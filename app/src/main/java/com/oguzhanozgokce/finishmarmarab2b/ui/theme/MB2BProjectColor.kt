@@ -7,7 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 fun lightColors(
-    primary: Color = Color(0xFFFF5722),
+    primary: Color = Color(0xFF9C6F91),
     primaryContainer: Color = Color(0xFF2D3142),
     secondary: Color = Color(0xFF2196F3),
     secondaryContainer: Color = Color(0xFF009688),
@@ -35,7 +35,7 @@ fun lightColors(
 )
 
 fun darkColors(
-    primary: Color = Color(0xFFFF5722),
+    primary: Color = Color(0xFF9C6F91),
     primaryContainer: Color = Color(0xFF2D3142),
     secondary: Color = Color(0xFF2196F3),
     secondaryContainer: Color = Color(0xFF009688),
@@ -113,7 +113,7 @@ class MB2BProjectColor(
     val darkGray: Color = _darkGray
 
     private class KelpColorPreview {
-        val primary_FFFF5722_FFFF5722: Color = Color(0xFFFF5722)
+        val primary_FFFF5722_FFFF5722: Color = Color(0xFF9C6F91)
         val primaryContainer_FF2D3142_FF2D3142: Color = Color(0xFF2D3142)
         val secondary_FF2196F3_FF2196F3: Color = Color(0xFF2196F3)
         val secondaryContainer_FF009688_FF009688: Color = Color(0xFF009688)

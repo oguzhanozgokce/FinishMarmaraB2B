@@ -36,7 +36,7 @@ fun NavigationGraph(
     NavHost(
         modifier = Modifier.then(modifier),
         navController = navController,
-        startDestination = startDestination,
+        startDestination = "Welcome",
     ) {
         composable("Welcome") {
             val viewModel: WelcomeViewModel = hiltViewModel()
@@ -45,7 +45,9 @@ fun NavigationGraph(
             WelcomeScreen(
                 uiState = uiState,
                 uiEffect = uiEffect,
-                onAction = viewModel::onAction
+                onAction = viewModel::onAction,
+                onNavigateToLogin = { navController.navigate("Login") },
+                onNavigateToSignup = { navController.navigate("Signup") }
             )
         }
         composable("Login") {
@@ -55,7 +57,16 @@ fun NavigationGraph(
             LoginScreen(
                 uiState = uiState,
                 uiEffect = uiEffect,
-                onAction = viewModel::onAction
+                onAction = viewModel::onAction,
+                onNavigateToHome = {
+                    navController.navigate("Home") {
+                        popUpTo("Welcome") {
+                            inclusive = true
+                        }
+                    }
+                },
+                onNavigateToForgotPassword = { navController.navigate("ForgotPassword") },
+                onNavigateToBack = { navController.navigateUp() }
             )
         }
         composable("Signup") {
@@ -65,7 +76,15 @@ fun NavigationGraph(
             SignupScreen(
                 uiState = uiState,
                 uiEffect = uiEffect,
-                onAction = viewModel::onAction
+                onAction = viewModel::onAction,
+                onNavigateToHome = {
+                    navController.navigate("Home") {
+                        popUpTo("Welcome") {
+                            inclusive = true
+                        }
+                    }
+                },
+                onNavigateToBack = { navController.navigateUp() }
             )
         }
         composable("Home") {

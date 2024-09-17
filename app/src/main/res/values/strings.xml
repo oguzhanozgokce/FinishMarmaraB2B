@@ -5,5 +5,10 @@
     <string name="forgot_password_text">Forgot Password</string>
     <string name="or_login_with_text">or login with</string>
     <string name="hello_register_text">Hello! Register to get started!</string>
+    <string name="email_format_error">Please enter a valid email address</string>
+    <string name="password_invalid_error">Password should be 6 characters or longer!</string>
+    <string name="empty_field_error">All fields are required</string>
+    <string name="validation_error">Validation Error</string>
+    <string name="ok_button">OK</string>
 
 </resources>

@@ -18,6 +18,7 @@ hiltNavigationCompose = "1.2.0"
 navigation = "2.8.0"
 detekt = "1.23.5"
 
+
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -44,6 +45,7 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 detekt = { group = "io.gitlab.arturbosch", name = "detekt", version.ref = "detekt" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

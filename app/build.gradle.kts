@@ -86,6 +86,8 @@ dependencies {
 
     // Detekt
     detektPlugins(libs.detekt)
+
+
 }
 
 detekt {

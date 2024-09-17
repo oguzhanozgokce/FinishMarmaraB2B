@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinishMarmaraB2B</string>
+    <string name="app_name">MarmaraB2B</string>
 
     <string name="welcome_login_text">Welcome back!\nGlad to see you, again!</string>
     <string name="forgot_password_text">Forgot Password</string>
@@ -10,5 +10,9 @@
     <string name="empty_field_error">All fields are required</string>
     <string name="validation_error">Validation Error</string>
     <string name="ok_button">OK</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="search_for_products">Search for products</string>
+    <string name="categories">Categories</string>
+    <string name="products">Products</string>
 
 </resources>

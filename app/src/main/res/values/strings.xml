@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FinishMarmaraB2B</string>
+
+    <string name="welcome_login_text">Welcome back!\nGlad to see you, again!</string>
+    <string name="forgot_password_text">Forgot Password</string>
+    <string name="or_login_with_text">or login with</string>
+    <string name="hello_register_text">Hello! Register to get started!</string>
+
 </resources>

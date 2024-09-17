@@ -24,6 +24,25 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     val uiEffect: Flow<UiEffect> by lazy { _uiEffect.receiveAsFlow() }
 
     fun onAction(uiAction: UiAction) {
+        when (uiAction) {
+            is UiAction.EmailChanged -> {
+                updateUiState { copy(email = uiAction.email) }
+            }
+
+            is UiAction.PasswordChanged -> {
+                updateUiState { copy(password = uiAction.password) }
+            }
+            is UiAction.LoginClicked -> {
+                login()
+            }
+            is UiAction.ClearError -> {
+                updateUiState { copy(error = "") }
+            }
+        }
+    }
+
+    private fun login() {
+
     }
 
     private fun updateUiState(block: UiState.() -> UiState) {

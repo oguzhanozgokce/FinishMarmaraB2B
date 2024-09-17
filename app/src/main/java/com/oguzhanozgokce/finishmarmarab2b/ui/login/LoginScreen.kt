@@ -26,6 +26,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,7 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.common.collectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.BackIconButton
+import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomDivider
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomIconButton
@@ -54,16 +60,48 @@ fun LoginScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    onNavigateToHome: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit,
+    onNavigateToBack: () -> Unit,
 ) {
+    var alertDialogState by remember { mutableStateOf(false) }
+
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> LoginContent()
+        else -> LoginContent(
+            uiState = uiState,
+            onAction = onAction,
+            onNavigateToForgotPassword = onNavigateToForgotPassword,
+            onNavigateToBack = onNavigateToBack
+        )
+    }
+
+    uiEffect.collectWithLifecycle { effect ->
+        when(effect){
+            is UiEffect.ShowAlertDialog -> alertDialogState = true
+            is UiEffect.GoToForgotPassword -> onNavigateToForgotPassword()
+            is UiEffect.GoToBack -> onNavigateToBack()
+        }
+    }
+    if (alertDialogState){
+        CustomAlertDialog(
+            errorMessage = uiState.error,
+            onDismiss = { alertDialogState = false },
+            confirmButtonClickListener = { onAction(UiAction.ClearError)
+            alertDialogState = false
+            }
+        )
     }
 }
 
 @Composable
-fun LoginContent() {
+fun LoginContent(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+    onNavigateToForgotPassword: () -> Unit,
+    onNavigateToBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,7 +110,7 @@ fun LoginContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         BackIconButton(
-            onClick = {},
+            onClick = onNavigateToBack,
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.twenty))
@@ -84,15 +122,15 @@ fun LoginContent() {
         )
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.twelve))
         CustomTextField(
-            value = "",
-            onValueChange = {},
+            value = uiState.email,
+            onValueChange = {onAction(UiAction.EmailChanged(it))},
             label = "Email",
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
         )
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.sixteen))
         CustomTextField(
-            value = "",
-            onValueChange = {},
+            value = uiState.password,
+            onValueChange = {onAction(UiAction.PasswordChanged(it))},
             label = "Password",
             isPassword = true,
             leadingIcon = {
@@ -114,7 +152,7 @@ fun LoginContent() {
                 modifier = Modifier.size(MB2BTheme.dimensions.twenty)
             )
             Text(
-                modifier = Modifier.clickable { },
+                modifier = Modifier.clickable {onNavigateToForgotPassword()},
                 text = stringResource(id = R.string.forgot_password_text),
                 fontWeight = FontWeight.Light,
                 fontSize = MB2BTheme.typography.small,
@@ -122,7 +160,7 @@ fun LoginContent() {
         }
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.thirtyTwo))
 
-        CustomButton(text = "Login", onClick = { })
+        CustomButton(text = "Login", onClick = { onAction(UiAction.LoginClicked) })
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.sixteen))
 
         Row(
@@ -178,5 +216,8 @@ fun LoginScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
+        onNavigateToHome = {},
+        onNavigateToForgotPassword = {},
+        onNavigateToBack = {},
     )
 }

@@ -24,6 +24,18 @@ class SignupViewModel @Inject constructor() : ViewModel() {
     val uiEffect: Flow<UiEffect> by lazy { _uiEffect.receiveAsFlow() }
 
     fun onAction(uiAction: UiAction) {
+        when(uiAction){
+            is UiAction.NameChanged -> updateUiState { copy(name = uiAction.name) }
+            is UiAction.SurnameChanged -> updateUiState { copy(surname = uiAction.surname) }
+            is UiAction.EmailChanged -> updateUiState { copy(email = uiAction.email) }
+            is UiAction.PasswordChanged -> updateUiState { copy(password = uiAction.password) }
+            is UiAction.Signup -> signup()
+            is UiAction.ClearError -> updateUiState { copy(error = "") }
+        }
+    }
+
+    private fun signup() {
+
     }
 
     private fun updateUiState(block: UiState.() -> UiState) {

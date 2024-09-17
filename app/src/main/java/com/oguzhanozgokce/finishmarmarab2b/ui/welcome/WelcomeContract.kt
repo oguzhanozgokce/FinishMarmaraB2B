@@ -8,5 +8,8 @@ object WelcomeContract {
 
     sealed class UiAction
 
-    sealed class UiEffect
+    sealed class UiEffect {
+        data object GoToLogin : UiEffect()
+        data object GoToSignup : UiEffect()
+    }
 }

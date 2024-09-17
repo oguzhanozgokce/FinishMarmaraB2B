@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.common.collectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
@@ -36,16 +37,31 @@ fun WelcomeScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    onNavigateToLogin: () -> Unit = {},
+    onNavigateToSignup: () -> Unit = {},
 ) {
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> WelcomeContent()
+        else -> WelcomeContent(
+            onNavigateToLogin = onNavigateToLogin,
+            onNavigateToSignup = onNavigateToSignup
+        )
+    }
+
+    uiEffect.collectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.GoToLogin -> {onNavigateToLogin()}
+            is UiEffect.GoToSignup -> {onNavigateToSignup()}
+        }
     }
 }
 
 @Composable
-fun WelcomeContent() {
+fun WelcomeContent(
+    onNavigateToLogin: () -> Unit = {},
+    onNavigateToSignup: () -> Unit = {},
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,8 +88,8 @@ fun WelcomeContent() {
             fontWeight = FontWeight.Normal,
         )
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.fortyEight))
-        CustomButton(text = "Login", onClick = { })
-        CustomOutlinedButton(text = "Register" , onClick = { })
+        CustomButton(text = "Login", onClick = {onNavigateToLogin()})
+        CustomOutlinedButton(text = "Register" , onClick = {onNavigateToSignup()})
         Spacer(modifier = Modifier.height(MB2BTheme.dimensions.fortyEight))
     }
 }
@@ -87,5 +103,7 @@ fun WelcomeScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
+        onNavigateToLogin = {},
+        onNavigateToSignup = {},
     )
 }

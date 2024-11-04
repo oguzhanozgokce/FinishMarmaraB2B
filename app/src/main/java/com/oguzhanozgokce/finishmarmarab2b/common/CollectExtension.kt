@@ -36,3 +36,15 @@ inline fun Modifier.noRippleClickable(
         onClick()
     }
 }
+
+fun Int?.orEmpty(): Int {
+    return this ?: 0
+}
+
+fun Double?.orEmpty(): Double {
+    return this ?: 0.0
+}
+
+fun Boolean?.orEmpty(): Boolean {
+    return this ?: false
+}

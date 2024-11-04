@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.oguzhanozgokce.finishmarmarab2b"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.oguzhanozgokce.finishmarmarab2b"
         minSdk = 27
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -72,6 +73,9 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    // OkHttp
+    implementation(libs.okhttp3.okhttp)
+    implementation (libs.logging.interceptor)
 
     // Hilt
     ksp(libs.hilt.compiler)

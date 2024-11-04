@@ -9,6 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
 
 @Composable
@@ -31,4 +32,10 @@ fun CustomIconButton(
             contentDescription = null
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CustomIconButtonPreview() {
+    CustomIconButton(iconResId = 0, onClickAction = {})
 }

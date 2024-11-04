@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
 
 @Composable
@@ -34,5 +35,11 @@ fun BackIconButton(
             tint = MB2BTheme.colors.primary
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BackIconButtonPreview() {
+    BackIconButton(onClick = {})
 }
 

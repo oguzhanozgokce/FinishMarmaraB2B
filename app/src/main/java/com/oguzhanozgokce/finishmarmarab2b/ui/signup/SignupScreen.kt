@@ -57,8 +57,8 @@ fun SignupScreen(
             onNavigateToBack = onNavigateToBack
         )
     }
-    uiEffect.collectWithLifecycle { uiEffect ->
-        when (uiEffect) {
+    uiEffect.collectWithLifecycle { effect ->
+        when (effect) {
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToHome -> onNavigateToHome()
             is UiEffect.GoToBack -> onNavigateToBack()

@@ -5,10 +5,13 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
-class MB2BFontSize {
+class FMFontSize {
     val small: TextUnit
         @Composable
         get() = 12.sp
+    val mediumSmall: TextUnit
+        @Composable
+        get() = 14.sp
     val medium: TextUnit
         @Composable
         get() = 16.sp
@@ -26,4 +29,4 @@ class MB2BFontSize {
         get() = 32.sp
 }
 
-internal val LocalFontSizes = staticCompositionLocalOf { MB2BFontSize() }
+internal val LocalFontSizes = staticCompositionLocalOf { FMFontSize() }

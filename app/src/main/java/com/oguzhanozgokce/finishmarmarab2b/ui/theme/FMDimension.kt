@@ -5,7 +5,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-class MB2BDimension {
+class FMDimension {
     val one: Dp
         @Composable
         get() = 1.dp
@@ -48,15 +48,27 @@ class MB2BDimension {
     val fiftySix: Dp
         @Composable
         get() = 56.dp
+    val sixty: Dp
+        @Composable
+        get() = 60.dp
     val seventyTwo: Dp
         @Composable
         get() = 72.dp
-    val sixty: Dp
-        @Composable
-        get() = 80.dp
     val oneHundred: Dp
         @Composable
         get() = 100.dp
+    val oneHundredTwenty: Dp
+        @Composable
+        get() = 120.dp
+    val oneHundredForty: Dp
+        @Composable
+        get() = 140.dp
+    val oneHundredEighty: Dp
+        @Composable
+        get() = 180.dp
+    val twoHundredSixty: Dp
+        @Composable
+        get() = 260.dp
 }
 
-internal val LocalDimensions = staticCompositionLocalOf { MB2BDimension() }
+internal val LocalDimensions = staticCompositionLocalOf { FMDimension() }

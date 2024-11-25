@@ -12,27 +12,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 
 @Composable
 fun CustomButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: Color = MB2BTheme.colors.primary,
+    colors: Color = LMTheme.colors.primary,
     enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         modifier = modifier
-            .padding(vertical = MB2BTheme.dimensions.eight)
-            .height(MB2BTheme.dimensions.fiftySix)
+            .padding(vertical = LMTheme.dimensions.eight)
+            .height(LMTheme.dimensions.fiftySix)
             .fillMaxWidth(),
-        shape = RoundedCornerShape(MB2BTheme.dimensions.sixteen),
+        shape = RoundedCornerShape(LMTheme.dimensions.sixteen),
         colors = ButtonDefaults.buttonColors(containerColor = colors),
         enabled = enabled
     ) {
-        Text(text = text, fontSize = MB2BTheme.typography.medium, fontWeight = FontWeight.Bold)
+        Text(text = text, fontSize = LMTheme.typography.medium, fontWeight = FontWeight.Bold)
     }
 }
 

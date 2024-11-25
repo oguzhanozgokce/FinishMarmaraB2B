@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 
 @Composable
 fun CustomTextField(
@@ -28,9 +28,9 @@ fun CustomTextField(
     errorMessage: String? = null
 ) {
     val containerColor =
-        if (isError) MB2BTheme.colors.customButtonColor else MB2BTheme.colors.white
+        if (isError) LMTheme.colors.customButtonColor else LMTheme.colors.white
     val indicatorColor =
-        if (isError) MB2BTheme.colors.red else MB2BTheme.colors.primary.copy(alpha = 0.3f)
+        if (isError) LMTheme.colors.red else LMTheme.colors.primary.copy(alpha = 0.3f)
 
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -40,7 +40,7 @@ fun CustomTextField(
             label = { Text(label) },
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(MB2BTheme.dimensions.eight),
+            shape = RoundedCornerShape(LMTheme.dimensions.eight),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = containerColor,
                 unfocusedContainerColor = containerColor,
@@ -53,11 +53,11 @@ fun CustomTextField(
         if (isError && errorMessage != null) {
             Text(
                 text = errorMessage,
-                color = MB2BTheme.colors.red,
+                color = LMTheme.colors.red,
                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(
-                    start = MB2BTheme.dimensions.sixteen,
-                    top = MB2BTheme.dimensions.four
+                    start = LMTheme.dimensions.sixteen,
+                    top = LMTheme.dimensions.four
                 )
             )
         }

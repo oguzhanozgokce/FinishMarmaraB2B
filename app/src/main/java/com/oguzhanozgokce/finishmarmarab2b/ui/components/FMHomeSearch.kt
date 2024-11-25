@@ -10,40 +10,39 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.common.noRippleClickable
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.common.extension.noRippleClickable
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
-fun CustomHomeSearch(
+fun FMSearch(
     modifier: Modifier = Modifier,
     onNavigateToSearch: () -> Unit
 ) {
-    val containerColor = MB2BTheme.colors.white
-    val indicatorColor = MB2BTheme.colors.primary.copy(alpha = 0.3f)
+    val containerColor = LMTheme.colors.searchBarColor
+    val indicatorColor = LMTheme.colors.white
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(MB2BTheme.dimensions.eight))
-            .noRippleClickable {
-                onNavigateToSearch()
-            }
+            .clip(RoundedCornerShape(LMTheme.dimensions.twenty))
             .background(containerColor)
             .border(
-                MB2BTheme.dimensions.two,
-                indicatorColor,
-                RoundedCornerShape(MB2BTheme.dimensions.eight)
+                width = LMTheme.dimensions.one,
+                color = indicatorColor,
+                shape = RoundedCornerShape(LMTheme.dimensions.twenty)
             )
-            .padding(MB2BTheme.dimensions.sixteen)
+            .noRippleClickable { onNavigateToSearch() }
+            .padding(LMTheme.dimensions.sixteen)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -54,14 +53,17 @@ fun CustomHomeSearch(
                 contentDescription = stringResource(id = R.string.search_icon),
                 modifier = Modifier
                     .padding(
-                        start = MB2BTheme.dimensions.four,
-                        end = MB2BTheme.dimensions.eight
-                    )
+                        start = LMTheme.dimensions.four,
+                        end = LMTheme.dimensions.eight
+                    ),
+                tint = LMTheme.colors.searchIconColor
             )
             Text(
                 text = stringResource(id = R.string.search_for_products),
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
-                style = MaterialTheme.typography.bodyLarge,
+                color = LMTheme.colors.darkGray.copy(alpha = 0.6f),
+                fontFamily = poppinsFontFamily,
+                fontSize = LMTheme.typography.medium,
+                fontWeight = FontWeight.Light,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -71,7 +73,7 @@ fun CustomHomeSearch(
 @Preview(showBackground = true)
 @Composable
 fun CustomHomeSearchPreview() {
-    CustomHomeSearch(
+    FMSearch(
         modifier = Modifier,
         onNavigateToSearch = {}
     )

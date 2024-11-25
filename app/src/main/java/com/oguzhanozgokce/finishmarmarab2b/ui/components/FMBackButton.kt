@@ -12,7 +12,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 
 @Composable
 fun BackIconButton(
@@ -22,17 +22,17 @@ fun BackIconButton(
     IconButton(
         onClick = onClick,
         modifier = modifier
-            .size(MB2BTheme.dimensions.fortyEight)
-            .padding(MB2BTheme.dimensions.eight)
+            .size(LMTheme.dimensions.fortyEight)
+            .padding(LMTheme.dimensions.eight)
             .border(
-                BorderStroke(MB2BTheme.dimensions.one, MB2BTheme.colors.primary),
-                shape = RoundedCornerShape(MB2BTheme.dimensions.twelve)
+                BorderStroke(LMTheme.dimensions.one, LMTheme.colors.primary),
+                shape = RoundedCornerShape(LMTheme.dimensions.twelve)
             )
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
             contentDescription = "Back",
-            tint = MB2BTheme.colors.primary
+            tint = LMTheme.colors.primary
         )
     }
 }

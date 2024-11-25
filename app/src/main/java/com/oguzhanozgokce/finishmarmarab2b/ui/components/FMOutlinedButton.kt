@@ -13,29 +13,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 
 @Composable
 fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
-    contentColor: Color = MB2BTheme.colors.primary
+    contentColor: Color = LMTheme.colors.primary
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = Modifier
-            .padding(vertical = MB2BTheme.dimensions.eight)
-            .height(MB2BTheme.dimensions.fiftySix)
+            .padding(vertical = LMTheme.dimensions.eight)
+            .height(LMTheme.dimensions.fiftySix)
             .fillMaxWidth(),
-        border = BorderStroke(MB2BTheme.dimensions.one, contentColor),
-        shape = RoundedCornerShape(MB2BTheme.dimensions.sixteen),
+        border = BorderStroke(LMTheme.dimensions.one, contentColor),
+        shape = RoundedCornerShape(LMTheme.dimensions.sixteen),
         colors = ButtonDefaults.buttonColors(
             contentColor = contentColor,
-            containerColor = MB2BTheme.colors.white
+            containerColor = LMTheme.colors.white
         )
 
     ) {
-        Text(text = text, fontSize = MB2BTheme.typography.medium, fontWeight = FontWeight.Bold)
+        Text(text = text, fontSize = LMTheme.typography.medium, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -45,6 +45,6 @@ fun CustomOutlineButtonPreview() {
     CustomOutlinedButton(
         text = "Button",
         onClick = { },
-        contentColor = MB2BTheme.colors.primary
+        contentColor = LMTheme.colors.primary
     )
 }

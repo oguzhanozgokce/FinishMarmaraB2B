@@ -11,8 +11,17 @@
     <string name="validation_error">Validation Error</string>
     <string name="ok_button">OK</string>
     <string name="search_icon">Search Icon</string>
-    <string name="search_for_products">Search for products</string>
-    <string name="categories">Categories</string>
+    <string name="search_for_products">Search</string>
+    <string name="categories">Select Categories</string>
     <string name="products">Products</string>
-
+    <string name="error_request_timeout">The request timed out.</string>
+    <string name="error_too_many_requests">Oops, it seems like your quato is exceed</string>
+    <string name="error_no_internet_connection">Couldn\'t connect to server, please check your internet connection</string>
+    <string name="error_server">Something went worng. Please try again later.</string>
+    <string name="error_serialization">Couldn\'t serialize or deserialize data.</string>
+    <string name="error_unknown">Something went worng. Please try again later.</string>
+    <string name="add_to_favorites_button">Add Favorites</string>
+    <string name="empty_favorites_description">You can add products to your favorites by clicking the heart icon on the product page. This way, you can access your products faster.</string>
+    <string name="empty_favorites_title">Oops! Your Favorites are Waiting for You!</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

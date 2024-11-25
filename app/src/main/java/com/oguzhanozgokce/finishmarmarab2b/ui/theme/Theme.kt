@@ -5,25 +5,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
-object MB2BTheme {
-    val colors: MB2BProjectColor
+object LMTheme {
+    val colors: FMProjectColor
         @Composable
         @ReadOnlyComposable
         get() = LocalColors.current
 
-    val dimensions: MB2BDimension
+    val dimensions: FMDimension
         @Composable
         @ReadOnlyComposable
         get() = LocalDimensions.current
 
-    val typography: MB2BFontSize
+    val typography: FMFontSize
         @Composable
         @ReadOnlyComposable
         get() = LocalFontSizes.current
+
+    val icons: LMIcons
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalLMIcons.current
 }
 
 @Composable
-fun MB2BTheme(
+fun LMTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

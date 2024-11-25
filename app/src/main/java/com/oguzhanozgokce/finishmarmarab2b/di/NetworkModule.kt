@@ -1,16 +1,15 @@
 package com.oguzhanozgokce.finishmarmarab2b.di
 
-import android.content.Context
+import android.app.Application
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.gson.GsonBuilder
 import com.oguzhanozgokce.finishmarmarab2b.BuildConfig
-import com.oguzhanozgokce.finishmarmarab2b.data.network.interceptor.ConnectivityInterceptor
-import com.oguzhanozgokce.finishmarmarab2b.data.source.remote.MainService
-import com.oguzhanozgokce.finishmarmarab2b.data.network.interceptor.AuthInterceptor
-import com.oguzhanozgokce.finishmarmarab2b.data.network.interceptor.ErrorInterceptor
-import com.oguzhanozgokce.finishmarmarab2b.domain.network.AuthRepository
+import com.oguzhanozgokce.finishmarmarab2b.core.data.network.interceptor.TokenInterceptor
+import com.oguzhanozgokce.finishmarmarab2b.core.data.network.token.TokenRepository
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,37 +25,21 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideConnectivityInterceptor(
-        @ApplicationContext context: Context
-    ): ConnectivityInterceptor {
-        return ConnectivityInterceptor(context)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthInterceptor(
-        authRepository: AuthRepository
-    ): AuthInterceptor {
-        return AuthInterceptor(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideErrorInterceptor(): ErrorInterceptor {
-        return ErrorInterceptor()
+        tokenRepository: dagger.Lazy<TokenRepository>
+    ): TokenInterceptor {
+        return TokenInterceptor(tokenRepository)
     }
 
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        connectivityInterceptor: ConnectivityInterceptor,
-        authInterceptor: AuthInterceptor,
-        errorInterceptor: ErrorInterceptor
+        tokenInterceptor: TokenInterceptor,
+        chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(connectivityInterceptor)
-            .addInterceptor(authInterceptor)
-            .addInterceptor(errorInterceptor)
+            .authenticator(tokenInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                 else HttpLoggingInterceptor.Level.NONE
@@ -66,16 +49,23 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
     }
 
+    @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): MainService {
-        return retrofit.create(MainService::class.java)
+    fun provideChuckInterceptor(application: Application) =
+        ChuckerInterceptor.Builder(application).build()
+
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 }

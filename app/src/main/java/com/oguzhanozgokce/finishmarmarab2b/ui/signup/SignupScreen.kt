@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.common.collectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
@@ -34,7 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -57,7 +57,7 @@ fun SignupScreen(
             onNavigateToBack = onNavigateToBack
         )
     }
-    uiEffect.collectWithLifecycle { effect ->
+    uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToHome -> onNavigateToHome()
@@ -87,7 +87,7 @@ fun SignupContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(MB2BTheme.dimensions.sixteen),
+                .padding(LMTheme.dimensions.sixteen),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ){
@@ -95,35 +95,35 @@ fun SignupContent(
                 onClick = {onNavigateToBack()},
                 modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.twenty))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.twenty))
             Text(
                 text = stringResource(id = R.string.hello_register_text),
                 fontWeight = FontWeight.Bold,
-                fontSize = MB2BTheme.typography.sizeTitle,
+                fontSize = LMTheme.typography.sizeTitle,
                 modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.twelve))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.twelve))
             CustomTextField(
                 value = uiState.name,
                 onValueChange = {onAction(UiAction.NameChanged(it))},
                 label = "Name",
                 leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Name") }
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
             CustomTextField(
                 value = uiState.surname,
                 onValueChange = {onAction(UiAction.SurnameChanged(it))},
                 label = "Surname",
                 leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Surname") }
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
             CustomTextField(
                 value = uiState.email,
                 onValueChange = {onAction(UiAction.EmailChanged(it))},
                 label = "Email",
                 leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
             CustomTextField(
                 value = uiState.password,
                 onValueChange = {onAction(UiAction.PasswordChanged(it))},
@@ -131,7 +131,7 @@ fun SignupContent(
                 isPassword = true,
                 leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Password") }
             )
-            Spacer(modifier = Modifier.height(MB2BTheme.dimensions.thirtyTwo))
+            Spacer(modifier = Modifier.height(LMTheme.dimensions.thirtyTwo))
             CustomButton(text = "Register", onClick = { })
         }
     }

@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 
 @Composable
 fun CustomIconButton(
@@ -21,10 +21,10 @@ fun CustomIconButton(
     IconButton(
         onClick = onClickAction,
         modifier = modifier
-            .size(MB2BTheme.dimensions.fortyEight)
+            .size(LMTheme.dimensions.fortyEight)
             .border(
-                BorderStroke(MB2BTheme.dimensions.one, MB2BTheme.colors.primary),
-                shape = RoundedCornerShape(MB2BTheme.dimensions.twelve)
+                BorderStroke(LMTheme.dimensions.one, LMTheme.colors.primary),
+                shape = RoundedCornerShape(LMTheme.dimensions.twelve)
             )
     ) {
         Image(

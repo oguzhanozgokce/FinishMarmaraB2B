@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.serialization)
+
 }
 
 android {
@@ -85,8 +87,15 @@ dependencies {
     // Navigation
     implementation(libs.navigation.compose)
 
+    // Serialization
+    implementation(libs.serialization.json)
+
     // Coil
     implementation(libs.coil.compose)
+
+    // Checker
+    debugImplementation(libs.chucker.library)
+    releaseImplementation(libs.chucker.library.no.op)
 
     // Detekt
     detektPlugins(libs.detekt)

@@ -18,14 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.common.collectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LocalDimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LocalFontSizes
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.MB2BTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiState
@@ -49,7 +47,7 @@ fun WelcomeScreen(
         )
     }
 
-    uiEffect.collectWithLifecycle { effect ->
+    uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.GoToLogin -> {onNavigateToLogin()}
             is UiEffect.GoToSignup -> {onNavigateToSignup()}
@@ -65,7 +63,7 @@ fun WelcomeContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(MB2BTheme.dimensions.sixteen),
+            .padding(LMTheme.dimensions.sixteen),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -74,23 +72,23 @@ fun WelcomeContent(
             contentDescription = "Welcome Image",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(MB2BTheme.dimensions.sixteen)
+                .padding(LMTheme.dimensions.sixteen)
         )
         Text(
             text = "Marmara B2B",
-            fontSize = MB2BTheme.typography.sizeTitle,
+            fontSize = LMTheme.typography.sizeTitle,
             fontWeight = FontWeight.Thin,
             fontStyle = FontStyle.Italic,
         )
         Text(
             text = "Welcome",
-            fontSize = MB2BTheme.typography.sizeTitle,
+            fontSize = LMTheme.typography.sizeTitle,
             fontWeight = FontWeight.Normal,
         )
-        Spacer(modifier = Modifier.height(MB2BTheme.dimensions.fortyEight))
+        Spacer(modifier = Modifier.height(LMTheme.dimensions.fortyEight))
         CustomButton(text = "Login", onClick = {onNavigateToLogin()})
         CustomOutlinedButton(text = "Register" , onClick = {onNavigateToSignup()})
-        Spacer(modifier = Modifier.height(MB2BTheme.dimensions.fortyEight))
+        Spacer(modifier = Modifier.height(LMTheme.dimensions.fortyEight))
     }
 }
 

@@ -1,6 +1,6 @@
-package com.oguzhanozgokce.finishmarmarab2b.domain.model
+package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto
 
-data class UserDomain(
+data class UserDto(
     val id: String,
     val email: String,
     val name: String,

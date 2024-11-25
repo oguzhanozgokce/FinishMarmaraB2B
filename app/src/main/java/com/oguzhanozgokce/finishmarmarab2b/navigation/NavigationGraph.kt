@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.navigation
+package com.oguzhanozgokce.finishmarmarab2b.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,37 +8,46 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteViewModel
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Favorite
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.ForgotPassword
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Payment
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Profile
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartViewModel
-import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentViewModel
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeScreen
+import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeViewModel
+
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: String,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         modifier = Modifier.then(modifier),
         navController = navController,
-        startDestination = "Welcome",
+        startDestination = Home,
     ) {
-        composable("Welcome") {
+        composable<Welcome> {
             val viewModel: WelcomeViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -46,11 +55,11 @@ fun NavigationGraph(
                 uiState = uiState,
                 uiEffect = uiEffect,
                 onAction = viewModel::onAction,
-                onNavigateToLogin = { navController.navigate("Login") },
-                onNavigateToSignup = { navController.navigate("Signup") }
+                onNavigateToLogin = { navController.navigate(route = Login) },
+                onNavigateToSignup = { navController.navigate(route = Signup) }
             )
         }
-        composable("Login") {
+        composable<Login> {
             val viewModel: LoginViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -59,17 +68,17 @@ fun NavigationGraph(
                 uiEffect = uiEffect,
                 onAction = viewModel::onAction,
                 onNavigateToHome = {
-                    navController.navigate("Home") {
-                        popUpTo("Welcome") {
+                    navController.navigate(route = Home) {
+                        popUpTo(route = Welcome) {
                             inclusive = true
                         }
                     }
                 },
-                onNavigateToForgotPassword = { navController.navigate("ForgotPassword") },
+                onNavigateToForgotPassword = { navController.navigate(route = ForgotPassword) },
                 onNavigateToBack = { navController.navigateUp() }
             )
         }
-        composable("Signup") {
+        composable<Signup> {
             val viewModel: SignupViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -78,8 +87,8 @@ fun NavigationGraph(
                 uiEffect = uiEffect,
                 onAction = viewModel::onAction,
                 onNavigateToHome = {
-                    navController.navigate("Home") {
-                        popUpTo("Welcome") {
+                    navController.navigate(route = Home) {
+                        popUpTo(route = Welcome) {
                             inclusive = true
                         }
                     }
@@ -87,7 +96,7 @@ fun NavigationGraph(
                 onNavigateToBack = { navController.navigateUp() }
             )
         }
-        composable("Home") {
+        composable<Home> {
             val viewModel: HomeViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -97,7 +106,7 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-        composable("Profile") {
+        composable<Profile> {
             val viewModel: ProfileViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -107,7 +116,7 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-        composable("Favorite") {
+        composable<Favorite> {
             val viewModel: FavoriteViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -117,7 +126,7 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-        composable("Cart") {
+        composable<Screen.Cart> {
             val viewModel: CartViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -127,7 +136,7 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-        composable("Payment") {
+        composable<Payment> {
             val viewModel: PaymentViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -137,7 +146,7 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-        composable("Detail") {
+        composable<Detail> {
             val viewModel: DetailViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
@@ -147,6 +156,5 @@ fun NavigationGraph(
                 onAction = viewModel::onAction
             )
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.data.source.remote.model
+package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain
 
 data class User(
     val id: String? = null,

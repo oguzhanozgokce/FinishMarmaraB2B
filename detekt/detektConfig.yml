@@ -1,8 +1,44 @@
 formatting:
+  NewLineAtEndOfFile:
+    active: true
+    autoCorrect: true
   NoWildcardImports:
     active: false
-  FinalNewline:
-    active: false
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+    autoCorrect: true
+  NoMultipleSpaces:
+    active: true
+    autoCorrect: true
+  ConsecutiveBlankLines:
+    active: true
+    autoCorrect: true
+    maxBlankLines: 1
+  TrailingWhitespace:
+    active: true
+    autoCorrect: true
+  NoEmptyClassBody:
+    active: true
+    autoCorrect: true
+  SpacingAroundCurlyBraces:
+    active: true
+    autoCorrect: true
+    allowBlankLines: false
+  SpacingInsideParens:
+    active: true
+    autoCorrect: true
+  ModifierOrder:
+    active: true
+    autoCorrect: true
+  NoUnusedImports:
+    active: true
+    autoCorrect: true
+  SpacingAroundOperators:
+    active: true
+    autoCorrect: true
+  UnusedPrivateMember:
+    active: true
+    autoCorrect: true
 
 style:
   WildcardImport:
@@ -14,4 +50,16 @@ style:
 naming:
   FunctionNaming:
     active: true
+    ignoreAnnotated: [ 'Composable' ]
+
+complexity:
+  LongParameterList:
+    active: true
+    threshold: 8
+    ignoreAnnotated: [ 'Composable' ]
+    excludes:
+      - '**/ui/theme/LLColor.kt'
+  LongMethod:
+    active: true
+    threshold: 60
     ignoreAnnotated: [ 'Composable' ]

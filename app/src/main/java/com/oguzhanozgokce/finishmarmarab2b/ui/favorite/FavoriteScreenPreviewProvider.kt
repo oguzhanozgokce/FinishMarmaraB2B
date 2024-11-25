@@ -1,21 +1,22 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
 
 class FavoriteScreenPreviewProvider : PreviewParameterProvider<FavoriteContract.UiState> {
     override val values: Sequence<FavoriteContract.UiState>
         get() = sequenceOf(
             FavoriteContract.UiState(
                 isLoading = true,
-                list = emptyList(),
+                favoriteList = emptyList(),
             ),
             FavoriteContract.UiState(
                 isLoading = false,
-                list = emptyList(),
+                favoriteList = emptyList(),
             ),
             FavoriteContract.UiState(
                 isLoading = false,
-                list = listOf("Item 1", "Item 2", "Item 3")
+                favoriteList = sampleProductList,
             ),
         )
 }

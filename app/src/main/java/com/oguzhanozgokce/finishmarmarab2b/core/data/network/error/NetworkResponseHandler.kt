@@ -1,22 +1,20 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.data.network.error
 
 import com.oguzhanozgokce.finishmarmarab2b.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import retrofit2.Response
 
-fun <T> responseToResult(response: Response<T>): Resource<T> {
-    return if (response.isSuccessful) {
-        val body = response.body()
-        if (body != null) {
-            Resource.Success(body)
-        } else {
-            Resource.Error("Response body is null.")
-        }
+/**
+ * Converts an ApiResponse<T> into a Resource<T>.
+ * - If the response is successful (status = true), wraps the data in a Resource.Success.
+ * - If the response has no data, returns a Resource.Error with a null body message.
+ * - If the response status is false, wraps the message in a Resource.Error.
+ */
+fun <T> responseToResult(response: ApiResponse<T>): Resource<T> {
+    return if (response.status) {
+        response.data?.let { Resource.Success(it) }
+            ?: Resource.Error("Response body is null.")
     } else {
-        when (response.code()) {
-            408 -> Resource.Error("Request timeout.")
-            429 -> Resource.Error("Too many requests.")
-            in 500..599 -> Resource.Error("Server error.")
-            else -> Resource.Error("Unknown error with code ${response.code()}.")
-        }
+        Resource.Error(response.message)
     }
 }

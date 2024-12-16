@@ -25,19 +25,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomDivider
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyFavoriteScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.FMFavoriteList
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyFavoriteScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMFavoriteList
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.typography
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -49,7 +46,7 @@ fun FavoriteScreen(
     onAction: (UiAction) -> Unit,
 ) {
     when {
-        uiState.isLoading -> LoadingBar()
+//        uiState.isLoading -> LoadingBar()
         uiState.favoriteList.isEmpty() -> EmptyFavoriteScreen()
         else -> FavoriteContent(
             uiState = uiState,
@@ -64,15 +61,15 @@ fun FavoriteContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.white)
+            .background(colors.background)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = dimensions.sixteen,
-                    end = dimensions.sixteen,
-                    top = dimensions.sixteen
+                    start = padding.dimension16,
+                    end = padding.dimension16,
+                    top = padding.dimension16
                 ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -80,19 +77,19 @@ fun FavoriteContent(
                 painter = painterResource(id = R.drawable.ic_person),
                 contentDescription = "User Avatar",
                 modifier = Modifier
-                    .size(dimensions.fortyEight)
+                    .size(padding.dimension48)
                     .clip(CircleShape)
-                    .background(colors.semiTransparentWhite)
-                    .padding(dimensions.eight),
+                    .background(colors.cardBackground)
+                    .padding(padding.dimension8),
                 tint = Color.LightGray
             )
-            Spacer(modifier = Modifier.width(dimensions.eight))
+            Spacer(modifier = Modifier.width(padding.dimension8))
             Text(
                 text = "Oguzhan Ozgokce",
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = typography.medium,
-                color = colors.black
+                fontSize = fontSize.medium,
+                color = colors.text
             )
         }
         Row(
@@ -100,14 +97,14 @@ fun FavoriteContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = dimensions.sixteen, end = dimensions.eight)
+                .padding(start = padding.dimension16, end = padding.dimension8)
         ) {
             Text(
                 text = "$0 Favorites",
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Normal,
-                fontSize = typography.small,
-                color = colors.darkGray
+                fontSize = fontSize.small,
+                color = colors.text
             )
             IconButton(onClick = { /* Menü İşlemleri */ }) {
                 Icon(
@@ -120,9 +117,9 @@ fun FavoriteContent(
         CustomDivider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = dimensions.eight, end = dimensions.eight),
-            color = colors.semiTransparentWhite,
-            thickness = dimensions.one
+                .padding(start = padding.dimension8, end = padding.dimension8),
+            color = colors.black,
+            thickness = padding.dimension1
         )
         FMFavoriteList(
             uiState = uiState,

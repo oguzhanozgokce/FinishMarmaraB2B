@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,22 +24,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CategoryList
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.FMSearch
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.ProductList
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductList
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.typography
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -51,8 +51,8 @@ fun HomeScreen(
 ) {
     when {
         uiState.isLoading -> LoadingBar()
-        uiState.categoryList.isEmpty() -> EmptyScreen()
-        uiState.productList.isEmpty() -> EmptyScreen()
+        uiState.categoryList.isNotEmpty() -> EmptyScreen()
+        uiState.productList.isNotEmpty() -> EmptyScreen()
         else -> HomeContent(
             uiState = uiState,
         )
@@ -63,67 +63,70 @@ fun HomeScreen(
 fun HomeContent(
     uiState: UiState,
 ) {
-    Column(
+    Box(
         modifier = Modifier
-            .padding(dimensions.sixteen)
             .fillMaxSize()
-            .background(colors.white)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(dimensions.twelve)
+            .background(colors.background)
+            .padding(padding.dimension16)
     ) {
-        TopBar()
-        FMSearch(
-            modifier = Modifier,
-            onNavigateToSearch = {}
+        TopBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopStart)
         )
-        SaleCard(modifier = Modifier.fillMaxWidth())
-        Text(
-            text = stringResource(id = R.string.categories),
-            fontSize = typography.body,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
-            color = colors.darkBlue
-        )
-        CategoryList(
-            modifier = Modifier.padding(start = dimensions.six),
-            uiState = uiState
-        )
-        ProductText()
-        ProductList(
-            uiState = uiState
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = padding.dimension80)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(padding.dimension12)
+        ) {
+            FMSearch(
+                modifier = Modifier,
+                onNavigateToSearch = {}
+            )
+            SaleCard(modifier = Modifier.fillMaxWidth())
+            Text(
+                text = stringResource(id = R.string.categories),
+                style = typography.titleBodyBold()
+            )
+            CategoryList(
+                uiState = uiState
+            )
+            ProductText()
+            ProductList(
+                uiState = uiState
+            )
+        }
     }
 }
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.weight(1f)
         ) {
             Text(
                 text = "Hello,",
-                fontFamily = poppinsFontFamily,
-                fontSize = typography.medium,
-                fontWeight = FontWeight.Light,
-                color = colors.darkGray
+                style = typography.titleMediumLight(),
             )
             Text(
                 text = "Oguzhan O.",
                 fontFamily = poppinsFontFamily,
-                fontSize = typography.large,
-                fontWeight = FontWeight.ExtraBold,
-                color = colors.darkGray
+                style = typography.labelLargeBold(),
             )
         }
         Icon(
-            imageVector = LMTheme.icons.notification,
+            imageVector = FMTheme.icons.notification,
             contentDescription = null,
-            tint = colors.darkGray,
+            tint = colors.text,
             modifier = Modifier
-                .padding(dimensions.sixteen)
+                .padding(padding.dimension16)
                 .align(Alignment.CenterVertically)
         )
     }
@@ -136,40 +139,37 @@ fun SaleCard(
     Card(
         modifier = modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(dimensions.eight),
+        shape = RoundedCornerShape(padding.dimension8),
         colors = CardDefaults.cardColors(
-            containerColor = colors.searchIconColor
+            containerColor = colors.primary
         )
     ) {
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(
-                    horizontal = dimensions.sixteen,
-                    vertical = dimensions.eight
+                    horizontal = padding.dimension16,
+                    vertical = padding.dimension8
                 ),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = "SUMMER SALE",
-                fontSize = typography.large,
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = poppinsFontFamily,
-                color = colors.white
+                style = typography.labelLargeBold().copy(
+                    color = colors.onText
+                ),
             )
             Text(
                 text = "50% OFF",
-                fontSize = typography.extraLarge,
-                fontWeight = FontWeight.ExtraBold,
-                fontFamily = poppinsFontFamily,
-                color = colors.white
+                style = typography.headExtraLargeBold().copy(
+                    color = colors.onText
+                ),
             )
             Text(
                 text = "Amazing discounts on selected items! Don't miss out!",
-                fontSize = typography.small,
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = poppinsFontFamily,
-                color = colors.white
+                style = typography.titleSmallMedium().copy(
+                    color = colors.onText
+                ),
             )
             TextButton(
                 onClick = { /* TODO: Navigate to the sale page */ },
@@ -182,18 +182,17 @@ fun SaleCard(
                 ) {
                     Text(
                         text = "Explore Now",
-                        fontSize = typography.medium,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = poppinsFontFamily,
-                        color = colors.white,
-                        modifier = Modifier.padding(bottom = dimensions.four)
+                        style = typography.titleMediumSemiBold().copy(
+                            color = colors.onText
+                        ),
+                        modifier = Modifier.padding(bottom = padding.dimension4)
                     )
                     HorizontalDivider(
                         modifier = Modifier
-                            .width(dimensions.oneHundred)
-                            .height(dimensions.two),
-                        thickness = dimensions.one,
-                        color = colors.white
+                            .width(padding.dimension100)
+                            .height(padding.dimension2),
+                        thickness = padding.dimension1,
+                        color = colors.onText
                     )
                 }
             }
@@ -212,10 +211,7 @@ fun ProductText(
     ) {
         Text(
             text = stringResource(id = R.string.products),
-            fontSize = typography.body,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
-            color = colors.darkBlue
+            style = typography.titleBodyBold()
         )
         TextButton(
             onClick = { /* TODO: Navigate to all products */ },
@@ -224,17 +220,14 @@ fun ProductText(
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = "See all",
-                    fontSize = typography.medium,
-                    fontWeight = FontWeight.Light,
-                    fontFamily = poppinsFontFamily,
-                    color = colors.darkBlue
+                    style = typography.titleMediumLight()
                 )
                 HorizontalDivider(
                     modifier = Modifier
-                        .width(dimensions.sixty)
-                        .height(dimensions.two),
-                    thickness = dimensions.one,
-                    color = colors.darkGray
+                        .width(padding.dimension60)
+                        .height(padding.dimension2),
+                    thickness = padding.dimension1,
+                    color = colors.text
                 )
             }
         }

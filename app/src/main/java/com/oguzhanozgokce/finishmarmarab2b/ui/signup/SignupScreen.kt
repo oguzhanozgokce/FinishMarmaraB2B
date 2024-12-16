@@ -20,21 +20,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.BackIconButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomTextField
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -54,7 +54,8 @@ fun SignupScreen(
         else -> SignupContent(
             uiState = uiState,
             onAction = onAction,
-            onNavigateToBack = onNavigateToBack
+            onNavigateToBack = onNavigateToBack,
+            onNavigateToHome = onNavigateToHome
         )
     }
     uiEffect.CollectWithLifecycle { effect ->
@@ -81,58 +82,86 @@ fun SignupScreen(
 fun SignupContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
-    onNavigateToBack: () -> Unit
+    onNavigateToBack: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(LMTheme.dimensions.sixteen),
+                .padding(padding.dimension16),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
-        ){
+        ) {
             BackIconButton(
-                onClick = {onNavigateToBack()},
-                modifier = Modifier.align(Alignment.Start)
+                onClick = { onNavigateToBack() },
+                modifier = Modifier
+                    .padding(vertical = padding.dimension8)
+                    .align(Alignment.Start)
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.twenty))
+            Spacer(modifier = Modifier.height(padding.dimension20))
             Text(
                 text = stringResource(id = R.string.hello_register_text),
-                fontWeight = FontWeight.Bold,
-                fontSize = LMTheme.typography.sizeTitle,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                style = typography.headExtraLargeBold(),
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.twelve))
+            Spacer(modifier = Modifier.height(padding.dimension36))
             CustomTextField(
                 value = uiState.name,
-                onValueChange = {onAction(UiAction.NameChanged(it))},
+                onValueChange = { onAction(UiAction.NameChanged(it)) },
                 label = "Name",
-                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Name") }
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Name"
+                    )
+                },
+                modifier = Modifier.padding(vertical = padding.dimension4)
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(padding.dimension4))
             CustomTextField(
                 value = uiState.surname,
-                onValueChange = {onAction(UiAction.SurnameChanged(it))},
+                onValueChange = { onAction(UiAction.SurnameChanged(it)) },
                 label = "Surname",
-                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Surname") }
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Surname"
+                    )
+                },
+                modifier = Modifier.padding(vertical = padding.dimension4)
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(padding.dimension4))
             CustomTextField(
                 value = uiState.email,
-                onValueChange = {onAction(UiAction.EmailChanged(it))},
+                onValueChange = { onAction(UiAction.EmailChanged(it)) },
                 label = "Email",
-                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Email"
+                    )
+                },
+                modifier = Modifier.padding(vertical = padding.dimension4)
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.four))
+            Spacer(modifier = Modifier.height(padding.dimension4))
             CustomTextField(
                 value = uiState.password,
-                onValueChange = {onAction(UiAction.PasswordChanged(it))},
+                onValueChange = { onAction(UiAction.PasswordChanged(it)) },
                 label = "Password",
                 isPassword = true,
-                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Password") }
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Password"
+                    )
+                },
+                modifier = Modifier.padding(vertical = padding.dimension4)
             )
-            Spacer(modifier = Modifier.height(LMTheme.dimensions.thirtyTwo))
-            CustomButton(text = "Register", onClick = { })
+            Spacer(modifier = Modifier.height(padding.dimension32))
+            CustomButton(text = "Register", onClick = {
+                onNavigateToHome()
+            })
         }
     }
 }

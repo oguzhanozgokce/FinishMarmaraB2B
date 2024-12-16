@@ -73,6 +73,7 @@ internal val sampleProductList : List<ProductUi> = listOf(
         imageUrl = R.drawable.ic_favorite_border,
         description = "A luxurious fragrance.",
         discount = 25,
+        rating = 3.0f,
         sellerName = "Seller Name"
     ),
     ProductUi(
@@ -83,6 +84,7 @@ internal val sampleProductList : List<ProductUi> = listOf(
         imageUrl = R.drawable.ic_notification,
         description = "Stylish sunglasses for sunny days.",
         discount = 15,
+        rating = 4.5f,
         sellerName = "Seller Name"
     ),
     ProductUi(
@@ -93,6 +95,7 @@ internal val sampleProductList : List<ProductUi> = listOf(
         imageUrl = R.drawable.ic_favorite_border,
         description = "Track your fitness and stay connected.",
         discount = 10,
+        rating = 4.0f,
         sellerName = "Seller Name"
     ),
     ProductUi(
@@ -103,6 +106,7 @@ internal val sampleProductList : List<ProductUi> = listOf(
         imageUrl = R.drawable.ic_notification,
         description = "A durable and spacious backpack.",
         discount = 20,
+        rating = 3.5f,
         sellerName = "Seller Name"
     ),
     ProductUi(
@@ -113,6 +117,7 @@ internal val sampleProductList : List<ProductUi> = listOf(
         imageUrl = R.drawable.ic_favorite_border,
         description = "High-quality sound for your music.",
         discount = 20,
+        rating = 4.5f,
         sellerName = "Seller Name"
     )
 )

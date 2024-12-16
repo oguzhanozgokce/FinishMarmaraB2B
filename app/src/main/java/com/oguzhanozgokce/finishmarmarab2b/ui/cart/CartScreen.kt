@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState

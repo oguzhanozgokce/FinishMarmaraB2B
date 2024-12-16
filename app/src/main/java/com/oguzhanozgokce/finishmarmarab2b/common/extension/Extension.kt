@@ -43,6 +43,12 @@ inline fun <T> Resource<T>.onFailure(action: (String) -> Unit): Resource<T> {
     return this
 }
 
+inline fun <T, R> Resource<T>.onMap(transform: (T) -> R): Resource<R> {
+    return when (this) {
+        is Resource.Success -> Resource.Success(transform(data))
+        is Resource.Error -> Resource.Error(message)
+    }
+}
 @OptIn(ExperimentalContracts::class)
 fun <T : Any> Resource<T>.isSuccess(): Boolean {
     contract {
@@ -65,6 +71,8 @@ fun Int?.orZero(): Int = this ?: 0
 fun Double?.orZero(): Double = this ?: 0.0
 fun Boolean?.orFalse(): Boolean = this ?: false
 fun String?.orEmpty(): String = this ?: ""
+fun Int.isPositive(): Boolean = this > 0
+
 
 inline fun Modifier.noRippleClickable(
     crossinline onClick: () -> Unit

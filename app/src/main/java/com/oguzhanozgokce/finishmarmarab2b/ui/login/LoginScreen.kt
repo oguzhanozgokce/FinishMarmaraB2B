@@ -30,18 +30,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.BackIconButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomDivider
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomIconButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.CustomTextField
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.EmptyScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomIconButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -62,24 +63,26 @@ fun LoginScreen(
         else -> LoginContent(
             uiState = uiState,
             onAction = onAction,
+            onNavigateToHome = onNavigateToHome,
             onNavigateToForgotPassword = onNavigateToForgotPassword,
             onNavigateToBack = onNavigateToBack
         )
     }
 
     uiEffect.CollectWithLifecycle { effect ->
-        when(effect){
+        when (effect) {
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToForgotPassword -> onNavigateToForgotPassword()
             is UiEffect.GoToBack -> onNavigateToBack()
         }
     }
-    if (alertDialogState){
+    if (alertDialogState) {
         CustomAlertDialog(
             errorMessage = uiState.error,
             onDismiss = { alertDialogState = false },
-            confirmButtonClickListener = { onAction(UiAction.ClearError)
-            alertDialogState = false
+            confirmButtonClickListener = {
+                onAction(UiAction.ClearError)
+                alertDialogState = false
             }
         )
     }
@@ -89,38 +92,40 @@ fun LoginScreen(
 fun LoginContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
+    onNavigateToHome: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
     onNavigateToBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(LMTheme.dimensions.sixteen),
+            .padding(padding.dimension16),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         BackIconButton(
             onClick = onNavigateToBack,
-            modifier = Modifier.align(Alignment.Start)
+            modifier = Modifier
+                .padding(vertical = padding.dimension8)
+                .align(Alignment.Start)
         )
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.twenty))
+        Spacer(modifier = Modifier.height(padding.dimension20))
         Text(
             text = stringResource(id = R.string.welcome_login_text),
-            fontSize = LMTheme.typography.sizeTitle,
-            fontWeight = FontWeight.Bold,
+            style = FMTheme.typography.headSizeTitleThin(),
             modifier = Modifier.align(Alignment.Start)
         )
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.twelve))
+        Spacer(modifier = Modifier.height(padding.dimension64))
         CustomTextField(
             value = uiState.email,
-            onValueChange = {onAction(UiAction.EmailChanged(it))},
+            onValueChange = { onAction(UiAction.EmailChanged(it)) },
             label = "Email",
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
         )
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.sixteen))
+        Spacer(modifier = Modifier.height(padding.dimension16))
         CustomTextField(
             value = uiState.password,
-            onValueChange = {onAction(UiAction.PasswordChanged(it))},
+            onValueChange = { onAction(UiAction.PasswordChanged(it)) },
             label = "Password",
             isPassword = true,
             leadingIcon = {
@@ -130,7 +135,7 @@ fun LoginContent(
                 )
             },
         )
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.eight))
+        Spacer(modifier = Modifier.height(padding.dimension8))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -139,58 +144,58 @@ fun LoginContent(
             Icon(
                 painter = painterResource(id = R.drawable.ic_forgot_password),
                 contentDescription = null,
-                modifier = Modifier.size(LMTheme.dimensions.twenty)
+                modifier = Modifier.size(padding.dimension20)
             )
             Text(
-                modifier = Modifier.clickable {onNavigateToForgotPassword()},
+                modifier = Modifier.clickable { onNavigateToForgotPassword() },
                 text = stringResource(id = R.string.forgot_password_text),
                 fontWeight = FontWeight.Light,
-                fontSize = LMTheme.typography.small,
-                )
+                fontSize = FMTheme.fontSize.small,
+            )
         }
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.thirtyTwo))
+        Spacer(modifier = Modifier.height(padding.dimension32))
 
         CustomButton(text = "Login", onClick = { onAction(UiAction.LoginClicked) })
-        Spacer(modifier = Modifier.height(LMTheme.dimensions.sixteen))
+        Spacer(modifier = Modifier.height(padding.dimension16))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(LMTheme.dimensions.sixteen),
+                .padding(padding.dimension16),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CustomDivider(
                 modifier = Modifier.weight(1f),
-                thickness = LMTheme.dimensions.one,
-                color = LMTheme.colors.primary
+                thickness = padding.dimension1,
+                color = FMTheme.colors.primary
             )
 
-            Spacer(modifier = Modifier.width(LMTheme.dimensions.eight))
+            Spacer(modifier = Modifier.width(padding.dimension8))
 
             Text(
                 text = stringResource(id = R.string.or_login_with_text),
-                fontSize = LMTheme.typography.medium,
-                color = LMTheme.colors.black
+                fontSize = FMTheme.fontSize.medium,
+                color = FMTheme.colors.text
             )
 
-            Spacer(modifier = Modifier.width(LMTheme.dimensions.eight))
+            Spacer(modifier = Modifier.width(padding.dimension8))
 
             CustomDivider(
                 modifier = Modifier.weight(1f),
-                thickness = LMTheme.dimensions.one,
-                color = LMTheme.colors.primary
+                thickness = padding.dimension1,
+                color = FMTheme.colors.primary
             )
         }
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = LMTheme.dimensions.sixteen),
+                .padding(top = padding.dimension16),
             horizontalArrangement = Arrangement.Center
         ) {
             CustomIconButton(
                 iconResId = R.drawable.ic_google,
-                onClickAction = {},
+                onClickAction = { onNavigateToHome() },
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }

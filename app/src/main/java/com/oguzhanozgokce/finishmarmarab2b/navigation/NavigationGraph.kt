@@ -45,7 +45,7 @@ fun NavigationGraph(
     NavHost(
         modifier = Modifier.then(modifier),
         navController = navController,
-        startDestination = Home,
+        startDestination = Welcome,
     ) {
         composable<Welcome> {
             val viewModel: WelcomeViewModel = hiltViewModel()

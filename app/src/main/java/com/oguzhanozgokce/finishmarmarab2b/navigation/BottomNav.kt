@@ -15,9 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMBottomBar(
@@ -29,13 +29,13 @@ fun FMBottomBar(
     NavigationBar(
         modifier = modifier
             .padding(
-                start = dimensions.sixteen,
-                end = dimensions.sixteen,
-                bottom = dimensions.sixteen
+                start = padding.dimension16,
+                end = padding.dimension16,
+                bottom = padding.dimension16
             )
-            .clip(RoundedCornerShape(dimensions.fortyEight)),
-        containerColor = colors.semiTransparentWhite,
-        contentColor = colors.darkGray
+            .clip(RoundedCornerShape(padding.dimension48)),
+        containerColor = colors.cardBackground,
+        contentColor = colors.text
     ) {
         bottomBarDestination.forEach { destination ->
             val selected = currentDestination?.destination?.route == destination.screen.getRoute()
@@ -44,7 +44,7 @@ fun FMBottomBar(
                     Icon(
                         imageVector = destination.icon(),
                         contentDescription = destination.name,
-                        tint = if (selected) colors.searchIconColor else colors.darkGray
+                        tint = if (selected) colors.primary else colors.text
                     )
                 },
                 label = null,
@@ -55,7 +55,7 @@ fun FMBottomBar(
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = colors.searchIconColor,
+                    selectedIconColor = colors.primary,
                     unselectedIconColor = colors.white,
                     indicatorColor = Color.Transparent
                 ),
@@ -68,7 +68,7 @@ fun FMBottomBar(
 @Preview(showBackground = true)
 @Composable
 fun BottomBarPreview() {
-    LMTheme {
+    FMTheme {
         FMBottomBar(navController = rememberNavController(), onNavigateToDestination = {})
     }
 }

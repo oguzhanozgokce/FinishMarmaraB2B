@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,7 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun CustomIconButton(
@@ -21,10 +22,10 @@ fun CustomIconButton(
     IconButton(
         onClick = onClickAction,
         modifier = modifier
-            .size(LMTheme.dimensions.fortyEight)
+            .size(padding.dimension48)
             .border(
-                BorderStroke(LMTheme.dimensions.one, LMTheme.colors.primary),
-                shape = RoundedCornerShape(LMTheme.dimensions.twelve)
+                BorderStroke(padding.dimension1, FMTheme.colors.primary),
+                shape = RoundedCornerShape(padding.dimension16)
             )
     ) {
         Image(

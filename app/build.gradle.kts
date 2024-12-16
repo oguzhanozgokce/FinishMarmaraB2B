@@ -97,6 +97,9 @@ dependencies {
     debugImplementation(libs.chucker.library)
     releaseImplementation(libs.chucker.library.no.op)
 
+    //Security
+    implementation (libs.security.crypto)
+
     // Detekt
     detektPlugins(libs.detekt)
 

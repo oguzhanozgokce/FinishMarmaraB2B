@@ -4,8 +4,6 @@ import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import com.oguzhanozgokce.finishmarmarab2b.BuildConfig
-import com.oguzhanozgokce.finishmarmarab2b.core.data.network.interceptor.TokenInterceptor
-import com.oguzhanozgokce.finishmarmarab2b.core.data.network.token.TokenRepository
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
 import dagger.Module
 import dagger.Provides
@@ -21,24 +19,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://api.example.com/"
-
-    @Provides
-    @Singleton
-    fun provideAuthInterceptor(
-        tokenRepository: dagger.Lazy<TokenRepository>
-    ): TokenInterceptor {
-        return TokenInterceptor(tokenRepository)
-    }
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        tokenInterceptor: TokenInterceptor,
         chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .authenticator(tokenInterceptor)
             .addInterceptor(chuckerInterceptor)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
@@ -64,6 +52,7 @@ object NetworkModule {
     fun provideChuckInterceptor(application: Application) =
         ChuckerInterceptor.Builder(application).build()
 
+    @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)

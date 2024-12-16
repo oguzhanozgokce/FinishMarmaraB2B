@@ -2,7 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 
 sealed class BottomBarDestination(
     val screen: Screen,

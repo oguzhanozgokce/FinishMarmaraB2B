@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 
 import androidx.compose.material3.HorizontalDivider

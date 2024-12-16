@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -20,7 +20,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,14 +29,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.typography
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
@@ -48,27 +46,27 @@ fun FMFavoriteCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(dimensions.oneHundredEighty)
-            .padding(dimensions.eight),
-        shape = RoundedCornerShape(dimensions.eight),
+            .height(padding.dimension180)
+            .padding(padding.dimension8),
+        shape = RoundedCornerShape(padding.dimension8),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = dimensions.four
+            defaultElevation = padding.dimension4
         ),
         colors = CardDefaults.cardColors(
-            containerColor = colors.white
+            containerColor = colors.background
         )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensions.eight),
+                .padding(padding.dimension8),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProductImage()
             Column(
                 modifier = Modifier
                     .weight(2f)
-                    .padding(dimensions.eight)
+                    .padding(padding.dimension8)
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start
@@ -87,9 +85,9 @@ fun RowScope.ProductImage() {
         contentDescription = "Product Image",
         modifier = Modifier
             .weight(1f)
-            .padding(end = dimensions.eight)
+            .padding(end = padding.dimension8)
             .aspectRatio(3f/4f)
-            .clip(RoundedCornerShape(dimensions.eight)),
+            .clip(RoundedCornerShape(padding.dimension8)),
         contentScale = ContentScale.Crop
     )
 }
@@ -102,28 +100,28 @@ fun ProductDetails(productUi: ProductUi) {
     ) {
         Text(
             text = productUi.name,
-            fontSize = typography.medium,
+            fontSize = fontSize.medium,
             fontWeight = FontWeight.SemiBold,
             fontFamily = poppinsFontFamily,
             color = colors.black,
             maxLines = 1
         )
-        Spacer(modifier = Modifier.height(dimensions.four))
+        Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
             text = productUi.description,
-            fontSize = typography.small,
+            fontSize = fontSize.small,
             fontWeight = FontWeight.Normal,
             fontFamily = poppinsFontFamily,
-            color = colors.gray,
+            color = colors.text,
             maxLines = 1
         )
-        Spacer(modifier = Modifier.height(dimensions.four))
+        Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
             text = productUi.sellerName,
-            fontSize = typography.small,
+            fontSize = fontSize.small,
             fontWeight = FontWeight.Normal,
             fontFamily = poppinsFontFamily,
-            color = colors.gray,
+            color = colors.text,
             maxLines = 1
         )
     }
@@ -134,16 +132,16 @@ fun AddToCartButton(productUi: ProductUi) {
     OutlinedButton(
         onClick = { /* Sepete ekle işlemi */ },
         colors = ButtonDefaults.buttonColors(
-            containerColor = colors.white,
-            contentColor = colors.searchIconColor
+            containerColor = colors.background,
+            contentColor = colors.primary
         ),
-        shape = RoundedCornerShape(dimensions.twentyFour),
+        shape = RoundedCornerShape(padding.dimension24),
         modifier = Modifier
             .fillMaxWidth()
-            .height(dimensions.fortyEight),
+            .height(padding.dimension48),
         border = BorderStroke(
-            width = dimensions.one,
-            color = colors.searchIconColor
+            width = padding.dimension1,
+            color = colors.primary
         )
     ) {
         Row(
@@ -153,24 +151,24 @@ fun AddToCartButton(productUi: ProductUi) {
         ) {
             Text(
                 text = "$${productUi.salePrice}",
-                fontSize = typography.mediumSmall,
+                fontSize = fontSize.mediumSmall,
                 fontWeight = FontWeight.Bold,
                 fontFamily = poppinsFontFamily,
                 color = colors.black
             )
             CustomVerticalDivider(
-                color = colors.gray,
+                color = colors.black,
                 modifier = Modifier
-                    .height(dimensions.twentyFour)
-                    .padding(horizontal = dimensions.four),
-                thickness = dimensions.one
+                    .height(padding.dimension24)
+                    .padding(horizontal = padding.dimension4),
+                thickness = padding.dimension1
             )
             Text(
                 text = stringResource(R.string.add_to_cart),
-                fontSize = typography.medium,
+                fontSize = fontSize.medium,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = poppinsFontFamily,
-                color = colors.searchIconColor,
+                color = colors.text,
                 maxLines = 1
             )
         }
@@ -185,7 +183,7 @@ fun FMFavoriteList(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensions.eight)
+            .padding(padding.dimension8)
     ) {
         items(uiState.favoriteList.size) { favoriteItem ->
             FMFavoriteCard(productUi = uiState.favoriteList[favoriteItem])
@@ -210,6 +208,7 @@ fun FavoriteCardPreview() {
         salePrice = "60.00",
         description = "Description",
         imageUrl = R.drawable.ic_notification,
+        rating = 4.5f,
         sellerName = "Seller Name"
     )
     FMFavoriteCard(productUi = product)

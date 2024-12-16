@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,18 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleCategoryList
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.icons
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.typography
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
-
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun CategoryCard(
@@ -41,25 +38,23 @@ fun CategoryCard(
 ) {
     Card(
         modifier = modifier
-            .wrapContentSize()
-            .padding(vertical = dimensions.six)
-            .background(color = colors.white),
-        shape = RoundedCornerShape(dimensions.twentyFour),
+            .wrapContentSize(),
+        shape = RoundedCornerShape(padding.dimension24),
         colors = CardDefaults.cardColors(
-            containerColor = colors.searchBarColor
+            containerColor = colors.white
         )
     ) {
         Row(
             modifier = Modifier.padding(
-                horizontal = dimensions.sixteen,
-                vertical = dimensions.eight
+                horizontal = padding.dimension16,
+                vertical = padding.dimension8
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(dimensions.thirtySix)
-                    .background(color = colors.white, shape = CircleShape),
+                    .size(padding.dimension36)
+                    .background(color = colors.background, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -68,13 +63,12 @@ fun CategoryCard(
                     tint = Color.Unspecified
                 )
             }
-            Spacer(modifier = Modifier.width(dimensions.twelve))
+            Spacer(modifier = Modifier.width(padding.dimension12))
             Text(
                 text = categoryUi.name,
-                fontSize = typography.body,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Medium,
-                color = colors.darkGray
+                style = typography.bodyMediumNormal().copy(
+                    color = colors.black
+                ),
             )
         }
     }
@@ -88,10 +82,10 @@ fun CategoryList(
     LazyRow(
         modifier = modifier.fillMaxWidth()
     ) {
-        items(uiState.categoryList) { categoryItem ->
+        items(sampleCategoryList) { categoryItem ->
             CategoryCard(
                 categoryUi = categoryItem,
-                modifier = modifier.padding(end = dimensions.sixteen)
+                modifier = modifier.padding(end = padding.dimension12)
             )
         }
     }

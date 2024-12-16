@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMHorizontalPager(
@@ -38,7 +38,7 @@ fun FMHorizontalPager(
     pagerHeight: Dp = 200.dp,
     cornerRadius: Dp = padding.dimension16,
     activeIndicatorColor: Color = colors.red,
-    inactiveIndicatorColor: Color = colors.gray,
+    inactiveIndicatorColor: Color = colors.cardBackground,
 ) {
 
     val pagerState = rememberPagerState(
@@ -63,7 +63,7 @@ fun FMHorizontalPager(
                 contentDescription =  "Image $page",
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.lightGray),
+                    .background(colors.cardBackground),
                 contentScale = ContentScale.Crop
             )
         }
@@ -90,7 +90,7 @@ fun HorizontalPagerIndicator(
     currentPage: Int,
     modifier: Modifier = Modifier,
     activeColor: Color = colors.red,
-    inactiveColor: Color = colors.darkGray,
+    inactiveColor: Color = colors.cardBackground,
     indicatorSize: Dp = padding.dimension8,
 ) {
     Row(

@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.common.extension.noRippleClickable
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
@@ -28,21 +30,21 @@ fun FMSearch(
     modifier: Modifier = Modifier,
     onNavigateToSearch: () -> Unit
 ) {
-    val containerColor = LMTheme.colors.searchBarColor
-    val indicatorColor = LMTheme.colors.white
+    val containerColor = colors.white
+    val indicatorColor = colors.lightGray
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(LMTheme.dimensions.twenty))
+            .clip(RoundedCornerShape(padding.dimension20))
             .background(containerColor)
             .border(
-                width = LMTheme.dimensions.one,
+                width = padding.dimension1,
                 color = indicatorColor,
-                shape = RoundedCornerShape(LMTheme.dimensions.twenty)
+                shape = RoundedCornerShape(padding.dimension20)
             )
             .noRippleClickable { onNavigateToSearch() }
-            .padding(LMTheme.dimensions.sixteen)
+            .padding(padding.dimension16)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -53,16 +55,16 @@ fun FMSearch(
                 contentDescription = stringResource(id = R.string.search_icon),
                 modifier = Modifier
                     .padding(
-                        start = LMTheme.dimensions.four,
-                        end = LMTheme.dimensions.eight
+                        start = padding.dimension4,
+                        end = padding.dimension8
                     ),
-                tint = LMTheme.colors.searchIconColor
+                tint = colors.black
             )
             Text(
                 text = stringResource(id = R.string.search_for_products),
-                color = LMTheme.colors.darkGray.copy(alpha = 0.6f),
+                color = colors.black.copy(alpha = 0.6f),
                 fontFamily = poppinsFontFamily,
-                fontSize = LMTheme.typography.medium,
+                fontSize = FMTheme.fontSize.medium,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.weight(1f)
             )

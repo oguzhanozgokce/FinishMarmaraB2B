@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,20 +23,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.dimensions
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.icons
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.typography
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun ProductCard(
@@ -45,22 +45,26 @@ fun ProductCard(
 ) {
     Card(
         modifier = modifier
-            .width(dimensions.oneHundredEighty)
-            .height(dimensions.twoHundredSixty)
-            .padding(dimensions.eight),
-        shape = RoundedCornerShape(dimensions.eight),
+            .width(padding.dimension180)
+            .height(padding.dimension260)
+            .padding(
+                start = padding.dimension4,
+                end = padding.dimension4,
+                bottom = padding.dimension8
+            ),
+        shape = RoundedCornerShape(padding.dimension8),
         colors = CardDefaults.cardColors(
-            containerColor = colors.lightGray.copy(alpha = 0.3f)
+            containerColor = colors.cardBackground
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = dimensions.two
+            defaultElevation = padding.dimension2
         )
     ) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(dimensions.oneHundredForty)
-                .background(colors.semiTransparentWhite),
+                .height(padding.dimension140)
+                .background(colors.cardBackground),
             contentAlignment = Alignment.TopEnd
         ) {
             Image(
@@ -68,7 +72,10 @@ fun ProductCard(
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
-            FavoriteButton()
+            FavoriteButton(
+                backgroundColor = colors.background,
+                boxSize = padding.dimension36
+            )
         }
         ProductInfo(
             productUi = productUi,
@@ -79,13 +86,15 @@ fun ProductCard(
 
 @Composable
 fun FavoriteButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backgroundColor: Color,
+    boxSize: Dp
 ) {
     Box(
         modifier = modifier
-            .size(dimensions.thirtySix)
-            .padding(dimensions.four)
-            .background(color = colors.white, shape = CircleShape),
+            .size(boxSize)
+            .padding(padding.dimension4)
+            .background(color = backgroundColor, shape = CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -104,44 +113,34 @@ fun ProductInfo(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.white)
-            .padding(dimensions.eight)
+            .background(colors.cardBackground)
+            .padding(padding.dimension8)
     ) {
         Text(
             text = productUi.name,
-            fontSize = typography.medium,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
-            color = colors.black
+            style = typography.titleMediumSemiBold(),
         )
-        Spacer(modifier = Modifier.height(dimensions.four))
+        Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
             text = "-${productUi.discount}% discount",
-            fontWeight = FontWeight.Light,
-            fontSize = typography.small,
-            fontFamily = poppinsFontFamily,
-            color = colors.gray
+            style = typography.bodySmallLight()
         )
-        Spacer(modifier = Modifier.height(dimensions.eight))
+        Spacer(modifier = Modifier.height(padding.dimension8))
         Row(
             modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "$${productUi.price}",
-                fontSize = typography.small,
-                fontWeight = FontWeight.Light,
-                fontFamily = poppinsFontFamily,
-                color = colors.gray,
+                style = typography.bodySmallLight(),
                 textDecoration = TextDecoration.LineThrough
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "$${productUi.salePrice}",
-                fontSize = typography.large,
-                fontWeight = FontWeight.Bold,
-                fontFamily = poppinsFontFamily,
-                color = colors.searchIconColor
+                style = typography.labelLargeBold().copy(
+                    color = colors.primary
+                ),
             )
         }
     }
@@ -153,7 +152,7 @@ fun ProductList(
     modifier: Modifier = Modifier,
 ) {
     LazyRow {
-        items(uiState.productList) { productItem ->
+        items(sampleProductList) { productItem ->
             ProductCard(
                 productUi = productItem,
                 modifier = modifier
@@ -179,6 +178,7 @@ fun PreviewProductCard() {
         salePrice = "60.00",
         description = "Description",
         imageUrl = R.drawable.ic_notification,
+        rating = 4.5f,
         sellerName = "Seller Name"
     )
 

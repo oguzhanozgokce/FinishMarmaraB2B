@@ -5,35 +5,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
-object LMTheme {
-    val colors: FMProjectColor
+object FMTheme {
+    val colors: FMColor
         @Composable
         @ReadOnlyComposable
         get() = LocalColors.current
 
-    val dimensions: FMDimension
+    val padding: FMPadding
         @Composable
         @ReadOnlyComposable
-        get() = LocalDimensions.current
+        get() = LocalPadding.current
 
-    val typography: FMFontSize
+    val fontSize: FMFontSize
         @Composable
         @ReadOnlyComposable
-        get() = LocalFontSizes.current
+        get() = LocalFontSize.current
 
     val icons: LMIcons
         @Composable
         @ReadOnlyComposable
         get() = LocalLMIcons.current
+
+    val typography: FMTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypography.current
 }
 
 @Composable
-fun LMTheme(
+fun FMTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalColors provides if (darkTheme) darkColors() else lightColors()
+        LocalColors provides if (darkTheme) darkColors() else lightColors(),
+        LocalPadding provides Padding,
+        LocalFontSize provides FontSize,
+        LocalTypography provides Typography,
+        LocalLMIcons provides FMTheme.icons
     ) {
         content()
     }

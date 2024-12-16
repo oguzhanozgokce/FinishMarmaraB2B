@@ -1,5 +1,5 @@
 
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.padding
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 
 @Composable
 fun FMBackIcon(
@@ -25,7 +25,7 @@ fun FMBackIcon(
             .size(padding.dimension48)
             .padding(padding.dimension4)
             .background(
-                color = colors.semiTransparentWhite,
+                color = colors.cardBackground,
                 shape = RoundedCornerShape(padding.dimension16)
             ),
         contentAlignment = Alignment.Center
@@ -36,7 +36,7 @@ fun FMBackIcon(
             Icon(
                 imageVector = icons.back,
                 contentDescription = "Back",
-                tint = colors.darkGray
+                tint = colors.text
             )
         }
     }

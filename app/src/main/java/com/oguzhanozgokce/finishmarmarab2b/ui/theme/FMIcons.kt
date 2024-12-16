@@ -25,6 +25,15 @@ class LMIcons {
     val favoriteBorder: ImageVector
         @Composable
         get() = ImageVector.vectorResource(id = R.drawable.ic_favorite_border)
+    val back: ImageVector
+        @Composable
+        get() = ImageVector.vectorResource(id = R.drawable.ic_back)
+    val starsOutline: ImageVector
+        @Composable
+        get() = ImageVector.vectorResource(id = R.drawable.ic_star_outline)
+    val starsHalf: ImageVector
+        @Composable
+        get() = ImageVector.vectorResource(id = R.drawable.ic_star_half)
 }
 
 internal val LocalLMIcons = staticCompositionLocalOf { LMIcons() }

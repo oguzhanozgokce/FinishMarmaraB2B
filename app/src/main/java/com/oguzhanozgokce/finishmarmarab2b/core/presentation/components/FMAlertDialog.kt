@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.components
+package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.LMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 
 @Composable
 fun CustomAlertDialog(
@@ -43,8 +43,8 @@ fun CustomAlertDialog(
                     painter = painterResource(id = R.drawable.ic_error),
                     contentDescription = "Error Icon",
                     modifier = Modifier
-                        .size(LMTheme.dimensions.fortyEight)
-                        .padding(bottom = LMTheme.dimensions.eight)
+                        .size(FMTheme.padding.dimension48)
+                        .padding(bottom = FMTheme.padding.dimension8)
                         .align(Alignment.CenterHorizontally)
                 )
                 Text(text = message)

@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,7 +42,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun ProductCard(
     productUi: ProductUi,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateToDetail: (id: Int) -> Unit = {}
 ) {
     Card(
         modifier = modifier
@@ -51,7 +53,8 @@ fun ProductCard(
                 start = padding.dimension4,
                 end = padding.dimension4,
                 bottom = padding.dimension8
-            ),
+            )
+            .clickable { onNavigateToDetail(productUi.id) },
         shape = RoundedCornerShape(padding.dimension8),
         colors = CardDefaults.cardColors(
             containerColor = colors.cardBackground
@@ -150,12 +153,14 @@ fun ProductInfo(
 fun ProductList(
     uiState: HomeContract.UiState,
     modifier: Modifier = Modifier,
+    onNavigateToDetail: (id: Int) -> Unit = {}
 ) {
     LazyRow {
         items(sampleProductList) { productItem ->
             ProductCard(
                 productUi = productItem,
-                modifier = modifier
+                modifier = modifier,
+                onNavigateToDetail = onNavigateToDetail
             )
         }
     }

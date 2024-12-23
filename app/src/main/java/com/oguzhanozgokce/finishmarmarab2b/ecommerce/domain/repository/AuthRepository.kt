@@ -11,6 +11,6 @@ import kotlinx.coroutines.flow.Flow
  * Commend
  */
 interface AuthRepository {
-    fun signIn(signInRequest: SignInRequest): Flow<Resource<User>>
-    fun signUp(signUpRequest: SignUpRequest): Flow<Resource<User>>
+    fun signIn(signInRequest: SignInRequest): Flow<Resource<Unit>>
+    fun signUp(signUpRequest: SignUpRequest): Flow<Resource<Unit>>
 }

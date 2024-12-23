@@ -12,9 +12,11 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.login
@@ -45,7 +47,7 @@ fun NavigationGraph(
                 .then(modifier)
                 .padding(innerPadding),
             navController = navController,
-            startDestination = Welcome,
+            startDestination = Home,
         ) {
             welcome(
                 actions = WelcomeNavActions(
@@ -78,7 +80,13 @@ fun NavigationGraph(
                     },
                 )
             )
-            home()
+            home(
+                actions = HomeNavActions(
+                    navigateToDetail = { id ->
+                        navController.navigate(route = Detail(id))
+                    }
+                )
+            )
             profile()
             favorite()
             cart()

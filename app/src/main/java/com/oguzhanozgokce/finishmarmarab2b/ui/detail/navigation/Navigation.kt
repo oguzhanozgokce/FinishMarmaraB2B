@@ -10,11 +10,11 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailViewModel
 
 fun NavGraphBuilder.detail(){
-    composable<Screen.Detail> {
+    composable<Screen.Detail> { backStackEntry ->
+        backStackEntry.arguments?.getInt("id")
         val viewModel: DetailViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
-
         DetailScreen(
             uiState = uiState,
             uiEffect = uiEffect,

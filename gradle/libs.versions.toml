@@ -26,6 +26,7 @@ securityCrypto = "1.1.0-alpha06"
 serialization = "1.7.3"
 library = "4.0.0"
 detekt = "1.23.6"
+playServicesAnalyticsImpl = "18.2.0"
 
 
 [libraries]
@@ -64,6 +65,7 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 detekt = { group = "io.gitlab.arturbosch", name = "detekt", version.ref = "detekt" }
+play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
 
 
 [plugins]

@@ -9,7 +9,11 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeViewModel
 
-fun NavGraphBuilder.home() {
+data class HomeNavActions(
+    val navigateToDetail: (id: Int) -> Unit
+)
+
+fun NavGraphBuilder.home(actions: HomeNavActions) {
     composable<Screen.Home> {
         val viewModel: HomeViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -18,7 +22,8 @@ fun NavGraphBuilder.home() {
         HomeScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            homeNavActions = actions
         )
     }
 }

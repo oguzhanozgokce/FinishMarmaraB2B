@@ -3,12 +3,9 @@ package com.oguzhanozgokce.finishmarmarab2b
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.AuthRepositoryImpl
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.SignInResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.SignUpResponse
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -26,15 +23,13 @@ private const val USER_EMAIL = "ozgokceoguzhan34@fm.com"
 private const val NOT_USER_EMAIL = "william.cushing@altostrat.com"
 private const val USER_PASSWORD = "123456"
 private const val USER_PHONE_NUMBER = "1234567890"
-private const val USER_NULL = ""
-private const val TEST_ZERO = 0
 private const val SUCCESS = "Success"
 private const val ERROR = "Error"
 private const val NO_INTERNET_CONNECTION = "No internet connection."
 
 class AuthRepositoryImplTest {
     private lateinit var repository: AuthRepositoryImpl
-    private val apiService: ApiService =  mock()
+    private val apiService: ApiService = mock()
 
     @Before
     fun setUp() {
@@ -42,45 +37,24 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `signIn success - returns User`() = runTest {
+    fun `signIn success - returns Unit`() = runTest {
         val signInRequest = SignInRequest(
             id = USER_ID,
             email = USER_EMAIL,
             password = USER_PASSWORD
         )
 
-        val userDto = UserDto(
-            id = USER_ID,
-            name = USER_NAME,
-            surname = USER_SURNAME,
-            email = USER_EMAIL,
-            password = USER_PASSWORD,
-            phoneNumber = USER_PHONE_NUMBER,
-            birthDate = USER_NULL,
-            locationId = TEST_ZERO,
-            favoriteId = TEST_ZERO,
-            notificationId = TEST_ZERO,
-            creditCardId = TEST_ZERO,
-            orderId = TEST_ZERO,
-            registerDate = USER_NULL
-        )
-
-        val apiResponse = ApiResponse(
+        val apiResponse = ApiResponse<Unit>(
             status = true,
             message = SUCCESS,
-            data = SignInResponse(userDto)
+            data = Unit
         )
 
         whenever(apiService.signIn(signInRequest)).thenReturn(apiResponse)
-
         val result = repository.signIn(signInRequest).first()
-
         assert(result is Resource.Success)
-        val user = (result as Resource.Success).data
-        assertEquals(USER_ID, user.id)
-        assertEquals(USER_NAME, user.name)
-        assertEquals(USER_SURNAME, user.surname)
-        assertEquals(USER_EMAIL, user.email)
+        val response = (result as Resource.Success).data
+        assertEquals(Unit, response)
     }
 
     @Test
@@ -91,10 +65,10 @@ class AuthRepositoryImplTest {
             password = USER_PASSWORD,
         )
 
-        val apiResponse = ApiResponse<SignInResponse>(
+        val apiResponse = ApiResponse<Unit>(
             status = false,
             message = ERROR,
-            data = null
+            data = Unit
         )
 
         whenever(apiService.signIn(signInRequest)).thenReturn(apiResponse)
@@ -123,7 +97,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `signUp success - returns User`() = runTest {
+    fun `signUp success - returns Unit`() = runTest {
         val signUpRequest = SignUpRequest(
             id = USER_ID,
             name = USER_NAME,
@@ -132,35 +106,19 @@ class AuthRepositoryImplTest {
             password = USER_PASSWORD,
             phoneNumber = USER_PHONE_NUMBER
         )
-        val userDto = UserDto(
-            id = USER_ID,
-            name = USER_NAME,
-            surname = USER_SURNAME,
-            email = USER_EMAIL,
-            phoneNumber = USER_PHONE_NUMBER,
-            birthDate = USER_NULL,
-            locationId = TEST_ZERO,
-            favoriteId = TEST_ZERO,
-            notificationId = TEST_ZERO ,
-            creditCardId = TEST_ZERO,
-            orderId = TEST_ZERO,
-            registerDate = USER_NULL
-        )
-        val apiResponse = ApiResponse(
+
+        val apiResponse = ApiResponse<Unit>(
             status = true,
             message = SUCCESS,
-            data = SignUpResponse(userDto)
+            data = Unit
         )
         whenever(apiService.signUp(signUpRequest)).thenReturn(apiResponse)
         val result = repository.signUp(signUpRequest).first()
         assert(result is Resource.Success)
-        val user = (result as Resource.Success).data
-        assertEquals(USER_ID, user.id)
-        assertEquals(USER_NAME, user.name)
-        assertEquals(USER_SURNAME, user.surname)
-        assertEquals(USER_EMAIL, user.email)
-        assertEquals(USER_PHONE_NUMBER, user.phoneNumber)
+        val response = (result as Resource.Success).data
+        assertEquals(Unit, response)
     }
+
 
     @Test
     fun `signUp error - returns error message`() = runTest {
@@ -173,10 +131,10 @@ class AuthRepositoryImplTest {
             phoneNumber = USER_PHONE_NUMBER
         )
 
-        val apiResponse = ApiResponse<SignUpResponse>(
+        val apiResponse = ApiResponse<Unit>(
             status = false,
             message = ERROR,
-            data = null
+            data = Unit
         )
 
         whenever(apiService.signUp(signUpRequest)).thenReturn(apiResponse)

@@ -19,7 +19,7 @@ suspend inline fun <T> safeCall(
     } catch (e: IOException) {
         Resource.Error("No internet connection.")
     } catch (e: JsonParseException) {
-        Resource.Error("Serialization error.")
+        Resource.Error("Serialization error: ${e.localizedMessage}")
     } catch (e: Exception) {
         Resource.Error("An unknown error occurred.")
     }

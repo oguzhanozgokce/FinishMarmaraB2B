@@ -55,9 +55,7 @@ fun <T : Any> Resource<T>.isSuccess(): Boolean {
 inline fun <T : Any, N : Any> Resource<T>.toMap(data: (T) -> N): Resource<N> {
     return when (this) {
         is Resource.Success -> Resource.Success(data(this.data))
-        is Resource.Error -> {
-            Resource.Error(this.message)
-        }
+        is Resource.Error -> Resource.Error(this.message)
     }
 }
 

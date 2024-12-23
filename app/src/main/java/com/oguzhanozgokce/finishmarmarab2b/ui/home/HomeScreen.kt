@@ -35,6 +35,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductL
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -48,6 +49,7 @@ fun HomeScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    homeNavActions: HomeNavActions,
 ) {
     when {
         uiState.isLoading -> LoadingBar()
@@ -55,6 +57,7 @@ fun HomeScreen(
         uiState.productList.isNotEmpty() -> EmptyScreen()
         else -> HomeContent(
             uiState = uiState,
+            homeNavActions = homeNavActions
         )
     }
 }
@@ -62,6 +65,7 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     uiState: UiState,
+    homeNavActions: HomeNavActions
 ) {
     Box(
         modifier = Modifier
@@ -95,7 +99,8 @@ fun HomeContent(
             )
             ProductText()
             ProductList(
-                uiState = uiState
+                uiState = uiState,
+                onNavigateToDetail = homeNavActions.navigateToDetail
             )
         }
     }
@@ -243,5 +248,6 @@ fun HomeScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
+        homeNavActions = HomeNavActions(navigateToDetail = {})
     )
 }

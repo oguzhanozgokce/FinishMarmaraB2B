@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.login
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiState

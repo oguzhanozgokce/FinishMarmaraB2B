@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
@@ -41,6 +41,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingB
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
@@ -51,9 +52,7 @@ fun LoginScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    onNavigateToHome: () -> Unit,
-    onNavigateToForgotPassword: () -> Unit,
-    onNavigateToBack: () -> Unit,
+    loginNavActions: LoginNavActions,
 ) {
     var alertDialogState by remember { mutableStateOf(false) }
 
@@ -63,17 +62,15 @@ fun LoginScreen(
         else -> LoginContent(
             uiState = uiState,
             onAction = onAction,
-            onNavigateToHome = onNavigateToHome,
-            onNavigateToForgotPassword = onNavigateToForgotPassword,
-            onNavigateToBack = onNavigateToBack
+            loginNavActions = loginNavActions
         )
     }
 
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowAlertDialog -> alertDialogState = true
-            is UiEffect.GoToForgotPassword -> onNavigateToForgotPassword()
-            is UiEffect.GoToBack -> onNavigateToBack()
+            is UiEffect.GoToForgotPassword -> loginNavActions.navigateToForgotPassword()
+            is UiEffect.GoToBack -> loginNavActions.navigateToBack()
         }
     }
     if (alertDialogState) {
@@ -92,9 +89,7 @@ fun LoginScreen(
 fun LoginContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
-    onNavigateToHome: () -> Unit,
-    onNavigateToForgotPassword: () -> Unit,
-    onNavigateToBack: () -> Unit
+    loginNavActions: LoginNavActions,
 ) {
     Column(
         modifier = Modifier
@@ -104,7 +99,7 @@ fun LoginContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         BackIconButton(
-            onClick = onNavigateToBack,
+            onClick = loginNavActions.navigateToBack,
             modifier = Modifier
                 .padding(vertical = padding.dimension8)
                 .align(Alignment.Start)
@@ -147,7 +142,7 @@ fun LoginContent(
                 modifier = Modifier.size(padding.dimension20)
             )
             Text(
-                modifier = Modifier.clickable { onNavigateToForgotPassword() },
+                modifier = Modifier.clickable { loginNavActions.navigateToForgotPassword() },
                 text = stringResource(id = R.string.forgot_password_text),
                 fontWeight = FontWeight.Light,
                 fontSize = FMTheme.fontSize.small,
@@ -195,7 +190,7 @@ fun LoginContent(
         ) {
             CustomIconButton(
                 iconResId = R.drawable.ic_google,
-                onClickAction = { onNavigateToHome() },
+                onClickAction = { loginNavActions.navigateToHome() },
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
@@ -211,8 +206,10 @@ fun LoginScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
-        onNavigateToHome = {},
-        onNavigateToForgotPassword = {},
-        onNavigateToBack = {},
+        loginNavActions = LoginNavActions(
+            navigateToForgotPassword = {},
+            navigateToBack = {},
+            navigateToHome = {},
+        )
     )
 }

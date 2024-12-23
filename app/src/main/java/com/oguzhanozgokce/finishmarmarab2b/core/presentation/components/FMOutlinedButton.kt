@@ -20,11 +20,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     contentColor: Color = FMTheme.colors.primary
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = padding.dimension8)
             .height(padding.dimension56)
             .fillMaxWidth(),

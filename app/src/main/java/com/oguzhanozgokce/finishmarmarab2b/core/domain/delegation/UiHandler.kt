@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation
+package com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.channels.Channel

@@ -32,6 +32,16 @@ sealed interface Screen {
 
     @Serializable
     data object ForgotPassword : Screen
+
+    companion object {
+        fun getRoute(screen: Screen): String = screen::class.qualifiedName.orEmpty()
+
+        fun showBottomBar(currentRoute: String?): Boolean {
+            return when (currentRoute) {
+                getRoute(Home), getRoute(Profile), getRoute(Favorite), getRoute(Cart) -> true
+                else -> false
+            }
+        }
+    }
 }
 
-fun Screen.getRoute(): String = this::class.qualifiedName.orEmpty()

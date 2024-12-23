@@ -1,8 +1,7 @@
-package com.oguzhanozgokce.finishmarmarab2b.core.data.network.error
+package com.oguzhanozgokce.finishmarmarab2b.core.data.network
 
-import com.oguzhanozgokce.finishmarmarab2b.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
-import retrofit2.Response
 
 /**
  * Converts an ApiResponse<T> into a Resource<T>.

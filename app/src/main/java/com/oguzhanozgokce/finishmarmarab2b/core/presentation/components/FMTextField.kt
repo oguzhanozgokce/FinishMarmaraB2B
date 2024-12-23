@@ -44,8 +44,7 @@ fun CustomTextField(
             label = {
                 Text(
                     label,
-                    color = colors.onText,
-                    modifier = Modifier.background(color = colors.white)
+                    color = colors.black
                 )
             },
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
@@ -56,8 +55,8 @@ fun CustomTextField(
                 unfocusedContainerColor = containerColor,
                 focusedIndicatorColor = indicatorColor,
                 unfocusedIndicatorColor = indicatorColor,
-                focusedTextColor = colors.onText,
-                unfocusedTextColor = colors.onText
+                focusedTextColor = colors.black,
+                unfocusedTextColor = colors.black
             ),
             isError = isError,
             singleLine = true

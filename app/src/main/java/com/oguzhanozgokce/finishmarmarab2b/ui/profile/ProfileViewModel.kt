@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.profile
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiState

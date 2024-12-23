@@ -103,6 +103,11 @@ dependencies {
     // Detekt
     detektPlugins(libs.detekt)
 
+    //Test
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 
 }
 

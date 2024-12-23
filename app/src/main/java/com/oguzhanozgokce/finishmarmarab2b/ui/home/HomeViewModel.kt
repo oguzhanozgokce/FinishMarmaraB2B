@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState

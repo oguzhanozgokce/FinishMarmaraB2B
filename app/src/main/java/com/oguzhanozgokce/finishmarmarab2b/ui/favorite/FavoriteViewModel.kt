@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState

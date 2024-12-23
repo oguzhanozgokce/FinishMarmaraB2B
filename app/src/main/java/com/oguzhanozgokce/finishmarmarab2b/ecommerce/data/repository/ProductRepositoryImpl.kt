@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.core.data.repository
+package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository

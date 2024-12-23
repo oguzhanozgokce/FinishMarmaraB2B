@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation
+package com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow

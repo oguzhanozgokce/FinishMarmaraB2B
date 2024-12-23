@@ -1,10 +1,8 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.data.network
 
 import com.google.gson.JsonParseException
-import com.oguzhanozgokce.finishmarmarab2b.common.Resource
-import com.oguzhanozgokce.finishmarmarab2b.core.data.network.error.responseToResult
+import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
-import retrofit2.Response
 import java.io.IOException
 
 /**

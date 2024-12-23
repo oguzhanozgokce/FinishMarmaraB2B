@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.cart
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState

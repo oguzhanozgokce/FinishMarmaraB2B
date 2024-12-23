@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.common.extension
+package com.oguzhanozgokce.finishmarmarab2b.core.common.extension
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -14,7 +14,7 @@ import androidx.compose.ui.composed
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
-import com.oguzhanozgokce.finishmarmarab2b.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -43,12 +43,6 @@ inline fun <T> Resource<T>.onFailure(action: (String) -> Unit): Resource<T> {
     return this
 }
 
-inline fun <T, R> Resource<T>.onMap(transform: (T) -> R): Resource<R> {
-    return when (this) {
-        is Resource.Success -> Resource.Success(transform(data))
-        is Resource.Error -> Resource.Error(message)
-    }
-}
 @OptIn(ExperimentalContracts::class)
 fun <T : Any> Resource<T>.isSuccess(): Boolean {
     contract {
@@ -58,7 +52,7 @@ fun <T : Any> Resource<T>.isSuccess(): Boolean {
     return this is Resource.Success
 }
 
-inline fun <T : Any, N : Any> Resource<T>.map(data: (T) -> N): Resource<N> {
+inline fun <T : Any, N : Any> Resource<T>.toMap(data: (T) -> N): Resource<N> {
     return when (this) {
         is Resource.Success -> Resource.Success(data(this.data))
         is Resource.Error -> {

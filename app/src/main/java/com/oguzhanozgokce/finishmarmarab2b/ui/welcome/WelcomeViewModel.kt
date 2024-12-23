@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.welcome
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiState

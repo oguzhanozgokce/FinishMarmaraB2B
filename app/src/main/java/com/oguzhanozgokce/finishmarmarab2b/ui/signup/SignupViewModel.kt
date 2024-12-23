@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.signup
 
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState

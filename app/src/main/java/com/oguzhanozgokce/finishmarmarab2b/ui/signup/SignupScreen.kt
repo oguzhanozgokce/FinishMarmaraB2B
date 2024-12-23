@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
@@ -33,6 +33,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingB
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.SignUpNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
@@ -43,8 +44,7 @@ fun SignupScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    onNavigateToHome: () -> Unit,
-    onNavigateToBack: () -> Unit,
+    signupNavActions: SignUpNavActions
 ) {
     var alertDialogState by remember { mutableStateOf(false) }
 
@@ -54,15 +54,14 @@ fun SignupScreen(
         else -> SignupContent(
             uiState = uiState,
             onAction = onAction,
-            onNavigateToBack = onNavigateToBack,
-            onNavigateToHome = onNavigateToHome
+            signupNavActions = signupNavActions
         )
     }
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowAlertDialog -> alertDialogState = true
-            is UiEffect.GoToHome -> onNavigateToHome()
-            is UiEffect.GoToBack -> onNavigateToBack()
+            is UiEffect.GoToHome -> signupNavActions.navigateToHome()
+            is UiEffect.GoToBack -> signupNavActions.navigateToBack()
         }
     }
 
@@ -82,8 +81,7 @@ fun SignupScreen(
 fun SignupContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
-    onNavigateToBack: () -> Unit,
-    onNavigateToHome: () -> Unit
+    signupNavActions: SignUpNavActions
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -94,7 +92,7 @@ fun SignupContent(
             verticalArrangement = Arrangement.Top,
         ) {
             BackIconButton(
-                onClick = { onNavigateToBack() },
+                onClick = { signupNavActions.navigateToBack() },
                 modifier = Modifier
                     .padding(vertical = padding.dimension8)
                     .align(Alignment.Start)
@@ -160,7 +158,7 @@ fun SignupContent(
             )
             Spacer(modifier = Modifier.height(padding.dimension32))
             CustomButton(text = "Register", onClick = {
-                onNavigateToHome()
+                signupNavActions.navigateToHome()
             })
         }
     }
@@ -175,7 +173,9 @@ fun SignupScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
-        onNavigateToHome = {},
-        onNavigateToBack = {},
+        signupNavActions = SignUpNavActions(
+            navigateToHome = {},
+            navigateToBack = {}
+        )
     )
 }

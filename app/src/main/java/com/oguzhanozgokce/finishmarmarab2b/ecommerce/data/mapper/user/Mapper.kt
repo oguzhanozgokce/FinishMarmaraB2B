@@ -1,7 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user
 
-import com.oguzhanozgokce.finishmarmarab2b.common.extension.orEmpty
-import com.oguzhanozgokce.finishmarmarab2b.common.extension.orZero
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orEmpty
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import java.time.LocalDate
@@ -34,13 +34,17 @@ fun UserDto.mapToUser(): User {
         email = this.email.orEmpty(),
         phoneNumber = this.phoneNumber.orEmpty(),
         birthDate = this.birthDate
-            ?.let { LocalDate.parse(it, formatter) } ?: LocalDate.now(),
+            ?.takeIf { it.isNotBlank() && it != "null" }
+            ?.let { LocalDate.parse(it, formatter) }
+            ?: LocalDate.now(),
         locationId = this.locationId.orZero(),
         favoriteId = this.favoriteId.orZero(),
         notificationId = this.notificationId.orZero(),
         creditCardId = this.creditCardId.orZero(),
         orderId = this.orderId.orZero(),
         registerDate = this.registerDate
-            ?.let { LocalDate.parse(it, formatter) } ?: LocalDate.now()
+            ?.takeIf { it.isNotBlank() && it != "null" }
+            ?.let { LocalDate.parse(it, formatter) }
+            ?: LocalDate.now()
     )
 }

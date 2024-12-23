@@ -114,9 +114,6 @@ fun ImageList(
     }
 }
 
-// core : domain(ortak usecaler oabilir) - ui(componentler / thema, mapper) // dtastoure, db , network,
-
-
 @Composable
 fun TopBarDetail(
 ) {

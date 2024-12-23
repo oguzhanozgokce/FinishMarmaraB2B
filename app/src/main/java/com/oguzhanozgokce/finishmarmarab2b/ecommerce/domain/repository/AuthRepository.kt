@@ -1,7 +1,8 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository
 
-import com.oguzhanozgokce.finishmarmarab2b.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -11,4 +12,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface AuthRepository {
     fun signIn(signInRequest: SignInRequest): Flow<Resource<User>>
+    fun signUp(signUpRequest: SignUpRequest): Flow<Resource<User>>
 }

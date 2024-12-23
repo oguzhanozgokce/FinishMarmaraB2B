@@ -1,7 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.di
 
-import com.oguzhanozgokce.finishmarmarab2b.core.data.repository.ProductRepositoryImpl
-import com.oguzhanozgokce.finishmarmarab2b.core.data.repository.AuthRepositoryImpl
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.ProductRepositoryImpl
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.AuthRepositoryImpl
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AuthRepository
 import dagger.Binds

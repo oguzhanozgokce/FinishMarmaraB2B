@@ -39,7 +39,6 @@ class AuthRepositoryImplTest {
     @Test
     fun `signIn success - returns Unit`() = runTest {
         val signInRequest = SignInRequest(
-            id = USER_ID,
             email = USER_EMAIL,
             password = USER_PASSWORD
         )
@@ -60,7 +59,6 @@ class AuthRepositoryImplTest {
     @Test
     fun `signIn error - returns error message`() = runTest {
         val signInRequest = SignInRequest(
-            id = USER_ID,
             email = NOT_USER_EMAIL,
             password = USER_PASSWORD,
         )
@@ -83,7 +81,6 @@ class AuthRepositoryImplTest {
     @Test
     fun `signIn exception - returns Resource Error with default message`() = runTest {
         val signInRequest = SignInRequest(
-            id = USER_ID,
             email = USER_EMAIL,
             password = USER_PASSWORD,
         )
@@ -99,7 +96,6 @@ class AuthRepositoryImplTest {
     @Test
     fun `signUp success - returns Unit`() = runTest {
         val signUpRequest = SignUpRequest(
-            id = USER_ID,
             name = USER_NAME,
             surname = USER_SURNAME,
             email = USER_EMAIL,
@@ -123,7 +119,6 @@ class AuthRepositoryImplTest {
     @Test
     fun `signUp error - returns error message`() = runTest {
         val signUpRequest = SignUpRequest(
-            id = USER_ID,
             name = USER_NAME,
             surname = USER_SURNAME,
             email = USER_EMAIL,

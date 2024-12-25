@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
@@ -55,6 +57,7 @@ fun LoginScreen(
     loginNavActions: LoginNavActions,
 ) {
     var alertDialogState by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     when {
         uiState.isLoading -> LoadingBar()
@@ -71,6 +74,8 @@ fun LoginScreen(
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToForgotPassword -> loginNavActions.navigateToForgotPassword()
             is UiEffect.GoToBack -> loginNavActions.navigateToBack()
+            is UiEffect.GoToHome -> loginNavActions.navigateToHome()
+            is UiEffect.ShowToast -> { context.showToast(effect.message)}
         }
     }
     if (alertDialogState) {
@@ -190,7 +195,7 @@ fun LoginContent(
         ) {
             CustomIconButton(
                 iconResId = R.drawable.ic_google,
-                onClickAction = { loginNavActions.navigateToHome() },
+                onClickAction = { onAction(UiAction.LoginClicked) },
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }

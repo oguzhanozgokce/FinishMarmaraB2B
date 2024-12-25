@@ -20,5 +20,8 @@ object LoginContract {
         data object ShowAlertDialog : UiEffect()
         data object GoToForgotPassword : UiEffect()
         data object GoToBack : UiEffect()
+        data object GoToHome : UiEffect()
+        data class ShowToast(val message: String) : UiEffect()
+
     }
 }

@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.data.network
 
+import android.util.Log
 import com.google.gson.JsonParseException
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
@@ -17,6 +18,7 @@ suspend inline fun <T> safeCall(
         val response = execute()
         responseToResult(response)
     } catch (e: IOException) {
+        Log.e("safeCall", "IOException: ${e.localizedMessage}")
         Resource.Error("No internet connection.")
     } catch (e: JsonParseException) {
         Resource.Error("Serialization error: ${e.localizedMessage}")

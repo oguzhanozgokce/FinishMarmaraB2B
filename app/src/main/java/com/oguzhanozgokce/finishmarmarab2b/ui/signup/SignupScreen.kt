@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -47,7 +50,7 @@ fun SignupScreen(
     signupNavActions: SignUpNavActions
 ) {
     var alertDialogState by remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
@@ -59,6 +62,7 @@ fun SignupScreen(
     }
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
+            is UiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToHome -> signupNavActions.navigateToHome()
             is UiEffect.GoToBack -> signupNavActions.navigateToBack()
@@ -103,7 +107,7 @@ fun SignupContent(
                 modifier = Modifier.align(Alignment.Start),
                 style = typography.headExtraLargeBold(),
             )
-            Spacer(modifier = Modifier.height(padding.dimension36))
+            Spacer(modifier = Modifier.height(padding.dimension32))
             CustomTextField(
                 value = uiState.name,
                 onValueChange = { onAction(UiAction.NameChanged(it)) },
@@ -156,10 +160,22 @@ fun SignupContent(
                 },
                 modifier = Modifier.padding(vertical = padding.dimension4)
             )
+            Spacer(modifier = Modifier.height(padding.dimension4))
+            CustomTextField(
+                value = uiState.phoneNumber,
+                onValueChange = { onAction(UiAction.PhoneNumberChanged(it)) },
+                label = "Phone",
+                isPassword = true,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Phone,
+                        contentDescription = "Phone number"
+                    )
+                },
+                modifier = Modifier.padding(vertical = padding.dimension4)
+            )
             Spacer(modifier = Modifier.height(padding.dimension32))
-            CustomButton(text = "Register", onClick = {
-                signupNavActions.navigateToHome()
-            })
+            CustomButton(text = "Register", onClick = { onAction(UiAction.Signup) })
         }
     }
 }

@@ -47,7 +47,7 @@ fun NavigationGraph(
                 .then(modifier)
                 .padding(innerPadding),
             navController = navController,
-            startDestination = Home,
+            startDestination = Welcome,
         ) {
             welcome(
                 actions = WelcomeNavActions(

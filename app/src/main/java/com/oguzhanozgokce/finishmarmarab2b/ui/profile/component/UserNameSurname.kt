@@ -11,11 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun UserNameSurname(
+    uiState: ProfileContract.UiState,
     modifier: Modifier = Modifier,
 ){
     Column(
@@ -28,17 +30,17 @@ fun UserNameSurname(
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "Oğuzhan",
+                text = uiState.user.name,
                 style = FMTheme.typography.headMediumSemiBold(),
             )
             Spacer(modifier = Modifier.width(padding.dimension8))
             Text(
-                text = "Özgökce",
+                text = uiState.user.surname,
                 style = FMTheme.typography.headMediumSemiBold(),
             )
         }
         Text(
-            text = "ozgokceoguzhan34@gmail.com",
+            text = uiState.user.email,
             style = FMTheme.typography.headSmallMedium().copy(
                 color = Color.DarkGray,
             ),

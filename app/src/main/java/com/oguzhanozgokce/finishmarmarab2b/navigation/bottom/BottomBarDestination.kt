@@ -1,7 +1,8 @@
-package com.oguzhanozgokce.finishmarmarab2b.navigation
+package com.oguzhanozgokce.finishmarmarab2b.navigation.bottom
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 
 sealed class BottomBarDestination(

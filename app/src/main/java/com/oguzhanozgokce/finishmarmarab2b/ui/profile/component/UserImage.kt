@@ -11,12 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getInitials
+import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
-fun UserImage() {
+fun UserImage(
+    uiState: ProfileContract.UiState
+) {
     Box(
         modifier = Modifier
             .size(padding.dimension80)
@@ -30,7 +34,7 @@ fun UserImage() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "OO",
+            text = uiState.user.getInitials(),
             style = FMTheme.typography.headLargeBold().copy(
                 color = colors.white,
             ),
@@ -41,5 +45,9 @@ fun UserImage() {
 @Preview(showBackground = true)
 @Composable
 fun UserImagePreview() {
-    UserImage()
+    FMTheme {
+        UserImage(
+            uiState = ProfileContract.UiState()
+        )
+    }
 }

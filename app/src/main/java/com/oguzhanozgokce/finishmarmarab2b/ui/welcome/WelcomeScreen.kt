@@ -57,8 +57,8 @@ fun WelcomeContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(padding.dimension16)
-            .background(colors.background),
+            .background(colors.background)
+            .padding(padding.dimension16),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

@@ -10,6 +10,7 @@ object LoginContract {
     )
 
     sealed class UiAction{
+        data object GetEmail : UiAction()
         data class EmailChanged(val email: String) : UiAction()
         data class PasswordChanged(val password: String) : UiAction()
         data object LoginClicked : UiAction()

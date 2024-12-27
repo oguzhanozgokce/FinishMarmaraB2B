@@ -165,7 +165,6 @@ fun SignupContent(
                 value = uiState.phoneNumber,
                 onValueChange = { onAction(UiAction.PhoneNumberChanged(it)) },
                 label = "Phone",
-                isPassword = true,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Phone,

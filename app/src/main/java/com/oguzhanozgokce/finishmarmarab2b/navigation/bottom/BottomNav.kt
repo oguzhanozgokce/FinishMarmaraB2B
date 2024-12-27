@@ -1,5 +1,6 @@
-package com.oguzhanozgokce.finishmarmarab2b.navigation
+package com.oguzhanozgokce.finishmarmarab2b.navigation.bottom
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -28,6 +30,7 @@ fun FMBottomBar(
     val currentDestination by navController.currentBackStackEntryAsState()
     NavigationBar(
         modifier = modifier
+            .background(color = colors.background)
             .padding(
                 start = padding.dimension16,
                 end = padding.dimension16,

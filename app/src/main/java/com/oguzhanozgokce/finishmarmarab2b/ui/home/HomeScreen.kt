@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,10 +24,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getFormattedName
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
@@ -51,6 +56,12 @@ fun HomeScreen(
     onAction: (UiAction) -> Unit,
     homeNavActions: HomeNavActions,
 ) {
+    val context = LocalContext.current
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.ShowToast -> context.showToast(effect.message)
+        }
+    }
     when {
         uiState.isLoading -> LoadingBar()
         uiState.categoryList.isNotEmpty() -> EmptyScreen()
@@ -76,7 +87,8 @@ fun HomeContent(
         TopBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.TopStart)
+                .align(Alignment.TopStart),
+            uiState = uiState
         )
         Column(
             modifier = Modifier
@@ -108,8 +120,10 @@ fun HomeContent(
 
 @Composable
 fun TopBar(
+    uiState: UiState,
     modifier: Modifier = Modifier
 ) {
+    Log.d("HomeScreen", "User name: ${uiState.user.getFormattedName()}")
     Row(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -121,7 +135,7 @@ fun TopBar(
                 style = typography.titleMediumLight(),
             )
             Text(
-                text = "Oguzhan O.",
+                text = uiState.user.getFormattedName(),
                 fontFamily = poppinsFontFamily,
                 style = typography.labelLargeBold(),
             )

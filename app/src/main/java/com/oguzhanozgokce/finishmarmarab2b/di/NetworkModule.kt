@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://localhost:7119"
+    private const val BASE_URL = "http://10.0.2.2:5173"
 
     @Provides
     @Singleton
@@ -27,7 +27,7 @@ object NetworkModule {
         chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .hostnameVerifier { _, _ -> true }
+            .retryOnConnectionFailure(true)
             .addInterceptor(chuckerInterceptor)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY

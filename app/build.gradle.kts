@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.play.services.analytics.impl)
+    implementation(libs.tools.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)
@@ -100,6 +101,10 @@ dependencies {
 
     //Security
     implementation (libs.security.crypto)
+
+    //dataSource
+    implementation(libs.datastore.core.android)
+    implementation(libs.datastore.preferences)
 
     // Detekt
     detektPlugins(libs.detekt)

@@ -39,12 +39,14 @@ fun ProfileScreen(
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> ProfileContent()
+        else -> ProfileContent(uiState = uiState)
     }
 }
 
 @Composable
-fun ProfileContent() {
+fun ProfileContent(
+    uiState: UiState,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,8 +62,8 @@ fun ProfileContent() {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                UserImage()
-                UserNameSurname()
+                UserImage(uiState = uiState)
+                UserNameSurname(uiState = uiState)
                 Spacer(modifier = Modifier.weight(1f))
                 FMNotification()
             }

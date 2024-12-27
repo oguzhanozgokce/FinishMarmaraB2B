@@ -2,7 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.respons
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiResponse<T>(
+data class FullResponse<T>(
     @SerializedName("status")
     val status: Boolean,
     @SerializedName("message")

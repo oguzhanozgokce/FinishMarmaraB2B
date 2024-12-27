@@ -1,6 +1,7 @@
 [versions]
-agp = "8.7.2"
-kotlin = "2.0.21"
+agp = "8.7.3"
+datastorePreferences = "1.1.1"
+kotlin = "2.1.0"
 core-ktx = "1.15.0"
 junit = "4.13.2"
 junit-ext = "1.2.1"
@@ -9,9 +10,9 @@ appcompat = "1.7.0"
 loggingInterceptor = "5.0.0-alpha.11"
 material = "1.12.0"
 lifecycle-runtime-ktx = "2.8.7"
-ksp = "2.0.20-1.0.24"
+ksp = "2.1.0-1.0.29"
 activity-compose = "1.9.3"
-compose-bom = "2024.11.00"
+compose-bom = "2024.12.01"
 coilVersion = "2.7.0"
 mockitoKotlin = "4.0.0"
 okhttp = "4.12.0"
@@ -21,16 +22,19 @@ kotlinxCoroutinesTest = "1.8.1"
 mockitoCore = "4.10.0"
 mockitoInline = "4.10.0"
 hiltNavigationCompose = "1.2.0"
-navigation = "2.8.4"
+navigation = "2.8.5"
 securityCrypto = "1.1.0-alpha06"
 serialization = "1.7.3"
 library = "4.0.0"
 detekt = "1.23.6"
 playServicesAnalyticsImpl = "18.2.0"
+toolsCore = "1.0.0-alpha10"
+datastoreCoreAndroid = "1.1.1"
 
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
@@ -66,6 +70,8 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 detekt = { group = "io.gitlab.arturbosch", name = "detekt", version.ref = "detekt" }
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
+tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
+datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 
 
 [plugins]

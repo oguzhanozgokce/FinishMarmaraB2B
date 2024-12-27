@@ -3,30 +3,20 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class UserDto(
-    @SerializedName("user_id")
+    @SerializedName("id")
     val id: Int? = 0,
-    @SerializedName("user_name")
+    @SerializedName("name")
     val name: String? = "",
-    @SerializedName("user_surname")
+    @SerializedName("surname")
     val surname: String? = "",
     @SerializedName("email")
     val email: String? = "",
-    @SerializedName("password")
-    val password: String? = "",
-    @SerializedName("phone_number")
+    @SerializedName("phone_Number")
     val phoneNumber: String? = "",
-    @SerializedName("birth_date")
-    val birthDate: String? = "null", // ISO 8601 formatında gelir
-    @SerializedName("location_id")
-    val locationId: Int? = 0,
-    @SerializedName("favorite_id")
-    val favoriteId: Int? = 0,
-    @SerializedName("notification_id")
-    val notificationId: Int? = 0,
-    @SerializedName("credit_card_id")
-    val creditCardId: Int? = 0,
-    @SerializedName("order_id")
-    val orderId: Int? = 0,
-    @SerializedName("register_date")
-    val registerDate: String? = ""
+    @SerializedName("birth_Date")
+    val birthDate: String? = "",
+    @SerializedName("created_At")
+    val createdAt: String? = ""
 )
+
+

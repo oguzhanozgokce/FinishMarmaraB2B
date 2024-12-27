@@ -1,28 +1,36 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.data.network
 
-import android.util.Log
-import com.google.gson.JsonParseException
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.FullResponse
+import retrofit2.Response
 import java.io.IOException
 
 /**
- * Safely executes an API call and converts the result to a Resource<T>.
- * - Returns Resource.Success if the call succeeds.
- * - Catches and handles exceptions, returning appropriate Resource.Error messages.
+ * // ApiResponseModel -> ApiResponse
  */
-suspend inline fun <T> safeCall(
-    crossinline execute: suspend () -> ApiResponse<T>
+
+suspend fun <T> safeApiCall(
+    execute: suspend () -> Response<FullResponse<T>>
 ): Resource<T> {
     return try {
         val response = execute()
-        responseToResult(response)
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body != null && body.status) {
+                Resource.Success(body.data)
+            } else {
+                Resource.Error(body?.message ?: "Unknown error")
+            }
+        } else {
+            Resource.Error("API call failed: ${response.message()} (Code: ${response.code()})")
+        }
     } catch (e: IOException) {
-        Log.e("safeCall", "IOException: ${e.localizedMessage}")
-        Resource.Error("No internet connection.")
-    } catch (e: JsonParseException) {
-        Resource.Error("Serialization error: ${e.localizedMessage}")
+        Resource.Error("Network error: ${e.localizedMessage}")
     } catch (e: Exception) {
-        Resource.Error("An unknown error occurred.")
+        Resource.Error("Unexpected error: ${e.localizedMessage}")
     }
 }
+
+
+
+

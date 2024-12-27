@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.core.common.extension
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
@@ -15,7 +16,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -52,7 +57,7 @@ fun <T : Any> Resource<T>.isSuccess(): Boolean {
     return this is Resource.Success
 }
 
-inline fun <T : Any, N : Any> Resource<T>.toMap(data: (T) -> N): Resource<N> {
+inline fun <T : Any, N : Any> Resource<T>.toResourceMap(data: (T) -> N): Resource<N> {
     return when (this) {
         is Resource.Success -> Resource.Success(data(this.data))
         is Resource.Error -> Resource.Error(this.message)
@@ -88,6 +93,29 @@ fun Context.getActivity(): ComponentActivity? = when (this) {
 }
 
 fun String.capitalizeFirstLetter(): String {
-    return this.lowercase().replaceFirstChar { it.uppercase() }
+    return this.lowercase().replaceFirstChar { it.uppercaseChar() }
 }
+
+fun User.getFormattedName(): String {
+    val formattedSurname = if (surname.isNotEmpty()) "${surname.first()}." else ""
+    return "$name $formattedSurname"
+}
+
+fun User.getInitials(): String {
+    val nameInitial = name.firstOrNull()?.uppercaseChar() ?: ""
+    val surnameInitial = surname.firstOrNull()?.uppercaseChar() ?: ""
+    return "$nameInitial$surnameInitial"
+}
+
+fun String?.toLocalDateOrDefault(formatter: DateTimeFormatter, defaultDate: LocalDate = LocalDate.now()): LocalDate {
+    return this?.let {
+        try {
+            LocalDateTime.parse(it, formatter).toLocalDate()
+        } catch (e: Exception) {
+            Log.e("DateParsing", "Invalid date format: $it, using default date.", e)
+            defaultDate
+        }
+    } ?: defaultDate
+}
+
 

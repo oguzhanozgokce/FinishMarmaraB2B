@@ -6,14 +6,19 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiServi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.whenever
+import retrofit2.Response
 import java.io.IOException
 
 private const val USER_ID = 1
@@ -25,15 +30,16 @@ private const val USER_PASSWORD = "123456"
 private const val USER_PHONE_NUMBER = "1234567890"
 private const val SUCCESS = "Success"
 private const val ERROR = "Error"
-private const val NO_INTERNET_CONNECTION = "No internet connection."
+private const val NO_INTERNET_CONNECTION = "Network error: No internet connection."
 
 class AuthRepositoryImplTest {
     private lateinit var repository: AuthRepositoryImpl
     private val apiService: ApiService = mock()
+    private val localDataSource: LocalDataSource = mock()
 
     @Before
     fun setUp() {
-        repository = AuthRepositoryImpl(apiService)
+        repository = AuthRepositoryImpl(apiService, localDataSource)
     }
 
     @Test
@@ -43,17 +49,18 @@ class AuthRepositoryImplTest {
             password = USER_PASSWORD
         )
 
-        val apiResponse = ApiResponse<Unit>(
+        val apiResponse = ApiResponse(
             status = true,
             message = SUCCESS,
-            data = Unit
+            data = LoginResponse(id = USER_ID)
         )
-
-        whenever(apiService.signIn(signInRequest)).thenReturn(apiResponse)
+        val mockResponse = Response.success(apiResponse)
+        whenever(apiService.signIn(signInRequest)).thenReturn(mockResponse)
         val result = repository.signIn(signInRequest).first()
         assert(result is Resource.Success)
         val response = (result as Resource.Success).data
-        assertEquals(Unit, response)
+        assertEquals(USER_ID, response.id)
+        verify(localDataSource).saveOrUpdateUserId(USER_ID)
     }
 
     @Test
@@ -63,13 +70,15 @@ class AuthRepositoryImplTest {
             password = USER_PASSWORD,
         )
 
-        val apiResponse = ApiResponse<Unit>(
+        val apiResponse = ApiResponse(
             status = false,
             message = ERROR,
-            data = Unit
+            data = LoginResponse(id = USER_ID)
         )
 
-        whenever(apiService.signIn(signInRequest)).thenReturn(apiResponse)
+        val mockResponse = Response.success(apiResponse)
+
+        whenever(apiService.signIn(signInRequest)).thenReturn(mockResponse)
 
         val result = repository.signIn(signInRequest).first()
 
@@ -90,7 +99,7 @@ class AuthRepositoryImplTest {
         val result = repository.signIn(signInRequest).first()
         assert(result is Resource.Error)
         val errorMessage = (result as Resource.Error).message
-        assertEquals(NO_INTERNET_CONNECTION, errorMessage)
+        assertEquals("Network error: $NO_INTERNET_CONNECTION", errorMessage)
     }
 
     @Test
@@ -103,16 +112,18 @@ class AuthRepositoryImplTest {
             phoneNumber = USER_PHONE_NUMBER
         )
 
-        val apiResponse = ApiResponse<Unit>(
+        val apiResponse = ApiResponse(
             status = true,
             message = SUCCESS,
-            data = Unit
+            data = RegisterResponse(id = USER_ID, email = USER_EMAIL)
         )
-        whenever(apiService.signUp(signUpRequest)).thenReturn(apiResponse)
+        val mockResponse = Response.success(apiResponse)
+        whenever(apiService.signUp(signUpRequest)).thenReturn(mockResponse)
         val result = repository.signUp(signUpRequest).first()
         assert(result is Resource.Success)
         val response = (result as Resource.Success).data
-        assertEquals(Unit, response)
+        assertEquals(USER_ID, response.id)
+        assertEquals(USER_EMAIL, response.email)
     }
 
 
@@ -126,13 +137,15 @@ class AuthRepositoryImplTest {
             phoneNumber = USER_PHONE_NUMBER
         )
 
-        val apiResponse = ApiResponse<Unit>(
+        val apiResponse = ApiResponse(
             status = false,
             message = ERROR,
-            data = Unit
+            data = RegisterResponse(id = USER_ID, email = USER_EMAIL)
         )
 
-        whenever(apiService.signUp(signUpRequest)).thenReturn(apiResponse)
+        val mockResponse = Response.success(apiResponse)
+
+        whenever(apiService.signUp(signUpRequest)).thenReturn(mockResponse)
 
         val result = repository.signUp(signUpRequest).first()
 

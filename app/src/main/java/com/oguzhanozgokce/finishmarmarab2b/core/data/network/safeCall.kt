@@ -1,7 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.data.network
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.FullResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import retrofit2.Response
 import java.io.IOException
 
@@ -10,7 +10,7 @@ import java.io.IOException
  */
 
 suspend fun <T> safeApiCall(
-    execute: suspend () -> Response<FullResponse<T>>
+    execute: suspend () -> Response<ApiResponse<T>>
 ): Resource<T> {
     return try {
         val response = execute()

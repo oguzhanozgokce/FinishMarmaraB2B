@@ -5,7 +5,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.FullResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
@@ -19,16 +19,16 @@ interface ApiService {
     @POST(LOGIN)
     suspend fun signIn(
         @Body request: SignInRequest
-    ): Response<FullResponse<LoginResponse>>
+    ): Response<ApiResponse<LoginResponse>>
 
     @POST(REGISTER)
     suspend fun signUp(
         @Body request: SignUpRequest
-    ): Response<FullResponse<RegisterResponse>>
+    ): Response<ApiResponse<RegisterResponse>>
 
     @GET(GET_USER)
     suspend fun getUser(
         @Path("id") id: Int
-    ): Response<FullResponse<GetUserResponse>>
+    ): Response<ApiResponse<GetUserResponse>>
 }
 

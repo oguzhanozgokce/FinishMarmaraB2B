@@ -73,7 +73,7 @@ fun NavigationGraph(
                 actions = SignUpNavActions(
                     navigateToBack = { navController.navigateUp() },
                     navigateToHome = {
-                        navController.navigate(Home) {
+                        navController.navigate(Login) {
                             popUpTo(Welcome) {
                                 inclusive = true
                             }

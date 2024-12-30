@@ -1,15 +1,18 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
+import androidx.paging.PagingData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
+import kotlinx.coroutines.flow.Flow
 
 object HomeContract {
     data class UiState(
         val isLoading: Boolean = false,
         val list: List<String> = emptyList(),
         val categoryList: List<CategoryUi> = emptyList(),
-        val productList: List<ProductUi> = emptyList(),
+        val productFlow: Flow<PagingData<Product>>? = null,
         val user: User = User(),
         val error: String? = null,
     )

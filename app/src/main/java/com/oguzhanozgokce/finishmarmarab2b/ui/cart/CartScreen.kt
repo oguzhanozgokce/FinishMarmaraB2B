@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
@@ -87,7 +88,7 @@ fun CardProductList(
 @Composable
 fun CardProductItem(
     modifier: Modifier = Modifier,
-    product: ProductUi
+    product: Product
 ) {
     Card(
         modifier = Modifier
@@ -123,7 +124,7 @@ fun CardProductItem(
                 verticalArrangement = Arrangement.spacedBy(padding.dimension8)
             ) {
                 Text(
-                    text = product.name,
+                    text = product.title,
                     style = FMTheme.typography.bodyMediumNormal(),
                 )
                 Text(
@@ -138,7 +139,7 @@ fun CardProductItem(
                     ),
                 )
                 Text(
-                    text = "$${product.salePrice}",
+                    text = "$${product.discountedPrice}",
                     style = FMTheme.typography.bodyMediumNormal().copy(
                         fontSize = FMTheme.fontSize.body,
                         color = colors.primary
@@ -169,7 +170,7 @@ fun CardProductItem(
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = product.discount.toString(),
+                    text = product.discountedPrice.toString(),
                     style = FMTheme.typography.bodyMediumNormal(),
                 )
                 Spacer(modifier = Modifier.width(8.dp))

@@ -4,7 +4,7 @@ import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import com.oguzhanozgokce.finishmarmarab2b.BuildConfig
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -2,8 +2,12 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
+import java.time.LocalDateTime
 
 class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState> {
     override val values: Sequence<HomeContract.UiState>
@@ -64,60 +68,110 @@ internal val sampleCategoryList : List<CategoryUi> = listOf(
     ),
 )
 
-internal val sampleProductList : List<ProductUi> = listOf(
-    ProductUi(
+internal val sampleProductList : List<Product> = listOf(
+    Product(
         id = 1,
-        name = "Perfume",
-        price = "100.00",
-        salePrice = "75.00",
-        imageUrl = R.drawable.ic_favorite_border,
-        description = "A luxurious fragrance.",
-        discount = 25,
-        rating = 3.0f,
-        sellerName = "Seller Name"
+        title = "Wireless Mouse",
+        description = "Ergonomic wireless mouse with adjustable DPI settings.",
+        price = 25.99,
+        discountedPrice = 23.99,
+        sellerId = 1,
+        stock = 150,
+        rate = 4.5,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(5),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 1,
+            name = "TechStore"
+        )
     ),
-    ProductUi(
+    Product(
         id = 2,
-        name = "Sunglasses",
-        price = "150.00",
-        salePrice = "128.00",
-        imageUrl = R.drawable.ic_notification,
-        description = "Stylish sunglasses for sunny days.",
-        discount = 15,
-        rating = 4.5f,
-        sellerName = "Seller Name"
+        title = "Gaming Keyboard",
+        description = "Mechanical keyboard with RGB lighting and customizable keys.",
+        price = 75.49,
+        discountedPrice = 70.99,
+        sellerId = 2,
+        stock = 200,
+        rate = 4.8,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(10),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 2,
+            name = "GameZone"
+        )
     ),
-    ProductUi(
+    Product(
         id = 3,
-        name = "Smart Watch",
-        price = "200.00",
-        salePrice = "180.00",
-        imageUrl = R.drawable.ic_favorite_border,
-        description = "Track your fitness and stay connected.",
-        discount = 10,
-        rating = 4.0f,
-        sellerName = "Seller Name"
+        title = "4K Monitor",
+        description = "27-inch UHD monitor with HDR support and slim bezels.",
+        price = 299.99,
+        discountedPrice = 280.99,
+        sellerId = 3,
+        stock = 50,
+        rate = 4.7,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(20),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 3,
+            name = "MonitorWorld"
+        )
     ),
-    ProductUi(
+    Product(
         id = 4,
-        name = "Backpack",
-        price = "80.00",
-        salePrice = "64.00",
-        imageUrl = R.drawable.ic_notification,
-        description = "A durable and spacious backpack.",
-        discount = 20,
-        rating = 3.5f,
-        sellerName = "Seller Name"
+        title = "Noise-Cancelling Headphones",
+        description = "Wireless headphones with active noise cancellation.",
+        price = 199.99,
+        discountedPrice = 189.99,
+        sellerId = 4,
+        stock = 120,
+        rate = 4.6,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(15),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 4,
+            name = "AudioTech"
+        )
     ),
-    ProductUi(
+    Product(
         id = 5,
-        name = "Headphones",
-        price = "120.00",
-        salePrice = "96.00",
-        imageUrl = R.drawable.ic_favorite_border,
-        description = "High-quality sound for your music.",
-        discount = 20,
-        rating = 4.5f,
-        sellerName = "Seller Name"
+        title = "Smartwatch",
+        description = "Waterproof smartwatch with fitness tracking features.",
+        price = 129.99,
+        discountedPrice = 119.99,
+        sellerId = 5,
+        stock = 300,
+        rate = 4.3,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(7),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 5,
+            name = "GadgetHub"
+        )
     )
 )

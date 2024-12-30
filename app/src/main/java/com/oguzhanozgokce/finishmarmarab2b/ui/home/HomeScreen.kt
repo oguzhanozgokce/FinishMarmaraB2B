@@ -28,15 +28,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getFormattedName
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ErrorFooter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductList
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
@@ -62,20 +67,37 @@ fun HomeScreen(
             is UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
+    val productItems = uiState.productFlow?.collectAsLazyPagingItems()
+    val refreshState = productItems?.loadState?.refresh
+    val itemCount = productItems?.itemCount ?: 0
+
     when {
-        uiState.isLoading -> LoadingBar()
-        uiState.categoryList.isNotEmpty() -> EmptyScreen()
-        uiState.productList.isNotEmpty() -> EmptyScreen()
-        else -> HomeContent(
-            uiState = uiState,
-            homeNavActions = homeNavActions
-        )
+        refreshState is LoadState.Loading && itemCount == 0 -> {
+            LoadingBar()
+        }
+        refreshState is LoadState.Error && itemCount == 0 -> {
+            ErrorFooter(
+                message = refreshState.error.localizedMessage ?: "Unknown error",
+                onRetry = { productItems.retry() }
+            )
+        }
+        refreshState !is LoadState.Loading && itemCount == 0 -> {
+            EmptyScreen()
+        }
+        else -> {
+            HomeContent(
+                uiState = uiState,
+                homeNavActions = homeNavActions,
+                productItems = productItems
+            )
+        }
     }
 }
 
 @Composable
 fun HomeContent(
     uiState: UiState,
+    productItems: LazyPagingItems<Product>?,
     homeNavActions: HomeNavActions
 ) {
     Box(
@@ -111,7 +133,7 @@ fun HomeContent(
             )
             ProductText()
             ProductList(
-                uiState = uiState,
+                productItems = productItems,
                 onNavigateToDetail = homeNavActions.navigateToDetail
             )
         }

@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,9 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -25,23 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
+import java.time.LocalDateTime
 
 @Composable
 fun ProductCard(
-    productUi: ProductUi,
+    product: Product,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (id: Int) -> Unit = {}
 ) {
@@ -54,7 +55,7 @@ fun ProductCard(
                 end = padding.dimension4,
                 bottom = padding.dimension8
             )
-            .clickable { onNavigateToDetail(productUi.id) },
+            .clickable { onNavigateToDetail(product.id) },
         shape = RoundedCornerShape(padding.dimension8),
         colors = CardDefaults.cardColors(
             containerColor = colors.cardBackground
@@ -70,10 +71,18 @@ fun ProductCard(
                 .background(colors.cardBackground),
             contentAlignment = Alignment.TopEnd
         ) {
-            Image(
-                painter = painterResource(id = productUi.imageUrl),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize()
+//            Image(
+//                painter = painterResource(id = product.imageId),
+//                contentDescription = null,
+//                modifier = Modifier.fillMaxSize()
+//            )
+            Icon(
+                imageVector = Icons.Default.FavoriteBorder,
+                contentDescription = "Default Image",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                tint = Color.Gray
             )
             FavoriteButton(
                 backgroundColor = colors.background,
@@ -81,7 +90,7 @@ fun ProductCard(
             )
         }
         ProductInfo(
-            productUi = productUi,
+            product = product,
             modifier = Modifier.align(Alignment.End)
         )
     }
@@ -110,7 +119,7 @@ fun FavoriteButton(
 
 @Composable
 fun ProductInfo(
-    productUi: ProductUi,
+    product: Product,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -120,12 +129,12 @@ fun ProductInfo(
             .padding(padding.dimension8)
     ) {
         Text(
-            text = productUi.name,
+            text = product.title,
             style = typography.titleMediumSemiBold(),
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
-            text = "-${productUi.discount}% discount",
+            text = "-20% discount",
             style = typography.bodySmallLight()
         )
         Spacer(modifier = Modifier.height(padding.dimension8))
@@ -134,13 +143,13 @@ fun ProductInfo(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "$${productUi.price}",
+                text = "$${product.price}",
                 style = typography.bodySmallLight(),
                 textDecoration = TextDecoration.LineThrough
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "$${productUi.salePrice}",
+                text = "$${product.price}",
                 style = typography.labelLargeBold().copy(
                     color = colors.primary
                 ),
@@ -151,41 +160,70 @@ fun ProductInfo(
 
 @Composable
 fun ProductList(
-    uiState: HomeContract.UiState,
+    productItems: LazyPagingItems<Product>?,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (id: Int) -> Unit = {}
 ) {
-    LazyRow {
-        items(sampleProductList) { productItem ->
-            ProductCard(
-                productUi = productItem,
-                modifier = modifier,
-                onNavigateToDetail = onNavigateToDetail
-            )
+    LazyRow(
+        modifier = modifier
+    ) {
+        productItems?.let { lazyItems ->
+            items(lazyItems.itemCount) { index ->
+                val productItem = lazyItems[index]
+                if (productItem != null) {
+                    ProductCard(
+                        product = productItem,
+                        modifier = modifier,
+                        onNavigateToDetail = onNavigateToDetail
+                    )
+                }
+            }
+            item {
+                when (val appendState = lazyItems.loadState.append) {
+                    is LoadState.Loading -> {
+                        LoadingBarSmall()
+                    }
+
+                    is LoadState.Error -> {
+                        ErrorFooter(
+                            message = appendState.error.localizedMessage ?: "Unknown error",
+                            onRetry = { lazyItems.retry() }
+                        )
+                    }
+
+                    else -> Unit
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewProductList() {
-    ProductList(uiState = HomeContract.UiState(productList = sampleProductList))
-}
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductCard() {
-    val product = ProductUi(
-        id = 1,
-        name = "Perfume",
-        price = 75.00.toString(),
-        discount = 20,
-        salePrice = "60.00",
-        description = "Description",
-        imageUrl = R.drawable.ic_notification,
-        rating = 4.5f,
-        sellerName = "Seller Name"
-    )
+    val product =
+        Product(
+            id = 1,
+            title = "Wireless Mouse",
+            description = "Ergonomic wireless mouse with adjustable DPI settings.",
+            price = 25.99,
+            discountedPrice = 23.99,
+            sellerId = 1,
+            stock = 150,
+            rate = 4.5,
+            categoryId = 101,
+            createdAt = LocalDateTime.now().minusDays(5),
+            category = Category(
+                id = 101,
+                name = "Electronics",
+                categoryImage = "https://example.com/images/electronics.jpg"
+            ),
+            seller = Seller(
+                id = 1,
+                name = "TechStore"
+            )
+        )
 
-    ProductCard(productUi = product)
+    ProductCard(product = product)
 }

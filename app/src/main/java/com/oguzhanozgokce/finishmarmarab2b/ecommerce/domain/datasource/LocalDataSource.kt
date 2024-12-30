@@ -5,9 +5,7 @@ interface LocalDataSource {
     suspend fun getUserId(): Int?
     suspend fun clearUserId()
 
-    // email
     suspend fun saveOrUpdateEmail(email: String)
     suspend fun getEmail(): String?
     suspend fun clearEmail()
-
 }

@@ -4,7 +4,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user.mapToUser
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse

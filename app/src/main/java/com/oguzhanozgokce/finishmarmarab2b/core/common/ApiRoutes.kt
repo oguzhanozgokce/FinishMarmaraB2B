@@ -4,4 +4,5 @@ object ApiRoutes {
     const val LOGIN = "/api/Auth/user/login"
     const val REGISTER = "/api/Auth/user/register"
     const val GET_USER = "/api/User/{id}"
+    const val GET_PRODUCTS = "/api/Product"
 }

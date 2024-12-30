@@ -2,7 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.AuthRepositoryImpl
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse

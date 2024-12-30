@@ -30,17 +30,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
+import java.time.LocalDateTime
 
 @Composable
 fun FMFavoriteCard(
-    productUi: ProductUi,
+    product: Product,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -71,8 +74,8 @@ fun FMFavoriteCard(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.Start
             ) {
-                ProductDetails(productUi)
-                AddToCartButton(productUi)
+                ProductDetails(product)
+                AddToCartButton(product)
             }
         }
     }
@@ -93,13 +96,13 @@ fun RowScope.ProductImage() {
 }
 
 @Composable
-fun ProductDetails(productUi: ProductUi) {
+fun ProductDetails(product: Product) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
     ) {
         Text(
-            text = productUi.name,
+            text = product.title,
             fontSize = fontSize.medium,
             fontWeight = FontWeight.SemiBold,
             fontFamily = poppinsFontFamily,
@@ -108,7 +111,7 @@ fun ProductDetails(productUi: ProductUi) {
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
-            text = productUi.description,
+            text = product.description,
             fontSize = fontSize.small,
             fontWeight = FontWeight.Normal,
             fontFamily = poppinsFontFamily,
@@ -116,19 +119,21 @@ fun ProductDetails(productUi: ProductUi) {
             maxLines = 1
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        Text(
-            text = productUi.sellerName,
-            fontSize = fontSize.small,
-            fontWeight = FontWeight.Normal,
-            fontFamily = poppinsFontFamily,
-            color = colors.text,
-            maxLines = 1
-        )
+        product.seller?.let {
+            Text(
+                text = it.name,
+                fontSize = fontSize.small,
+                fontWeight = FontWeight.Normal,
+                fontFamily = poppinsFontFamily,
+                color = colors.text,
+                maxLines = 1
+            )
+        }
     }
 }
 
 @Composable
-fun AddToCartButton(productUi: ProductUi) {
+fun AddToCartButton(product: Product) {
     OutlinedButton(
         onClick = { /* Sepete ekle işlemi */ },
         colors = ButtonDefaults.buttonColors(
@@ -150,7 +155,7 @@ fun AddToCartButton(productUi: ProductUi) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "$${productUi.salePrice}",
+                text = "$${product.price}",
                 fontSize = fontSize.mediumSmall,
                 fontWeight = FontWeight.Bold,
                 fontFamily = poppinsFontFamily,
@@ -186,7 +191,7 @@ fun FMFavoriteList(
             .padding(padding.dimension8)
     ) {
         items(uiState.favoriteList.size) { favoriteItem ->
-            FMFavoriteCard(productUi = uiState.favoriteList[favoriteItem])
+            FMFavoriteCard(product = uiState.favoriteList[favoriteItem])
         }
     }
 }
@@ -200,16 +205,26 @@ fun FavoriteListPreview() {
 @Preview(showBackground = true)
 @Composable
 fun FavoriteCardPreview() {
-    val product = ProductUi(
-        id = 1,
-        name = "Perfume",
-        price = 75.00.toString(),
-        discount = 20,
-        salePrice = "60.00",
-        description = "Description",
-        imageUrl = R.drawable.ic_notification,
-        rating = 4.5f,
-        sellerName = "Seller Name"
+    val product = Product(
+        id = 4,
+        title = "Noise-Cancelling Headphones",
+        description = "Wireless headphones with active noise cancellation.",
+        price = 199.99,
+        discountedPrice = 189.99,
+        sellerId = 4,
+        stock = 120,
+        rate = 4.6,
+        categoryId = 101,
+        createdAt = LocalDateTime.now().minusDays(15),
+        category = Category(
+            id = 101,
+            name = "Electronics",
+            categoryImage = "https://example.com/images/electronics.jpg"
+        ),
+        seller = Seller(
+            id = 4,
+            name = "AudioTech"
+        )
     )
-    FMFavoriteCard(productUi = product)
+    FMFavoriteCard(product = product)
 }

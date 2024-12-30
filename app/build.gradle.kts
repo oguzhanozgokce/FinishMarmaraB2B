@@ -106,6 +106,10 @@ dependencies {
     implementation(libs.datastore.core.android)
     implementation(libs.datastore.preferences)
 
+    // Paging3
+    implementation (libs.paging.runtime.ktx)
+    implementation (libs.paging.compose)
+
     // Detekt
     detektPlugins(libs.detekt)
 

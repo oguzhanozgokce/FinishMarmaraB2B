@@ -8,10 +8,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
-
-/**
- * Commend
- */
 interface AuthRepository {
     fun signIn(signInRequest: SignInRequest): Flow<Resource<LoginResponse>>
     fun signUp(signUpRequest: SignUpRequest): Flow<Resource<RegisterResponse>>

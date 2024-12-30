@@ -3,28 +3,44 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class ProductDto(
-    @SerializedName("product_id")
-    val productId: Int? = null,
+    @SerializedName("id")
+    val id: Int? = null,
+
     @SerializedName("title")
     val title: String? = null,
+
     @SerializedName("description")
     val description: String? = null,
+
     @SerializedName("price")
     val price: Double? = null,
-    @SerializedName("seller_price")
-    val sellerPrice: Double? = null,
+
+    @SerializedName("discounted_Price")
+    val discountedPrice: Double? = null,
+
+    @SerializedName("seller_Id")
+    val sellerId: Int? = null,
+
     @SerializedName("stock")
-    val stock: Double? = null,
+    val stock: Int? = null,
+
     @SerializedName("rate")
     val rate: Double? = null,
-    @SerializedName("category_id")
+
+    @SerializedName("category_Id")
     val categoryId: Int? = null,
-    @SerializedName("created_time")
-    val createdTime: String? = null,
-    @SerializedName("comment_id")
-    val commentId: Int? = null,
-    @SerializedName("image_id")
-    val imageId: Int? = null
+
+    @SerializedName("created_At")
+    val createdAt: String? = null,
+
+    @SerializedName("category")
+    val category: CategoryDto? = null,
+
+    @SerializedName("seller")
+    val seller: SellerDto? = null,
+
+    @SerializedName("pagination")
+    val pagination: PaginationDto? = null
 )
 
 

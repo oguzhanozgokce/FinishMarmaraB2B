@@ -33,6 +33,9 @@ data class ProductDto(
     @SerializedName("created_At")
     val createdAt: String? = null,
 
+    @SerializedName("images")
+    val images: List<ImageDto>? = null,
+
     @SerializedName("category")
     val category: CategoryDto? = null,
 
@@ -42,5 +45,6 @@ data class ProductDto(
     @SerializedName("pagination")
     val pagination: PaginationDto? = null
 )
+
 
 

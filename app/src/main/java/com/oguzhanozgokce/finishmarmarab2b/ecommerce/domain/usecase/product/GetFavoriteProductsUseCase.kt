@@ -7,7 +7,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRe
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetProductsUseCase @Inject constructor(
+class GetFavoriteProductsUseCase @Inject constructor(
     private val repository: ProductRepository
 ) {
     operator fun invoke(
@@ -15,6 +15,6 @@ class GetProductsUseCase @Inject constructor(
         orderBy: String = Constant.ORDER_BY,
         sort: String = Constant.SHORT
     ): Flow<PagingData<Product>> {
-        return repository.getProducts(limit, orderBy, sort)
+        return repository.getFavoriteProducts(limit, orderBy, sort)
     }
 }

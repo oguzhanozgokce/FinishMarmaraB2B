@@ -1,11 +1,18 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_DELETE_FAVORITE_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
@@ -41,5 +48,28 @@ interface ApiService {
         @Query("orderBy") orderBy: String,
         @Query("sort") sort: String
     ) : Response<ApiResponse<ProductResponse>>
+
+    @GET(GET_FAVORITE_PRODUCTS)
+    suspend fun getFavoriteProducts(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("orderBy") orderBy: String,
+        @Query("sort") sort: String
+    ) : Response<ApiResponse<ProductResponse>>
+
+    @POST(POST_TOGGLE_FAVORITE)
+    suspend fun toggleFavorite(
+        @Body request: ToggleFavoriteRequest
+    ) : Response<ApiResponse<Unit>>
+
+    @POST(POST_DELETE_FAVORITE_PRODUCT)
+    suspend fun deleteFavoriteProduct(
+        @Body request: DeleteFavoriteProductRequest
+    ) : Response<ApiResponse<Unit>>
+
+    @POST(POST_ADD_FAVORITE_PRODUCT)
+    suspend fun addProductToFavorites(
+        @Body request: AddFavoriteProductRequest
+    ) : Response<ApiResponse<Unit>>
 }
 

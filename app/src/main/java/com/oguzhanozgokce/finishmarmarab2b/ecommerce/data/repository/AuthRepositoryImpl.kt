@@ -4,9 +4,11 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user.mapToUser
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
@@ -21,6 +23,15 @@ class AuthRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val localDataSource: LocalDataSource
 ) : AuthRepository {
+
+    override  fun getUserId(): Flow<Resource<Int>> = flow {
+        val userId = localDataSource.getUserId()
+        if (userId == null) {
+            emit(Resource.Error("User ID not found in local storage."))
+            return@flow
+        }
+        emit(Resource.Success(userId))
+    }
 
     override fun signIn(signInRequest: SignInRequest): Flow<Resource<LoginResponse>> = flow {
         val response = safeApiCall { apiService.signIn(signInRequest) }

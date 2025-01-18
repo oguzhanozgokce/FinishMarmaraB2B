@@ -1,31 +1,37 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orDoubleZero
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-fun ProductDto.mapToProduct(): Product {
+fun ProductDto.mapToProduct(isFavorite: Boolean = false): Product {
     val formatter = DateTimeFormatter.ISO_DATE_TIME
     return Product(
-        id = this.id ?: 0,
+        id = this.id.orZero(),
         title = this.title.orEmpty(),
         description = this.description.orEmpty(),
-        price = this.price ?: 0.0,
-        discountedPrice = this.discountedPrice ?: 0.0,
-        sellerId = this.sellerId ?: 0,
-        stock = this.stock ?: 0,
-        rate = this.rate ?: 0.0,
-        categoryId = this.categoryId ?: 0,
+        price = this.price.orDoubleZero(),
+        discountedPrice = this.discountedPrice.orDoubleZero(),
+        sellerId = this.sellerId.orZero(),
+        stock = this.stock.orZero(),
+        rate = this.rate.orDoubleZero(),
+        categoryId = this.categoryId.orZero(),
         createdAt = this.createdAt?.let {
             LocalDateTime.parse(it, formatter)
         } ?: LocalDateTime.now(),
-        category = this.category?.totoCategoryDomain(),
-        seller = this.seller?.toSellerDomain()
+        category = this.category?.toCategoryDomain(),
+        seller = this.seller?.toSellerDomain(),
+        images = this.images?.map { it.toImageDomain() },
+        isFavorite = isFavorite
     )
 }
 
@@ -43,12 +49,13 @@ fun Product.mapToProductDto(): ProductDto {
         categoryId = this.categoryId,
         createdAt = this.createdAt.format(formatter),
         category = this.category?.toCategoryDto(),
-        seller = this.seller?.toSellerDto()
+        seller = this.seller?.toSellerDto(),
+        images = this.images?.map { it.toImageDto() }
     )
 }
 
-fun CategoryDto.totoCategoryDomain() = Category(
-    id = this.id ?: 0,
+fun CategoryDto.toCategoryDomain() = Category(
+    id = this.id.orZero(),
     name = this.name.orEmpty(),
     categoryImage = this.categoryImage.orEmpty()
 )
@@ -60,7 +67,7 @@ fun Category.toCategoryDto() = CategoryDto(
 )
 
 fun SellerDto.toSellerDomain() = Seller(
-    id = this.id ?: 0,
+    id = this.id.orZero(),
     name = this.name.orEmpty()
 )
 
@@ -68,3 +75,12 @@ fun Seller.toSellerDto() = SellerDto(
     id = this.id,
     name = this.name
 )
+
+fun ImageDto.toImageDomain() = Image(
+    imageUrl = this.imageUrl.orEmpty()
+)
+
+fun Image.toImageDto() = ImageDto(
+    imageUrl = this.imageUrl
+)
+

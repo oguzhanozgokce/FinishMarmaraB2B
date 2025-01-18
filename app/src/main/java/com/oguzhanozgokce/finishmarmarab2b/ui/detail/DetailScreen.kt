@@ -134,7 +134,9 @@ fun TopBarDetail(
         FavoriteButton(
             backgroundColor = colors.cardBackground,
             boxSize = padding.dimension48,
-            modifier = Modifier.align(Alignment.CenterEnd)
+            modifier = Modifier.align(Alignment.CenterEnd),
+            isFavorite = false,
+            onToggleClick = {}
         )
     }
 }

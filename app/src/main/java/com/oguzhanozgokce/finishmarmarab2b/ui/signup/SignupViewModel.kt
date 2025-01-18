@@ -3,9 +3,8 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.signup
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AuthRepository
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.SaveOrUpdateEmailUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.SignUpUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
@@ -23,9 +22,9 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val saveOrUpdateEmailUseCase: SaveOrUpdateEmailUseCase
-) : UiHandler<UiState, UiEffect>(UiState()) {
+) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
         when(uiAction){
             is UiAction.NameChanged ->  updateState { copy(name = uiAction.name) }
             is UiAction.SurnameChanged -> updateState { copy(surname = uiAction.surname) }

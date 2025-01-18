@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.password
 
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiState
@@ -8,9 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ResetPasswordViewModel @Inject constructor() : UiHandler<UiState, UiEffect>(UiState()) {
+class ResetPasswordViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
     }
 
 }

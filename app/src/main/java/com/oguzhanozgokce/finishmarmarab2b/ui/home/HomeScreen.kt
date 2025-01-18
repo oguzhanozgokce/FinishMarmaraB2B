@@ -88,7 +88,8 @@ fun HomeScreen(
             HomeContent(
                 uiState = uiState,
                 homeNavActions = homeNavActions,
-                productItems = productItems
+                productItems = productItems,
+                onAction = onAction
             )
         }
     }
@@ -98,7 +99,8 @@ fun HomeScreen(
 fun HomeContent(
     uiState: UiState,
     productItems: LazyPagingItems<Product>?,
-    homeNavActions: HomeNavActions
+    homeNavActions: HomeNavActions,
+    onAction: (UiAction) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -134,7 +136,10 @@ fun HomeContent(
             ProductText()
             ProductList(
                 productItems = productItems,
-                onNavigateToDetail = homeNavActions.navigateToDetail
+                onNavigateToDetail = homeNavActions.navigateToDetail,
+                onToggleFavorite = { productId, isFavorite ->
+                    onAction(UiAction.ToggleFavorite(productId, isFavorite))
+                }
             )
         }
     }

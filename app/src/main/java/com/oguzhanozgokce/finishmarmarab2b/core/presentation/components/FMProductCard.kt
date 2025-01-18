@@ -25,15 +25,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -44,19 +48,20 @@ import java.time.LocalDateTime
 fun ProductCard(
     product: Product,
     modifier: Modifier = Modifier,
-    onNavigateToDetail: (id: Int) -> Unit = {}
+    onNavigateToDetail: (id: Int) -> Unit = {},
+    onToggleClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier
-            .width(padding.dimension180)
-            .height(padding.dimension260)
+            .width(padding.dimension200)
+            .height(padding.dimension280)
             .padding(
                 start = padding.dimension4,
                 end = padding.dimension4,
                 bottom = padding.dimension8
             )
             .clickable { onNavigateToDetail(product.id) },
-        shape = RoundedCornerShape(padding.dimension8),
+        shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
             containerColor = colors.cardBackground
         ),
@@ -71,22 +76,26 @@ fun ProductCard(
                 .background(colors.cardBackground),
             contentAlignment = Alignment.TopEnd
         ) {
-//            Image(
-//                painter = painterResource(id = product.imageId),
-//                contentDescription = null,
-//                modifier = Modifier.fillMaxSize()
-//            )
-            Icon(
+            product.images?.takeIf { it.isNotEmpty() && it[0].imageUrl != null }?.let { images ->
+                AsyncImage(
+                    model = images[0].imageUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } ?: Icon(
                 imageVector = Icons.Default.FavoriteBorder,
                 contentDescription = "Default Image",
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                    .size(padding.dimension36)
+                    .align(Alignment.Center),
                 tint = Color.Gray
             )
             FavoriteButton(
                 backgroundColor = colors.background,
-                boxSize = padding.dimension36
+                boxSize = padding.dimension36,
+                isFavorite = product.isFavorite,
+                onToggleClick = onToggleClick
             )
         }
         ProductInfo(
@@ -100,7 +109,9 @@ fun ProductCard(
 fun FavoriteButton(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
-    boxSize: Dp
+    boxSize: Dp,
+    isFavorite: Boolean,
+    onToggleClick: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -110,7 +121,7 @@ fun FavoriteButton(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            imageVector = icons.favoriteBorder,
+            imageVector = if (isFavorite) icons.favorite else icons.favoriteBorder,
             contentDescription = null,
             tint = colors.red
         )
@@ -131,13 +142,38 @@ fun ProductInfo(
         Text(
             text = product.title,
             style = typography.titleMediumSemiBold(),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        product.seller?.let { seller ->
+            Text(
+                text = "Sold by: ${seller.name}",
+                style = typography.bodySmallLight(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.height(padding.dimension4))
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RatingBar(
+                rating = product.rate,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Spacer(modifier = Modifier.width(padding.dimension4))
+            Text(
+                text = "${product.rate}",
+                style = typography.bodySmallLight(),
+            )
+        }
         Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
             text = "-20% discount",
             style = typography.bodySmallLight()
         )
-        Spacer(modifier = Modifier.height(padding.dimension8))
+        Spacer(modifier = Modifier.height(padding.dimension4))
         Row(
             modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -149,8 +185,8 @@ fun ProductInfo(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "$${product.price}",
-                style = typography.labelLargeBold().copy(
+                text = "$${product.discountedPrice}",
+                style = typography.titleBodyBold().copy(
                     color = colors.primary
                 ),
             )
@@ -162,7 +198,8 @@ fun ProductInfo(
 fun ProductList(
     productItems: LazyPagingItems<Product>?,
     modifier: Modifier = Modifier,
-    onNavigateToDetail: (id: Int) -> Unit = {}
+    onNavigateToDetail: (id: Int) -> Unit = {},
+    onToggleFavorite: (productId: Int, isFavorite: Boolean) -> Unit
 ) {
     LazyRow(
         modifier = modifier
@@ -174,7 +211,13 @@ fun ProductList(
                     ProductCard(
                         product = productItem,
                         modifier = modifier,
-                        onNavigateToDetail = onNavigateToDetail
+                        onNavigateToDetail = onNavigateToDetail,
+                        onToggleClick = {
+                            onToggleFavorite(
+                                productItem.id,
+                                !productItem.isFavorite
+                            )
+                        }
                     )
                 }
             }
@@ -202,28 +245,29 @@ fun ProductList(
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductCard() {
-    val product =
-        Product(
-            id = 1,
-            title = "Wireless Mouse",
-            description = "Ergonomic wireless mouse with adjustable DPI settings.",
-            price = 25.99,
-            discountedPrice = 23.99,
-            sellerId = 1,
-            stock = 150,
-            rate = 4.5,
-            categoryId = 101,
-            createdAt = LocalDateTime.now().minusDays(5),
-            category = Category(
-                id = 101,
-                name = "Electronics",
-                categoryImage = "https://example.com/images/electronics.jpg"
-            ),
-            seller = Seller(
+    FMTheme {
+        val product =
+            Product(
                 id = 1,
-                name = "TechStore"
+                title = "Wireless Mouse",
+                description = "Ergonomic wireless mouse with adjustable DPI settings.",
+                price = 25.99,
+                discountedPrice = 23.99,
+                sellerId = 1,
+                stock = 150,
+                rate = 4.5,
+                categoryId = 101,
+                createdAt = LocalDateTime.now().minusDays(5),
+                category = Category(
+                    id = 101,
+                    name = "Electronics",
+                    categoryImage = "https://example.com/images/electronics.jpg"
+                ),
+                seller = Seller(
+                    id = 1,
+                    name = "TechStore"
+                )
             )
-        )
-
-    ProductCard(product = product)
+        ProductCard(product = product)
+    }
 }

@@ -3,7 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.profile
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetUserUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiEffect
@@ -18,13 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
-) : UiHandler<UiState, UiEffect>(UiState()) {
+) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
         getUser()
     }
 
-    fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
         when (uiAction) {
             UiAction.GetUser -> getUser()
         }

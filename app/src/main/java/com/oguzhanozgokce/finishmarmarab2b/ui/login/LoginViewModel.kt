@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetEmailUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.SaveOrUpdateEmailUseCase
@@ -25,13 +25,13 @@ class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val saveOrUpdateEmailUseCase: SaveOrUpdateEmailUseCase,
     private val getEmailUseCase: GetEmailUseCase
-) : UiHandler<UiState, UiEffect>(UiState()) {
+) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
         onAction(UiAction.GetEmail)
     }
 
-    fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
         when (uiAction) {
             is UiAction.GetEmail -> loadSavedEmail()
             is UiAction.EmailChanged -> updateState { copy(email = uiAction.email) }

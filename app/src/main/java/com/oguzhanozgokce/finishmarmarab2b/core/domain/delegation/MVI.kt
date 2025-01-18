@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 
-abstract class UiHandler<UiState, UiEffect>(
+abstract class MVI<UiState, UiEffect, UiAction>(
     initialState: UiState
-) : ViewModel(), UiHandlerDelegate<UiState, UiEffect> {
+) : ViewModel(), UiHandlerDelegate<UiState, UiEffect, UiAction> {
 
     private val _uiState = MutableStateFlow(initialState)
     private val _uiEffect = Channel<UiEffect>()
@@ -26,4 +26,6 @@ abstract class UiHandler<UiState, UiEffect>(
     override suspend fun emitUiEffect(effect: UiEffect) {
         _uiEffect.send(effect)
     }
+
+    override fun onAction(uiAction: UiAction) {}
 }

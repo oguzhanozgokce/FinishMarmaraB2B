@@ -65,7 +65,7 @@ inline fun <T : Any, N : Any> Resource<T>.toResourceMap(data: (T) -> N): Resourc
 }
 
 fun Int?.orZero(): Int = this ?: 0
-fun Double?.orZero(): Double = this ?: 0.0
+fun Double?.orDoubleZero(): Double = this ?: 0.0
 fun Boolean?.orFalse(): Boolean = this ?: false
 fun String?.orEmpty(): String = this ?: ""
 fun Int.isPositive(): Boolean = this > 0

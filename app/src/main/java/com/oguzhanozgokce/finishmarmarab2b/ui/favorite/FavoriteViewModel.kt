@@ -1,6 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.UiHandler
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
@@ -8,9 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor() : UiHandler<UiState, UiEffect>(UiState()) {
+class FavoriteViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
     }
 
 }

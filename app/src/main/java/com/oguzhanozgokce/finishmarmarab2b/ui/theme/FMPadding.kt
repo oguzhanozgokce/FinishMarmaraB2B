@@ -33,8 +33,8 @@ data class FMPadding(
     val dimension160: Dp,
     val dimension180: Dp,
     val dimension200: Dp,
-    val dimension260: Dp
-
+    val dimension260: Dp,
+    val dimension280: Dp
 )
 
 val Padding = FMPadding(
@@ -60,5 +60,6 @@ val Padding = FMPadding(
     dimension160 = 160.dp,
     dimension180 = 180.dp,
     dimension200 = 200.dp,
-    dimension260 = 260.dp
+    dimension260 = 260.dp,
+    dimension280 = 280.dp
 )

@@ -2,7 +2,9 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
@@ -15,17 +17,14 @@ class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState>
             HomeContract.UiState(
                 isLoading = true,
                 categoryList = emptyList(),
-                productList = emptyList()
             ),
             HomeContract.UiState(
                 isLoading = false,
                 categoryList = emptyList(),
-                productList = emptyList()
             ),
             HomeContract.UiState(
                 isLoading = false,
                 categoryList = sampleCategoryList,
-                productList = sampleProductList
             )
         )
 }
@@ -88,6 +87,10 @@ internal val sampleProductList : List<Product> = listOf(
         seller = Seller(
             id = 1,
             name = "TechStore"
+        ),
+        images = listOf(
+            Image(imageUrl = "https://example.com/images/mouse1.jpg"),
+            Image(imageUrl = "https://example.com/images/mouse2.jpg")
         )
     ),
     Product(
@@ -109,6 +112,10 @@ internal val sampleProductList : List<Product> = listOf(
         seller = Seller(
             id = 2,
             name = "GameZone"
+        ),
+        images = listOf(
+            Image(imageUrl = "https://example.com/images/mouse1.jpg"),
+            Image(imageUrl = "https://example.com/images/mouse2.jpg")
         )
     ),
     Product(
@@ -130,6 +137,10 @@ internal val sampleProductList : List<Product> = listOf(
         seller = Seller(
             id = 3,
             name = "MonitorWorld"
+        ),
+        images = listOf(
+            Image(imageUrl = "https://example.com/images/mouse1.jpg"),
+            Image(imageUrl = "https://example.com/images/mouse2.jpg")
         )
     ),
     Product(
@@ -151,6 +162,10 @@ internal val sampleProductList : List<Product> = listOf(
         seller = Seller(
             id = 4,
             name = "AudioTech"
+        ),
+        images = listOf(
+            Image(imageUrl = "https://example.com/images/mouse1.jpg"),
+            Image(imageUrl = "https://example.com/images/mouse2.jpg")
         )
     ),
     Product(
@@ -172,6 +187,10 @@ internal val sampleProductList : List<Product> = listOf(
         seller = Seller(
             id = 5,
             name = "GadgetHub"
+        ),
+        images = listOf(
+            Image(imageUrl = "https://example.com/images/mouse1.jpg"),
+            Image(imageUrl = "https://example.com/images/mouse2.jpg")
         )
     )
 )

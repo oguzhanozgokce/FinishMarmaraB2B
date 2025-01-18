@@ -21,7 +21,7 @@ object HomeContract {
         data object LoadGetUser : UiAction()
         data object FetchCategory : UiAction()
         data object FetchProduct : UiAction()
-        data object ToggleFavorite : UiAction()
+        data class ToggleFavorite(val productId: Int, val isFavorite: Boolean) : UiAction()
     }
 
     sealed class UiEffect {

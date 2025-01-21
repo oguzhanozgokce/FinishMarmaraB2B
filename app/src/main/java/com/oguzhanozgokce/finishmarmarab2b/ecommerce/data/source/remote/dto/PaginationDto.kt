@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 
 data class PaginationDto(
     @SerializedName("page")
@@ -14,4 +15,12 @@ data class PaginationDto(
 
     @SerializedName("max")
     val max: Int? = null
+)
+
+data class PaginationData<T>(
+    @SerialName("list")
+    val list: List<T>? = null,
+
+    @SerialName("pagination")
+    val pagination: PaginationDto? = null
 )

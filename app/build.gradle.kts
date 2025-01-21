@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.play.services.analytics.impl)
     implementation(libs.tools.core)
     implementation(libs.benchmark.macro)
+    implementation(libs.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)

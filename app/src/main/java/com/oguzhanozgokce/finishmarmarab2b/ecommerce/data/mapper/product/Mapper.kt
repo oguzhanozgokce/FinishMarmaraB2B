@@ -2,14 +2,19 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orDoubleZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toLocalDateTimeOrDefault
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +29,7 @@ fun ProductDto.mapToProduct(isFavorite: Boolean = false): Product {
         sellerId = this.sellerId.orZero(),
         stock = this.stock.orZero(),
         rate = this.rate.orDoubleZero(),
+        commentCount = this.commentCount.orZero(),
         categoryId = this.categoryId.orZero(),
         createdAt = this.createdAt?.let {
             LocalDateTime.parse(it, formatter)
@@ -46,6 +52,7 @@ fun Product.mapToProductDto(): ProductDto {
         sellerId = this.sellerId,
         stock = this.stock,
         rate = this.rate,
+        commentCount = this.commentCount,
         categoryId = this.categoryId,
         createdAt = this.createdAt.format(formatter),
         category = this.category?.toCategoryDto(),
@@ -68,12 +75,18 @@ fun Category.toCategoryDto() = CategoryDto(
 
 fun SellerDto.toSellerDomain() = Seller(
     id = this.id.orZero(),
-    name = this.name.orEmpty()
+    name = this.name.orEmpty(),
+    email = this.email.orEmpty(),
+    address = this.address.orEmpty(),
+    imageUrl = this.imageUrl.orEmpty()
 )
 
 fun Seller.toSellerDto() = SellerDto(
     id = this.id,
-    name = this.name
+    name = this.name,
+    email = this.email,
+    address = this.address,
+    imageUrl = this.imageUrl
 )
 
 fun ImageDto.toImageDomain() = Image(
@@ -84,3 +97,25 @@ fun Image.toImageDto() = ImageDto(
     imageUrl = this.imageUrl
 )
 
+fun QuestionAnswerDto.toQuestionAnswerDomain() = QuestionAnswer(
+    id = this.id.orZero(),
+    question = this.question.orEmpty(),
+    answer = this.answer.orEmpty(),
+    date = this.date?.toLocalDateTimeOrDefault(
+        formatter = DateTimeFormatter.ISO_DATE_TIME
+    )?.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")) ?: "",
+    userName = this.userName.orEmpty(),
+    sellerName = this.sellerName.orEmpty(),
+    sellerImageUrl = this.sellerImageUrl.orEmpty()
+)
+
+fun UserCommentDto.toUserCommentDomain() = UserComment(
+    id = this.id.orZero(),
+    userName = this.userName.orEmpty(),
+    date = this.date?.toLocalDateTimeOrDefault(
+        formatter = DateTimeFormatter.ISO_DATE_TIME
+    )?.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")) ?: "",
+    rating = this.rating.orDoubleZero(),
+    comment = this.comment.orEmpty(),
+    sellerName = this.sellerName.orEmpty()
+)

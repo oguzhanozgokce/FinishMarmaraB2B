@@ -29,7 +29,7 @@ import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
@@ -174,7 +174,7 @@ fun SignupContent(
                 modifier = Modifier.padding(vertical = padding.dimension4)
             )
             Spacer(modifier = Modifier.height(padding.dimension32))
-            CustomButton(text = "Register", onClick = { onAction(UiAction.Signup) })
+            FMButton(text = "Register", onClick = { onAction(UiAction.Signup) })
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,9 +39,9 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ErrorFooter
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProductList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
@@ -134,13 +135,14 @@ fun HomeContent(
                 uiState = uiState
             )
             ProductText()
-            ProductList(
+            FMProductList(
                 productItems = productItems,
                 onNavigateToDetail = homeNavActions.navigateToDetail,
                 onToggleFavorite = { productId, isFavorite ->
                     onAction(UiAction.ToggleFavorite(productId, isFavorite))
                 }
             )
+            Spacer(modifier = Modifier.height(padding.dimension16))
         }
     }
 }

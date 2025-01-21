@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
@@ -21,16 +22,18 @@ fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    height: Dp = padding.dimension56,
+    shape: RoundedCornerShape = RoundedCornerShape(padding.dimension16),
     contentColor: Color = FMTheme.colors.primary
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
             .padding(vertical = padding.dimension8)
-            .height(padding.dimension56)
+            .height(height)
             .fillMaxWidth(),
         border = BorderStroke(padding.dimension1, contentColor),
-        shape = RoundedCornerShape(padding.dimension16),
+        shape = shape,
         colors = ButtonDefaults.buttonColors(
             contentColor = contentColor,
             containerColor = FMTheme.colors.white

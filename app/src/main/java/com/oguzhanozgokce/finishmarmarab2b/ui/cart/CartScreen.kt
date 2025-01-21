@@ -39,7 +39,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState

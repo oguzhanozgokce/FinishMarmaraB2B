@@ -20,8 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
@@ -81,7 +80,7 @@ fun WelcomeContent(
             style = typography.headExtraLargeBold()
         )
         Spacer(modifier = Modifier.height(padding.dimension48))
-        CustomButton(
+        FMButton(
             text = "Login",
             onClick = { welcomeNavActions.navigateToLogin() }
         )

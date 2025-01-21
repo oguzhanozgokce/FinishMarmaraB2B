@@ -34,7 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLife
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
@@ -155,7 +155,7 @@ fun LoginContent(
         }
         Spacer(modifier = Modifier.height(padding.dimension32))
 
-        CustomButton(text = "Login", onClick = { onAction(UiAction.LoginClicked) })
+        FMButton(text = "Login", onClick = { onAction(UiAction.LoginClicked) })
         Spacer(modifier = Modifier.height(padding.dimension16))
 
         Row(

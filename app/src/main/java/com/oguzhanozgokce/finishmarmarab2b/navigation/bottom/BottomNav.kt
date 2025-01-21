@@ -64,6 +64,7 @@ fun FMBottomBar(
                         restoreState = true
                     }
                 },
+                enabled = currentDestination?.destination?.route != Screen.getRoute(destination.screen),
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = colors.primary,
                     unselectedIconColor = colors.white,

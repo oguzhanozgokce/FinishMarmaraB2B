@@ -33,6 +33,7 @@ playServicesAnalyticsImpl = "18.2.0"
 toolsCore = "1.0.0-alpha10"
 datastoreCoreAndroid = "1.1.1"
 benchmarkMacro = "1.3.3"
+storage = "1.5.0"
 
 
 [libraries]
@@ -78,6 +79,7 @@ play-services-analytics-impl = { group = "com.google.android.gms", name = "play-
 tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
 datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro", version.ref = "benchmarkMacro" }
+storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
 
 
 [plugins]

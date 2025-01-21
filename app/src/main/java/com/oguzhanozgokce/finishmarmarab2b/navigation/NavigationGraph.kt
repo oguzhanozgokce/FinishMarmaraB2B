@@ -15,6 +15,7 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
+import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
@@ -92,7 +93,12 @@ fun NavigationGraph(
             favorite()
             cart()
             payment()
-            detail()
+            detail(
+                actions = DetailNavActions(
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToCart = { navController.navigate(route = Screen.Cart) }
+                )
+            )
             password()
         }
     }

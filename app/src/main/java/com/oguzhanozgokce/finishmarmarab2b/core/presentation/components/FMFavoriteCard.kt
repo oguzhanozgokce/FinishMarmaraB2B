@@ -214,6 +214,7 @@ fun FavoriteCardPreview() {
         sellerId = 4,
         stock = 120,
         rate = 4.6,
+        commentCount = 100,
         categoryId = 101,
         createdAt = LocalDateTime.now().minusDays(15),
         category = Category(
@@ -223,7 +224,10 @@ fun FavoriteCardPreview() {
         ),
         seller = Seller(
             id = 4,
-            name = "AudioTech"
+            name = "AudioTech",
+            email = "ozgokceoguzhan34@gmail.com",
+            address = "456 Tech Street",
+            imageUrl = "https://example.com/images/audiotech.jpg"
         )
     )
     FMFavoriteCard(product = product)

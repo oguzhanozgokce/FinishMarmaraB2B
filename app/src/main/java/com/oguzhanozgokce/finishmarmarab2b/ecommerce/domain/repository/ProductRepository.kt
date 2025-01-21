@@ -9,6 +9,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
@@ -24,4 +26,7 @@ interface ProductRepository {
     fun addProductToFavorites(addFavoriteProductRequest: AddFavoriteProductRequest): Flow<Resource<Unit>>
     fun toggleFavorite(toggleFavoriteRequest: ToggleFavoriteRequest): Flow<Resource<Unit>>
     fun deleteFavoriteProduct(deleteFavoriteProductRequest: DeleteFavoriteProductRequest): Flow<Resource<Unit>>
+    fun getProductComments(productId: Int): Flow<PagingData<UserComment>>
+    fun getProductQuestionsAndAnswers(productId: Int): Flow<PagingData<QuestionAnswer>>
+    suspend fun getProductDetail(productId: Int): Resource<Product>
 }

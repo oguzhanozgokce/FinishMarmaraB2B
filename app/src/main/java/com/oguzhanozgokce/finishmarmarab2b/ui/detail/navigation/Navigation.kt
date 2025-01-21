@@ -9,7 +9,12 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailViewModel
 
-fun NavGraphBuilder.detail(){
+data class DetailNavActions(
+    val navigateToBack: () -> Unit,
+    val navigateToCart: () -> Unit,
+)
+
+fun NavGraphBuilder.detail(actions: DetailNavActions) {
     composable<Screen.Detail> { backStackEntry ->
         backStackEntry.arguments?.getInt("id")
         val viewModel: DetailViewModel = hiltViewModel()
@@ -18,7 +23,8 @@ fun NavGraphBuilder.detail(){
         DetailScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            navActions = actions
         )
     }
 }

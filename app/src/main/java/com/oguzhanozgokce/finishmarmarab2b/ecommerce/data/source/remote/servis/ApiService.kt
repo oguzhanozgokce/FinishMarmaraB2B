@@ -1,13 +1,20 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DETAIL
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_DELETE_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
@@ -47,7 +54,7 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("orderBy") orderBy: String,
         @Query("sort") sort: String
-    ) : Response<ApiResponse<ProductResponse>>
+    ): Response<ApiResponse<PaginationData<ProductDto>>>
 
     @GET(GET_FAVORITE_PRODUCTS)
     suspend fun getFavoriteProducts(
@@ -71,5 +78,27 @@ interface ApiService {
     suspend fun addProductToFavorites(
         @Body request: AddFavoriteProductRequest
     ) : Response<ApiResponse<Unit>>
+
+    @GET(GET_COMMENT_PRODUCT)
+    suspend fun getUserComments(
+        @Path("product_id") productId: Int,
+        @Query("page") page: Int,
+        @Query("orderBy") orderBy: String,
+        @Query("sort") sort: String
+    ) :  Response<ApiResponse<PaginationData<UserCommentDto>>>
+
+    @GET(GET_PRODUCT_DETAIL)
+    suspend fun getProductDetail(
+        @Path("id") id: Int
+    ) : Response<ApiResponse<ProductDto>>
+
+    @GET(GET_QUESTIONS_PRODUCT)
+    suspend fun getQuestionsAndAnswers(
+        @Path("product_id") productId: Int,
+        @Query("page") page: Int,
+        @Query("orderBy") orderBy: String,
+        @Query("sort") sort: String
+    ) : Response<ApiResponse<PaginationData<QuestionAnswerDto>>>
+
 }
 

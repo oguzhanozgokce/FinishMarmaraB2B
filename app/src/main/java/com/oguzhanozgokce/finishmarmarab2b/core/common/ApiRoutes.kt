@@ -9,4 +9,7 @@ object ApiRoutes {
     const val GET_FAVORITE_PRODUCTS = "/api/Product/getFavoriteProducts"
     const val POST_DELETE_FAVORITE_PRODUCT = "/api/Product/deleteProduct"
     const val POST_ADD_FAVORITE_PRODUCT = "/api/Favorite/{user_id}"
+    const val GET_COMMENT_PRODUCT = "/api/Comment/{product_id}"
+    const val GET_PRODUCT_DETAIL = "/api/Product/{id}"
+    const val GET_QUESTIONS_PRODUCT = "/api/Question/{product_id}"
 }

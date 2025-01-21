@@ -27,6 +27,9 @@ data class ProductDto(
     @SerializedName("rate")
     val rate: Double? = null,
 
+    @SerializedName("comment_Count")
+    val commentCount: Int? = null,
+
     @SerializedName("category_Id")
     val categoryId: Int? = null,
 

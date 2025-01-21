@@ -7,5 +7,14 @@ data class SellerDto(
     val id: Int? = null,
 
     @SerializedName("name")
-    val name: String? = null
+    val name: String? = null,
+
+    @SerializedName("email")
+    val email: String? = null,
+
+    @SerializedName("address")
+    val address: String? = null,
+
+    @SerializedName("image_url")
+    val imageUrl: String? = null
 )

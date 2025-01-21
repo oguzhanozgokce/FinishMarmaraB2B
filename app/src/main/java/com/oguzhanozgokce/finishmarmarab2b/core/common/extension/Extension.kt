@@ -5,24 +5,40 @@ import android.content.ContextWrapper
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawOutline
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
 
 @Composable
 fun <T> Flow<T>.CollectWithLifecycle(
@@ -48,13 +64,14 @@ inline fun <T> Resource<T>.onFailure(action: (String) -> Unit): Resource<T> {
     return this
 }
 
-@OptIn(ExperimentalContracts::class)
-fun <T : Any> Resource<T>.isSuccess(): Boolean {
-    contract {
-        returns(true) implies (this@isSuccess is Resource.Success<T>)
-        returns(false) implies (this@isSuccess is Resource.Error)
+inline fun <T> Resource<T>.fold(
+    onSuccess: (T) -> Unit,
+    onError: (String) -> Unit,
+) {
+    when (this) {
+        is Resource.Success -> onSuccess(data)
+        is Resource.Error -> onError(message)
     }
-    return this is Resource.Success
 }
 
 inline fun <T : Any, N : Any> Resource<T>.toResourceMap(data: (T) -> N): Resource<N> {
@@ -68,7 +85,6 @@ fun Int?.orZero(): Int = this ?: 0
 fun Double?.orDoubleZero(): Double = this ?: 0.0
 fun Boolean?.orFalse(): Boolean = this ?: false
 fun String?.orEmpty(): String = this ?: ""
-fun Int.isPositive(): Boolean = this > 0
 
 
 inline fun Modifier.noRippleClickable(
@@ -116,6 +132,83 @@ fun String?.toLocalDateOrDefault(formatter: DateTimeFormatter, defaultDate: Loca
             defaultDate
         }
     } ?: defaultDate
+}
+
+fun String?.toLocalDateTimeOrDefault(
+    formatter: DateTimeFormatter,
+    defaultDateTime: LocalDateTime = LocalDateTime.now()
+): LocalDateTime {
+    return this?.let {
+        try {
+            LocalDateTime.parse(it, formatter)
+        } catch (e: Exception) {
+            Log.e("DateParsing", "Invalid date format: $it, using default date and time.", e)
+            defaultDateTime
+        }
+    } ?: defaultDateTime
+}
+
+
+@Composable
+fun Modifier.shimmer(
+    isLoading: Boolean,
+    shape: Shape = MaterialTheme.shapes.medium,
+    shimmerColors: Color = Color.Gray.copy(alpha = 0.2f),
+    placeholderColor: Color = Color.Gray.copy(alpha = 0.1f),
+    durationMillis: Int = 1000
+): Modifier {
+    if (!isLoading) return this
+    val transition = rememberInfiniteTransition(label = "")
+
+    val shimmerProgress = transition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.6f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = durationMillis, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "Shimmer Progress"
+    )
+
+    return this.drawWithContent {
+        val outline = shape.createOutline(size, layoutDirection, this)
+        drawOutline(outline, color = placeholderColor)
+        drawOutline(outline, color = shimmerColors, alpha = shimmerProgress.value)
+    }
+}
+
+fun <T : Any> createPager(
+    pageSize: Int = 20,
+    pagingSourceFactory: () -> PagingSource<Int, T>
+): Flow<PagingData<T>> {
+    return Pager(
+        config = PagingConfig(
+            pageSize = pageSize,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = pagingSourceFactory
+    ).flow
+}
+
+@Composable
+fun <T : Any> mockLazyPagingItems(data: List<T>): LazyPagingItems<T> {
+    val pagingSource = object : PagingSource<Int, T>() {
+        override fun getRefreshKey(state: PagingState<Int, T>): Int? = null
+
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
+            return LoadResult.Page(
+                data = data,
+                prevKey = null,
+                nextKey = null
+            )
+        }
+    }
+
+    val pager = Pager(PagingConfig(pageSize = data.size)) {
+        pagingSource
+    }
+
+    return pager.flow.collectAsLazyPagingItems()
 }
 
 

@@ -2,32 +2,30 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.detail
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 
 class DetailScreenPreviewProvider : PreviewParameterProvider<DetailContract.UiState> {
+
     override val values: Sequence<DetailContract.UiState>
         get() = sequenceOf(
             DetailContract.UiState(
                 isLoading = true,
-                product = ProductUi(),
+                product = null
             ),
             DetailContract.UiState(
                 isLoading = false,
-                product = ProductUi()
+                product = PreviewMockData.defaultProduct
             ),
             DetailContract.UiState(
                 isLoading = false,
-                product = ProductUi(
-                    id = 1,
-                    name = "Sample Product",
-                    price = "$100",
-                    imageUrl = R.drawable.image_product, // Örnek görsel
-                    description = "This is a sample product description.",
-                    discount = 10,
-                    salePrice = "$90",
-                    rating = 4.5f,
-                    sellerName = "Sample Seller"
-                )
+                product = PreviewMockData.productWithNoImage
+            ),
+            DetailContract.UiState(
+                isLoading = false,
+                product = PreviewMockData.outOfStockProduct
             )
         )
 }
+

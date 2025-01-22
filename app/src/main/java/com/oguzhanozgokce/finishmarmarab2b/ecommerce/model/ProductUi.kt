@@ -6,7 +6,7 @@ data class ProductUi(
     val price: String = "",
     val imageUrl: Int = 0,
     val description: String = "",
-    val discount: Int = 0 ,
+    val discount: Int = 0,
     val salePrice: String = "",
     val rating: Float = 1f,
     val sellerName: String = "",

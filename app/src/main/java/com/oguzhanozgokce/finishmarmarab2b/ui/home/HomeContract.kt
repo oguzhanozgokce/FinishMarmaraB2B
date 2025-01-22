@@ -4,7 +4,6 @@ import androidx.paging.PagingData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import kotlinx.coroutines.flow.Flow
 
 object HomeContract {

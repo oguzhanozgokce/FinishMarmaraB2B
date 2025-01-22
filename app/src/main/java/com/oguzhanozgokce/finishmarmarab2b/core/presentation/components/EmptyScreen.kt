@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable

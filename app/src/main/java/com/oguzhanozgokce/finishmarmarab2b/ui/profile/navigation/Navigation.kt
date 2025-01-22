@@ -9,7 +9,6 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileViewModel
 
-
 fun NavGraphBuilder.profile() {
     composable<Screen.Profile> {
         val viewModel: ProfileViewModel = hiltViewModel()

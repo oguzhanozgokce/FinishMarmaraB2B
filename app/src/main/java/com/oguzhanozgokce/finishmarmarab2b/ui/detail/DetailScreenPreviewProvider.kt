@@ -1,9 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.detail
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 
 class DetailScreenPreviewProvider : PreviewParameterProvider<DetailContract.UiState> {
@@ -28,4 +25,3 @@ class DetailScreenPreviewProvider : PreviewParameterProvider<DetailContract.UiSt
             )
         )
 }
-

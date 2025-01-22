@@ -25,8 +25,8 @@ class SignupViewModel @Inject constructor(
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     override fun onAction(uiAction: UiAction) {
-        when(uiAction){
-            is UiAction.NameChanged ->  updateState { copy(name = uiAction.name) }
+        when (uiAction) {
+            is UiAction.NameChanged -> updateState { copy(name = uiAction.name) }
             is UiAction.SurnameChanged -> updateState { copy(surname = uiAction.surname) }
             is UiAction.EmailChanged -> updateState { copy(email = uiAction.email) }
             is UiAction.PasswordChanged -> updateState { copy(password = uiAction.password) }
@@ -50,8 +50,8 @@ class SignupViewModel @Inject constructor(
             phoneNumber = phoneNumber
         )
         signUpUseCase(signupRequest)
-            .onStart { updateState { copy( isLoading = true) }  }
-            .onCompletion { updateState { copy( isLoading = false) } }
+            .onStart { updateState { copy(isLoading = true) } }
+            .onCompletion { updateState { copy(isLoading = false) } }
             .onEach { resource ->
                 resource.onSuccess {
                     saveEmail(email)

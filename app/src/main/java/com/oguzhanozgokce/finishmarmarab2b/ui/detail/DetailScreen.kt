@@ -83,7 +83,8 @@ fun DetailContent(
         topBar = {
             TopBarDetail(
                 onBackClick = navActions.navigateToBack,
-                onCartClick = navActions.navigateToCart
+                onCartClick = navActions.navigateToCart,
+                onSearchClick = navActions.navigateToSearch
             )
         },
         bottomBar = {
@@ -158,7 +159,8 @@ fun DetailScreenPreview(
             onAction = {},
             navActions = DetailNavActions(
                 navigateToBack = {},
-                navigateToCart = {}
+                navigateToCart = {},
+                navigateToSearch = {}
             )
         )
     }

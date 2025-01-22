@@ -11,4 +11,3 @@ data class User(
     val birthDate: LocalDate = LocalDate.now(),
     val registerDate: LocalDate = LocalDate.now()
 )
-

@@ -2,13 +2,11 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.ProductUi
 import java.time.LocalDateTime
 
 class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState> {
@@ -29,7 +27,7 @@ class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState>
         )
 }
 
-internal val sampleCategoryList : List<CategoryUi> = listOf(
+internal val sampleCategoryList: List<CategoryUi> = listOf(
     CategoryUi(
         id = 1,
         name = "Electronics",
@@ -67,7 +65,7 @@ internal val sampleCategoryList : List<CategoryUi> = listOf(
     ),
 )
 
-internal val sampleProductList : List<Product> = listOf(
+internal val sampleProductList: List<Product> = listOf(
     Product(
         id = 1,
         title = "Wireless Mouse",

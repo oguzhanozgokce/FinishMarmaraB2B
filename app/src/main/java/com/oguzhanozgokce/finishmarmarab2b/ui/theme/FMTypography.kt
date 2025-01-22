@@ -26,7 +26,6 @@ val Typography = FMTypography(
                 trim = LineHeightStyle.Trim.None
             )
         )
-
     },
     headExtraLargeBold = {
         TextStyle(
@@ -119,6 +118,19 @@ val Typography = FMTypography(
             )
         )
     },
+    titleMediumMedium = {
+        TextStyle(
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = FontSize.medium,
+            color = colors.text,
+            lineHeight = 20.sp,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = LineHeightStyle.Trim.None
+            )
+        )
+    },
     titleMediumLight = {
         TextStyle(
             fontFamily = poppinsFontFamily,
@@ -197,6 +209,19 @@ val Typography = FMTypography(
             )
         )
     },
+    bodySmallNormal = {
+        TextStyle(
+            fontFamily = poppinsFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = FontSize.small,
+            color = colors.text,
+            lineHeight = 16.sp,
+            lineHeightStyle = LineHeightStyle(
+                alignment = LineHeightStyle.Alignment.Center,
+                trim = LineHeightStyle.Trim.None
+            )
+        )
+    },
     labelLargeBold = {
         TextStyle(
             fontFamily = poppinsFontFamily,
@@ -222,11 +247,13 @@ data class FMTypography(
     val titleLargeBold: @Composable () -> TextStyle,
     val titleBodyBold: @Composable () -> TextStyle,
     val titleMediumSemiBold: @Composable () -> TextStyle,
+    val titleMediumMedium: @Composable () -> TextStyle,
     val titleMediumLight: @Composable () -> TextStyle,
     val titleSmallMedium: @Composable () -> TextStyle,
     val bodyTitleBold: @Composable () -> TextStyle,
     val bodyLargeBold: @Composable () -> TextStyle,
     val bodyMediumNormal: @Composable () -> TextStyle,
     val bodySmallLight: @Composable () -> TextStyle,
+    val bodySmallNormal: @Composable () -> TextStyle,
     val labelLargeBold: @Composable () -> TextStyle,
 )

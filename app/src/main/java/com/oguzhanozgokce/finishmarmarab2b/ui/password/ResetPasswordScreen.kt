@@ -54,5 +54,3 @@ fun ResetPasswordScreenPreview(
         onAction = {},
     )
 }
-
-

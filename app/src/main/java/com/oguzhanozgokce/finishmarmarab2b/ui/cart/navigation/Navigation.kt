@@ -9,7 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartViewModel
 
-fun NavGraphBuilder.cart(){
+fun NavGraphBuilder.cart() {
     composable<Screen.Cart> {
         val viewModel: CartViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()

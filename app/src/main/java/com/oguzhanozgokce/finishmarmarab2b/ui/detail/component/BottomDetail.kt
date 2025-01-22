@@ -1,8 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.detail.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,16 +8,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
@@ -59,24 +55,14 @@ fun BottomDetail(
         FMButton(
             text = "Basket",
             onClick = onAddToCart,
-            modifier = Modifier
-                .weight(1f)
-                .padding(padding.dimension4),
-            colors = colors.primary,
-            shape = RoundedCornerShape(8.dp),
-            elevation = null,
-            height = padding.dimension48,
-            enabled = true
+            modifier = Modifier.weight(1f),
+            height = padding.dimension48
         )
         Spacer(modifier = Modifier.width(padding.dimension8))
-        CustomOutlinedButton(
+        FMOutlinedButton(
             text = "Buy Now",
             onClick = onNowAddToCart,
-            modifier = Modifier
-                .weight(1f)
-                .padding(padding.dimension4),
-            contentColor = colors.primary,
-            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.weight(1f),
             height = padding.dimension48
         )
     }

@@ -53,7 +53,7 @@ fun ImageList(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),

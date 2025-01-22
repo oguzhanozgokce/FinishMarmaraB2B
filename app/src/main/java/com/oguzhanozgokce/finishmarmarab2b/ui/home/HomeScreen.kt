@@ -37,7 +37,6 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLife
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getFormattedName
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ErrorFooter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProductList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
@@ -82,9 +81,6 @@ fun HomeScreen(
                 onRetry = { productItems.retry() }
             )
         }
-        refreshState !is LoadState.Loading && itemCount == 0 -> {
-            EmptyScreen()
-        }
         else -> {
             HomeContent(
                 uiState = uiState,
@@ -124,7 +120,7 @@ fun HomeContent(
         ) {
             FMSearch(
                 modifier = Modifier,
-                onNavigateToSearch = {}
+                onNavigateToSearch = { homeNavActions.navigateToSearch() }
             )
             SaleCard(modifier = Modifier.fillMaxWidth())
             Text(
@@ -220,7 +216,7 @@ fun SaleCard(
                 ),
             )
             TextButton(
-                onClick = { /* TODO: Navigate to the sale page */ },
+                onClick = {},
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.End)
@@ -287,10 +283,15 @@ fun ProductText(
 fun HomeScreenPreview(
     @PreviewParameter(HomeScreenPreviewProvider::class) uiState: UiState,
 ) {
-    HomeScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-        homeNavActions = HomeNavActions(navigateToDetail = {})
-    )
+    FMTheme {
+        HomeScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            homeNavActions = HomeNavActions(
+                navigateToDetail = {},
+                navigateToSearch = {}
+            )
+        )
+    }
 }

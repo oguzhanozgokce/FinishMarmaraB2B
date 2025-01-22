@@ -27,8 +27,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleCategoryList
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable

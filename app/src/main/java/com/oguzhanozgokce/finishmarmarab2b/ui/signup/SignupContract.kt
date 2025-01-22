@@ -12,20 +12,20 @@ object SignupContract {
         val list: List<String> = emptyList(),
     )
 
-    sealed class UiAction{
-        data class NameChanged(val name: String): UiAction()
-        data class SurnameChanged(val surname: String): UiAction()
-        data class EmailChanged(val email: String): UiAction()
-        data class PasswordChanged(val password: String): UiAction()
-        data class PhoneNumberChanged(val phoneNumber: String): UiAction()
-        data object Signup: UiAction()
-        data object ClearError: UiAction()
+    sealed class UiAction {
+        data class NameChanged(val name: String) : UiAction()
+        data class SurnameChanged(val surname: String) : UiAction()
+        data class EmailChanged(val email: String) : UiAction()
+        data class PasswordChanged(val password: String) : UiAction()
+        data class PhoneNumberChanged(val phoneNumber: String) : UiAction()
+        data object Signup : UiAction()
+        data object ClearError : UiAction()
     }
 
     sealed class UiEffect {
-        data class ShowToast(val message: String): UiEffect()
-        data class ShowAlertDialog(val message: String): UiEffect()
-        data object GoToHome: UiEffect()
-        data object GoToBack: UiEffect()
+        data class ShowToast(val message: String) : UiEffect()
+        data class ShowAlertDialog(val message: String) : UiEffect()
+        data object GoToHome : UiEffect()
+        data object GoToBack : UiEffect()
     }
 }

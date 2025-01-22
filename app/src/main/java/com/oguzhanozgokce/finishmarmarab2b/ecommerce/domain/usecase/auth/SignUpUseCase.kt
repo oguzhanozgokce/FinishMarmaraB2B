@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth
 
-
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.capitalizeFirstLetter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.validation.InputValidator

@@ -31,4 +31,3 @@ fun NavGraphBuilder.login(
         )
     }
 }
-

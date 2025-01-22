@@ -13,4 +13,3 @@ class GetUserUseCase @Inject constructor(
         return authRepository.getUser()
     }
 }
-

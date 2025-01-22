@@ -18,5 +18,3 @@ data class UserDto(
     @SerializedName("created_At")
     val createdAt: String? = ""
 )
-
-

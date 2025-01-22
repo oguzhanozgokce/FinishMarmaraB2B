@@ -20,7 +20,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMNotification(
     tint: Color = colors.primary,
     icon: ImageVector = icons.notification,
-){
+) {
     Box(
         modifier = Modifier
             .size(padding.dimension48)

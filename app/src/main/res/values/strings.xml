@@ -24,4 +24,6 @@
     <string name="empty_favorites_description">You can add products to your favorites by clicking the heart icon on the product page. This way, you can access your products faster.</string>
     <string name="empty_favorites_title">Oops! Your Favorites are Waiting for You!</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="clear_all">Clear All</string>
+    <string name="history_searches">History Searches</string>
 </resources>

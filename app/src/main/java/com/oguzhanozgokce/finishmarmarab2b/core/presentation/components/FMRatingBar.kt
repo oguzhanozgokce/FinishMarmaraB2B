@@ -41,7 +41,6 @@ fun FMRatingBar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
         repeat(totalStars) { index ->
             val isActive = index < rating.toInt()
             val isHalfStar = (rating - index).let { it > 0 && it < 1 }
@@ -57,9 +56,13 @@ fun FMRatingBar(
                 modifier = Modifier
                     .size(starSize)
                     .run {
-                        if (onRatingChanged != null) clickable {
-                            onRatingChanged((index + 1).toFloat())
-                        } else this
+                        if (onRatingChanged != null) {
+                            clickable {
+                                onRatingChanged((index + 1).toFloat())
+                            }
+                        } else {
+                            this
+                        }
                     }
             )
         }
@@ -72,7 +75,6 @@ fun FMRatingBar(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun RatingBarPreview() {
@@ -81,4 +83,3 @@ fun RatingBarPreview() {
         onRatingChanged = { newRating -> println("New rating: $newRating") }
     )
 }
-

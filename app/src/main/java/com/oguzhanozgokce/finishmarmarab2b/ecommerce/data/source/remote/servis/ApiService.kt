@@ -62,22 +62,22 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("orderBy") orderBy: String,
         @Query("sort") sort: String
-    ) : Response<ApiResponse<ProductResponse>>
+    ): Response<ApiResponse<ProductResponse>>
 
     @POST(POST_TOGGLE_FAVORITE)
     suspend fun toggleFavorite(
         @Body request: ToggleFavoriteRequest
-    ) : Response<ApiResponse<Unit>>
+    ): Response<ApiResponse<Unit>>
 
     @POST(POST_DELETE_FAVORITE_PRODUCT)
     suspend fun deleteFavoriteProduct(
         @Body request: DeleteFavoriteProductRequest
-    ) : Response<ApiResponse<Unit>>
+    ): Response<ApiResponse<Unit>>
 
     @POST(POST_ADD_FAVORITE_PRODUCT)
     suspend fun addProductToFavorites(
         @Body request: AddFavoriteProductRequest
-    ) : Response<ApiResponse<Unit>>
+    ): Response<ApiResponse<Unit>>
 
     @GET(GET_COMMENT_PRODUCT)
     suspend fun getUserComments(
@@ -85,12 +85,12 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("orderBy") orderBy: String,
         @Query("sort") sort: String
-    ) :  Response<ApiResponse<PaginationData<UserCommentDto>>>
+    ): Response<ApiResponse<PaginationData<UserCommentDto>>>
 
     @GET(GET_PRODUCT_DETAIL)
     suspend fun getProductDetail(
         @Path("id") id: Int
-    ) : Response<ApiResponse<ProductDto>>
+    ): Response<ApiResponse<ProductDto>>
 
     @GET(GET_QUESTIONS_PRODUCT)
     suspend fun getQuestionsAndAnswers(
@@ -98,7 +98,5 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("orderBy") orderBy: String,
         @Query("sort") sort: String
-    ) : Response<ApiResponse<PaginationData<QuestionAnswerDto>>>
-
+    ): Response<ApiResponse<PaginationData<QuestionAnswerDto>>>
 }
-

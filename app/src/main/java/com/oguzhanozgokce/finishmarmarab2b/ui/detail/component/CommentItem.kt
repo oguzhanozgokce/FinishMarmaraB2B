@@ -8,22 +8,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAnnotatedText
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.RatingBar
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
@@ -65,35 +61,27 @@ fun CommentItem(
             style = typography.bodySmallLight(),
             modifier = Modifier.padding(top = padding.dimension4)
         )
-        Card(
+        FMCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
                 .height(75.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = colors.white
-            )
-        ) {
-            Text(
-                text = comment.comment,
-                style = typography.titleSmallMedium(),
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(padding.dimension8)
-            )
-        }
-
+            content = {
+                Text(
+                    text = comment.comment,
+                    style = typography.titleSmallMedium(),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(padding.dimension8)
+                )
+            }
+        )
         Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = buildAnnotatedString {
-                append("Seller ")
-                withStyle(style = SpanStyle(color = colors.primary)) {
-                    append(comment.sellerName)
-                }
-            },
+        FMAnnotatedText(
+            prefix = "Seller",
+            highlightedText = comment.sellerName,
+            modifier = Modifier.padding(bottom = padding.dimension4),
             style = typography.bodySmallLight(),
-            modifier = Modifier.padding(top = padding.dimension4)
         )
     }
 }

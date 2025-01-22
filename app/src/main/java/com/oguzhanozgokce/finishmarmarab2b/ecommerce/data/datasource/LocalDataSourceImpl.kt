@@ -1,20 +1,19 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.datasource
 
-import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import kotlinx.coroutines.flow.first
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-)  : LocalDataSource {
+) : LocalDataSource {
     companion object {
-        private  val USER_ID_KEY = stringPreferencesKey("id")
-        private  val EMAIL_KEY = stringPreferencesKey("email")
+        private val USER_ID_KEY = stringPreferencesKey("id")
+        private val EMAIL_KEY = stringPreferencesKey("email")
     }
 
     override suspend fun saveOrUpdateUserId(id: Int) {

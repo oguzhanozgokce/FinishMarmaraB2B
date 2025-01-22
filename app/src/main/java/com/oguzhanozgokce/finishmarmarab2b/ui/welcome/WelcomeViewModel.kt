@@ -11,7 +11,5 @@ import javax.inject.Inject
 class WelcomeViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     override fun onAction(uiAction: UiAction) {
-
     }
-
 }

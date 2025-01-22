@@ -4,13 +4,11 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user.mapToUser
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AuthRepository
@@ -24,7 +22,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : AuthRepository {
 
-    override  fun getUserId(): Flow<Resource<Int>> = flow {
+    override fun getUserId(): Flow<Resource<Int>> = flow {
         val userId = localDataSource.getUserId()
         if (userId == null) {
             emit(Resource.Error("User ID not found in local storage."))
@@ -50,7 +48,6 @@ class AuthRepositoryImpl @Inject constructor(
     }.catch { e ->
         emit(Resource.Error("Unexpected error: ${e.localizedMessage}"))
     }
-
 
     override fun getUser(): Flow<Resource<User>> = flow {
         val userId = localDataSource.getUserId()

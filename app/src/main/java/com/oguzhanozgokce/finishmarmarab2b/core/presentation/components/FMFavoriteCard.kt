@@ -36,8 +36,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 import java.time.LocalDateTime
 
@@ -89,7 +89,7 @@ fun RowScope.ProductImage() {
         modifier = Modifier
             .weight(1f)
             .padding(end = padding.dimension8)
-            .aspectRatio(3f/4f)
+            .aspectRatio(3f / 4f)
             .clip(RoundedCornerShape(padding.dimension8)),
         contentScale = ContentScale.Crop
     )

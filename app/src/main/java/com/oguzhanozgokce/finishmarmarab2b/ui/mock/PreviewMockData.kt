@@ -6,6 +6,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
+import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
+import com.oguzhanozgokce.finishmarmarab2b.ui.search.PopularSearch
 import java.time.LocalDateTime
 
 object PreviewMockData {
@@ -31,8 +33,12 @@ object PreviewMockData {
             name = "Test Seller",
         ),
         images = listOf(
-            Image("https://img.freepik.com/free-vector/realistic-natural-cream-ad-template_52683-19298.jpg?t=st=1737368792~exp=1737372392~hmac=23a9141fa69e0f8ec951357a3df6b37447768a76207c649cd152be0ba2c74f62&w=1800"),
-            Image("https://img.freepik.com/free-vector/cosmetic-realistic-with-cream-jar_88138-122.jpg?t=st=1737368852~exp=1737372452~hmac=0036a43a7ec668f2189018a44f07a57a6ee1beec303046890a0f5d21161e5519&w=2000")
+            Image(
+                "https://img.freepik.com/free-vector/realistic-natural-cream-ad-template_52683-19298.jpg?t=st=1737368792~exp=1737372392~hmac=23a9141fa69e0f8ec951357a3df6b37447768a76207c649cd152be0ba2c74f62&w=1800"
+            ),
+            Image(
+                "https://img.freepik.com/free-vector/cosmetic-realistic-with-cream-jar_88138-122.jpg?t=st=1737368852~exp=1737372452~hmac=0036a43a7ec668f2189018a44f07a57a6ee1beec303046890a0f5d21161e5519&w=2000"
+            )
         ),
         isFavorite = false
     )
@@ -95,5 +101,23 @@ object PreviewMockData {
         userName = "O** O**",
         sellerName = "Nimbus Market",
         comment = "Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün. Bu ürün çok iyi bir ürün.",
+    )
+
+    val historyList = listOf(
+        HistorySearch(text = "Iphone 13"),
+        HistorySearch(text = "Headphones"),
+        HistorySearch(text = "Camera"),
+        HistorySearch(text = "Iphone 13"),
+        HistorySearch(text = "Headphones"),
+        HistorySearch(text = "Camera"),
+    )
+
+    val popularList = listOf(
+        PopularSearch(text = "Iphone 13"),
+        PopularSearch(text = "Headphones"),
+        PopularSearch(text = "Camera"),
+        PopularSearch(text = "Iphone 13"),
+        PopularSearch(text = "Headphones"),
+        PopularSearch(text = "Camera"),
     )
 }

@@ -8,6 +8,5 @@ object WelcomeContract {
 
     sealed class UiAction
 
-    sealed class UiEffect {
-    }
+    sealed class UiEffect
 }

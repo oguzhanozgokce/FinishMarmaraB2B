@@ -12,5 +12,4 @@ class CartViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiS
 
     override fun onAction(uiAction: UiAction) {
     }
-
 }

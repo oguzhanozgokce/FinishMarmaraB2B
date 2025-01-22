@@ -10,10 +10,10 @@ sealed class BottomBarDestination(
     val icon: @Composable () -> ImageVector,
     val name: String
 ) {
-    data object Home : BottomBarDestination(Screen.Home, {icons.home}, "Home")
-    data object Favorite : BottomBarDestination(Screen.Favorite, {icons.favorite}, "Favorite")
-    data object Cart : BottomBarDestination(Screen.Cart, {icons.cart}, "Cart")
-    data object Profile : BottomBarDestination(Screen.Profile, {icons.profile}, "Profile")
+    data object Home : BottomBarDestination(Screen.Home, { icons.home }, "Home")
+    data object Favorite : BottomBarDestination(Screen.Favorite, { icons.favorite }, "Favorite")
+    data object Cart : BottomBarDestination(Screen.Cart, { icons.cart }, "Cart")
+    data object Profile : BottomBarDestination(Screen.Profile, { icons.profile }, "Profile")
 }
 
 val bottomBarDestination = listOf(

@@ -1,13 +1,11 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user
 
-import android.util.Log
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orEmpty
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toLocalDateOrDefault
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 fun User.mapToUserDto(): UserDto {
@@ -48,4 +46,3 @@ fun GetUserResponse.mapToUser(): User {
         registerDate = this.createdAt.toLocalDateOrDefault(formatter)
     )
 }
-

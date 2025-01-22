@@ -33,8 +33,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -126,7 +126,6 @@ fun FavoriteContent(
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
@@ -70,56 +69,52 @@ fun QuestionItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        Card(
+        FMCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
                 .height(90.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = colors.white
-            )
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp, vertical = padding.dimension4)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+            content = {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
                 ) {
-                    AsyncImage(
-                        model = questionAnswer.sellerImageUrl,
-                        contentDescription = null,
+                    Row(
                         modifier = Modifier
-                            .size(padding.dimension24)
-                            .clip(CircleShape)
-                            .border(
-                                width = padding.dimension1,
-                                color = colors.lightGray,
-                                shape = CircleShape
-                            )
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
+                            .padding(horizontal = 8.dp, vertical = padding.dimension4)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        AsyncImage(
+                            model = questionAnswer.sellerImageUrl,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(padding.dimension24)
+                                .clip(CircleShape)
+                                .border(
+                                    width = padding.dimension1,
+                                    color = colors.lightGray,
+                                    shape = CircleShape
+                                )
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = questionAnswer.sellerName,
+                            style = typography.titleSmallMedium().copy(
+                                fontSize = fontSize.mediumSmall
+                            ),
+                        )
+                    }
                     Text(
-                        text = questionAnswer.sellerName,
-                        style = typography.titleSmallMedium().copy(
-                            fontSize = fontSize.mediumSmall
-                        ),
+                        text = questionAnswer.answer,
+                        style = typography.titleSmallMedium(),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = padding.dimension4),
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
-                Text(
-                    text = questionAnswer.answer,
-                    style = typography.titleSmallMedium(),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = padding.dimension4),
-                    overflow = TextOverflow.Ellipsis
-                )
             }
-        }
+        )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -48,6 +48,3 @@ data class ProductDto(
     @SerializedName("pagination")
     val pagination: PaginationDto? = null
 )
-
-
-

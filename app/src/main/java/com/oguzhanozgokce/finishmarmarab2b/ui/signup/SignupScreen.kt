@@ -29,9 +29,9 @@ import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect

@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
             FMTheme {
                 val navController = rememberNavController()
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = colors.white
+                    modifier = Modifier.fillMaxSize(),
+                    color = colors.white
                 ) {
                     NavigationGraph(navController = navController)
                 }
@@ -29,4 +30,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-

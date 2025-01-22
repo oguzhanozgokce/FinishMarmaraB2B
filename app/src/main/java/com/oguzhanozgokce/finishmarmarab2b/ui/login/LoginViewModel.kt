@@ -49,8 +49,8 @@ class LoginViewModel @Inject constructor(
             password = password
         )
         signInUseCase(signInRequest)
-            .onStart { updateState { copy( isLoading = true) } }
-            .onCompletion { updateState { copy( isLoading = false) } }
+            .onStart { updateState { copy(isLoading = true) } }
+            .onCompletion { updateState { copy(isLoading = false) } }
             .onEach { resource ->
                 resource.onSuccess {
                     saveEmail(email)

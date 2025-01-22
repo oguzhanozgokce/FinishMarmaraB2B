@@ -1,3 +1,35 @@
+style:
+  WildcardImport:
+    active: false
+  MagicNumber:
+    active: true
+    excludes: [ '**/theme/**' ]
+
+naming:
+  FunctionNaming:
+    active: true
+    ignoreAnnotated: [ 'Composable' ]
+
+complexity:
+  LongParameterList:
+    active: true
+    threshold: 8
+    ignoreAnnotated: [ 'Composable' ]
+    excludes:
+      - '**/ui/theme/LLColor.kt'
+  LongMethod:
+    active: true
+    threshold: 60
+    ignoreAnnotated: [ 'Composable' ]
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 20
+    thresholdInClasses: 20
+    thresholdInInterfaces: 20
+    ignoreAnnotated: [ ]
+    ignorePrivate: false
+    excludes: [ ]
+
 formatting:
   NewLineAtEndOfFile:
     active: true
@@ -39,27 +71,3 @@ formatting:
   UnusedPrivateMember:
     active: true
     autoCorrect: true
-
-style:
-  WildcardImport:
-    active: false
-  MagicNumber:
-    active: true
-    excludes: [ '**/theme/**' ]
-
-naming:
-  FunctionNaming:
-    active: true
-    ignoreAnnotated: [ 'Composable' ]
-
-complexity:
-  LongParameterList:
-    active: true
-    threshold: 8
-    ignoreAnnotated: [ 'Composable' ]
-    excludes:
-      - '**/ui/theme/LLColor.kt'
-  LongMethod:
-    active: true
-    threshold: 60
-    ignoreAnnotated: [ 'Composable' ]

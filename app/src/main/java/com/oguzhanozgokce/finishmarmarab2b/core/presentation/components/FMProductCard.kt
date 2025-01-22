@@ -353,7 +353,6 @@ fun calculateItemOffset(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductCard() {

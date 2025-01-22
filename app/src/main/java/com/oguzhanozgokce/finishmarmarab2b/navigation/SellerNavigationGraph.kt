@@ -2,8 +2,8 @@ package com.oguzhanozgokce.finishmarmarab2b.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.home
 
 @Composable

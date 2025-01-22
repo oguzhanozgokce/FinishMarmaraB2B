@@ -4,7 +4,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-
 internal val LocalColors = staticCompositionLocalOf { lightColors() }
 
 val primaryLight = Color(0xFF007BFF)
@@ -26,7 +25,6 @@ val onTextDark = Color(0xFF000000)
 val textSecondaryDark = Color(0xFF888888)
 val backgroundDark = Color(0xFF222222)
 val cardBackgroundDark = Color(0xFF444444)
-
 
 fun lightColors(): FMColor = FMColor(
     primary = primaryLight,

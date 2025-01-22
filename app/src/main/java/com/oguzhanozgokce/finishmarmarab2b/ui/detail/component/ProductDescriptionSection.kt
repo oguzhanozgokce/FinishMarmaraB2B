@@ -4,20 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
 fun ProductDescriptionSection(
@@ -37,13 +34,7 @@ fun ProductDescriptionSection(
             ),
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        HorizontalDivider(
-            thickness = padding.dimension1,
-            color = colors.lightGray.copy(alpha = 0.5f),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = padding.dimension4)
-        )
+        FMHorizontalDivider()
         Text(
             text = product.description,
             style = typography.bodySmallLight().copy(

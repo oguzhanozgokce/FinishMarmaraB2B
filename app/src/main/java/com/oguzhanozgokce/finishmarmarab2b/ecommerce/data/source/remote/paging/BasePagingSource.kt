@@ -46,4 +46,3 @@ class BasePagingSource(
         return state.anchorPosition
     }
 }
-

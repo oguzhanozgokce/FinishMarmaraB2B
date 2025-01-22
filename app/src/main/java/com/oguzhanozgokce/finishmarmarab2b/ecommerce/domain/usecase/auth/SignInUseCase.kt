@@ -14,8 +14,7 @@ import javax.inject.Inject
 class SignInUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    operator fun invoke(signInRequest: SignInRequest): Flow<Resource<LoginResponse>> = flow{
-
+    operator fun invoke(signInRequest: SignInRequest): Flow<Resource<LoginResponse>> = flow {
         val emailValidation = InputValidator.validateEmail(signInRequest.email)
         if (emailValidation is ValidationResult.Error) {
             emit(Resource.Error(emailValidation.message))

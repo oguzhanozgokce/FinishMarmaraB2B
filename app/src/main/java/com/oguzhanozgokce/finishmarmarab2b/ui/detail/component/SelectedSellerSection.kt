@@ -8,13 +8,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAnnotatedText
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun SelectedSellerSection(
@@ -29,27 +26,15 @@ fun SelectedSellerSection(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         sellerName?.let { name ->
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            color = colors.text,
-                            fontWeight = FontWeight.Light
-                        )
-                    ) {
-                        append("Selected Seller ")
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            color = colors.primary
-                        )
-                    ) {
-                        append(name)
-                    }
-                },
-                fontSize = fontSize.small,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold,
+            FMAnnotatedText(
+                prefix = "Selected Seller ",
+                highlightedText = name,
+                prefixColor = colors.text,
+                highlightedColor = colors.primary,
+                style = typography.headSmallMedium().copy(
+                    fontSize = fontSize.mediumSmall
+                ),
+                modifier = Modifier
             )
         }
         TextButton(
@@ -57,10 +42,7 @@ fun SelectedSellerSection(
         ) {
             Text(
                 text = "16 Soru & Cevap >",
-                fontSize = fontSize.small,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light,
-                color = colors.text
+                style = typography.bodySmallLight()
             )
         }
     }

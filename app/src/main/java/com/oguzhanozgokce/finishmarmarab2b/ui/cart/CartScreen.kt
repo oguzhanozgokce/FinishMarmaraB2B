@@ -81,7 +81,6 @@ fun CartContent() {
 fun CardProductList(
     modifier: Modifier = Modifier
 ) {
-
 }
 
 @Composable

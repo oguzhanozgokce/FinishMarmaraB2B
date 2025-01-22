@@ -19,7 +19,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun UserNameSurname(
     uiState: ProfileContract.UiState,
     modifier: Modifier = Modifier,
-){
+) {
     Column(
         modifier = modifier
             .padding(padding.dimension8)
@@ -28,7 +28,7 @@ fun UserNameSurname(
             modifier = Modifier,
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = uiState.user.name,
                 style = FMTheme.typography.headMediumSemiBold(),

@@ -1,21 +1,31 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
@@ -23,12 +33,14 @@ fun FMButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: Color = FMTheme.colors.primary,
+    backgroundColor: Color = colors.primary,
+    textColor: Color = colors.white,
     enabled: Boolean = true,
     height: Dp = padding.dimension56,
     border: BorderStroke? = null,
-    shape: RoundedCornerShape = RoundedCornerShape(padding.dimension16),
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(4.dp)
+    shape: RoundedCornerShape = RoundedCornerShape(padding.dimension8),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(2.dp),
+    contentPadding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 12.dp)
 ) {
     Button(
         onClick = onClick,
@@ -36,10 +48,14 @@ fun FMButton(
             .fillMaxWidth()
             .height(height),
         shape = shape,
-        colors = ButtonDefaults.buttonColors(containerColor = colors),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor,
+            contentColor = textColor
+        ),
         enabled = enabled,
         border = border,
-        elevation = elevation
+        elevation = elevation,
+        contentPadding = contentPadding
     ) {
         Text(
             text = text,
@@ -49,10 +65,57 @@ fun FMButton(
     }
 }
 
+@Composable
+fun FMOutlinedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    borderColor: Color = colors.primary,
+    textColor: Color = colors.primary,
+    backgroundColor: Color = colors.white,
+    enabled: Boolean = true,
+    height: Dp = padding.dimension56,
+    elevation: ButtonElevation? = null,
+    shape: Shape = RoundedCornerShape(padding.dimension8),
+    contentPadding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
+    borderWidth: Dp = 1.dp
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
+        border = BorderStroke(width = borderWidth, color = borderColor),
+        shape = shape,
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = backgroundColor,
+            contentColor = textColor
+        ),
+        elevation = elevation,
+        enabled = enabled,
+        contentPadding = contentPadding
+    ) {
+        Text(
+            text = text,
+            fontSize = FMTheme.fontSize.medium,
+            fontWeight = FontWeight.Bold,
+            color = textColor
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun FMButtonPreview() {
     FMTheme {
-        FMButton(text = "Button", onClick = { })
+        Column(
+            modifier = Modifier.fillMaxSize().background(colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            FMButton(text = "Button", onClick = { })
+            Spacer(modifier = Modifier.height(padding.dimension16))
+            FMOutlinedButton(text = "Button", onClick = { })
+        }
     }
 }

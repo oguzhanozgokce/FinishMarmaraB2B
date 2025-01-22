@@ -57,7 +57,6 @@ fun HomeScreenPreview(
     )
 }
 
-
 class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState> {
     override val values: Sequence<HomeContract.UiState>
         get() = sequenceOf(

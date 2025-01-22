@@ -20,9 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -46,7 +46,6 @@ fun WelcomeScreen(
         uiState.list.isNotEmpty() -> EmptyScreen()
         else -> WelcomeContent(welcomeNavActions = welcomeNavActions)
     }
-
 }
 
 @Composable

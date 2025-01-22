@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetProductQuestionsAndAnswersUseCase @Inject constructor(
     private val repository: ProductRepository
 ) {
-    operator fun invoke(productId: Int) : Flow<PagingData<QuestionAnswer>> {
+    operator fun invoke(productId: Int): Flow<PagingData<QuestionAnswer>> {
         return repository.getProductQuestionsAndAnswers(productId)
     }
 }

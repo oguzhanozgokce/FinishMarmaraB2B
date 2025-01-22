@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.detail.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun TopBarDetail(
+    onSearchClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
     onCartClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
@@ -59,7 +61,8 @@ fun TopBarDetail(
                 .padding(horizontal = padding.dimension8)
                 .height(padding.dimension36)
                 .clip(RoundedCornerShape(padding.dimension16))
-                .background(colors.lightGray.copy(alpha = 0.2f)),
+                .background(colors.lightGray.copy(alpha = 0.2f))
+                .clickable { onSearchClick() },
             contentAlignment = Alignment.CenterStart
         ) {
             Row(
@@ -102,7 +105,6 @@ fun TopBarDetail(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun TopBarDetailPreview() {
@@ -110,7 +112,8 @@ fun TopBarDetailPreview() {
         TopBarDetail(
             onBackClick = {},
             onCartClick = {},
-            onShareClick = {}
+            onShareClick = {},
+            onSearchClick = {}
         )
     }
 }

@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeViewModel
 
 data class HomeNavActions(
     val navigateToDetail: (id: Int) -> Unit,
+    val navigateToSearch: () -> Unit,
 )
 
 fun NavGraphBuilder.home(actions: HomeNavActions) {

@@ -9,7 +9,7 @@ object LoginContract {
         val list: List<String> = emptyList(),
     )
 
-    sealed class UiAction{
+    sealed class UiAction {
         data object GetEmail : UiAction()
         data class EmailChanged(val email: String) : UiAction()
         data class PasswordChanged(val password: String) : UiAction()
@@ -17,12 +17,11 @@ object LoginContract {
         data object ClearError : UiAction()
     }
 
-    sealed class UiEffect{
+    sealed class UiEffect {
         data object ShowAlertDialog : UiEffect()
         data object GoToForgotPassword : UiEffect()
         data object GoToBack : UiEffect()
         data object GoToHome : UiEffect()
         data class ShowToast(val message: String) : UiEffect()
-
     }
 }

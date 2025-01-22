@@ -12,6 +12,4 @@ class ResetPasswordViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAc
 
     override fun onAction(uiAction: UiAction) {
     }
-
 }
-

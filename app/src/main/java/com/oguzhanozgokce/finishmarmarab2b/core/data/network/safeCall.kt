@@ -5,10 +5,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import retrofit2.Response
 import java.io.IOException
 
-/**
- * // ApiResponseModel -> ApiResponse
- */
-
 suspend fun <T> safeApiCall(
     execute: suspend () -> Response<ApiResponse<T>>
 ): Resource<T> {
@@ -30,7 +26,3 @@ suspend fun <T> safeApiCall(
         Resource.Error("Unexpected error: ${e.localizedMessage}")
     }
 }
-
-
-
-

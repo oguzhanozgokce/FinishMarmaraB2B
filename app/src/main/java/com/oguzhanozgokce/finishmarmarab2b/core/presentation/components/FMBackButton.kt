@@ -43,4 +43,3 @@ fun BackIconButton(
 fun BackIconButtonPreview() {
     BackIconButton(onClick = {})
 }
-

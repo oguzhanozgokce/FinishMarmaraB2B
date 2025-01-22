@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 
 fun NavGraphBuilder.home() {
     composable("home") {
-        val viewModel : HomeViewModel = hiltViewModel()
+        val viewModel: HomeViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
 

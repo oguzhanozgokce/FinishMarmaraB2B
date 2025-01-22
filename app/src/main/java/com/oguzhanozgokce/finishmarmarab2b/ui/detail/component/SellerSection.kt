@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
@@ -68,32 +68,23 @@ fun SellerSection(
             }
             Text(
                 text = "$followerCount Follower",
-                fontSize = fontSize.small,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light,
-                color = colors.text
+                style = typography.bodySmallLight(),
             )
         }
-        Card(
+        FMOutlinedCard(
             modifier = Modifier
-                .padding(padding.dimension4)
+                .padding(padding.dimension8)
                 .align(Alignment.CenterVertically),
             border = BorderStroke(
                 width = padding.dimension1,
                 color = Color.Red
             ),
             shape = RoundedCornerShape(padding.dimension4),
-            colors = CardDefaults.cardColors(
-                containerColor = colors.white,
-            )
         ) {
             Text(
                 modifier = Modifier.padding(padding.dimension8),
                 text = "Follow",
-                fontSize = fontSize.small,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Medium,
-                color = Color.Red
+                style = typography.headSmallMedium().copy(color = Color.Red)
             )
         }
     }

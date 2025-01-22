@@ -57,7 +57,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchCategory() {
-
     }
 
     private fun addProductToFavorites(productId: Int) {

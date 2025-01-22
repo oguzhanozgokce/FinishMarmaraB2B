@@ -28,5 +28,3 @@ fun NavGraphBuilder.signUp(actions: SignUpNavActions) {
         )
     }
 }
-
-

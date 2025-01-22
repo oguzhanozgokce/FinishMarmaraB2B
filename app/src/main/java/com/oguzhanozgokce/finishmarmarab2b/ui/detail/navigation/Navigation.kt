@@ -12,6 +12,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailViewModel
 data class DetailNavActions(
     val navigateToBack: () -> Unit,
     val navigateToCart: () -> Unit,
+    val navigateToSearch: () -> Unit,
 )
 
 fun NavGraphBuilder.detail(actions: DetailNavActions) {

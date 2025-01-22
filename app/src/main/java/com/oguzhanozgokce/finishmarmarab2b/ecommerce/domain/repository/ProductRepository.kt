@@ -22,7 +22,6 @@ interface ProductRepository {
 
     fun getFavoriteProducts(limit: Int, orderBy: String, sort: String): Flow<PagingData<Product>>
 
-
     fun addProductToFavorites(addFavoriteProductRequest: AddFavoriteProductRequest): Flow<Resource<Unit>>
     fun toggleFavorite(toggleFavoriteRequest: ToggleFavoriteRequest): Flow<Resource<Unit>>
     fun deleteFavoriteProduct(deleteFavoriteProductRequest: DeleteFavoriteProductRequest): Flow<Resource<Unit>>

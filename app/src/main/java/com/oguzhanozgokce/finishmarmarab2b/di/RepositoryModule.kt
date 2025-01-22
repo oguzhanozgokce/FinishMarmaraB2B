@@ -1,9 +1,9 @@
 package com.oguzhanozgokce.finishmarmarab2b.di
 
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.ProductRepositoryImpl
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.AuthRepositoryImpl
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.ProductRepositoryImpl
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AuthRepository
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

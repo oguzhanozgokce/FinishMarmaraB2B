@@ -74,7 +74,7 @@ chucker-library-no-op = { module = "com.github.chuckerteam.chucker:library-no-op
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-detekt = { group = "io.gitlab.arturbosch", name = "detekt", version.ref = "detekt" }
+detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
 tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
 datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }

@@ -25,9 +25,7 @@ fun CommentList(
             items(lazyItems.itemCount) { index ->
                 val commentItem = lazyItems[index]
                 if (commentItem != null) {
-                    CommentItem(
-                        comment = commentItem
-                    )
+                    CommentItem(comment = commentItem)
                 }
             }
         }

@@ -29,10 +29,15 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
             .addInterceptor(chuckerInterceptor)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-                else HttpLoggingInterceptor.Level.NONE
-            })
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
+                }
+            )
             .build()
     }
 

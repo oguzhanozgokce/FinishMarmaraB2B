@@ -40,7 +40,6 @@ fun FMHorizontalPager(
     activeIndicatorColor: Color = colors.red,
     inactiveIndicatorColor: Color = colors.cardBackground,
 ) {
-
     val pagerState = rememberPagerState(
         initialPage = 0,
         pageCount = { imageList.size }
@@ -60,7 +59,7 @@ fun FMHorizontalPager(
             val painter = rememberAsyncImagePainter(model = imageList[page])
             Image(
                 painter = painter,
-                contentDescription =  "Image $page",
+                contentDescription = "Image $page",
                 modifier = Modifier
                     .fillMaxSize()
                     .background(colors.cardBackground),
@@ -111,7 +110,7 @@ fun HorizontalPagerIndicator(
 
 @Preview(showBackground = true)
 @Composable
-fun FMHorizontalPagerPreview () {
+fun FMHorizontalPagerPreview() {
     val imageList = listOf(
         R.drawable.image_product,
         R.drawable.image_product,

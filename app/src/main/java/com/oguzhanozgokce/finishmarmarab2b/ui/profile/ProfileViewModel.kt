@@ -38,10 +38,10 @@ class ProfileViewModel @Inject constructor(
                 resource.onSuccess { user ->
                     updateState { copy(user = user) }
                 }
-                .onFailure { message ->
-                    updateState { copy(error = message) }
-                    emitUiEffect(UiEffect.ShowToast(message))
-                }
+                    .onFailure { message ->
+                        updateState { copy(error = message) }
+                        emitUiEffect(UiEffect.ShowToast(message))
+                    }
             }.launchIn(viewModelScope)
     }
 }

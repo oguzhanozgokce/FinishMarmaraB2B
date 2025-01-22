@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -28,6 +29,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 @Composable
 fun FMSearch(
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     onNavigateToSearch: () -> Unit
 ) {
     val containerColor = colors.white
@@ -37,6 +39,7 @@ fun FMSearch(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(padding.dimension20))
+            .shimmer(isLoading)
             .background(containerColor)
             .border(
                 width = padding.dimension1,

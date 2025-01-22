@@ -69,8 +69,8 @@ inline fun Modifier.conditional(
 fun Modifier.shimmer(
     isLoading: Boolean,
     shape: Shape = MaterialTheme.shapes.medium,
-    shimmerColors: Color = Color.Gray.copy(alpha = 0.2f),
-    placeholderColor: Color = Color.Gray.copy(alpha = 0.1f),
+    shimmerColors: Color = Color.LightGray.copy(alpha = 0.2f),
+    placeholderColor: Color = Color.LightGray.copy(alpha = 0.1f),
     durationMillis: Int = 1000
 ): Modifier {
     if (!isLoading) return this

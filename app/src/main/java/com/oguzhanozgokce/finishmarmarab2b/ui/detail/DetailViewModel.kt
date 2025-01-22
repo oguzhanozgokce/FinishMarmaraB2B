@@ -40,12 +40,14 @@ class DetailViewModel @Inject constructor(
             is UiAction.FetchQuestionsAndAnswers -> fetchQuestionsAndAnswers(args.id)
         }
     }
+
     private fun fetchComments(productId: Int) {
         updateState { copy(isLoading = true) }
         val flow = getCommentsUseCase(productId)
             .cachedIn(viewModelScope)
         updateState { copy(comments = flow, isLoading = false) }
     }
+
     private fun fetchProductDetail(productId: Int) {
         updateState { copy(isLoading = true) }
         viewModelScope.launch {

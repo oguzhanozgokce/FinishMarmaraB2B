@@ -23,9 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleCategoryList
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -76,7 +77,7 @@ fun CategoryCard(
 
 @Composable
 fun CategoryList(
-    uiState: HomeContract.UiState,
+    isLoading: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
@@ -85,7 +86,9 @@ fun CategoryList(
         items(sampleCategoryList) { categoryItem ->
             CategoryCard(
                 categoryUi = categoryItem,
-                modifier = modifier.padding(end = padding.dimension12)
+                modifier = modifier
+                    .padding(end = padding.dimension12)
+                    .shimmer(isLoading)
             )
         }
     }
@@ -94,11 +97,12 @@ fun CategoryList(
 @Preview(showBackground = true)
 @Composable
 fun CategoryListPreview() {
-    CategoryList(
-        uiState = HomeContract.UiState(
-            categoryList = sampleCategoryList
+    FMTheme {
+        CategoryList(
+            isLoading = true,
+            modifier = Modifier.background(colors.background)
         )
-    )
+    }
 }
 
 @Preview(showBackground = true)

@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,12 +34,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getFormattedName
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ErrorFooter
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProductList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
@@ -68,28 +66,12 @@ fun HomeScreen(
         }
     }
     val productItems = uiState.productFlow?.collectAsLazyPagingItems()
-    val refreshState = productItems?.loadState?.refresh
-    val itemCount = productItems?.itemCount ?: 0
-
-    when {
-        refreshState is LoadState.Loading && itemCount == 0 -> {
-            LoadingBar()
-        }
-        refreshState is LoadState.Error && itemCount == 0 -> {
-            ErrorFooter(
-                message = refreshState.error.localizedMessage ?: "Unknown error",
-                onRetry = { productItems.retry() }
-            )
-        }
-        else -> {
-            HomeContent(
-                uiState = uiState,
-                homeNavActions = homeNavActions,
-                productItems = productItems,
-                onAction = onAction
-            )
-        }
-    }
+    HomeContent(
+        uiState = uiState,
+        homeNavActions = homeNavActions,
+        productItems = productItems,
+        onAction = onAction
+    )
 }
 
 @Composable
@@ -99,6 +81,7 @@ fun HomeContent(
     homeNavActions: HomeNavActions,
     onAction: (UiAction) -> Unit,
 ) {
+    val isLoading = uiState.isLoading || productItems?.loadState?.refresh is LoadState.Loading
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +92,8 @@ fun HomeContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopStart),
-            uiState = uiState
+            uiState = uiState,
+            isLoading = isLoading
         )
         Column(
             modifier = Modifier
@@ -120,18 +104,23 @@ fun HomeContent(
         ) {
             FMSearch(
                 modifier = Modifier,
+                isLoading = isLoading,
                 onNavigateToSearch = { homeNavActions.navigateToSearch() }
             )
-            SaleCard(modifier = Modifier.fillMaxWidth())
+            SaleCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shimmer(isLoading)
+            )
             Text(
+                modifier = Modifier.shimmer(isLoading),
                 text = stringResource(id = R.string.categories),
                 style = typography.titleBodyBold()
             )
-            CategoryList(
-                uiState = uiState
-            )
-            ProductText()
-            FMProductList(
+            CategoryList(isLoading = isLoading)
+            ProductText(isLoading = isLoading)
+            ProductList(
+                isLoading = isLoading,
                 productItems = productItems,
                 onNavigateToDetail = homeNavActions.navigateToDetail,
                 onToggleFavorite = { productId, isFavorite ->
@@ -145,10 +134,10 @@ fun HomeContent(
 
 @Composable
 fun TopBar(
+    isLoading: Boolean = false,
     uiState: UiState,
     modifier: Modifier = Modifier
 ) {
-    Log.d("HomeScreen", "User name: ${uiState.user.getFormattedName()}")
     Row(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -156,10 +145,12 @@ fun TopBar(
             modifier = Modifier.weight(1f)
         ) {
             Text(
+                modifier = Modifier.shimmer(isLoading),
                 text = "Hello,",
                 style = typography.titleMediumLight(),
             )
             Text(
+                modifier = Modifier.shimmer(isLoading),
                 text = uiState.user.getFormattedName(),
                 fontFamily = poppinsFontFamily,
                 style = typography.labelLargeBold(),
@@ -172,6 +163,7 @@ fun TopBar(
             modifier = Modifier
                 .padding(padding.dimension16)
                 .align(Alignment.CenterVertically)
+                .shimmer(isLoading)
         )
     }
 }
@@ -247,6 +239,7 @@ fun SaleCard(
 @Composable
 fun ProductText(
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -255,21 +248,25 @@ fun ProductText(
     ) {
         Text(
             text = stringResource(id = R.string.products),
-            style = typography.titleBodyBold()
+            style = typography.titleBodyBold(),
+            modifier = Modifier.shimmer(isLoading)
         )
         TextButton(
             onClick = { /* TODO: Navigate to all products */ },
         ) {
             Column {
                 Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .shimmer(isLoading),
                     text = "See all",
                     style = typography.titleMediumLight()
                 )
                 HorizontalDivider(
                     modifier = Modifier
                         .width(padding.dimension60)
-                        .height(padding.dimension2),
+                        .height(padding.dimension2)
+                        .shimmer(isLoading),
                     thickness = padding.dimension1,
                     color = colors.text
                 )

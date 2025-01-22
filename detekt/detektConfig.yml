@@ -35,7 +35,8 @@ formatting:
     active: true
     autoCorrect: true
   NoWildcardImports:
-    active: false
+    active: true
+    autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
     active: true
     autoCorrect: true

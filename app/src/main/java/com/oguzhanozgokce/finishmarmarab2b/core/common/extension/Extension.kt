@@ -2,7 +2,6 @@ package com.oguzhanozgokce.finishmarmarab2b.core.common.extension
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.paging.Pager
@@ -49,6 +48,7 @@ fun String?.orEmpty(): String = this ?: ""
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
 fun Context.getActivity(): ComponentActivity? = when (this) {
     is ComponentActivity -> this
     is ContextWrapper -> baseContext.getActivity()
@@ -78,7 +78,6 @@ fun String?.toLocalDateOrDefault(
         try {
             LocalDateTime.parse(it, formatter).toLocalDate()
         } catch (e: Exception) {
-            Log.e("DateParsing", "Invalid date format: $it, using default date.", e)
             defaultDate
         }
     } ?: defaultDate
@@ -92,7 +91,6 @@ fun String?.toLocalDateTimeOrDefault(
         try {
             LocalDateTime.parse(it, formatter)
         } catch (e: Exception) {
-            Log.e("DateParsing", "Invalid date format: $it, using default date and time.", e)
             defaultDateTime
         }
     } ?: defaultDateTime

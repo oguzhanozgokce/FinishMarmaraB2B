@@ -33,6 +33,9 @@ sealed interface Screen {
     @Serializable
     data object ForgotPassword : Screen
 
+    @Serializable
+    data object Search : Screen
+
     companion object {
         fun getRoute(screen: Screen): String = screen::class.qualifiedName.orEmpty()
 
@@ -44,4 +47,3 @@ sealed interface Screen {
         }
     }
 }
-

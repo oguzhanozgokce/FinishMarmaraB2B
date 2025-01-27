@@ -1,12 +1,10 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import java.time.LocalDateTime
 
 class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState> {
@@ -27,41 +25,41 @@ class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState>
         )
 }
 
-internal val sampleCategoryList: List<CategoryUi> = listOf(
-    CategoryUi(
+internal val sampleCategoryList: List<Category> = listOf(
+    Category(
         id = 1,
         name = "Electronics",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 2,
         name = "Home & Living",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 3,
         name = "Clothing",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 4,
         name = "Furniture",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 5,
         name = "Computer",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 6,
         name = "Mont",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
-    CategoryUi(
+    Category(
         id = 7,
         name = "Clothing",
-        image = R.drawable.ic_notification,
+        categoryImage = "",
     ),
 )
 
@@ -77,6 +75,7 @@ internal val sampleProductList: List<Product> = listOf(
         rate = 4.5,
         commentCount = 35,
         categoryId = 101,
+        isFavorite = true,
         createdAt = LocalDateTime.now().minusDays(5),
         category = Category(
             id = 101,
@@ -103,6 +102,7 @@ internal val sampleProductList: List<Product> = listOf(
         rate = 4.8,
         commentCount = 50,
         categoryId = 101,
+        isFavorite = true,
         createdAt = LocalDateTime.now().minusDays(10),
         category = Category(
             id = 101,
@@ -129,6 +129,7 @@ internal val sampleProductList: List<Product> = listOf(
         rate = 4.7,
         commentCount = 40,
         categoryId = 101,
+        isFavorite = true,
         createdAt = LocalDateTime.now().minusDays(20),
         category = Category(
             id = 101,
@@ -155,6 +156,7 @@ internal val sampleProductList: List<Product> = listOf(
         rate = 4.6,
         commentCount = 100,
         categoryId = 101,
+        isFavorite = true,
         createdAt = LocalDateTime.now().minusDays(15),
         category = Category(
             id = 101,
@@ -181,6 +183,7 @@ internal val sampleProductList: List<Product> = listOf(
         rate = 4.3,
         commentCount = 20,
         categoryId = 101,
+        isFavorite = true,
         createdAt = LocalDateTime.now().minusDays(7),
         category = Category(
             id = 101,

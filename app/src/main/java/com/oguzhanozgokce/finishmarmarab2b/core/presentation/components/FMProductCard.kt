@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -30,7 +32,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
@@ -102,7 +103,7 @@ fun ProductCard(
 fun FavoriteButton(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
-    boxSize: Dp,
+    boxSize: Dp = padding.dimension36,
     isFavorite: Boolean,
     onToggleClick: () -> Unit = {}
 ) {
@@ -110,7 +111,8 @@ fun FavoriteButton(
         modifier = modifier
             .size(boxSize)
             .padding(padding.dimension4)
-            .background(color = backgroundColor, shape = CircleShape),
+            .background(color = backgroundColor, shape = CircleShape)
+            .clickable { onToggleClick() },
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -120,6 +122,7 @@ fun FavoriteButton(
         )
     }
 }
+
 
 @Composable
 fun ProductInfo(
@@ -190,32 +193,30 @@ fun ProductInfo(
 @Composable
 fun ProductList(
     isLoading: Boolean = false,
-    productItems: LazyPagingItems<Product>?,
+    productList: List<Product>,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (id: Int) -> Unit = {},
-    onToggleFavorite: (productId: Int, isFavorite: Boolean) -> Unit
+    onToggleFavorite: (productId: Int) -> Unit
 ) {
+    val listState = rememberLazyListState()
     LazyRow(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        state = listState
     ) {
         if (isLoading) {
             items(5) {
                 ProductCardShimmer()
             }
         } else {
-            productItems?.let { lazyItems ->
-                items(lazyItems.itemCount) { productItem ->
-                    val productItem = lazyItems[productItem]
-                    if (productItem != null) {
-                        ProductCard(
-                            product = productItem,
-                            onNavigateToDetail = onNavigateToDetail,
-                            onToggleClick = {
-                                onToggleFavorite(productItem.id, !productItem.isFavorite)
-                            }
-                        )
-                    }
-                }
+            items(
+                items = productList,
+                key = { product -> product.id }
+            ) { product ->
+                ProductCard(
+                    product = product,
+                    onNavigateToDetail = { onNavigateToDetail(product.id) },
+                    onToggleClick = { onToggleFavorite(product.id) }
+                )
             }
         }
     }

@@ -15,7 +15,7 @@ fun NavGraphBuilder.home() {
         HomeScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction,
+            onAction = viewModel::onAction
         )
     }
 }

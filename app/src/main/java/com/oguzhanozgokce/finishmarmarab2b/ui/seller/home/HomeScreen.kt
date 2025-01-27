@@ -8,11 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.sp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiState
@@ -57,20 +55,4 @@ fun HomeScreenPreview(
     )
 }
 
-class HomeScreenPreviewProvider : PreviewParameterProvider<HomeContract.UiState> {
-    override val values: Sequence<HomeContract.UiState>
-        get() = sequenceOf(
-            HomeContract.UiState(
-                isLoading = true,
-                list = emptyList(),
-            ),
-            HomeContract.UiState(
-                isLoading = false,
-                list = emptyList(),
-            ),
-            HomeContract.UiState(
-                isLoading = false,
-                list = listOf("Item 1", "Item 2", "Item 3")
-            ),
-        )
-}
+

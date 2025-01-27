@@ -1,17 +1,18 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.paging.PagingData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
 import kotlinx.coroutines.flow.Flow
 
 object HomeContract {
     data class UiState(
         val isLoading: Boolean = false,
         val list: List<String> = emptyList(),
-        val categoryList: List<CategoryUi> = emptyList(),
-        val productFlow: Flow<PagingData<Product>>? = null,
+        val categoryList: List<Category>? = emptyList(),
+        val productList: List<Product> = emptyList(),
+        val categoryFlow: Flow<PagingData<Category>>? = null,
         val user: User = User(),
         val error: String? = null,
     )
@@ -20,7 +21,7 @@ object HomeContract {
         data object LoadGetUser : UiAction()
         data object FetchCategory : UiAction()
         data object FetchProduct : UiAction()
-        data class ToggleFavorite(val productId: Int, val isFavorite: Boolean) : UiAction()
+        data class ToggleFavorite(val productId: Int) : UiAction()
     }
 
     sealed class UiEffect {

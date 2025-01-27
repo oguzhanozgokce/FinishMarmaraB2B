@@ -2,13 +2,14 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetUserUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.AddProductToFavoritesUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCategoriesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.ToggleFavoriteUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
@@ -17,19 +18,22 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getUserCase: GetUserUseCase,
     private val getProductsUseCase: GetProductsUseCase,
-    private val addProductToFavoritesUseCase: AddProductToFavoritesUseCase,
-    private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
+    private var lastClickTime = 0L
+
     init {
-        onAction(UiAction.LoadGetUser)
-        onAction(UiAction.FetchProduct)
+        fetchCategory()
+        loadGetUser()
     }
 
     override fun onAction(uiAction: UiAction) {
@@ -37,7 +41,52 @@ class HomeViewModel @Inject constructor(
             is UiAction.LoadGetUser -> loadGetUser()
             is UiAction.FetchCategory -> fetchCategory()
             is UiAction.FetchProduct -> fetchProduct()
-            is UiAction.ToggleFavorite -> toggleFavorite(uiAction.productId, uiAction.isFavorite)
+            is UiAction.ToggleFavorite -> toggleFavorite(uiAction.productId)
+        }
+    }
+
+    private fun fetchProduct() {
+        viewModelScope.launch {
+            updateState { copy(isLoading = true) }
+            getProductsUseCase().fold(
+                onSuccess = { paginationData ->
+                    updateState {
+                        copy(
+                            productList = paginationData.list.orEmpty(),
+                            isLoading = false
+                        )
+                    }
+                },
+                onError = { error ->
+                    updateState { copy(error = error, isLoading = false) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun toggleFavorite(productId: Int) {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastClickTime < 500) {
+            return
+        }
+        lastClickTime = currentTime
+        viewModelScope.launch {
+            toggleFavoriteUseCase(productId)
+                .onSuccess { response ->
+                    updateProductFavoriteStatus(response.productId, response.isFavorite)
+                }.onFailure {
+                    UiEffect.ShowToast(it)
+                }
+        }
+    }
+
+    private fun updateProductFavoriteStatus(productId: Int, isFavorite: Boolean) {
+        updateState {
+            val updatedProducts = productList.map { product ->
+                if (product.id == productId) product.copy(isFavorite = isFavorite) else product
+            }
+            copy(productList = updatedProducts)
         }
     }
 
@@ -57,51 +106,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchCategory() {
-    }
-
-    private fun addProductToFavorites(productId: Int) {
-        addProductToFavoritesUseCase(productId)
-            .onStart { updateState { copy(isLoading = true) } }
-            .onCompletion { updateState { copy(isLoading = false) } }
-            .onEach { resource ->
-                resource.onSuccess {
-                    updateState { copy(isLoading = false) }
-                    UiEffect.ShowToast("Product added to favorites")
-                }
-                resource.onFailure { error ->
-                    updateState { copy(error = error) }
-                    UiEffect.ShowToast(error)
-                }
-            }.launchIn(viewModelScope)
-    }
-
-    private fun deleteFavoriteProduct(productId: Int) {
-        deleteFavoriteProductUseCase(productId)
-            .onStart { updateState { copy(isLoading = true) } }
-            .onCompletion { updateState { copy(isLoading = false) } }
-            .onEach { resource ->
-                resource.onSuccess {
-                    updateState { copy(isLoading = false) }
-                    UiEffect.ShowToast("Product removed from favorites")
-                }.onFailure { error ->
-                    updateState { copy(error = error) }
-                    UiEffect.ShowToast(error)
-                }
-            }.launchIn(viewModelScope)
-    }
-
-    private fun fetchProduct() {
         updateState { copy(isLoading = true) }
-        val flow = getProductsUseCase()
+        val flow = getCategoriesUseCase()
             .cachedIn(viewModelScope)
-        updateState { copy(productFlow = flow, isLoading = false) }
-    }
-
-    private fun toggleFavorite(productId: Int, isFavorite: Boolean) {
-        if (isFavorite) {
-            deleteFavoriteProduct(productId)
-        } else {
-            addProductToFavorites(productId)
-        }
+        updateState { copy(categoryFlow = flow, isLoading = false) }
     }
 }

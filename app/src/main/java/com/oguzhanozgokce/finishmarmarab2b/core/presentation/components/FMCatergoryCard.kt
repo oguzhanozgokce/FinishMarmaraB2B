@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,12 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.R
+import androidx.paging.compose.LazyPagingItems
+import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.model.CategoryUi
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleCategoryList
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -35,7 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun CategoryCard(
     modifier: Modifier = Modifier,
-    categoryUi: CategoryUi
+    category: Category
 ) {
     Card(
         modifier = modifier
@@ -58,15 +57,24 @@ fun CategoryCard(
                     .background(color = colors.background, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = icons.notification,
-                    contentDescription = null,
-                    tint = Color.Unspecified
-                )
+                if (category.categoryImage.isNotEmpty()) {
+                    AsyncImage(
+                        model = category.categoryImage,
+                        contentDescription = null,
+                        modifier = Modifier.size(padding.dimension36),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Icon(
+                        imageVector = icons.notification,
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(padding.dimension12))
             Text(
-                text = categoryUi.name,
+                text = category.name,
                 style = typography.bodyMediumNormal().copy(
                     color = colors.black
                 ),
@@ -79,28 +87,49 @@ fun CategoryCard(
 fun CategoryList(
     isLoading: Boolean = false,
     modifier: Modifier = Modifier,
+    categoryList: LazyPagingItems<Category>?
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth()
     ) {
-        items(sampleCategoryList) { categoryItem ->
-            CategoryCard(
-                categoryUi = categoryItem,
-                modifier = modifier
-                    .padding(end = padding.dimension12)
-                    .shimmer(isLoading)
-            )
+        if (isLoading) {
+            items(5) {
+                CategoryCardShimmer()
+            }
+        } else {
+            categoryList?.let { lazyItems ->
+                items(lazyItems.itemCount) { categoryItem ->
+                    val categoryItem = lazyItems[categoryItem]
+                    if (categoryItem != null) {
+                        CategoryCard(
+                            category = categoryItem,
+                            modifier = modifier.padding(end = padding.dimension12)
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun CategoryListPreview() {
-    FMTheme {
-        CategoryList(
-            isLoading = true,
-            modifier = Modifier.background(colors.background)
+fun CategoryCardShimmer(
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .wrapContentSize()
+            .shimmer(isLoading = true),
+        shape = RoundedCornerShape(padding.dimension24),
+        colors = CardDefaults.cardColors(
+            containerColor = colors.white
+        )
+    ) {
+        Text(
+            text = "Shimmer",
+            style = typography.bodyMediumNormal().copy(
+                color = colors.black
+            ),
         )
     }
 }
@@ -109,10 +138,10 @@ fun CategoryListPreview() {
 @Composable
 fun CategoryCardPreview() {
     CategoryCard(
-        categoryUi = CategoryUi(
+        category = Category(
             id = 1,
             name = "Elektronik",
-            image = R.drawable.ic_notification,
+            categoryImage = "",
         )
     )
 }

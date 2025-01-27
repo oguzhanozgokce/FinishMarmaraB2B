@@ -78,7 +78,7 @@ fun FMOutlinedButton(
     elevation: ButtonElevation? = null,
     shape: Shape = RoundedCornerShape(padding.dimension8),
     contentPadding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
-    borderWidth: Dp = 1.dp
+    borderWidth: Dp = 1.dp,
 ) {
     OutlinedButton(
         onClick = onClick,
@@ -104,18 +104,56 @@ fun FMOutlinedButton(
     }
 }
 
+@Composable
+fun FMOutlinedButtonWithContent(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    borderColor: Color = colors.primary,
+    backgroundColor: Color = colors.white,
+    enabled: Boolean = true,
+    height: Dp = padding.dimension48,
+    elevation: ButtonElevation? = null,
+    shape: Shape = RoundedCornerShape(padding.dimension8),
+    contentPadding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
+    borderWidth: Dp = 1.dp,
+    content: @Composable () -> Unit
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
+        border = BorderStroke(width = borderWidth, color = borderColor),
+        shape = shape,
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = backgroundColor,
+            contentColor = colors.primary
+        ),
+        elevation = elevation,
+        enabled = enabled,
+        contentPadding = contentPadding,
+        content = { content() }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun FMButtonPreview() {
     FMTheme {
         Column(
-            modifier = Modifier.fillMaxSize().background(colors.background),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.background),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             FMButton(text = "Button", onClick = { })
             Spacer(modifier = Modifier.height(padding.dimension16))
             FMOutlinedButton(text = "Button", onClick = { })
+            Spacer(modifier = Modifier.height(padding.dimension16))
+            FMOutlinedButtonWithContent(onClick = { }) {
+                Text(text = "Content")
+            }
         }
     }
 }

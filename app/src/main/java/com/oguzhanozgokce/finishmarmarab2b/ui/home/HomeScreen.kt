@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.R
@@ -39,7 +38,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CategoryList
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearch
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductList
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
@@ -60,16 +59,17 @@ fun HomeScreen(
     homeNavActions: HomeNavActions,
 ) {
     val context = LocalContext.current
+    val categoryItems = uiState.categoryFlow?.collectAsLazyPagingItems()
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
-    val productItems = uiState.productFlow?.collectAsLazyPagingItems()
+
     HomeContent(
         uiState = uiState,
         homeNavActions = homeNavActions,
-        productItems = productItems,
+        categoryItems = categoryItems,
         onAction = onAction
     )
 }
@@ -77,11 +77,10 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     uiState: UiState,
-    productItems: LazyPagingItems<Product>?,
+    categoryItems: LazyPagingItems<Category>?,
     homeNavActions: HomeNavActions,
     onAction: (UiAction) -> Unit,
 ) {
-    val isLoading = uiState.isLoading || productItems?.loadState?.refresh is LoadState.Loading
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -93,7 +92,6 @@ fun HomeContent(
                 .fillMaxWidth()
                 .align(Alignment.TopStart),
             uiState = uiState,
-            isLoading = isLoading
         )
         Column(
             modifier = Modifier
@@ -104,28 +102,29 @@ fun HomeContent(
         ) {
             FMSearch(
                 modifier = Modifier,
-                isLoading = isLoading,
+                isLoading = uiState.isLoading,
                 onNavigateToSearch = { homeNavActions.navigateToSearch() }
             )
             SaleCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .shimmer(isLoading)
+                    .shimmer(uiState.isLoading)
             )
             Text(
-                modifier = Modifier.shimmer(isLoading),
+                modifier = Modifier.shimmer(uiState.isLoading),
                 text = stringResource(id = R.string.categories),
                 style = typography.titleBodyBold()
             )
-            CategoryList(isLoading = isLoading)
-            ProductText(isLoading = isLoading)
+            CategoryList(
+                isLoading = uiState.isLoading,
+                categoryList = categoryItems,
+            )
+            ProductText(isLoading = uiState.isLoading)
             ProductList(
-                isLoading = isLoading,
-                productItems = productItems,
+                isLoading = uiState.isLoading,
+                productList = uiState.productList,
                 onNavigateToDetail = homeNavActions.navigateToDetail,
-                onToggleFavorite = { productId, isFavorite ->
-                    onAction(UiAction.ToggleFavorite(productId, isFavorite))
-                }
+                onToggleFavorite = { onAction(UiAction.ToggleFavorite(it)) }
             )
             Spacer(modifier = Modifier.height(padding.dimension16))
         }
@@ -134,7 +133,6 @@ fun HomeContent(
 
 @Composable
 fun TopBar(
-    isLoading: Boolean = false,
     uiState: UiState,
     modifier: Modifier = Modifier
 ) {
@@ -145,12 +143,12 @@ fun TopBar(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                modifier = Modifier.shimmer(isLoading),
+                modifier = Modifier.shimmer(uiState.isLoading),
                 text = "Hello,",
                 style = typography.titleMediumLight(),
             )
             Text(
-                modifier = Modifier.shimmer(isLoading),
+                modifier = Modifier.shimmer(uiState.isLoading),
                 text = uiState.user.getFormattedName(),
                 fontFamily = poppinsFontFamily,
                 style = typography.labelLargeBold(),
@@ -163,7 +161,7 @@ fun TopBar(
             modifier = Modifier
                 .padding(padding.dimension16)
                 .align(Alignment.CenterVertically)
-                .shimmer(isLoading)
+                .shimmer(uiState.isLoading)
         )
     }
 }

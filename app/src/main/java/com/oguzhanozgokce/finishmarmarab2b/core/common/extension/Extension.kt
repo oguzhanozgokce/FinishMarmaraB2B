@@ -9,6 +9,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToProduct
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
@@ -108,3 +112,11 @@ fun <T : Any> createPager(
         pagingSourceFactory = pagingSourceFactory
     ).flow
 }
+
+fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
+    return PaginationData(
+        list = this.list?.map { it.mapToProduct() } ?: emptyList(),
+        pagination = this.pagination
+    )
+}
+

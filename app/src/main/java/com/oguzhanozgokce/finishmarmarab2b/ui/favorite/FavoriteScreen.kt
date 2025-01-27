@@ -21,21 +21,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyFavoriteScreen
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMFavoriteList
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FMFavoriteList
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -45,11 +51,19 @@ fun FavoriteScreen(
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
 ) {
+    val context = LocalContext.current
+    val favoriteItems = uiState.favoriteList.collectAsLazyPagingItems()
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.ShowToast -> context.showToast(effect.message)
+        }
+    }
     when {
-//        uiState.isLoading -> LoadingBar()
-        uiState.favoriteList.isEmpty() -> EmptyFavoriteScreen()
+        favoriteItems.itemCount == 0 -> EmptyFavoriteScreen()
         else -> FavoriteContent(
             uiState = uiState,
+            favoriteItems = favoriteItems,
+            onAction = onAction
         )
     }
 }
@@ -57,6 +71,8 @@ fun FavoriteScreen(
 @Composable
 fun FavoriteContent(
     uiState: UiState,
+    favoriteItems: LazyPagingItems<Product>,
+    onAction: (UiAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -84,13 +100,13 @@ fun FavoriteContent(
                 tint = Color.LightGray
             )
             Spacer(modifier = Modifier.width(padding.dimension8))
-            Text(
-                text = "Oguzhan Ozgokce",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = fontSize.medium,
-                color = colors.text
-            )
+            uiState.user?.let {
+                Text(
+                    text = it.name,
+                    style = typography.titleMediumSemiBold(),
+                    modifier = Modifier.shimmer(uiState.isLoading)
+                )
+            }
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -101,28 +117,28 @@ fun FavoriteContent(
         ) {
             Text(
                 text = "$0 Favorites",
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = fontSize.small,
-                color = colors.text
+                style = typography.bodySmallNormal(),
             )
-            IconButton(onClick = { /* Menü İşlemleri */ }) {
+            IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Menu",
-                    tint = Color.Black
+                    tint = colors.black
                 )
             }
         }
-        CustomDivider(
+        FMHorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = padding.dimension8, end = padding.dimension8),
-            color = colors.black,
-            thickness = padding.dimension1
+                .padding(horizontal = padding.dimension8),
         )
         FMFavoriteList(
-            uiState = uiState,
+            isLoading = uiState.isLoading,
+            modifier = Modifier,
+            favoriteItems = favoriteItems,
+            onFavoriteClick = { id ->
+                onAction(UiAction.DeleteFavorite(id))
+            }
         )
     }
 }
@@ -132,9 +148,11 @@ fun FavoriteContent(
 fun FavoriteScreenPreview(
     @PreviewParameter(FavoriteScreenPreviewProvider::class) uiState: UiState,
 ) {
-    FavoriteScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-    )
+    FMTheme {
+        FavoriteScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+        )
+    }
 }

@@ -9,5 +9,3 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState())
-
-

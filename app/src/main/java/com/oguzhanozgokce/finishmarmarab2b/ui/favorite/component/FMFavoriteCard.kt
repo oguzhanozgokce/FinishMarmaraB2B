@@ -109,7 +109,6 @@ fun AnimatedFavoriteCard(
     }
 }
 
-
 @Composable
 fun RowScope.ProductImage(product: Product) {
     val imageUrl = product.primaryImageUrl
@@ -214,7 +213,6 @@ fun AddToCartButton(product: Product) {
         }
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable

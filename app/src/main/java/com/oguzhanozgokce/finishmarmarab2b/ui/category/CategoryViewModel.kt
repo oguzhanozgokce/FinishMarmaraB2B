@@ -8,14 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
-
-) : MVI<UiState, UiEffect, UiAction>(UiState()) {
-
+class CategoryViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     override fun onAction(uiAction: UiAction) {
     }
-
-
 }
-

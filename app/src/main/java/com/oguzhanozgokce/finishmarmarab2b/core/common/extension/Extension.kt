@@ -119,4 +119,3 @@ fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
         pagination = this.pagination
     )
 }
-

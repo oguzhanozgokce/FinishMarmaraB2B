@@ -48,7 +48,6 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getFavoriteProducts(): Flow<PagingData<Product>> {
         val userId = getUserId()
         return createPager(
@@ -130,7 +129,6 @@ class ProductRepositoryImpl @Inject constructor(
         ).map { pagingData ->
             pagingData.map { it.toQuestionAnswerDomain() }
         }
-
 
     override suspend fun getProductDetail(productId: Int): Resource<Product> {
         return safeApiCall {

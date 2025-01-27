@@ -123,7 +123,6 @@ fun FavoriteButton(
     }
 }
 
-
 @Composable
 fun ProductInfo(
     product: Product,

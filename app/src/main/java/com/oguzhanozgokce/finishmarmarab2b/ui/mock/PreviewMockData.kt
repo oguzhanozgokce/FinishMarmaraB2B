@@ -26,7 +26,8 @@ object PreviewMockData {
         createdAt = LocalDateTime.now(),
         category = Category(
             id = 1,
-            name = "Tech"
+            name = "Tech",
+            categoryImage = ""
         ),
         seller = Seller(
             id = 123,
@@ -41,6 +42,15 @@ object PreviewMockData {
             )
         ),
         isFavorite = false
+    )
+
+    val defaultProductList = listOf(
+        defaultProduct,
+        defaultProduct.copy(id = 2, title = "Test Product 2"),
+        defaultProduct.copy(id = 3, title = "Test Product 3"),
+        defaultProduct.copy(id = 4, title = "Test Product 4"),
+        defaultProduct.copy(id = 5, title = "Test Product 5"),
+        defaultProduct.copy(id = 6, title = "Test Product 6"),
     )
 
     val outOfStockProduct = defaultProduct.copy(

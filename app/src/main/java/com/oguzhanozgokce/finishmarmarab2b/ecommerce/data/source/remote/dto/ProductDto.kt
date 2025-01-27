@@ -33,6 +33,9 @@ data class ProductDto(
     @SerializedName("category_Id")
     val categoryId: Int? = null,
 
+    @SerializedName("isFavorite")
+    val isFavorite: Boolean? = null,
+
     @SerializedName("created_At")
     val createdAt: String? = null,
 

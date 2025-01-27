@@ -8,9 +8,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 class GenericPagingSource<T : Any>(
-    private val apiCall: suspend (page: Int) -> Response<ApiResponse<PaginationData<T>>>,
-    private val orderBy: String = "id",
-    private val sort: String = "asc"
+    private val apiCall: suspend (page: Int) -> Response<ApiResponse<PaginationData<T>>>
 ) : PagingSource<Int, T>() {
 
     companion object {
@@ -43,6 +41,10 @@ class GenericPagingSource<T : Any>(
     }
 
     override fun getRefreshKey(state: PagingState<Int, T>): Int? {
-        return state.anchorPosition
+        val anchorPosition = state.anchorPosition ?: return null
+        val page = state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+            ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        return page
     }
 }
+

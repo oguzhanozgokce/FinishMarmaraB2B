@@ -18,7 +18,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Prod
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
@@ -31,8 +30,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -63,7 +62,7 @@ interface ApiService {
     suspend fun getFavoriteProducts(
         @Path("user_id") userId: Int,
         @Query("page") page: Int = 1,
-        @Query("limit") limit: Int = 20,
+        @Query("limit") limit: Int = 4,
     ): Response<ApiResponse<PaginationData<GetFavoriteResponse>>>
 
     @POST(POST_TOGGLE_FAVORITE)
@@ -71,9 +70,10 @@ interface ApiService {
         @Body request: ToggleFavoriteRequest
     ): Response<ApiResponse<PostToggleResponse>>
 
-    @HTTP(method = "DELETE", path = DELETE_FAVORITE_PRODUCT, hasBody = true)
+    @DELETE(DELETE_FAVORITE_PRODUCT)
     suspend fun deleteFavoriteProduct(
-        @Body request: DeleteFavoriteProductRequest
+        @Path("user_id") userId: Int,
+        @Path("product_id") productId: Int,
     ): Response<ApiResponse<DeleteFavoriteResponse>>
 
     @POST(POST_ADD_FAVORITE_PRODUCT)

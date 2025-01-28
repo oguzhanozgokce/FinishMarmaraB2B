@@ -81,7 +81,7 @@ dependencies {
     implementation(libs.converter.gson)
     // OkHttp
     implementation(libs.okhttp3.okhttp)
-    implementation (libs.logging.interceptor)
+    implementation(libs.logging.interceptor)
 
     // Hilt
     ksp(libs.hilt.compiler)
@@ -102,15 +102,18 @@ dependencies {
     releaseImplementation(libs.chucker.library.no.op)
 
     //Security
-    implementation (libs.security.crypto)
+    implementation(libs.security.crypto)
 
     //dataSource
     implementation(libs.datastore.core.android)
     implementation(libs.datastore.preferences)
 
     // Paging3
-    implementation (libs.paging.runtime.ktx)
-    implementation (libs.paging.compose)
+    implementation(libs.paging.runtime.ktx)
+    implementation(libs.paging.compose)
+
+    // Splash
+    implementation(libs.core.splashscreen)
 
     // Detekt
     detektPlugins(libs.detekt)

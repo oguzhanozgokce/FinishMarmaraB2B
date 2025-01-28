@@ -2,7 +2,6 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import androidx.paging.filter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
@@ -15,7 +14,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -44,11 +42,8 @@ class FavoriteViewModel @Inject constructor(
     private fun deleteFavorite(productId: Int) {
         viewModelScope.launch {
             deleteFavoriteUseCase(productId).fold(
-                onSuccess = { id ->
-                    val updatedList = currentState.favoriteList.map { pagingData ->
-                        pagingData.filter { it.id != id }
-                    }
-                    updateState { copy(favoriteList = updatedList) }
+                onSuccess = {
+                    emitUiEffect(UiEffect.Refresh)
                 },
                 onError = { error ->
                     updateState { copy(error = error) }
@@ -60,10 +55,9 @@ class FavoriteViewModel @Inject constructor(
 
     private fun loadFavoriteProducts() {
         viewModelScope.launch {
-            updateState { copy(isLoading = true) }
             val flow = getFavoriteProductsUseCase()
                 .cachedIn(viewModelScope)
-            updateState { copy(favoriteList = flow, isLoading = false) }
+            updateState { copy(favoriteList = flow) }
         }
     }
 

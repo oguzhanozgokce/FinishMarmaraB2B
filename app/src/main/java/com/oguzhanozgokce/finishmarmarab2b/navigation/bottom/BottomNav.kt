@@ -1,8 +1,8 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation.bottom
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,16 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMBottomBar(
@@ -31,29 +30,28 @@ fun FMBottomBar(
     NavigationBar(
         modifier = modifier
             .background(color = colors.background)
-            .padding(
-                start = padding.dimension16,
-                end = padding.dimension16,
-                bottom = padding.dimension16
-            )
-            .clip(RoundedCornerShape(padding.dimension48)),
+            .height(72.dp),
         containerColor = colors.cardBackground,
         contentColor = colors.text
     ) {
         bottomBarDestination.forEach { destination ->
-            val selected = currentDestination?.destination?.route == Screen.getRoute(destination.screen)
+            val selected =
+                currentDestination?.destination?.route == Screen.getRoute(destination.screen)
             NavigationBarItem(
+                modifier = Modifier.padding(top = 12.dp),
                 icon = {
                     Icon(
                         imageVector = destination.icon(),
                         contentDescription = destination.name,
-                        tint = if (selected) colors.primary else colors.text
+                        tint = if (selected) colors.primary else colors.text,
+                        modifier = Modifier.height(20.dp)
                     )
                 },
                 label = {
                     Text(
                         text = destination.name,
-                        color = if (selected) colors.primary else colors.text
+                        color = if (selected) colors.primary else colors.text,
+                        style = FMTheme.typography.bodySmallNormal()
                     )
                 },
                 selected = navController.currentDestination?.route == Screen.getRoute(destination.screen),

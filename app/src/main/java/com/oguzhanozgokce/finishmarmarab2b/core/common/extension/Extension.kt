@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.navigation.NavController
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -14,6 +15,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Pagi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -118,4 +120,16 @@ fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
         list = this.list?.map { it.mapToProduct() } ?: emptyList(),
         pagination = this.pagination
     )
+}
+
+fun NavController.navigateClearingStack(
+    route: Screen,
+    popUpToRoute: Screen,
+    inclusive: Boolean = true
+) {
+    navigate(route) {
+        popUpTo(popUpToRoute) {
+            this.inclusive = inclusive
+        }
+    }
 }

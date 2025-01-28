@@ -7,12 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.ForgotPassword
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
@@ -29,6 +25,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.SearchNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.search
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.SignUpNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.signUp
+import com.oguzhanozgokce.finishmarmarab2b.ui.splash.splash
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.navigation.WelcomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.navigation.welcome
 
@@ -50,7 +47,7 @@ fun NavigationGraph(
                 .then(modifier)
                 .padding(innerPadding),
             navController = navController,
-            startDestination = Home,
+            startDestination = Splash,
         ) {
             welcome(
                 actions = WelcomeNavActions(
@@ -62,25 +59,13 @@ fun NavigationGraph(
                 actions = LoginNavActions(
                     navigateToForgotPassword = { navController.navigate(route = ForgotPassword) },
                     navigateToBack = { navController.navigateUp() },
-                    navigateToHome = {
-                        navController.navigate(Home) {
-                            popUpTo(Welcome) {
-                                inclusive = true
-                            }
-                        }
-                    },
+                    navigateToHome = { navController.navigateClearingStack(Home, Welcome) },
                 )
             )
             signUp(
                 actions = SignUpNavActions(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToHome = {
-                        navController.navigate(Login) {
-                            popUpTo(Welcome) {
-                                inclusive = true
-                            }
-                        }
-                    },
+                    navigateToHome = { navController.navigateClearingStack(Login, Welcome) },
                 )
             )
             home(
@@ -88,7 +73,7 @@ fun NavigationGraph(
                     navigateToDetail = { id ->
                         navController.navigate(route = Detail(id))
                     },
-                    navigateToSearch = { navController.navigate(route = Screen.Search) }
+                    navigateToSearch = { navController.navigate(route = Search) }
                 )
             )
             profile()
@@ -98,16 +83,20 @@ fun NavigationGraph(
             detail(
                 actions = DetailNavActions(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToCart = { navController.navigate(route = Screen.Cart) },
-                    navigateToSearch = { navController.navigate(route = Screen.Search) }
+                    navigateToCart = { navController.navigate(route = Cart) },
+                    navigateToSearch = { navController.navigate(route = Search) }
                 )
             )
             password()
             search(
                 actions = SearchNavActions(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToCart = { navController.navigate(route = Screen.Cart) }
+                    navigateToCart = { navController.navigate(route = Cart) }
                 )
+            )
+            splash(
+                onNavigateToHome = { navController.navigateClearingStack(Home, Welcome) },
+                onNavigateToWelcome = { navController.navigate(Welcome) }
             )
         }
     }

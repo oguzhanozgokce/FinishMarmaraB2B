@@ -52,7 +52,7 @@ fun FMFavoriteButton(
     boxSize: Dp = padding.dimension36,
     isFavorite: Boolean = false,
     border: BorderStroke? = null,
-    onClick: () -> Unit = {},
+    onClick: () -> Unit,
 ) {
     FMIcon(
         modifier = modifier,

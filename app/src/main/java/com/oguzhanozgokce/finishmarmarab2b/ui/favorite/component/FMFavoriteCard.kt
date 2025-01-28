@@ -51,13 +51,13 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 fun FMFavoriteCard(
     product: Product,
     modifier: Modifier = Modifier,
-    onFavoriteClick: () -> Unit = {}
+    onFavoriteClick: () -> Unit
 ) {
     FMCard(
         modifier = modifier
             .fillMaxWidth()
             .height(padding.dimension180)
-            .padding(padding.dimension8),
+            .padding(horizontal = padding.dimension8, vertical = padding.dimension4),
         shape = RoundedCornerShape(padding.dimension8),
         elevation = CardDefaults.cardElevation(
             defaultElevation = padding.dimension2
@@ -104,7 +104,6 @@ fun AnimatedFavoriteCard(
     }
     if (!isVisible) {
         LaunchedEffect(Unit) {
-            onRemoveConfirmed(product.id)
         }
     }
 }
@@ -131,7 +130,7 @@ fun RowScope.ProductImage(product: Product) {
 @Composable
 fun ProductDetails(
     product: Product,
-    onFavoriteClick: () -> Unit = {}
+    onFavoriteClick: () -> Unit
 ) {
     Column(
         modifier = Modifier

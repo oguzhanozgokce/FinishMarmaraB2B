@@ -13,7 +13,7 @@ val buttonLight = Color(0xFF007BFF)
 val textLight = Color(0xFF000000)
 val onTextLight = Color(0xFFFFFFFF)
 val textSecondaryLight = Color(0xFF888888)
-val backgroundLight = Color(0xFFF5F5F5)
+val backgroundLight = Color(0xFFF9F9F9)
 val cardBackgroundLight = Color(0xFFFFFFFF)
 
 val primaryDark = Color(0xFF007BFF)

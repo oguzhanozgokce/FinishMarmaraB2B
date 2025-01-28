@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mockLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
@@ -20,17 +23,19 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMFavoriteList(
-    isLoading: Boolean = false,
     modifier: Modifier = Modifier,
     favoriteItems: LazyPagingItems<Product>,
     onFavoriteClick: (productId: Int) -> Unit
 ) {
+    val isRefreshing = favoriteItems.loadState.refresh is LoadState.Loading
+    val isAppending = favoriteItems.loadState.append is LoadState.Loading
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(padding.dimension8)
     ) {
-        if (isLoading) {
+        if (isRefreshing) {
             items(5) {
                 FMFavoriteCardShimmer(
                     modifier = Modifier.padding(bottom = padding.dimension8)
@@ -43,13 +48,23 @@ fun FMFavoriteList(
             ) { index ->
                 val product = favoriteItems[index]
                 if (product != null) {
-                    AnimatedFavoriteCard(
+                    FMFavoriteCard(
                         product = product,
-                        onRemoveConfirmed = { productId ->
-                            onFavoriteClick(productId)
+                        onFavoriteClick = {
+                            onFavoriteClick(product.id)
                         }
                     )
                 }
+            }
+        }
+
+        if (isAppending) {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                )
             }
         }
     }

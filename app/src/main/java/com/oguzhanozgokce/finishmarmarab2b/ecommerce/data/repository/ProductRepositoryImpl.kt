@@ -15,7 +15,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserC
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.DeleteFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
@@ -75,12 +74,8 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun deleteFavoriteProduct(productId: Int): Resource<Int> {
         val userId = getUserId()
-        val request = DeleteFavoriteProductRequest(
-            userId = userId,
-            productId = productId
-        )
         return safeApiCall {
-            apiService.deleteFavoriteProduct(request)
+            apiService.deleteFavoriteProduct(userId, productId)
         }.toResourceMap { response ->
             response.productId
         }

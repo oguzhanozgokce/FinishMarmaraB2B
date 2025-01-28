@@ -56,6 +56,7 @@ fun FavoriteScreen(
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowToast -> context.showToast(effect.message)
+            is UiEffect.Refresh -> favoriteItems.refresh()
         }
     }
     when {
@@ -133,7 +134,6 @@ fun FavoriteContent(
                 .padding(horizontal = padding.dimension8),
         )
         FMFavoriteList(
-            isLoading = uiState.isLoading,
             modifier = Modifier,
             favoriteItems = favoriteItems,
             onFavoriteClick = { id ->

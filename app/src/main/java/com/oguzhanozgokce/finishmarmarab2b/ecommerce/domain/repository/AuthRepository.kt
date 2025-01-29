@@ -9,12 +9,10 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    fun signIn(signInRequest: SignInRequest): Flow<Resource<LoginResponse>>
-    fun signUp(signUpRequest: SignUpRequest): Flow<Resource<RegisterResponse>>
+    fun signIn(request: SignInRequest): Flow<Resource<LoginResponse>>
+    fun signUp(request: SignUpRequest): Flow<Resource<RegisterResponse>>
     fun getUser(): Flow<Resource<User>>
 
     suspend fun saveOrUpdateEmail(email: String)
     suspend fun getEmail(): String?
-
-    fun getUserId(): Flow<Resource<Int>>
 }

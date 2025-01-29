@@ -22,25 +22,16 @@ class AuthRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : AuthRepository {
 
-    override fun getUserId(): Flow<Resource<Int>> = flow {
-        val userId = localDataSource.getUserId()
-        if (userId == null) {
-            emit(Resource.Error("User ID not found in local storage."))
-            return@flow
-        }
-        emit(Resource.Success(userId))
-    }
-
-    override fun signIn(signInRequest: SignInRequest): Flow<Resource<LoginResponse>> = flow {
-        val response = safeApiCall { apiService.signIn(signInRequest) }
+    override fun signIn(request: SignInRequest): Flow<Resource<LoginResponse>> = flow {
+        val response = safeApiCall { apiService.signIn(request) }
         if (response is Resource.Success) {
             localDataSource.saveOrUpdateUserId(response.data.id)
         }
         emit(response)
     }
 
-    override fun signUp(signUpRequest: SignUpRequest): Flow<Resource<RegisterResponse>> = flow {
-        val response = safeApiCall { apiService.signUp(signUpRequest) }
+    override fun signUp(request: SignUpRequest): Flow<Resource<RegisterResponse>> = flow {
+        val response = safeApiCall { apiService.signUp(request) }
         if (response is Resource.Success) {
             localDataSource.saveOrUpdateUserId(response.data.id)
         }

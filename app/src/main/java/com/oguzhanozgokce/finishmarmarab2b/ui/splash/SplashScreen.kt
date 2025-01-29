@@ -36,6 +36,7 @@ fun SplashScreen(
             is UiEffect.NavigateToWelcome -> onNavigateToWelcome()
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

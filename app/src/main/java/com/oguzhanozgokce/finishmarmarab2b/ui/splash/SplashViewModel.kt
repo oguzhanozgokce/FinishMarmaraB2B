@@ -22,15 +22,9 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val startTime = System.currentTimeMillis()
-
-            checkUserLogin()
-            val elapsedTime = System.currentTimeMillis() - startTime
-            val remainingTime = 1000 - elapsedTime
-            if (remainingTime > 0) {
-                delay(remainingTime)
-            }
             splashShowFlow.value = false
+            delay(1000)
+            checkUserLogin()
         }
     }
 

@@ -15,8 +15,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMNotification
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
@@ -37,17 +40,26 @@ fun ProfileScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    onNavigateToWelcome: () -> Unit,
 ) {
+    val context = LocalContext.current
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.NavigateToWelcome -> onNavigateToWelcome()
+            is UiEffect.ShowToast -> context.showToast(effect.message)
+        }
+    }
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> ProfileContent(uiState = uiState)
+        else -> ProfileContent(uiState = uiState, onAction = onAction)
     }
 }
 
 @Composable
 fun ProfileContent(
     uiState: UiState,
+    onAction: (UiAction) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -92,7 +104,7 @@ fun ProfileContent(
                 ProfileItem(text = "Feedback", onClick = {})
             }
             ProfileCard {
-                ProfileItem(text = "Log Out", onClick = {})
+                ProfileItem(text = "Log Out", onClick = { onAction(UiAction.LogOut) })
             }
         }
     }
@@ -107,5 +119,6 @@ fun ProfileScreenPreview(
         uiState = uiState,
         uiEffect = emptyFlow(),
         onAction = {},
+        onNavigateToWelcome = {}
     )
 }

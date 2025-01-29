@@ -12,9 +12,11 @@ object ProfileContract {
 
     sealed class UiAction {
         data object GetUser : UiAction()
+        data object LogOut : UiAction()
     }
 
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()
+        data object NavigateToWelcome : UiEffect()
     }
 }

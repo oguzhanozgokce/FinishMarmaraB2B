@@ -14,7 +14,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toQuest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserCommentDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
@@ -25,7 +24,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -42,6 +40,15 @@ class ProductRepositoryImpl @Inject constructor(
         val userId = getUserId()
         return safeApiCall {
             apiService.getProduct(userId = userId, limit = limit)
+        }.toResourceMap { paginationDataDto ->
+            paginationDataDto.mapToPaginationData()
+        }
+    }
+
+    override suspend fun getCategoryProducts(categoryId: Int): Resource<PaginationData<Product>> {
+        val userId = getUserId()
+        return safeApiCall {
+            apiService.getCategoryProducts(userId = userId, categoryId = categoryId)
         }.toResourceMap { paginationDataDto ->
             paginationDataDto.mapToPaginationData()
         }
@@ -80,13 +87,6 @@ class ProductRepositoryImpl @Inject constructor(
             response.productId
         }
     }
-
-    override fun addProductToFavorites(request: AddFavoriteProductRequest): Flow<Resource<Unit>> =
-        flow {
-            val response =
-                safeApiCall { apiService.addProductToFavorites(request) }
-            emit(response)
-        }
 
     override fun getProductComments(productId: Int): Flow<PagingData<UserComment>> {
         return createPager(

@@ -11,6 +11,8 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearin
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
+import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.CategoryNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.categoryProducts
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
@@ -73,10 +75,15 @@ fun NavigationGraph(
                     navigateToDetail = { id ->
                         navController.navigate(route = Detail(id))
                     },
-                    navigateToSearch = { navController.navigate(route = Search) }
+                    navigateToSearch = { navController.navigate(route = Search) },
+                    navigateToCategory = { id, name ->
+                        navController.navigate(route = CategoryProducts(id, name))
+                    }
                 )
             )
-            profile()
+            profile(
+                onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) }
+            )
             favorite()
             cart()
             payment()
@@ -95,8 +102,18 @@ fun NavigationGraph(
                 )
             )
             splash(
-                onNavigateToHome = { navController.navigateClearingStack(Home, Welcome) },
-                onNavigateToWelcome = { navController.navigate(Welcome) }
+                onNavigateToHome = { navController.navigateClearingStack(Home, Splash) },
+                onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Splash) }
+            )
+            categoryProducts(
+                actions = CategoryNavActions(
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToCart = { navController.navigate(route = Cart) },
+                    navigateToSearch = { navController.navigate(route = Search) },
+                    navigateToProductDetail = { id ->
+                        navController.navigate(route = Detail(id))
+                    }
+                )
             )
         }
     }

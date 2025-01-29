@@ -9,7 +9,9 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileViewModel
 
-fun NavGraphBuilder.profile() {
+fun NavGraphBuilder.profile(
+    onNavigateToWelcome: () -> Unit
+) {
     composable<Screen.Profile> {
         val viewModel: ProfileViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -18,7 +20,8 @@ fun NavGraphBuilder.profile() {
         ProfileScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            onNavigateToWelcome = onNavigateToWelcome
         )
     }
 }

@@ -58,6 +58,12 @@ interface ApiService {
         @Query("limit") limit: Int
     ): Response<ApiResponse<PaginationData<ProductDto>>>
 
+    @GET(GET_PRODUCTS)
+    suspend fun getCategoryProducts(
+        @Query("user_id") userId: Int,
+        @Query("category_id") categoryId: Int
+    ): Response<ApiResponse<PaginationData<ProductDto>>>
+
     @GET(GET_FAVORITE_PRODUCTS)
     suspend fun getFavoriteProducts(
         @Path("user_id") userId: Int,

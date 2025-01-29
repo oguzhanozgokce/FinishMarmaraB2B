@@ -1,4 +1,3 @@
-
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.background
@@ -12,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -45,5 +45,7 @@ fun FMBackIcon(
 @Preview(showBackground = true)
 @Composable
 fun FMBackIconPreview() {
-    FMBackIcon()
+    FMTheme {
+        FMBackIcon()
+    }
 }

@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
@@ -24,7 +23,6 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 
 @Composable
 fun FMSearch(
@@ -65,10 +63,9 @@ fun FMSearch(
             )
             Text(
                 text = stringResource(id = R.string.search_for_products),
-                color = colors.black.copy(alpha = 0.6f),
-                fontFamily = poppinsFontFamily,
-                fontSize = FMTheme.fontSize.medium,
-                fontWeight = FontWeight.Light,
+                style = FMTheme.typography.titleMediumLight().copy(
+                    color = colors.black.copy(alpha = 0.6f),
+                ),
                 modifier = Modifier.weight(1f)
             )
         }
@@ -78,8 +75,10 @@ fun FMSearch(
 @Preview(showBackground = true)
 @Composable
 fun CustomHomeSearchPreview() {
-    FMSearch(
-        modifier = Modifier,
-        onNavigateToSearch = {}
-    )
+    FMTheme {
+        FMSearch(
+            modifier = Modifier,
+            onNavigateToSearch = {}
+        )
+    }
 }

@@ -118,6 +118,9 @@ dependencies {
     // Detekt
     detektPlugins(libs.detekt)
 
+    // SystemUiController
+    implementation(libs.accompanist.systemuicontroller)
+
     //Test
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)

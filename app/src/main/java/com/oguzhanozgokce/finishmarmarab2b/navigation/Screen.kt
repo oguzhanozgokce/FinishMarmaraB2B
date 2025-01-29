@@ -39,6 +39,9 @@ sealed interface Screen {
     @Serializable
     data object Splash : Screen
 
+    @Serializable
+    data class CategoryProducts(val id: Int, val name: String) : Screen
+
     companion object {
         fun getRoute(screen: Screen): String = screen::class.qualifiedName.orEmpty()
 

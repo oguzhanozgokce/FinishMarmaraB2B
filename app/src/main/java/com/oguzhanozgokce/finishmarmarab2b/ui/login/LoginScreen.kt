@@ -34,11 +34,11 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLife
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
@@ -75,7 +75,9 @@ fun LoginScreen(
             is UiEffect.GoToForgotPassword -> loginNavActions.navigateToForgotPassword()
             is UiEffect.GoToBack -> loginNavActions.navigateToBack()
             is UiEffect.GoToHome -> loginNavActions.navigateToHome()
-            is UiEffect.ShowToast -> { context.showToast(effect.message) }
+            is UiEffect.ShowToast -> {
+                context.showToast(effect.message)
+            }
         }
     }
     if (alertDialogState) {
@@ -164,7 +166,7 @@ fun LoginContent(
                 .padding(padding.dimension16),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            CustomDivider(
+            FMHorizontalDivider(
                 modifier = Modifier.weight(1f),
                 thickness = padding.dimension1,
                 color = FMTheme.colors.primary
@@ -180,7 +182,7 @@ fun LoginContent(
 
             Spacer(modifier = Modifier.width(padding.dimension8))
 
-            CustomDivider(
+            FMHorizontalDivider(
                 modifier = Modifier.weight(1f),
                 thickness = padding.dimension1,
                 color = FMTheme.colors.primary

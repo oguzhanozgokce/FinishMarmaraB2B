@@ -24,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -34,12 +35,14 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun CategoryCard(
     modifier: Modifier = Modifier,
-    category: Category
+    category: Category,
+    onNavigateToCategory: (Int, String) -> Unit
 ) {
     Card(
         modifier = modifier
-            .wrapContentSize(),
-        shape = RoundedCornerShape(padding.dimension24),
+            .wrapContentSize()
+            .noRippleClickable { onNavigateToCategory(category.id, category.name) },
+        shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
             containerColor = colors.white
         )
@@ -87,7 +90,8 @@ fun CategoryCard(
 fun CategoryList(
     isLoading: Boolean = false,
     modifier: Modifier = Modifier,
-    categoryList: LazyPagingItems<Category>?
+    categoryList: LazyPagingItems<Category>?,
+    onNavigateToCategory: (Int, String) -> Unit
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth()
@@ -103,7 +107,8 @@ fun CategoryList(
                     if (categoryItem != null) {
                         CategoryCard(
                             category = categoryItem,
-                            modifier = modifier.padding(end = padding.dimension12)
+                            modifier = modifier.padding(end = padding.dimension12),
+                            onNavigateToCategory = onNavigateToCategory
                         )
                     }
                 }
@@ -142,6 +147,7 @@ fun CategoryCardPreview() {
             id = 1,
             name = "Elektronik",
             categoryImage = "",
-        )
+        ),
+        onNavigateToCategory = { _, _ -> }
     )
 }

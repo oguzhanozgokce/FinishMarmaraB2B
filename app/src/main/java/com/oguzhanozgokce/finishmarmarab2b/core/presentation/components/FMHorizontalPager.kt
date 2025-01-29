@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
@@ -88,8 +89,8 @@ fun HorizontalPagerIndicator(
     pageCount: Int,
     currentPage: Int,
     modifier: Modifier = Modifier,
-    activeColor: Color = colors.red,
-    inactiveColor: Color = colors.cardBackground,
+    activeColor: Color = colors.lightGray,
+    inactiveColor: Color = colors.black,
     indicatorSize: Dp = padding.dimension8,
 ) {
     Row(
@@ -116,5 +117,7 @@ fun FMHorizontalPagerPreview() {
         R.drawable.image_product,
         R.drawable.image_product,
     )
-    FMHorizontalPager(imageList = imageList)
+    FMTheme {
+        FMHorizontalPager(imageList = imageList)
+    }
 }

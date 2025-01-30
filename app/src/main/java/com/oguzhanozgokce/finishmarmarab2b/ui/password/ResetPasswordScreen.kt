@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingB
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.ResetPasswordContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -48,9 +49,11 @@ fun ResetPasswordContent() {
 fun ResetPasswordScreenPreview(
     @PreviewParameter(ResetPasswordScreenPreviewProvider::class) uiState: UiState,
 ) {
-    ResetPasswordScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-    )
+    FMTheme {
+        ResetPasswordScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+        )
+    }
 }

@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingB
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -48,9 +49,11 @@ fun PaymentContent() {
 fun PaymentScreenPreview(
     @PreviewParameter(PaymentScreenPreviewProvider::class) uiState: UiState,
 ) {
-    PaymentScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-    )
+    FMTheme {
+        PaymentScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+        )
+    }
 }

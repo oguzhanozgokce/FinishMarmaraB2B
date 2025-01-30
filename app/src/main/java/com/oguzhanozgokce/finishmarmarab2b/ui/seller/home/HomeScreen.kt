@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingB
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.seller.home.HomeContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -48,9 +49,11 @@ fun HomeContent() {
 fun HomeScreenPreview(
     @PreviewParameter(HomeScreenPreviewProvider::class) uiState: UiState,
 ) {
-    HomeScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-    )
+    FMTheme {
+        HomeScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+        )
+    }
 }

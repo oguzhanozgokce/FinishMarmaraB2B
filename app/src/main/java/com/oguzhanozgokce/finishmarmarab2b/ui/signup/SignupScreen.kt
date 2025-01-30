@@ -37,6 +37,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.SignUpNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
@@ -62,7 +63,9 @@ fun SignupScreen(
     }
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
-            is UiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+            is UiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT)
+                .show()
+
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToHome -> signupNavActions.navigateToHome()
             is UiEffect.GoToBack -> signupNavActions.navigateToBack()
@@ -184,13 +187,15 @@ fun SignupContent(
 fun SignupScreenPreview(
     @PreviewParameter(SignupScreenPreviewProvider::class) uiState: UiState,
 ) {
-    SignupScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-        signupNavActions = SignUpNavActions(
-            navigateToHome = {},
-            navigateToBack = {}
+    FMTheme {
+        SignupScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            signupNavActions = SignUpNavActions(
+                navigateToHome = {},
+                navigateToBack = {}
+            )
         )
-    )
+    }
 }

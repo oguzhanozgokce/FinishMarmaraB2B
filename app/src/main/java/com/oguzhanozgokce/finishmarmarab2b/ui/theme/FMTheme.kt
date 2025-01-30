@@ -41,16 +41,6 @@ fun FMTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-//    val systemUiController = rememberSystemUiController()
-//    val backgroundColor = if (darkTheme) colors.black else colors.white
-//    val useDarkIcons = !darkTheme
-//
-//    SideEffect {
-//        systemUiController.setSystemBarsColor(
-//            color = backgroundColor,
-//            darkIcons = useDarkIcons
-//        )
-//    }
 
     CompositionLocalProvider(
         LocalColors provides if (darkTheme) darkColors() else lightColors(),

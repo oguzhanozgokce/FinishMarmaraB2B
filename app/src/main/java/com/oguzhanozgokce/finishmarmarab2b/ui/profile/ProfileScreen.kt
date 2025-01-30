@@ -30,6 +30,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.ProfileCard
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.ProfileItem
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserImage
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserNameSurname
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
@@ -115,10 +116,12 @@ fun ProfileContent(
 fun ProfileScreenPreview(
     @PreviewParameter(ProfileScreenPreviewProvider::class) uiState: UiState,
 ) {
-    ProfileScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-        onNavigateToWelcome = {}
-    )
+    FMTheme {
+        ProfileScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            onNavigateToWelcome = {}
+        )
+    }
 }

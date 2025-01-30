@@ -204,19 +204,21 @@ fun LoginContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = (0xFFF5F5F5))
 @Composable
 fun LoginScreenPreview(
     @PreviewParameter(LoginScreenPreviewProvider::class) uiState: UiState,
 ) {
-    LoginScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-        loginNavActions = LoginNavActions(
-            navigateToForgotPassword = {},
-            navigateToBack = {},
-            navigateToHome = {},
+    FMTheme {
+        LoginScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            loginNavActions = LoginNavActions(
+                navigateToForgotPassword = {},
+                navigateToBack = {},
+                navigateToHome = {},
+            )
         )
-    )
+    }
 }

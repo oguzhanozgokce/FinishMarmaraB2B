@@ -24,6 +24,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOu
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
@@ -96,13 +97,15 @@ fun WelcomeContent(
 fun WelcomeScreenPreview(
     @PreviewParameter(WelcomeScreenPreviewProvider::class) uiState: UiState,
 ) {
-    WelcomeScreen(
-        uiState = uiState,
-        uiEffect = emptyFlow(),
-        onAction = {},
-        welcomeNavActions = WelcomeNavActions(
-            navigateToLogin = {},
-            navigateToSignup = {}
+    FMTheme {
+        WelcomeScreen(
+            uiState = uiState,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            welcomeNavActions = WelcomeNavActions(
+                navigateToLogin = {},
+                navigateToSignup = {}
+            )
         )
-    )
+    }
 }

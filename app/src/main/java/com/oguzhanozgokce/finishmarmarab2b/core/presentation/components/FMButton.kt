@@ -44,9 +44,7 @@ fun FMButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height),
+        modifier = modifier.height(height),
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
@@ -147,7 +145,7 @@ fun FMButtonPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            FMButton(text = "Button", onClick = { })
+            FMButton(text = "Button", onClick = { }, modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.height(padding.dimension16))
             FMOutlinedButton(text = "Button", onClick = { })
             Spacer(modifier = Modifier.height(padding.dimension16))

@@ -55,7 +55,9 @@ fun BottomDetail(
         FMButton(
             text = "Basket",
             onClick = onAddToCart,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
             height = padding.dimension48
         )
         Spacer(modifier = Modifier.width(padding.dimension8))

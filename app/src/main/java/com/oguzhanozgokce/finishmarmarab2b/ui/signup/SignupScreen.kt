@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -177,7 +178,11 @@ fun SignupContent(
                 modifier = Modifier.padding(vertical = padding.dimension4)
             )
             Spacer(modifier = Modifier.height(padding.dimension32))
-            FMButton(text = "Register", onClick = { onAction(UiAction.Signup) })
+            FMButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Register",
+                onClick = { onAction(UiAction.Signup) }
+            )
         }
     }
 }
@@ -192,10 +197,7 @@ fun SignupScreenPreview(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
-            signupNavActions = SignUpNavActions(
-                navigateToHome = {},
-                navigateToBack = {}
-            )
+            signupNavActions = SignUpNavActions(navigateToHome = {}, navigateToBack = {})
         )
     }
 }

@@ -52,6 +52,7 @@ fun CustomAlertDialog(
         },
         confirmButton = {
             FMButton(
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.ok_button),
                 onClick = {
                     confirmButtonClickListener?.invoke()

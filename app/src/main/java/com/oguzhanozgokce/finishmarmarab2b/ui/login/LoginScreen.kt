@@ -156,8 +156,11 @@ fun LoginContent(
             )
         }
         Spacer(modifier = Modifier.height(padding.dimension32))
-
-        FMButton(text = "Login", onClick = { onAction(UiAction.LoginClicked) })
+        FMButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Login",
+            onClick = { onAction(UiAction.LoginClicked) }
+        )
         Spacer(modifier = Modifier.height(padding.dimension16))
 
         Row(

@@ -81,6 +81,7 @@ fun WelcomeContent(
         )
         Spacer(modifier = Modifier.height(padding.dimension48))
         FMButton(
+            modifier = Modifier.fillMaxWidth(),
             text = "Login",
             onClick = { welcomeNavActions.navigateToLogin() }
         )

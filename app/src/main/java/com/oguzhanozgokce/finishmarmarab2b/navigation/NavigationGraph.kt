@@ -84,7 +84,11 @@ fun NavigationGraph(
             profile(
                 onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) }
             )
-            favorite()
+            favorite(
+                onNavigateToDetail = { id ->
+                    navController.navigate(route = Detail(id))
+                }
+            )
             cart()
             payment()
             detail(

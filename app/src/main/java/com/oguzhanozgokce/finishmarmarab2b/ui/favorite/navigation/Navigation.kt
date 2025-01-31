@@ -11,7 +11,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteViewModel
 
-fun NavGraphBuilder.favorite() {
+fun NavGraphBuilder.favorite(
+    onNavigateToDetail: (Int) -> Unit
+) {
     composable<Screen.Favorite> {
         val viewModel: FavoriteViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -22,7 +24,8 @@ fun NavGraphBuilder.favorite() {
         FavoriteScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            onNavigateToDetail = onNavigateToDetail
         )
     }
 }

@@ -50,6 +50,7 @@ fun FavoriteScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    onNavigateToDetail: (Int) -> Unit
 ) {
     val context = LocalContext.current
     val favoriteItems = uiState.favoriteList.collectAsLazyPagingItems()
@@ -64,7 +65,8 @@ fun FavoriteScreen(
         else -> FavoriteContent(
             uiState = uiState,
             favoriteItems = favoriteItems,
-            onAction = onAction
+            onAction = onAction,
+            onNavigateToDetail = onNavigateToDetail
         )
     }
 }
@@ -73,7 +75,8 @@ fun FavoriteScreen(
 fun FavoriteContent(
     uiState: UiState,
     favoriteItems: LazyPagingItems<Product>,
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
+    onNavigateToDetail: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -138,6 +141,9 @@ fun FavoriteContent(
             favoriteItems = favoriteItems,
             onFavoriteClick = { id ->
                 onAction(UiAction.DeleteFavorite(id))
+            },
+            onCartClick = { id ->
+                onNavigateToDetail(id)
             }
         )
     }
@@ -153,6 +159,7 @@ fun FavoriteScreenPreview(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
+            onNavigateToDetail = {}
         )
     }
 }

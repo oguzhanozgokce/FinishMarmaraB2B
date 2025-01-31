@@ -25,7 +25,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMFavoriteList(
     modifier: Modifier = Modifier,
     favoriteItems: LazyPagingItems<Product>,
-    onFavoriteClick: (productId: Int) -> Unit
+    onFavoriteClick: (productId: Int) -> Unit,
+    onCartClick: (productId: Int) -> Unit = {},
 ) {
     val isRefreshing = favoriteItems.loadState.refresh is LoadState.Loading
     val isAppending = favoriteItems.loadState.append is LoadState.Loading
@@ -48,11 +49,11 @@ fun FMFavoriteList(
             ) { index ->
                 val product = favoriteItems[index]
                 if (product != null) {
-                    FMFavoriteCard(
+                    FMCardFavorite(
                         product = product,
-                        onFavoriteClick = {
-                            onFavoriteClick(product.id)
-                        }
+                        onFavoriteClick = { onFavoriteClick(product.id) },
+                        onCartClick = {},
+                        onClick = { onCartClick(product.id) }
                     )
                 }
             }
@@ -77,7 +78,7 @@ fun FMFavoriteCardShimmer(
     FMCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(padding.dimension180)
+            .height(padding.dimension200)
             .padding(padding.dimension8),
         shape = RoundedCornerShape(padding.dimension8),
         elevation = CardDefaults.cardElevation(

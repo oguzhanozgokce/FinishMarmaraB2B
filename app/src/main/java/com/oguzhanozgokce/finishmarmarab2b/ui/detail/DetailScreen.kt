@@ -50,9 +50,7 @@ fun DetailScreen(
     val context = LocalContext.current
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
-            is UiEffect.ShowToast -> {
-                context.showToast(effect.message)
-            }
+            is UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
 

@@ -41,7 +41,6 @@ fun FMTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-
     CompositionLocalProvider(
         LocalColors provides if (darkTheme) darkColors() else lightColors(),
         LocalPadding provides Padding,

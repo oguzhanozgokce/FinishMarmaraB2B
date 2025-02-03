@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -32,7 +31,7 @@ fun CartTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(padding.dimension56)
             .background(color = colors.white)
             .padding(horizontal = padding.dimension16),
         verticalAlignment = Alignment.CenterVertically
@@ -55,7 +54,6 @@ fun CartTopBar(
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = onDeleteClick) {
             Icon(
-                modifier = Modifier.size(24.dp),
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Clear Basket",
                 tint = colors.primary

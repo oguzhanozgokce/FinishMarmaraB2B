@@ -17,36 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOutlinedButton
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
-import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiAction
-import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiEffect
-import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.navigation.WelcomeNavActions
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun WelcomeScreen(
-    uiState: UiState,
-    uiEffect: Flow<UiEffect>,
-    onAction: (UiAction) -> Unit,
     welcomeNavActions: WelcomeNavActions
 ) {
-    when {
-        uiState.isLoading -> LoadingBar()
-        uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> WelcomeContent(welcomeNavActions = welcomeNavActions)
-    }
+    WelcomeContent(
+        welcomeNavActions = welcomeNavActions
+    )
 }
 
 @Composable
@@ -56,7 +43,7 @@ fun WelcomeContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.background)
+            .background(colors.white)
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,14 +82,9 @@ fun WelcomeContent(
 
 @Preview(showBackground = true)
 @Composable
-fun WelcomeScreenPreview(
-    @PreviewParameter(WelcomeScreenPreviewProvider::class) uiState: UiState,
-) {
+fun WelcomeScreenPreview() {
     FMTheme {
         WelcomeScreen(
-            uiState = uiState,
-            uiEffect = emptyFlow(),
-            onAction = {},
             welcomeNavActions = WelcomeNavActions(
                 navigateToLogin = {},
                 navigateToSignup = {}

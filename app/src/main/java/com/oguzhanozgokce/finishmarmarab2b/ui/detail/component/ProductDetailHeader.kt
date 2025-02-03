@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
@@ -28,17 +27,15 @@ fun ProductDetailHeader(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        product.seller?.let { seller ->
-            Text(
-                text = seller.name,
-                style = typography.headMediumSemiBold().copy(
-                    color = colors.primary
-                ),
-            )
-        }
+        Text(
+            text = product.seller.name,
+            style = typography.headMediumSemiBold().copy(
+                color = colors.primary
+            ),
+        )
         Spacer(modifier = Modifier.width(padding.dimension8))
         Text(
             text = product.title,

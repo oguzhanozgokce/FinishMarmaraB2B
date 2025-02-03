@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyImageScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun ImageList(
@@ -34,11 +36,13 @@ fun ImageList(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .background(colors.black)
+                .background(colors.white)
         ) {
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.fillMaxWidth().height(300.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
                 pageContent = { page ->
                     AsyncImage(
                         model = imageList[page],
@@ -55,15 +59,16 @@ fun ImageList(
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .background(colors.lightGray.copy(alpha = 0.2f), shape = CircleShape)
+                    .padding(horizontal = padding.dimension8, vertical = padding.dimension2)
+                    .align(Alignment.CenterHorizontally),
                 horizontalArrangement = Arrangement.Center
             ) {
                 repeat(imageList.size) { index ->
                     val isSelected = pagerState.currentPage == index
                     Box(
                         modifier = Modifier
-                            .size(if (isSelected) 12.dp else 8.dp)
+                            .size(padding.dimension12)
                             .clip(CircleShape)
                             .background(if (isSelected) colors.primary else colors.lightGray)
                             .padding(horizontal = 4.dp)
@@ -76,6 +81,7 @@ fun ImageList(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
+                .background(colors.red)
                 .clip(RoundedCornerShape(8.dp))
                 .padding(horizontal = 16.dp, vertical = 32.dp),
             message = "No images found for this product",

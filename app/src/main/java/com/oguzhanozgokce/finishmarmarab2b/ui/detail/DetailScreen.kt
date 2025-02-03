@@ -113,7 +113,7 @@ fun DetailContent(
                         ProductDetailHeader(product = product)
                         Spacer(modifier = Modifier.height(padding.dimension4))
                         SelectedSellerSection(
-                            sellerName = product.seller?.name,
+                            sellerName = product.seller.name,
                             onQuestionsAndAnswersClick = { }
                         )
                     }

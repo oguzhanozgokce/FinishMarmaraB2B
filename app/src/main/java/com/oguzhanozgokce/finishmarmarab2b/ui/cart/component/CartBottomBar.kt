@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -51,7 +51,7 @@ fun CartBottomBar(
                 ),
             )
             Text(
-                text = "$${sampleProductList.sumOf { it.price }}",
+                text = "$${PreviewMockData.defaultProductList.sumOf { it.price }}",
                 style = typography.titleMediumSemiBold(),
             )
         }

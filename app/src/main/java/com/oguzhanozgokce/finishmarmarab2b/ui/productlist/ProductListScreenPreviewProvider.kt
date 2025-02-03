@@ -1,19 +1,19 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.welcome
+package com.oguzhanozgokce.finishmarmarab2b.ui.productlist
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-class WelcomeScreenPreviewProvider : PreviewParameterProvider<WelcomeContract.UiState> {
-    override val values: Sequence<WelcomeContract.UiState>
+class ProductListScreenPreviewProvider : PreviewParameterProvider<ProductListContract.UiState> {
+    override val values: Sequence<ProductListContract.UiState>
         get() = sequenceOf(
-            WelcomeContract.UiState(
+            ProductListContract.UiState(
                 isLoading = true,
                 list = emptyList(),
             ),
-            WelcomeContract.UiState(
+            ProductListContract.UiState(
                 isLoading = false,
                 list = emptyList(),
             ),
-            WelcomeContract.UiState(
+            ProductListContract.UiState(
                 isLoading = false,
                 list = listOf("Item 1", "Item 2", "Item 3")
             ),

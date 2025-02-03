@@ -15,17 +15,16 @@ data class Product(
     val categoryId: Int,
     val isFavorite: Boolean,
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    val category: Category? = null,
-    val seller: Seller? = null,
-    val images: List<Image>? = null,
+    val category: Category,
+    val seller: Seller,
+    val images: List<Image>,
 ) {
     val imageUrl: List<String>
-        get() = images?.mapNotNull { it.imageUrl?.takeIf { url -> url.isNotBlank() } }
-            ?: emptyList()
+        get() = images.map { it.imageUrl } ?: emptyList()
 
     val primaryImageUrl: String?
         get() = imageUrl.firstOrNull()
 
-    val sellerImageUrl: String?
-        get() = seller?.imageUrl
+    val sellerImageUrl: String
+        get() = seller.imageUrl
 }

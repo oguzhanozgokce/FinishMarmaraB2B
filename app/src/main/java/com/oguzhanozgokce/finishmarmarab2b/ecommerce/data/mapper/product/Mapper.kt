@@ -36,9 +36,9 @@ fun ProductDto?.mapToProduct(): Product {
         createdAt = this?.createdAt?.let {
             LocalDateTime.parse(it, formatter)
         } ?: LocalDateTime.now(),
-        category = this?.category?.toCategoryDomain(),
-        seller = this?.seller?.toSellerDomain(),
-        images = this?.images?.map { it.toImageDomain() },
+        category = this?.category.toCategoryDomain(),
+        seller = this?.seller.toSellerDomain(),
+        images = this?.images?.map { it.toImageDomain() } ?: emptyList()
     )
 }
 
@@ -57,9 +57,9 @@ fun Product.mapToProductDto(): ProductDto {
         categoryId = this.categoryId,
         isFavorite = this.isFavorite,
         createdAt = this.createdAt.format(formatter),
-        category = this.category?.toCategoryDto(),
-        seller = this.seller?.toSellerDto(),
-        images = this.images?.map { it.toImageDto() }
+        category = this.category.toCategoryDto(),
+        seller = this.seller.toSellerDto(),
+        images = this.images.map { it.toImageDto() }
     )
 }
 
@@ -67,10 +67,10 @@ fun GetFavoriteResponse.toProduct(): Product {
     return product.mapToProduct()
 }
 
-fun CategoryDto.toCategoryDomain() = Category(
-    id = this.id.orZero(),
-    name = this.name.orEmpty(),
-    categoryImage = this.categoryImage.orEmpty()
+fun CategoryDto?.toCategoryDomain() = Category(
+    id = this?.id.orZero(),
+    name = this?.name.orEmpty(),
+    categoryImage = this?.categoryImage.orEmpty()
 )
 
 fun Category.toCategoryDto() = CategoryDto(
@@ -79,12 +79,12 @@ fun Category.toCategoryDto() = CategoryDto(
     categoryImage = this.categoryImage
 )
 
-fun SellerDto.toSellerDomain() = Seller(
-    id = this.id.orZero(),
-    name = this.name.orEmpty(),
-    email = this.email.orEmpty(),
-    address = this.address.orEmpty(),
-    imageUrl = this.imageUrl.orEmpty()
+fun SellerDto?.toSellerDomain() = Seller(
+    id = this?.id.orZero(),
+    name = this?.name.orEmpty(),
+    email = this?.email.orEmpty(),
+    address = this?.address.orEmpty(),
+    imageUrl = this?.imageUrl.orEmpty()
 )
 
 fun Seller.toSellerDto() = SellerDto(
@@ -95,11 +95,15 @@ fun Seller.toSellerDto() = SellerDto(
     imageUrl = this.imageUrl
 )
 
-fun ImageDto.toImageDomain() = Image(
-    imageUrl = this.imageUrl.orEmpty()
+fun ImageDto?.toImageDomain() = Image(
+    id = this?.id.orZero(),
+    productId = this?.productId.orZero(),
+    imageUrl = this?.imageUrl.orEmpty()
 )
 
 fun Image.toImageDto() = ImageDto(
+    id = this.id,
+    productId = this.productId,
     imageUrl = this.imageUrl
 )
 

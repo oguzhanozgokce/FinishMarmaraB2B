@@ -35,10 +35,14 @@ object PreviewMockData {
         ),
         images = listOf(
             Image(
-                "https://img.freepik.com/free-vector/realistic-natural-cream-ad-template_52683-19298.jpg?t=st=1737368792~exp=1737372392~hmac=23a9141fa69e0f8ec951357a3df6b37447768a76207c649cd152be0ba2c74f62&w=1800"
+                id = 2,
+                productId = 1,
+                imageUrl = "https://img.freepik.com/free-vector/realistic-natural-cream-ad-template_52683-19298.jpg?t=st=1737368792~exp=1737372392~hmac=23a9141fa69e0f8ec951357a3df6b37447768a76207c649cd152be0ba2c74f62&w=1800"
             ),
             Image(
-                "https://img.freepik.com/free-vector/cosmetic-realistic-with-cream-jar_88138-122.jpg?t=st=1737368852~exp=1737372452~hmac=0036a43a7ec668f2189018a44f07a57a6ee1beec303046890a0f5d21161e5519&w=2000"
+                id = 3,
+                productId = 1,
+                imageUrl = "https://img.freepik.com/free-vector/cosmetic-realistic-with-cream-jar_88138-122.jpg?t=st=1737368852~exp=1737372452~hmac=0036a43a7ec668f2189018a44f07a57a6ee1beec303046890a0f5d21161e5519&w=2000"
             )
         ),
         isFavorite = false
@@ -51,6 +55,21 @@ object PreviewMockData {
         defaultProduct.copy(id = 4, title = "Test Product 4"),
         defaultProduct.copy(id = 5, title = "Test Product 5"),
         defaultProduct.copy(id = 6, title = "Test Product 6"),
+    )
+
+    private val defaultCategory = Category(
+        id = 1,
+        name = "Tech",
+        categoryImage = ""
+    )
+
+    val defaultCategoryList = listOf(
+        defaultCategory,
+        defaultCategory.copy(id = 2, name = "Test Category 2"),
+        defaultCategory.copy(id = 3, name = "Test Category 3"),
+        defaultCategory.copy(id = 4, name = "Test Category 4"),
+        defaultCategory.copy(id = 5, name = "Test Category 5"),
+        defaultCategory.copy(id = 6, name = "Test Category 6"),
     )
 
     val outOfStockProduct = defaultProduct.copy(

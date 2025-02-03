@@ -22,11 +22,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
-import com.oguzhanozgokce.finishmarmarab2b.ui.home.sampleProductList
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -46,14 +45,14 @@ fun ProductCounter(
             .wrapContentSize()
             .padding(padding.dimension4),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(padding.dimension8)
     ) {
         AsyncImage(
-            model = product.primaryImageUrl?.ifBlank { painterResource(id = R.drawable.image_product) },
+            model = product.primaryImageUrl ?: painterResource(id = R.drawable.image_product),
             contentDescription = null,
             modifier = Modifier
-                .size(80.dp)
-                .clip(RoundedCornerShape(8.dp)),
+                .size(padding.dimension80)
+                .clip(RoundedCornerShape(padding.dimension8)),
             contentScale = ContentScale.Crop
         )
 
@@ -61,22 +60,22 @@ fun ProductCounter(
             modifier = Modifier
                 .clip(RoundedCornerShape(padding.dimension16))
                 .border(
-                    1.dp,
+                    padding.dimension1,
                     colors.lightGray,
                     RoundedCornerShape(padding.dimension16)
                 )
-                .padding(horizontal = 12.dp, vertical = 4.dp),
+                .padding(horizontal = padding.dimension12, vertical = padding.dimension4),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
             IconButton(
                 onClick = {
-                    if (count > 1) onDecrease() else onDelete()
+                    if (count > ONE) onDecrease() else onDelete()
                 },
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(padding.dimension16)
             ) {
                 Icon(
-                    imageVector = if (count > 1) Icons.Default.Delete else Icons.Default.Delete,
+                    imageVector = if (count > ONE) Icons.Default.Delete else Icons.Default.Delete,
                     contentDescription = "Decrease or Delete",
                     tint = colors.primary
                 )
@@ -89,7 +88,7 @@ fun ProductCounter(
 
             IconButton(
                 onClick = onIncrease,
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(padding.dimension16)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -101,12 +100,14 @@ fun ProductCounter(
     }
 }
 
+private const val ONE = 1
+
 @Preview(showBackground = true)
 @Composable
 fun ProductCounterPreview() {
     FMTheme {
         ProductCounter(
-            product = sampleProductList.first(),
+            product = PreviewMockData.defaultProduct,
             count = 1,
             onIncrease = {},
             onDecrease = {},

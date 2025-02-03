@@ -1,8 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.signup
 
-import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
@@ -64,9 +64,7 @@ fun SignupScreen(
     }
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
-            is UiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT)
-                .show()
-
+            is UiEffect.ShowToast -> context.showToast(effect.message)
             is UiEffect.ShowAlertDialog -> alertDialogState = true
             is UiEffect.GoToHome -> signupNavActions.navigateToHome()
             is UiEffect.GoToBack -> signupNavActions.navigateToBack()
@@ -91,99 +89,98 @@ fun SignupContent(
     onAction: (UiAction) -> Unit,
     signupNavActions: SignUpNavActions
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(FMTheme.colors.white)
+            .padding(padding.dimension16),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top,
+    ) {
+        BackIconButton(
+            onClick = { signupNavActions.navigateToBack() },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding.dimension16),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ) {
-            BackIconButton(
-                onClick = { signupNavActions.navigateToBack() },
-                modifier = Modifier
-                    .padding(vertical = padding.dimension8)
-                    .align(Alignment.Start)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension20))
-            Text(
-                text = stringResource(id = R.string.hello_register_text),
-                modifier = Modifier.align(Alignment.Start),
-                style = typography.headExtraLargeBold(),
-            )
-            Spacer(modifier = Modifier.height(padding.dimension32))
-            CustomTextField(
-                value = uiState.name,
-                onValueChange = { onAction(UiAction.NameChanged(it)) },
-                label = "Name",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Name"
-                    )
-                },
-                modifier = Modifier.padding(vertical = padding.dimension4)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension4))
-            CustomTextField(
-                value = uiState.surname,
-                onValueChange = { onAction(UiAction.SurnameChanged(it)) },
-                label = "Surname",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Surname"
-                    )
-                },
-                modifier = Modifier.padding(vertical = padding.dimension4)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension4))
-            CustomTextField(
-                value = uiState.email,
-                onValueChange = { onAction(UiAction.EmailChanged(it)) },
-                label = "Email",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email"
-                    )
-                },
-                modifier = Modifier.padding(vertical = padding.dimension4)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension4))
-            CustomTextField(
-                value = uiState.password,
-                onValueChange = { onAction(UiAction.PasswordChanged(it)) },
-                label = "Password",
-                isPassword = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Password"
-                    )
-                },
-                modifier = Modifier.padding(vertical = padding.dimension4)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension4))
-            CustomTextField(
-                value = uiState.phoneNumber,
-                onValueChange = { onAction(UiAction.PhoneNumberChanged(it)) },
-                label = "Phone",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = "Phone number"
-                    )
-                },
-                modifier = Modifier.padding(vertical = padding.dimension4)
-            )
-            Spacer(modifier = Modifier.height(padding.dimension32))
-            FMButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Register",
-                onClick = { onAction(UiAction.Signup) }
-            )
-        }
+                .padding(vertical = padding.dimension8)
+                .align(Alignment.Start)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension20))
+        Text(
+            text = stringResource(id = R.string.hello_register_text),
+            modifier = Modifier.align(Alignment.Start),
+            style = typography.headExtraLargeBold(),
+        )
+        Spacer(modifier = Modifier.height(padding.dimension32))
+        CustomTextField(
+            value = uiState.name,
+            onValueChange = { onAction(UiAction.NameChanged(it)) },
+            label = "Name",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Name"
+                )
+            },
+            modifier = Modifier.padding(vertical = padding.dimension4)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        CustomTextField(
+            value = uiState.surname,
+            onValueChange = { onAction(UiAction.SurnameChanged(it)) },
+            label = "Surname",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Surname"
+                )
+            },
+            modifier = Modifier.padding(vertical = padding.dimension4)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        CustomTextField(
+            value = uiState.email,
+            onValueChange = { onAction(UiAction.EmailChanged(it)) },
+            label = "Email",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Email"
+                )
+            },
+            modifier = Modifier.padding(vertical = padding.dimension4)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        CustomTextField(
+            value = uiState.password,
+            onValueChange = { onAction(UiAction.PasswordChanged(it)) },
+            label = "Password",
+            isPassword = true,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Password"
+                )
+            },
+            modifier = Modifier.padding(vertical = padding.dimension4)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        CustomTextField(
+            value = uiState.phoneNumber,
+            onValueChange = { onAction(UiAction.PhoneNumberChanged(it)) },
+            label = "Phone",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = "Phone number"
+                )
+            },
+            modifier = Modifier.padding(vertical = padding.dimension4)
+        )
+        Spacer(modifier = Modifier.height(padding.dimension32))
+        FMButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Register",
+            onClick = { onAction(UiAction.Signup) }
+        )
     }
 }
 

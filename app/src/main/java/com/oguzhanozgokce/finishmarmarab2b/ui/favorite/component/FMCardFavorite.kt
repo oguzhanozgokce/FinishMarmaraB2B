@@ -58,11 +58,7 @@ fun FMCardFavorite(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = if (product.primaryImageUrl.isNullOrBlank()) {
-                    painterResource(id = R.drawable.image_product)
-                } else {
-                    product.primaryImageUrl
-                },
+                model = product.primaryImageUrl ?: painterResource(id = R.drawable.image_product),
                 contentDescription = null,
                 modifier = Modifier
                     .width(120.dp)

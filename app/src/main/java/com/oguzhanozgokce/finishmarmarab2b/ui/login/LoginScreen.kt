@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -101,6 +103,7 @@ fun LoginContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = colors.white)
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,

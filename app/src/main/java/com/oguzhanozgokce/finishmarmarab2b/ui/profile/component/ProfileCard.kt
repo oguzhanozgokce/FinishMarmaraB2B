@@ -26,7 +26,7 @@ fun ProfileCard(
             containerColor = colors.white
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = padding.dimension4
+            defaultElevation = padding.dimension2
         )
     ) {
         Column(

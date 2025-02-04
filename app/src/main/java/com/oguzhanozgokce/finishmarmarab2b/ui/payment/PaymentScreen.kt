@@ -44,7 +44,7 @@ fun PaymentContent() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun PaymentScreenPreview(
     @PreviewParameter(PaymentScreenPreviewProvider::class) uiState: UiState,

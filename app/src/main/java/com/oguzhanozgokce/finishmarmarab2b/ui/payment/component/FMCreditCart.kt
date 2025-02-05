@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIcon
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
@@ -51,6 +52,7 @@ enum class CardType(
 }
 
 data class CreditCard(
+    val cardTitle: String,
     val cardNumber: String,
     val cardHolder: String,
     val expirationDate: String,
@@ -78,8 +80,7 @@ fun FMCreditCard(
     Box(
         modifier = Modifier
             .width(200.dp)
-            .height(200.dp)
-            .clickable { isFlipped = !isFlipped }
+            .height(180.dp)
             .border(
                 width = 1.dp,
                 color = borderColor,
@@ -95,7 +96,8 @@ fun FMCreditCard(
             FrontSideCreditCard(
                 creditCard,
                 cardBackgroundColor = cardBackgroundColor,
-                borderColor = borderColor
+                borderColor = borderColor,
+                onFlip = { isFlipped = !isFlipped },
             )
         } else {
             BackSideCreditCard(
@@ -108,7 +110,8 @@ fun FMCreditCard(
                         rotationY = 180f
                         transformOrigin = TransformOrigin(0.5f, 0.5f)
                         cameraDistance = 30f * density
-                    }
+                    },
+                onFlip = { isFlipped = !isFlipped }
             )
         }
     }
@@ -119,7 +122,8 @@ fun FrontSideCreditCard(
     creditCard: CreditCard,
     modifier: Modifier = Modifier,
     cardBackgroundColor: Color,
-    borderColor: Color
+    borderColor: Color,
+    onFlip: () -> Unit
 ) {
     FMCard(
         modifier = modifier.background(
@@ -138,11 +142,34 @@ fun FrontSideCreditCard(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = padding.dimension16)
+                    .padding(top = padding.dimension4)
             ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = creditCard.cardTitle,
+                        style = typography.titleMediumSemiBold()
+                    )
+                    FMIcon(
+                        onClick = { onFlip() },
+                        backgroundColor = borderColor,
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_360),
+                                contentDescription = null,
+                            )
+                        },
+                        boxSize = padding.dimension36,
+                    )
+                }
                 Text(
                     text = maskCreditCardNumber(creditCard.cardNumber),
-                    style = typography.titleMediumMedium().copy()
+                    style = typography.titleMediumMedium().copy(
+                        fontSize = FMTheme.fontSize.mediumSmall
+                    )
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 when (creditCard.cardType) {
@@ -172,7 +199,8 @@ fun BackSideCreditCard(
     creditCard: CreditCard,
     modifier: Modifier = Modifier,
     cardBackgroundColor: Color,
-    borderColor: Color
+    borderColor: Color,
+    onFlip: () -> Unit
 ) {
     FMCard(
         modifier = modifier.background(
@@ -193,13 +221,30 @@ fun BackSideCreditCard(
                     .fillMaxSize()
                     .padding(top = padding.dimension8)
             ) {
-                Text(
-                    text = creditCard.cardHolder,
-                    style = typography.titleMediumMedium()
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = creditCard.cardHolder,
+                        style = typography.titleMediumMedium()
+                    )
+                    FMIcon(
+                        onClick = { onFlip() },
+                        backgroundColor = borderColor,
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_360),
+                                contentDescription = null,
+                            )
+                        },
+                        boxSize = padding.dimension36,
+                    )
+                }
                 Spacer(modifier = Modifier.height(padding.dimension8))
                 Text(
-                    text = creditCardFormat(creditCard.cardNumber),
+                    text = maskCreditCardNumber(creditCard.cardNumber),
                     style = typography.titleMediumMedium()
                 )
                 Spacer(modifier = Modifier.height(padding.dimension4))
@@ -210,11 +255,11 @@ fun BackSideCreditCard(
                 ) {
                     Text(
                         text = creditCard.expirationDate,
-                        style = typography.bodyMediumNormal()
+                        style = typography.titleSmallMedium()
                     )
                     Text(
                         text = creditCard.cvv,
-                        style = typography.bodyMediumNormal()
+                        style = typography.titleSmallMedium()
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -270,6 +315,7 @@ fun FrontSideCreditCardPreview() {
         ) {
             BackSideCreditCard(
                 creditCard = CreditCard(
+                    cardTitle = "Test",
                     cardNumber = "5367890123456436",
                     cardHolder = "John Doe",
                     expirationDate = "12/25",
@@ -280,7 +326,8 @@ fun FrontSideCreditCardPreview() {
                     .padding(16.dp)
                     .size(200.dp, 200.dp),
                 cardBackgroundColor = Color(0xFFE3F2FD),
-                borderColor = Color(0xFFBBDEFB)
+                borderColor = Color(0xFFBBDEFB),
+                onFlip = {}
             )
             LazyRow(
                 modifier = Modifier
@@ -298,6 +345,7 @@ fun FrontSideCreditCardPreview() {
 
 val sampleCreditCardList = listOf(
     CreditCard(
+        cardTitle = "Test",
         cardNumber = "5367890123456436",
         cardHolder = "John Doe",
         expirationDate = "12/25",
@@ -305,6 +353,7 @@ val sampleCreditCardList = listOf(
         cardType = CardType.MASTERCARD
     ),
     CreditCard(
+        cardTitle = "Test",
         cardNumber = "4367890123456436",
         cardHolder = "Jane Smith",
         expirationDate = "11/26",

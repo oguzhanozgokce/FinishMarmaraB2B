@@ -23,7 +23,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun CartBottomBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    buttonText: String = "Confirm Cart",
 ) {
     Row(
         modifier = modifier
@@ -56,7 +57,7 @@ fun CartBottomBar(
             )
         }
         FMButton(
-            text = "Confirm Cart",
+            text = buttonText,
             onClick = { },
             contentPadding = PaddingValues(
                 horizontal = padding.dimension16,

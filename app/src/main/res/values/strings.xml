@@ -26,4 +26,6 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="clear_all">Clear All</string>
     <string name="history_searches">History Searches</string>
+    <string name="payment">Payment</string>
+    <string name="back">Back</string>
 </resources>

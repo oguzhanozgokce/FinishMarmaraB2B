@@ -70,6 +70,15 @@ fun User.getFormattedName(): String {
     return "$name $formattedSurname"
 }
 
+fun String.formatPhoneNumber(): String {
+    val cleanedNumber = this.filter { it.isDigit() }
+        .removePrefix("0")
+
+    if (cleanedNumber.length != 10) return this
+
+    return "${cleanedNumber.take(3)}*****${cleanedNumber.takeLast(2)}"
+}
+
 fun User.getInitials(): String {
     val nameInitial = name.firstOrNull()?.uppercaseChar() ?: ""
     val surnameInitial = surname.firstOrNull()?.uppercaseChar() ?: ""

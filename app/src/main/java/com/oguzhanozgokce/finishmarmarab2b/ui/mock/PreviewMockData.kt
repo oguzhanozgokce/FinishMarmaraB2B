@@ -6,6 +6,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMAddress
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.PopularSearch
 import java.time.LocalDateTime
@@ -148,5 +149,32 @@ object PreviewMockData {
         PopularSearch(text = "Iphone 13"),
         PopularSearch(text = "Headphones"),
         PopularSearch(text = "Camera"),
+    )
+
+    val addressList = listOf(
+        FMAddress(
+            title = "Home",
+            city = "İstanbul",
+            district = "Beşiktaş",
+            street = "Şimalılar",
+            addressInfo = "419. Sokak No:6, Daire:12 Beşiktaş İstanbul",
+            phoneNumber = "1234567890"
+        ),
+        FMAddress(
+            title = "Work",
+            city = "İstanbul",
+            district = "Bağcılar",
+            street = "İnönü",
+            addressInfo = "100. Sokak No:8, Daire:12 Bağcılar İstanbul",
+            phoneNumber = "1234567890"
+        ),
+        FMAddress(
+            title = "Office",
+            city = "İstanbul",
+            district = "Kağıthane",
+            street = "Şimalılar",
+            addressInfo = "419. Sokak No:6, Daire:12 Kağıthane İstanbul",
+            phoneNumber = "1234567890"
+        )
     )
 }

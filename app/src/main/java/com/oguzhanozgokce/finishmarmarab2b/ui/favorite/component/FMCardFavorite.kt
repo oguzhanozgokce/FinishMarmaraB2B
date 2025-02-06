@@ -138,7 +138,7 @@ fun FMCardFavorite(
                 }
                 Spacer(modifier = Modifier.height(padding.dimension4))
                 Text(
-                    text = "-20% discount",
+                    text = "${product.percentageRate} discount",
                     style = typography.bodySmallLight()
                 )
                 Spacer(modifier = Modifier.height(padding.dimension4))

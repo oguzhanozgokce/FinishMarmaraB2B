@@ -9,6 +9,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import androidx.paging.map
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
@@ -17,6 +18,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -109,6 +111,12 @@ fun String?.toLocalDateTimeOrDefault(
             defaultDateTime
         }
     } ?: defaultDateTime
+}
+
+fun <T : Any, R : Any> Flow<PagingData<T>>.mapDomain(mapper: (T) -> R): Flow<PagingData<R>> {
+    return map { pagingData ->
+        pagingData.map { mapper(it) }
+    }
 }
 
 fun <T : Any> createPager(

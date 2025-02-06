@@ -33,7 +33,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun CartProductItem(
     modifier: Modifier = Modifier,
-    product: Product
+    product: Product,
+    onDeleteBasket: () -> Unit,
+    onAddToBasket: () -> Unit
 ) {
     var count by remember { mutableIntStateOf(1) }
 
@@ -46,7 +48,7 @@ fun CartProductItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(padding.dimension8)
     ) {
-        product.seller?.let {
+        product.seller.let {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,10 +94,9 @@ fun CartProductItem(
         ) {
             ProductCounter(
                 product = product,
-                count = 1,
-                onIncrease = { count++ },
-                onDecrease = { if (count > 1) count-- else count = 1 },
-                onDelete = {}
+                count = product.count,
+                onIncrease = { onAddToBasket() },
+                onDelete = { onDeleteBasket() }
             )
             Column(
                 modifier = Modifier.weight(1f),
@@ -141,7 +142,9 @@ fun CartProductItem(
 fun CardProductItem() {
     FMTheme {
         CartProductItem(
-            product = PreviewMockData.defaultProduct
+            product = PreviewMockData.defaultProduct,
+            onDeleteBasket = {},
+            onAddToBasket = {}
         )
     }
 }

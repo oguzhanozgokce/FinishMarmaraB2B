@@ -7,15 +7,9 @@ class CartScreenPreviewProvider : PreviewParameterProvider<CartContract.UiState>
         get() = sequenceOf(
             CartContract.UiState(
                 isLoading = true,
-                list = emptyList(),
             ),
             CartContract.UiState(
                 isLoading = false,
-                list = emptyList(),
-            ),
-            CartContract.UiState(
-                isLoading = false,
-                list = listOf("Item 1", "Item 2", "Item 3")
             ),
         )
 }

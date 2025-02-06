@@ -20,18 +20,24 @@ class GenericPagingSource<T : Any>(
         return try {
             val response = apiCall(page)
 
-            if (response.isSuccessful && response.body()?.status == true) {
-                val body = response.body()?.data
-                val items = body?.list ?: emptyList()
-                val pagination = body?.pagination
-                val currentPage = pagination?.page ?: STARTING_PAGE_INDEX
-                val totalPages = pagination?.max ?: STARTING_PAGE_INDEX
+            if (response.isSuccessful) {
+                response.body()?.let { apiResponse ->
+                    if (apiResponse.status) {
+                        val paginationData = apiResponse.data
+                        val items = paginationData.list ?: emptyList()
+                        val pagination = paginationData.pagination
+                        val currentPage = pagination?.page ?: STARTING_PAGE_INDEX
+                        val totalPages = pagination?.max ?: STARTING_PAGE_INDEX
 
-                LoadResult.Page(
-                    data = items,
-                    prevKey = if (currentPage > STARTING_PAGE_INDEX) currentPage - 1 else null,
-                    nextKey = if (currentPage < totalPages) currentPage + 1 else null
-                )
+                        return LoadResult.Page(
+                            data = items,
+                            prevKey = if (currentPage > STARTING_PAGE_INDEX) currentPage - 1 else null,
+                            nextKey = if (currentPage < totalPages) currentPage + 1 else null
+                        )
+                    } else {
+                        return LoadResult.Error(Exception(apiResponse.message))
+                    }
+                } ?: LoadResult.Error(Exception("Response body is null"))
             } else {
                 LoadResult.Error(HttpException(response))
             }
@@ -41,9 +47,10 @@ class GenericPagingSource<T : Any>(
     }
 
     override fun getRefreshKey(state: PagingState<Int, T>): Int? {
-        val anchorPosition = state.anchorPosition ?: return null
-        val page = state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-            ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        return page
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.let { closestPage ->
+                closestPage.prevKey?.plus(1) ?: closestPage.nextKey?.minus(1)
+            }
+        }
     }
 }

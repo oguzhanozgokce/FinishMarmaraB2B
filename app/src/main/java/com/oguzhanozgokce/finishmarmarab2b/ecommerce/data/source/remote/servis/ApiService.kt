@@ -1,6 +1,9 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET_ALL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
@@ -25,10 +28,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.BasketData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostBasketResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
 import retrofit2.Response
@@ -123,5 +128,21 @@ interface ApiService {
     @POST(POST_BASKET)
     suspend fun addProductToBasket(
         @Body request: PostProductBasketRequest
+    ): Response<ApiResponse<PostBasketResponse>>
+
+    @GET(GET_BASKET)
+    suspend fun getBasket(
+        @Path("user_id") userId: Int,
+    ): Response<ApiResponse<BasketData>>
+
+    @DELETE(DELETE_BASKET)
+    suspend fun deleteBasket(
+        @Path("user_id") userId: Int,
+        @Path("product_id") productId: Int,
+    ): Response<ApiResponse<Unit>>
+
+    @DELETE(DELETE_BASKET_ALL)
+    suspend fun deleteBasketAll(
+        @Path("user_id") userId: Int,
     ): Response<ApiResponse<Unit>>
 }

@@ -9,6 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Prod
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetBasketResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
@@ -133,3 +134,15 @@ fun UserCommentDto.toUserCommentDomain() = UserComment(
     comment = this.comment.orEmpty(),
     sellerName = this.sellerName.orEmpty()
 )
+
+fun List<GetBasketResponse>?.toProductList(): List<Product> {
+    return this?.mapNotNull { basketItem ->
+        basketItem.toProductOrNull()
+    } ?: emptyList()
+}
+
+fun GetBasketResponse.toProductOrNull(): Product? {
+    return product?.mapToProduct()?.copy(
+        count = count.orZero()
+    )
+}

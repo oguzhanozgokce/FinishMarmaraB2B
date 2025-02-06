@@ -361,4 +361,3 @@ val sampleCreditCardList = listOf(
         cardType = CardType.VISA
     ),
 )
-

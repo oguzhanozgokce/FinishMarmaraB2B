@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -36,7 +35,6 @@ fun ProductCounter(
     product: Product,
     count: Int,
     onIncrease: () -> Unit,
-    onDecrease: () -> Unit,
     onDelete: () -> Unit
 ) {
     Column(
@@ -48,7 +46,9 @@ fun ProductCounter(
         verticalArrangement = Arrangement.spacedBy(padding.dimension8)
     ) {
         AsyncImage(
-            model = product.primaryImageUrl ?: painterResource(id = R.drawable.image_product),
+            model = product.primaryImageUrl,
+            placeholder = painterResource(id = R.drawable.image_product),
+            error = painterResource(id = R.drawable.image_product),
             contentDescription = null,
             modifier = Modifier
                 .size(padding.dimension80)
@@ -70,19 +70,25 @@ fun ProductCounter(
         ) {
             IconButton(
                 onClick = {
-                    if (count > ONE) onDecrease() else onDelete()
+                    if (product.count > ONE) onDelete()
                 },
                 modifier = Modifier.size(padding.dimension16)
             ) {
                 Icon(
-                    imageVector = if (count > ONE) Icons.Default.Delete else Icons.Default.Delete,
+                    painter = if (product.count > ONE) {
+                        painterResource(id = R.drawable.ic_remove)
+                    } else {
+                        painterResource(
+                            id = R.drawable.ic_delete
+                        )
+                    },
                     contentDescription = "Decrease or Delete",
                     tint = colors.primary
                 )
             }
 
             Text(
-                text = "$count",
+                text = "${product.count}",
                 style = typography.titleMediumMedium()
             )
 
@@ -110,7 +116,6 @@ fun ProductCounterPreview() {
             product = PreviewMockData.defaultProduct,
             count = 1,
             onIncrease = {},
-            onDecrease = {},
             onDelete = {}
         )
     }

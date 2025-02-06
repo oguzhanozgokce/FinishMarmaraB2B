@@ -15,4 +15,7 @@ object ApiRoutes {
     const val GET_CATEGORIES = "/api/Category"
     const val GET_PRODUCT_TOP5 = "/api/Product/top5"
     const val POST_BASKET = "/api/Basket"
+    const val GET_BASKET = "/api/Basket/{user_id}"
+    const val DELETE_BASKET = "/api/Basket/{user_id}/{product_id}"
+    const val DELETE_BASKET_ALL = "/api/Basket/{user_id}"
 }

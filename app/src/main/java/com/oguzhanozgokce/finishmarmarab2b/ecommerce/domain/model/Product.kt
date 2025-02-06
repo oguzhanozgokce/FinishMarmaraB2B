@@ -20,13 +20,17 @@ data class Product(
     val category: Category,
     val seller: Seller,
     val images: List<Image>,
+    val count: Int = 1,
 ) {
     val imageUrl: List<String>
-        get() = images.map { it.imageUrl } ?: emptyList()
+        get() = images.map { it.imageUrl }
 
     val primaryImageUrl: String?
         get() = imageUrl.firstOrNull()
 
     val sellerImageUrl: String
         get() = seller.imageUrl
+
+    val totalPrice: Double
+        get() = discountedPrice * count
 }

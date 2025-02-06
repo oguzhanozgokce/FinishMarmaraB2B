@@ -10,9 +10,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductListViewModel @Inject constructor() : MVI<UiState, UiAction, UiEffect>(UiState()) {
 
-
     fun onAction(uiAction: UiAction) {
     }
-
 }
-

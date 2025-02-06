@@ -143,7 +143,6 @@ object PreviewMockData {
         HistorySearch(text = "Camera"),
     )
 
-
     val addressList = listOf(
         FMAddress(
             title = "Home",

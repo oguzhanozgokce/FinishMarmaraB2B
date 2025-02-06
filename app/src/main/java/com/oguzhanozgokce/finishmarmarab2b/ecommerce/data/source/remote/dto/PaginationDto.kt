@@ -5,16 +5,16 @@ import kotlinx.serialization.SerialName
 
 data class PaginationDto(
     @SerializedName("page")
-    val page: Int? = null,
+    val page: Int = 1,
 
     @SerializedName("size")
-    val size: Int? = null,
+    val size: Int = 10,
 
     @SerializedName("total")
-    val total: Int? = null,
+    val total: Int = 0,
 
     @SerializedName("max")
-    val max: Int? = null
+    val max: Int = 1
 )
 
 data class PaginationData<T>(

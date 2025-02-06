@@ -41,12 +41,13 @@ fun FMTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val colors = if (darkTheme) darkColors() else lightColors()
     CompositionLocalProvider(
-        LocalColors provides if (darkTheme) darkColors() else lightColors(),
+        LocalColors provides colors,
         LocalPadding provides Padding,
         LocalFontSize provides FontSize,
         LocalTypography provides Typography,
-        LocalLMIcons provides FMTheme.icons
+        LocalLMIcons provides FMTheme.icons,
     ) {
         content()
     }

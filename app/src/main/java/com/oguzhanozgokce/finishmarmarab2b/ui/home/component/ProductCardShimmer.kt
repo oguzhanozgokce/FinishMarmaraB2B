@@ -62,7 +62,9 @@ fun ProductCardShimmer(
                             topEnd = padding.dimension16
                         )
                     )
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)) // **Daha belirgin hale getirildi**
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
+                    ) // **Daha belirgin hale getirildi**
             )
 
             Box(
@@ -99,7 +101,6 @@ fun ProductCardShimmer(
         }
     }
 }
-
 
 @Composable
 fun ProductListShimmer(

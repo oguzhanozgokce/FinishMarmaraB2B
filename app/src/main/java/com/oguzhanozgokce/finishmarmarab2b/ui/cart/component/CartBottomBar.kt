@@ -14,18 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
+import java.text.DecimalFormat
 
 @Composable
 fun CartBottomBar(
     modifier: Modifier = Modifier,
+    totalPrice: Double = 0.0,
     buttonText: String = "Confirm Cart",
 ) {
+    val formatter = DecimalFormat("#,###.00")
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -52,7 +54,7 @@ fun CartBottomBar(
                 ),
             )
             Text(
-                text = "$${PreviewMockData.defaultProductList.sumOf { it.price }}",
+                text = "$${formatter.format(totalPrice)}",
                 style = typography.titleMediumSemiBold(),
             )
         }
@@ -75,6 +77,8 @@ fun CartBottomBar(
 @Composable
 fun CartBottomBarPreview() {
     FMTheme {
-        CartBottomBar()
+        CartBottomBar(
+            totalPrice = 100.0
+        )
     }
 }

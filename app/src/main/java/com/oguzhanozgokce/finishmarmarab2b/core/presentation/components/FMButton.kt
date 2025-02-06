@@ -80,9 +80,7 @@ fun FMOutlinedButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height),
+        modifier = modifier.height(height),
         border = BorderStroke(width = borderWidth, color = borderColor),
         shape = shape,
         colors = ButtonDefaults.outlinedButtonColors(
@@ -147,7 +145,7 @@ fun FMButtonPreview() {
         ) {
             FMButton(text = "Button", onClick = { }, modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.height(padding.dimension16))
-            FMOutlinedButton(text = "Button", onClick = { })
+            FMOutlinedButton(text = "Button", onClick = { }, modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.height(padding.dimension16))
             FMOutlinedButtonWithContent(onClick = { }) {
                 Text(text = "Content")

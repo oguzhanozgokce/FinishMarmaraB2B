@@ -4,12 +4,15 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.createPager
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mapDomain
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mapToPaginationData
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toCategoryDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProduct
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProductList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toQuestionAnswerDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserCommentDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
@@ -103,9 +106,7 @@ class ProductRepositoryImpl @Inject constructor(
                     }
                 )
             }
-        ).map { pagingData ->
-            pagingData.map { it.toUserCommentDomain() }
-        }
+        ).mapDomain { it.toUserCommentDomain() }
     }
 
     override fun getProductQuestionsAndAnswers(productId: Int): Flow<PagingData<QuestionAnswer>> =
@@ -152,11 +153,31 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun postProductBasket(productId: Int): Resource<Unit> {
+    override suspend fun postProductBasket(productId: Int): Resource<Int> {
         val request = PostProductBasketRequest(
             productId = productId,
             userId = getUserId()
         )
-        return safeApiCall { apiService.addProductToBasket(request) }
+        return safeApiCall { apiService.addProductToBasket(request) }.toResourceMap { response ->
+            response.count.orZero()
+        }
+    }
+
+    override suspend fun getBasketProducts(): Resource<List<Product>> {
+        val userId = getUserId()
+        return safeApiCall { apiService.getBasket(userId) }
+            .toResourceMap { response ->
+                response.list.toProductList()
+            }
+    }
+
+    override suspend fun deleteBasketProduct(productId: Int): Resource<Unit> {
+        val userId = getUserId()
+        return safeApiCall { apiService.deleteBasket(userId, productId) }
+    }
+
+    override suspend fun deleteBasketAll(): Resource<Unit> {
+        val userId = getUserId()
+        return safeApiCall { apiService.deleteBasketAll(userId) }
     }
 }

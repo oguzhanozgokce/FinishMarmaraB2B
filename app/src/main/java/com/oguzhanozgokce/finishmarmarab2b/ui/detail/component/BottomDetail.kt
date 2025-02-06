@@ -64,7 +64,9 @@ fun BottomDetail(
         FMOutlinedButton(
             text = "Buy Now",
             onClick = onNowAddToCart,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             height = padding.dimension48
         )
     }

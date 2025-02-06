@@ -8,7 +8,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMAddress
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.PopularSearch
 import java.time.LocalDateTime
 
 object PreviewMockData {
@@ -19,10 +18,12 @@ object PreviewMockData {
         description = "A nice test product description",
         price = 100.0,
         discountedPrice = 80.0,
+        percentageRate = "%20",
         sellerId = 123,
         stock = 10,
         rate = 4.5,
         commentCount = 15,
+        favoriteCount = 5,
         categoryId = 1,
         createdAt = LocalDateTime.now(),
         category = Category(
@@ -142,14 +143,6 @@ object PreviewMockData {
         HistorySearch(text = "Camera"),
     )
 
-    val popularList = listOf(
-        PopularSearch(text = "Iphone 13"),
-        PopularSearch(text = "Headphones"),
-        PopularSearch(text = "Camera"),
-        PopularSearch(text = "Iphone 13"),
-        PopularSearch(text = "Headphones"),
-        PopularSearch(text = "Camera"),
-    )
 
     val addressList = listOf(
         FMAddress(

@@ -71,7 +71,7 @@ fun ProductCard(
                 .background(colors.cardBackground),
             contentAlignment = Alignment.TopEnd
         ) {
-            product.images?.takeIf { it.isNotEmpty() && it[0].imageUrl != null }?.let { images ->
+            product.images.takeIf { it.isNotEmpty() }?.let { images ->
                 AsyncImage(
                     model = images[0].imageUrl,
                     contentDescription = null,
@@ -165,7 +165,7 @@ fun ProductInfo(
         }
         Spacer(modifier = Modifier.height(padding.dimension4))
         Text(
-            text = "-20% discount",
+            text = "${product.percentageRate} discount",
             style = typography.bodySmallLight()
         )
         Spacer(modifier = Modifier.height(padding.dimension4))

@@ -20,4 +20,5 @@ interface ProductRepository {
     fun getProductQuestionsAndAnswers(productId: Int): Flow<PagingData<QuestionAnswer>>
     suspend fun getProductDetail(productId: Int): Resource<Product>
     fun getCategories(): Flow<PagingData<Category>>
+    suspend fun getTop5Products(): Resource<List<Product>>
 }

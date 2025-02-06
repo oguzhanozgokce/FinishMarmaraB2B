@@ -144,4 +144,10 @@ class ProductRepositoryImpl @Inject constructor(
     ).map { pagingData ->
         pagingData.map { it.toCategoryDomain() }
     }
+
+    override suspend fun getTop5Products(): Resource<List<Product>> {
+        return safeApiCall { apiService.getTop5Products() }.toResourceMap { productDtoList ->
+            productDtoList.map { it.mapToProduct() }
+        }
+    }
 }

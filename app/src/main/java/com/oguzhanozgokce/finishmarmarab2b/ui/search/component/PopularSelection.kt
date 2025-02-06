@@ -10,14 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.PopularSearch
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun PopularSelection(
-    popularList: List<PopularSearch>,
+    popularProduct: List<Product>,
     onPopularItemClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -39,7 +39,7 @@ fun PopularSelection(
         )
         Spacer(modifier = Modifier.height(padding.dimension8))
         PopularSearchList(
-            popularList = popularList,
+            popularProduct = popularProduct,
             onPopularItemClick = onPopularItemClick
         )
     }

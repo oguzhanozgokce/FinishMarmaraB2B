@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.PopularSearch
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -25,7 +25,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun PopularSearchItem(
-    popularSearch: PopularSearch,
+    popularProduct: Product,
     modifier: Modifier = Modifier,
     onPopularItemClick: (String) -> Unit = {}
 ) {
@@ -50,11 +50,11 @@ fun PopularSearchItem(
                     modifier = Modifier
                         .size(24.dp)
                         .noRippleClickable {
-                            onPopularItemClick(popularSearch.text)
+                            onPopularItemClick(popularProduct.title)
                         }
                 )
                 Text(
-                    text = popularSearch.text,
+                    text = popularProduct.title,
                     style = typography.bodySmallLight().copy(
                         fontWeight = FontWeight.Medium,
                         fontSize = fontSize.mediumSmall

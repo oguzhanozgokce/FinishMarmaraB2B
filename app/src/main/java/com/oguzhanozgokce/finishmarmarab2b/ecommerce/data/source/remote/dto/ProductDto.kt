@@ -18,6 +18,9 @@ data class ProductDto(
     @SerializedName("discounted_Price")
     val discountedPrice: Double? = null,
 
+    @SerializedName("percentage_Rate")
+    val percentageRate: String? = null,
+
     @SerializedName("seller_Id")
     val sellerId: Int? = null,
 
@@ -29,6 +32,9 @@ data class ProductDto(
 
     @SerializedName("comment_Count")
     val commentCount: Int? = null,
+
+    @SerializedName("favorite_Count")
+    val favoriteCount: Int? = null,
 
     @SerializedName("category_Id")
     val categoryId: Int? = null,

@@ -77,7 +77,7 @@ fun ProductDetailHeader(
         )
         Spacer(modifier = Modifier.width(padding.dimension4))
         Text(
-            text = "104 People Added to Favourites",
+            text = "${product.favoriteCount} People Added to Favourites",
             style = typography.bodySmallNormal(),
         )
     }

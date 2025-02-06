@@ -6,6 +6,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRO
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DETAIL
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP5
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
@@ -113,4 +114,7 @@ interface ApiService {
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 10,
     ): Response<ApiResponse<PaginationData<CategoryDto>>>
+
+    @GET(GET_PRODUCT_TOP5)
+    suspend fun getTop5Products(): Response<ApiResponse<List<ProductDto>>>
 }

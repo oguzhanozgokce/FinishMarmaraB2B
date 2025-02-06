@@ -60,6 +60,7 @@ fun SearchScreen(
     when {
         uiState.isLoading -> LoadingBar()
         else -> SearchContent(
+            uiState = uiState,
             onAction = onAction,
             navActions = navActions,
             focusRequester = focusRequester
@@ -69,6 +70,7 @@ fun SearchScreen(
 
 @Composable
 fun SearchContent(
+    uiState: UiState,
     navActions: SearchNavActions,
     focusRequester: FocusRequester,
     onAction: (UiAction) -> Unit,
@@ -92,7 +94,7 @@ fun SearchContent(
         )
         Spacer(modifier = Modifier.height(padding.dimension8))
         PopularSelection(
-            popularList = PreviewMockData.popularList,
+            popularProduct = uiState.top5productList,
             onPopularItemClick = { }
         )
     }

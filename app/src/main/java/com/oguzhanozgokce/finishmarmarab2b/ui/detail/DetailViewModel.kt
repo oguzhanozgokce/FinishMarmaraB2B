@@ -9,6 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductCommentsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductDetailUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductQuestionsAndAnswersUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiEffect
@@ -22,7 +23,8 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCommentsUseCase: GetProductCommentsUseCase,
     private val getProductDetailUseCase: GetProductDetailUseCase,
-    private val getQuestionsAndAnswersUseCase: GetProductQuestionsAndAnswersUseCase
+    private val getQuestionsAndAnswersUseCase: GetProductQuestionsAndAnswersUseCase,
+    private val postProductBasketUseCase: PostProductBasketUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private val args = savedStateHandle.toRoute<Screen.Detail>()
@@ -38,6 +40,7 @@ class DetailViewModel @Inject constructor(
             is UiAction.FetchProductDetail -> fetchProductDetail(args.id)
             is UiAction.FetchComments -> fetchComments(args.id)
             is UiAction.FetchQuestionsAndAnswers -> fetchQuestionsAndAnswers(args.id)
+            is UiAction.ProductBasket -> postProductBasket(args.id)
         }
     }
 
@@ -69,5 +72,18 @@ class DetailViewModel @Inject constructor(
         val flow = getQuestionsAndAnswersUseCase(productId)
             .cachedIn(viewModelScope)
         updateState { copy(questionsAndAnswers = flow, isLoading = false) }
+    }
+
+    private fun postProductBasket(productId: Int) {
+        viewModelScope.launch {
+            postProductBasketUseCase(productId).fold(
+                onSuccess = {
+                    emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                },
+                onError = {
+                    emitUiEffect(UiEffect.ShowToast(it))
+                }
+            )
+        }
     }
 }

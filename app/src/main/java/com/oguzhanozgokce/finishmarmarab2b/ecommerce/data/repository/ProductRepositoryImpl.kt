@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toQuest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserCommentDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
@@ -149,5 +150,13 @@ class ProductRepositoryImpl @Inject constructor(
         return safeApiCall { apiService.getTop5Products() }.toResourceMap { productDtoList ->
             productDtoList.map { it.mapToProduct() }
         }
+    }
+
+    override suspend fun postProductBasket(productId: Int): Resource<Unit> {
+        val request = PostProductBasketRequest(
+            productId = productId,
+            userId = getUserId()
+        )
+        return safeApiCall { apiService.addProductToBasket(request) }
     }
 }

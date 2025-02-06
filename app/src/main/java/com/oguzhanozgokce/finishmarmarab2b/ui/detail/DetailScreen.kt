@@ -64,7 +64,8 @@ fun DetailScreen(
                 uiState = uiState,
                 commentItem = commentItem,
                 questionAnswers = questionAnswers,
-                navActions = navActions
+                navActions = navActions,
+                onAction = onAction
             )
         }
     }
@@ -75,7 +76,8 @@ fun DetailContent(
     uiState: UiState,
     commentItem: LazyPagingItems<UserComment>?,
     questionAnswers: LazyPagingItems<QuestionAnswer>?,
-    navActions: DetailNavActions
+    navActions: DetailNavActions,
+    onAction: (UiAction) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -89,7 +91,7 @@ fun DetailContent(
             uiState.product?.let { product ->
                 BottomDetail(
                     product = product,
-                    onAddToCart = { },
+                    onAddToCart = { onAction(UiAction.ProductBasket(product.id)) },
                     onNowAddToCart = { }
                 )
             }

@@ -26,7 +26,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun BottomDetail(
     product: Product,
-    onAddToCart: () -> Unit,
+    onAddToCart: (Int) -> Unit,
     onNowAddToCart: () -> Unit,
 ) {
     Row(
@@ -54,7 +54,7 @@ fun BottomDetail(
         }
         FMButton(
             text = "Basket",
-            onClick = onAddToCart,
+            onClick = { onAddToCart(product.id) },
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),

@@ -11,6 +11,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_P
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
@@ -19,6 +20,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Prod
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
@@ -117,4 +119,9 @@ interface ApiService {
 
     @GET(GET_PRODUCT_TOP5)
     suspend fun getTop5Products(): Response<ApiResponse<List<ProductDto>>>
+
+    @POST(POST_BASKET)
+    suspend fun addProductToBasket(
+        @Body request: PostProductBasketRequest
+    ): Response<ApiResponse<Unit>>
 }

@@ -21,7 +21,8 @@ fun CartProductList(
     modifier: Modifier = Modifier,
     basketProduct: List<Product>,
     onDeleteBasket: (Int) -> Unit,
-    onAddToBasket: (Int) -> Unit
+    onAddToBasket: (Int) -> Unit,
+    onDetail: (Int) -> Unit
 ) {
     val state = rememberLazyListState()
     LazyColumn(
@@ -36,7 +37,8 @@ fun CartProductList(
             CartProductItem(
                 product = product,
                 onDeleteBasket = { onDeleteBasket(product.id) },
-                onAddToBasket = { onAddToBasket(product.id) }
+                onAddToBasket = { onAddToBasket(product.id) },
+                onDetail = { onDetail(product.id) }
             )
         }
     }
@@ -49,7 +51,8 @@ fun CartProductListPreview() {
         CartProductList(
             basketProduct = PreviewMockData.defaultProductList,
             onDeleteBasket = {},
-            onAddToBasket = {}
+            onAddToBasket = {},
+            onDetail = {}
         )
     }
 }

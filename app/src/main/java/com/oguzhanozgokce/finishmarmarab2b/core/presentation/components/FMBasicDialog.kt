@@ -73,7 +73,7 @@ fun FMConfirmDialog(
                     .background(colors.white)
                     .padding(
                         top = padding.dimension16,
-                        start = padding.dimension8,
+                        start = padding.dimension16,
                         end = padding.dimension8,
                         bottom = padding.dimension8
                     ),
@@ -96,7 +96,7 @@ fun FMConfirmDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(padding.dimension8),
+                        .padding(vertical = padding.dimension16),
                     horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
                 ) {
                     FMOutlinedButton(

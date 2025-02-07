@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
@@ -35,7 +36,8 @@ fun CartProductItem(
     modifier: Modifier = Modifier,
     product: Product,
     onDeleteBasket: () -> Unit,
-    onAddToBasket: () -> Unit
+    onAddToBasket: () -> Unit,
+    onDetail: () -> Unit
 ) {
     var count by remember { mutableIntStateOf(1) }
 
@@ -89,7 +91,8 @@ fun CartProductItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = padding.dimension8),
+                .padding(horizontal = padding.dimension8)
+                .noRippleClickable { onDetail() },
             horizontalArrangement = Arrangement.spacedBy(padding.dimension4),
         ) {
             ProductCounter(
@@ -144,7 +147,8 @@ fun CardProductItem() {
         CartProductItem(
             product = PreviewMockData.defaultProduct,
             onDeleteBasket = {},
-            onAddToBasket = {}
+            onAddToBasket = {},
+            onDetail = {}
         )
     }
 }

@@ -51,7 +51,8 @@ fun PaymentContent() {
         },
         bottomBar = {
             CartBottomBar(
-                buttonText = "Confirm Payment"
+                buttonText = "Confirm Payment",
+                onConfirm = {}
             )
         },
     ) { innerPadding ->

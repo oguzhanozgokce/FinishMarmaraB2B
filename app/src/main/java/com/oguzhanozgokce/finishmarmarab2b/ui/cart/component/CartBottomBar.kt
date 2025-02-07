@@ -26,6 +26,7 @@ fun CartBottomBar(
     modifier: Modifier = Modifier,
     totalPrice: Double = 0.0,
     buttonText: String = "Confirm Cart",
+    onConfirm: () -> Unit
 ) {
     val formatter = DecimalFormat("#,###.00")
     Row(
@@ -60,7 +61,7 @@ fun CartBottomBar(
         }
         FMButton(
             text = buttonText,
-            onClick = { },
+            onClick = { onConfirm() },
             contentPadding = PaddingValues(
                 horizontal = padding.dimension16,
                 vertical = padding.dimension8
@@ -78,7 +79,8 @@ fun CartBottomBar(
 fun CartBottomBarPreview() {
     FMTheme {
         CartBottomBar(
-            totalPrice = 100.0
+            totalPrice = 100.0,
+            onConfirm = {}
         )
     }
 }

@@ -32,6 +32,8 @@ class CartViewModel @Inject constructor(
             is UiAction.DeleteBasketProduct -> deleteBasketProduct(uiAction.productId)
             is UiAction.DeleteBasketAll -> deleteBasketAll()
             is UiAction.PostProductBasket -> postProductBasket(uiAction.productId)
+            is UiAction.ShowDialog -> showDialog()
+            is UiAction.HideDialog -> hideDialog()
         }
     }
 
@@ -51,7 +53,6 @@ class CartViewModel @Inject constructor(
                 onError = { error ->
                     updateState { copy(isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
-                    Log.e("DeleteBasketProduct", "Error: $error")
                 }
             )
         }
@@ -78,6 +79,7 @@ class CartViewModel @Inject constructor(
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))
+                    Log.e("DeleteBasketAll", "Error: $error")
                 }
             )
         }
@@ -94,5 +96,13 @@ class CartViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun showDialog() {
+        updateState { copy(showDialog = true) }
+    }
+
+    private fun hideDialog() {
+        updateState { copy(showDialog = false) }
     }
 }

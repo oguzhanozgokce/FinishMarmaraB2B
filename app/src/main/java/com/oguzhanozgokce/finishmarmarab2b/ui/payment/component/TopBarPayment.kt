@@ -20,7 +20,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
-fun TopBarPayment() {
+fun TopBarPayment(
+    onBackClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +30,7 @@ fun TopBarPayment() {
             .padding(horizontal = padding.dimension8)
     ) {
         IconButton(
-            onClick = { },
+            onClick = { onBackClick() },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
@@ -50,6 +52,8 @@ fun TopBarPayment() {
 @Composable
 fun TopBarPaymentPreview() {
     FMTheme {
-        TopBarPayment()
+        TopBarPayment(
+            onBackClick = {}
+        )
     }
 }

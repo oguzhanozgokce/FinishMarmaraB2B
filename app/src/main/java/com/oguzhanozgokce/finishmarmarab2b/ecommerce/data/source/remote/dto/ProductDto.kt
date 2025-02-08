@@ -36,6 +36,9 @@ data class ProductDto(
     @SerializedName("favorite_Count")
     val favoriteCount: Int? = null,
 
+    @SerializedName("basket_Count")
+    val basketCount: Int? = null,
+
     @SerializedName("category_Id")
     val categoryId: Int? = null,
 

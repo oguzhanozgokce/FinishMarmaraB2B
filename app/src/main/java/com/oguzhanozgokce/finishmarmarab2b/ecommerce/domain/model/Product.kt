@@ -14,6 +14,7 @@ data class Product(
     val rate: Double,
     val commentCount: Int,
     val favoriteCount: Int,
+    val basketCount: Int,
     val categoryId: Int,
     val isFavorite: Boolean,
     val createdAt: LocalDateTime = LocalDateTime.now(),

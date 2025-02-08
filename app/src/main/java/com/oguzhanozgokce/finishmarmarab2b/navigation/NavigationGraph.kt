@@ -22,6 +22,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.login
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.navigation.password
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.PaymentNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.payment
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.navigation.profile
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.SearchNavActions
@@ -98,7 +99,11 @@ fun NavigationGraph(
                     navigateToPayment = { navController.navigate(route = Payment) }
                 )
             )
-            payment()
+            payment(
+                navAction = PaymentNavAction(
+                    navigateToBack = { navController.navigateUp() }
+                )
+            )
             detail(
                 actions = DetailNavActions(
                     navigateToBack = { navController.navigateUp() },

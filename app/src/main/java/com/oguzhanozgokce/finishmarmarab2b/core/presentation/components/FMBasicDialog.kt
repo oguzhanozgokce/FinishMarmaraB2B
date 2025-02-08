@@ -16,7 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
@@ -57,11 +59,13 @@ fun FMBasicDialog(
 fun FMConfirmDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
+    onCancel: () -> Unit,
     onConfirm: () -> Unit,
     title: String,
     description: String?,
     confirmText: String,
     dismissText: String,
+    buttonFontSize: TextUnit = fontSize.medium
 ) {
     FMBasicDialog(
         showDialog = showDialog,
@@ -89,7 +93,8 @@ fun FMConfirmDialog(
                         text = it,
                         style = typography.titleMediumLight().copy(
                             fontSize = fontSize.mediumSmall
-                        )
+                        ),
+                        textAlign = TextAlign.Center
                     )
                 }
                 Spacer(modifier = Modifier.height(padding.dimension24))
@@ -100,9 +105,10 @@ fun FMConfirmDialog(
                     horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
                 ) {
                     FMOutlinedButton(
-                        onClick = onDismiss,
+                        onClick = { onCancel() },
                         text = dismissText,
                         modifier = Modifier.weight(1f),
+                        fontSize = buttonFontSize,
                         height = 44.dp,
                     )
                     FMButton(
@@ -124,6 +130,7 @@ fun FMConfirmDialogPreview() {
         FMConfirmDialog(
             showDialog = true,
             onDismiss = {},
+            onCancel = {},
             onConfirm = {},
             title = "Do you want to cancel the order?",
             description = "Description",

@@ -24,6 +24,7 @@ object PreviewMockData {
         rate = 4.5,
         commentCount = 15,
         favoriteCount = 5,
+        basketCount = 2,
         categoryId = 1,
         createdAt = LocalDateTime.now(),
         category = Category(

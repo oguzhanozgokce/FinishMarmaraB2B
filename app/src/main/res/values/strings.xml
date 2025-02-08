@@ -28,4 +28,5 @@
     <string name="history_searches">History Searches</string>
     <string name="payment">Payment</string>
     <string name="back">Back</string>
+    <string name="cart_icon">Cart Icon</string>
 </resources>

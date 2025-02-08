@@ -2,6 +2,16 @@ package com.oguzhanozgokce.finishmarmarab2b.navigation
 
 import kotlinx.serialization.Serializable
 
+//inline fun <reified T> NavController.isRouteInBackStack(route: T): Boolean {
+//    return try {
+//        getBackStackEntry(route = route::class.qualifiedName.toString())
+//        true
+//    } catch (_: Exception) {
+//        false
+//    }
+//}
+//!appNavHostController.isRouteInBackStack(AppScreenRoutes.BottomRoute)
+
 sealed interface Screen {
     @Serializable
     data object Home : Screen

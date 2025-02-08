@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIcon
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -33,6 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun ProductsToBuy(
     modifier: Modifier = Modifier,
+    basketProduct: List<Product>
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -88,8 +90,8 @@ fun ProductsToBuy(
                     .padding(padding.dimension8),
                 horizontalArrangement = Arrangement.spacedBy(padding.dimension4)
             ) {
-                items(PreviewMockData.defaultProductList) {
-                    PaymentProduct(product = PreviewMockData.defaultProduct)
+                items(basketProduct) { basketProduct ->
+                    PaymentProduct(product = basketProduct)
                 }
             }
         }
@@ -100,6 +102,8 @@ fun ProductsToBuy(
 @Composable
 fun ProductsToBuyPreview() {
     FMTheme {
-        ProductsToBuy()
+        ProductsToBuy(
+            basketProduct = PreviewMockData.defaultProductList
+        )
     }
 }

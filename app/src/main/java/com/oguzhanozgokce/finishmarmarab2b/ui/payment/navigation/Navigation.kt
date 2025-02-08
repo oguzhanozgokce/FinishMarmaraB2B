@@ -9,7 +9,13 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentViewModel
 
-fun NavGraphBuilder.payment() {
+data class PaymentNavAction(
+    val navigateToBack: () -> Unit
+)
+
+fun NavGraphBuilder.payment(
+    navAction: PaymentNavAction
+) {
     composable<Screen.Payment> {
         val viewModel: PaymentViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -18,7 +24,8 @@ fun NavGraphBuilder.payment() {
         PaymentScreen(
             uiState = uiState,
             uiEffect = uiEffect,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            navAction = navAction
         )
     }
 }

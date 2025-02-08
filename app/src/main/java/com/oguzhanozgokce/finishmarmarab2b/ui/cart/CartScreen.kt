@@ -41,6 +41,7 @@ fun CartScreen(
     FMConfirmDialog(
         showDialog = uiState.showDialog,
         onDismiss = { onAction(UiAction.HideDialog) },
+        onCancel = { onAction(UiAction.HideDialog) },
         onConfirm = {
             onAction(UiAction.DeleteBasketAll)
             onAction(UiAction.HideDialog)

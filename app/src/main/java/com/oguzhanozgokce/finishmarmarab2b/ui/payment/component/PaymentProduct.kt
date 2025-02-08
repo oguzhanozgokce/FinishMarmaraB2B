@@ -45,22 +45,6 @@ fun PaymentProduct(
             )
             .padding(padding.dimension8)
     ) {
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .offset(y = (-padding.dimension16))
-                .background(
-                    colors.lightGray.copy(alpha = 0.7f),
-                    shape = RoundedCornerShape(padding.dimension8)
-                )
-                .padding(horizontal = 6.dp, vertical = padding.dimension2)
-        ) {
-            Text(
-                text = "3",
-                style = FMTheme.typography.titleSmallMedium(),
-                color = colors.black
-            )
-        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -77,10 +61,27 @@ fun PaymentProduct(
             Spacer(modifier = Modifier.height(padding.dimension4))
 
             Text(
-                text = "${product.price} TL",
+                text = "${product.price * product.count} TL",
                 style = FMTheme.typography.bodyMediumNormal().copy(
                     color = colors.primary
                 )
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = (-padding.dimension16))
+                .background(
+                    colors.lightGray.copy(alpha = 0.7f),
+                    shape = RoundedCornerShape(padding.dimension8)
+                )
+                .padding(horizontal = 6.dp, vertical = padding.dimension2)
+        ) {
+            Text(
+                text = "${product.count}",
+                style = FMTheme.typography.titleSmallMedium(),
+                color = colors.black
             )
         }
     }

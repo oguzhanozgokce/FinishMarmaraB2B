@@ -34,6 +34,7 @@ fun ProductDto?.mapToProduct(): Product {
         rate = this?.rate.orDoubleZero(),
         commentCount = this?.commentCount.orZero(),
         favoriteCount = this?.favoriteCount.orZero(),
+        basketCount = this?.basketCount.orZero(),
         categoryId = this?.categoryId.orZero(),
         isFavorite = this?.isFavorite ?: false,
         createdAt = this?.createdAt?.let {
@@ -59,6 +60,7 @@ fun Product.mapToProductDto(): ProductDto {
         rate = this.rate,
         commentCount = this.commentCount,
         favoriteCount = this.favoriteCount,
+        basketCount = this.basketCount,
         categoryId = this.categoryId,
         isFavorite = this.isFavorite,
         createdAt = this.createdAt.format(formatter),

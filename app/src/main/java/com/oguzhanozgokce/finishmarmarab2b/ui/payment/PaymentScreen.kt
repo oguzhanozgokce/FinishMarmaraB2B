@@ -12,9 +12,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMConfirmDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.CartBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
@@ -24,6 +28,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMDeliveryAddres
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMPaymentOptions
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.ProductsToBuy
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.TopBarPayment
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.PaymentNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -35,24 +40,53 @@ fun PaymentScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
+    navAction: PaymentNavAction
 ) {
+    val context = LocalContext.current
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.ShowToast -> context.showToast(effect.message)
+        }
+    }
+
+    FMConfirmDialog(
+        showDialog = uiState.showDialog,
+        onDismiss = { onAction(UiAction.HideDialog) },
+        onCancel = {
+            onAction(UiAction.HideDialog)
+            navAction.navigateToBack()
+        },
+        onConfirm = { onAction(UiAction.HideDialog) },
+        title = "Exit Payment",
+        description = "Are you sure you want to leave the payment process? You can continue your shopping from where you left off.",
+        confirmText = "Continue",
+        dismissText = "Exit",
+    )
+
     when {
         uiState.isLoading -> LoadingBar()
-        uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> PaymentContent()
+        uiState.products.isEmpty() -> EmptyScreen()
+        else -> PaymentContent(
+            uiState = uiState,
+            onAction = onAction
+        )
     }
 }
 
 @Composable
-fun PaymentContent() {
+fun PaymentContent(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit
+) {
     Scaffold(
         topBar = {
-            TopBarPayment()
+            TopBarPayment(onBackClick = { onAction(UiAction.ShowDialog) })
         },
         bottomBar = {
             CartBottomBar(
                 buttonText = "Confirm Payment",
-                onConfirm = {}
+                onConfirm = {},
+                totalPrice = uiState.totalPrice
             )
         },
     ) { innerPadding ->
@@ -66,7 +100,7 @@ fun PaymentContent() {
             verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
             Spacer(modifier = Modifier.height(padding.dimension8))
-            ProductsToBuy()
+            ProductsToBuy(basketProduct = uiState.products)
             FMDeliveryAddress()
             FMPaymentOptions()
         }
@@ -83,6 +117,9 @@ fun PaymentScreenPreview(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
+            navAction = PaymentNavAction(
+                navigateToBack = {}
+            )
         )
     }
 }

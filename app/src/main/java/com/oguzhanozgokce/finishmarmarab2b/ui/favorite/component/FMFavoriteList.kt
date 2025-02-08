@@ -26,7 +26,8 @@ fun FMFavoriteList(
     modifier: Modifier = Modifier,
     favoriteItems: LazyPagingItems<Product>,
     onFavoriteClick: (productId: Int) -> Unit,
-    onCartClick: (productId: Int) -> Unit = {},
+    onCartClick: (productId: Int) -> Unit,
+    onBasketClick: (productId: Int) -> Unit
 ) {
     val isRefreshing = favoriteItems.loadState.refresh is LoadState.Loading
     val isAppending = favoriteItems.loadState.append is LoadState.Loading
@@ -52,8 +53,8 @@ fun FMFavoriteList(
                     FMCardFavorite(
                         product = product,
                         onFavoriteClick = { onFavoriteClick(product.id) },
-                        onCartClick = {},
-                        onClick = { onCartClick(product.id) }
+                        onClick = { onCartClick(product.id) },
+                        onBasketClick = { onBasketClick(product.id) }
                     )
                 }
             }
@@ -94,7 +95,9 @@ fun FavoriteListPreview() {
     FMTheme {
         FMFavoriteList(
             favoriteItems = mockLazyPagingItems(PreviewMockData.defaultProductList),
-            onFavoriteClick = {}
+            onFavoriteClick = {},
+            onCartClick = {},
+            onBasketClick = {}
         )
     }
 }

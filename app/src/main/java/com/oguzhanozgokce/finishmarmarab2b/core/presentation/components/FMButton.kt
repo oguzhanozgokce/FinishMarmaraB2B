@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -75,6 +76,7 @@ fun FMOutlinedButton(
     height: Dp = padding.dimension56,
     elevation: ButtonElevation? = null,
     shape: Shape = RoundedCornerShape(padding.dimension8),
+    fontSize: TextUnit = FMTheme.fontSize.medium,
     contentPadding: PaddingValues = PaddingValues(vertical = 12.dp, horizontal = 12.dp),
     borderWidth: Dp = 1.dp,
 ) {
@@ -93,7 +95,7 @@ fun FMOutlinedButton(
     ) {
         Text(
             text = text,
-            fontSize = FMTheme.fontSize.medium,
+            fontSize = fontSize,
             fontWeight = FontWeight.Bold,
             color = textColor
         )

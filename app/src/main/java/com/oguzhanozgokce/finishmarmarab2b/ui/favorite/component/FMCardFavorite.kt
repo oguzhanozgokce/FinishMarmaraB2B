@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,7 @@ fun FMCardFavorite(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    onCartClick: () -> Unit
+    onBasketClick: () -> Unit
 ) {
     FMCard(
         modifier = modifier
@@ -127,11 +128,11 @@ fun FMCardFavorite(
                     Icon(
                         modifier = Modifier.size(padding.dimension16),
                         imageVector = FMTheme.icons.cart,
-                        contentDescription = "Cart Icon",
+                        contentDescription = stringResource(R.string.cart_icon),
                         tint = colors.primary
                     )
                     Text(
-                        text = "230 Kişinin Sepetinde",
+                        text = "${product.basketCount} Kişinin Sepetinde",
                         style = typography.titleSmallMedium(),
                         maxLines = 1
                     )
@@ -166,7 +167,7 @@ fun FMCardFavorite(
                     modifier = Modifier.fillMaxWidth(),
                     height = padding.dimension36,
                     text = "Add to Cart",
-                    onClick = onCartClick,
+                    onClick = onBasketClick,
                     contentPadding = PaddingValues(padding.dimension4)
                 )
             }
@@ -182,7 +183,7 @@ fun PreviewFMCardFavorite() {
             product = PreviewMockData.defaultProduct,
             onClick = {},
             onFavoriteClick = {},
-            onCartClick = {}
+            onBasketClick = {}
         )
     }
 }

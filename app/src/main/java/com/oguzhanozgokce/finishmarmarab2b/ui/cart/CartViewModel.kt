@@ -53,6 +53,7 @@ class CartViewModel @Inject constructor(
                 onError = { error ->
                     updateState { copy(isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
+                    Log.e("GetBasketProducts", "Error: $error")
                 }
             )
         }

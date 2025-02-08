@@ -144,6 +144,9 @@ fun FavoriteContent(
             },
             onCartClick = { id ->
                 onNavigateToDetail(id)
+            },
+            onBasketClick = { id ->
+                onAction(UiAction.PostProductBasket(id))
             }
         )
     }

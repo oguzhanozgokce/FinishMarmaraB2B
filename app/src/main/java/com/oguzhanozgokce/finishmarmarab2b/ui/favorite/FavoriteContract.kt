@@ -18,6 +18,7 @@ object FavoriteContract {
         data object LoadFavoriteProducts : UiAction()
         data object LoadGetUser : UiAction()
         data class DeleteFavorite(val productId: Int) : UiAction()
+        data class PostProductBasket(val productId: Int) : UiAction()
     }
 
     sealed class UiEffect {

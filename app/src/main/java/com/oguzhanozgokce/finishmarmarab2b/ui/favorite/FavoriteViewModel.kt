@@ -9,6 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetUserUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val getUserCase: GetUserUseCase,
     private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
-    private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase
+    private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase,
+    private val postProductBasketUseCase: PostProductBasketUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -36,6 +38,7 @@ class FavoriteViewModel @Inject constructor(
             is UiAction.LoadFavoriteProducts -> loadFavoriteProducts()
             is UiAction.LoadGetUser -> loadGetUser()
             is UiAction.DeleteFavorite -> deleteFavorite(uiAction.productId)
+            is UiAction.PostProductBasket -> postProductBasket(uiAction.productId)
         }
     }
 
@@ -74,5 +77,19 @@ class FavoriteViewModel @Inject constructor(
                     UiEffect.ShowToast(error)
                 }
             }.launchIn(viewModelScope)
+    }
+
+    private fun postProductBasket(productId: Int) {
+        viewModelScope.launch {
+            postProductBasketUseCase(productId).fold(
+                onSuccess = {
+                    emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                },
+                onError = { error ->
+                    updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
     }
 }

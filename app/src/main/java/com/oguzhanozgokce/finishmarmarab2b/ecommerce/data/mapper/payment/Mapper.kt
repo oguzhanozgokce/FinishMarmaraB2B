@@ -1,9 +1,12 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orEmptyList
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.AddressDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CitiesDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CreditCartDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.City
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 
 fun Address.mapToAddressDto(): AddressDto {
@@ -52,4 +55,13 @@ fun CreditCartDto.mapToCreditCart(): CreditCart {
         cardNameSurname = this.cardNameSurname.orEmpty(),
         cardType = this.cardType.orEmpty()
     )
+}
+
+fun CitiesDto.toDomainCities(): List<City> {
+    return cities?.map { (cityName, districts) ->
+        City(
+            cityName = cityName,
+            districts = districts
+        )
+    }.orEmptyList()
 }

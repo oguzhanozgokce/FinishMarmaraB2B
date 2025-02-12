@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.auto(Color.WHITE, Color.WHITE),
+            statusBarStyle = SystemBarStyle.light(Color.WHITE, Color.WHITE),
             navigationBarStyle = SystemBarStyle.light(Color.WHITE, Color.WHITE)
         )
         splashScreen.setKeepOnScreenCondition {

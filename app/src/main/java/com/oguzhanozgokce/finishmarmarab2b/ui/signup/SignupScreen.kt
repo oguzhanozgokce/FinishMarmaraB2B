@@ -30,9 +30,9 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLife
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
@@ -110,7 +110,7 @@ fun SignupContent(
             style = typography.headExtraLargeBold(),
         )
         Spacer(modifier = Modifier.height(padding.dimension32))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.name,
             onValueChange = { onAction(UiAction.NameChanged(it)) },
             label = "Name",
@@ -123,7 +123,7 @@ fun SignupContent(
             modifier = Modifier.padding(vertical = padding.dimension4)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.surname,
             onValueChange = { onAction(UiAction.SurnameChanged(it)) },
             label = "Surname",
@@ -136,7 +136,7 @@ fun SignupContent(
             modifier = Modifier.padding(vertical = padding.dimension4)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.email,
             onValueChange = { onAction(UiAction.EmailChanged(it)) },
             label = "Email",
@@ -149,7 +149,7 @@ fun SignupContent(
             modifier = Modifier.padding(vertical = padding.dimension4)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.password,
             onValueChange = { onAction(UiAction.PasswordChanged(it)) },
             label = "Password",
@@ -163,7 +163,7 @@ fun SignupContent(
             modifier = Modifier.padding(vertical = padding.dimension4)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.phoneNumber,
             onValueChange = { onAction(UiAction.PhoneNumberChanged(it)) },
             label = "Phone",

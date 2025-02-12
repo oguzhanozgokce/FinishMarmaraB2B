@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.City
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 
 object PaymentContract {
@@ -7,7 +8,10 @@ object PaymentContract {
         val isLoading: Boolean = false,
         val products: List<Product> = emptyList(),
         val totalPrice: Double = 0.0,
-        val showDialog: Boolean = false
+        val showDialog: Boolean = false,
+        val cities: List<City> = emptyList(),
+        val districts: List<String> = emptyList(),
+        val errorMessage: String? = null
     )
 
     sealed class UiAction {

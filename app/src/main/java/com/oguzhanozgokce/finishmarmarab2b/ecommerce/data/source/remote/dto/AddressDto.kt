@@ -16,5 +16,9 @@ data class AddressDto(
     @SerializedName("address_tel")
     val addressTel: String? = null,
     @SerializedName("address_title")
-    val addressTitle: String? = null
+    val addressTitle: String? = null,
+    @SerializedName("address_name")
+    val addressName: String? = null,
+    @SerializedName("address_surname")
+    val addressSurname: String? = null
 )

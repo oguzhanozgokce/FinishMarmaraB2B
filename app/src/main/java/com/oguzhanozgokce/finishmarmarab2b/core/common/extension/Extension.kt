@@ -53,6 +53,7 @@ inline fun <T : Any, N : Any> Resource<T>.toResourceMap(data: (T) -> N): Resourc
 fun Int?.orZero(): Int = this ?: 0
 fun Double?.orDoubleZero(): Double = this ?: 0.0
 fun String?.orEmpty(): String = this ?: ""
+fun <T> List<T>?.orEmptyList(): List<T> = this ?: emptyList()
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

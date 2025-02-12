@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.mock
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.City
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
@@ -169,5 +170,19 @@ object PreviewMockData {
             addressInfo = "419. Sokak No:6, Daire:12 Kağıthane İstanbul",
             phoneNumber = "1234567890"
         )
+    )
+
+    val sampleCities = listOf(
+        City("Ankara", listOf("Çankaya", "Keçiören", "Sincan")),
+        City("İstanbul", listOf("Kadıköy", "Beşiktaş", "Şişli")),
+        City("İzmir", listOf("Konak", "Karşıyaka", "Bornova")),
+        City("Adana", listOf("Seyhan", "Gelendost", "Keşan")),
+        City("Antalya", listOf("Yenimahalle", "Keçiören", "Çankaya")),
+        City("Bursa", listOf("Osmangazi", "Nilüfer", "Osmangazi")),
+    )
+
+    val sampleCity = City(
+        "Ankara",
+        listOf("Çankaya", "Keçiören", "Sincan", "Yenimahalle", "Keçiören", "Çankaya")
     )
 }

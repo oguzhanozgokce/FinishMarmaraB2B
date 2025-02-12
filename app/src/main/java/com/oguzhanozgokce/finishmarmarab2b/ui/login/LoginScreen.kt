@@ -36,10 +36,10 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomIconButton
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiEffect
@@ -121,14 +121,14 @@ fun LoginContent(
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(padding.dimension64))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.email,
             onValueChange = { onAction(UiAction.EmailChanged(it)) },
             label = "Email",
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
         )
         Spacer(modifier = Modifier.height(padding.dimension16))
-        CustomTextField(
+        FMOutlineTextField(
             value = uiState.password,
             onValueChange = { onAction(UiAction.PasswordChanged(it)) },
             label = "Password",

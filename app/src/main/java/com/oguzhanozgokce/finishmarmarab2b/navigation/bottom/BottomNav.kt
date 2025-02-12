@@ -18,6 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
@@ -25,12 +29,45 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
+fun NavController.navigateTopSingle(
+    route: String,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null,
+) {
+    val defaultNavOptionsBuilder = NavOptions.Builder()
+        .setLaunchSingleTop(true)
+
+    navOptions?.let { userNavOptions ->
+        defaultNavOptionsBuilder.apply {
+            setEnterAnim(userNavOptions.enterAnim)
+            setExitAnim(userNavOptions.exitAnim)
+            setPopEnterAnim(userNavOptions.popEnterAnim)
+            setPopExitAnim(userNavOptions.popExitAnim)
+            setLaunchSingleTop(userNavOptions.shouldLaunchSingleTop())
+            setPopUpTo(userNavOptions.popUpToId, userNavOptions.isPopUpToInclusive())
+            setLaunchSingleTop(userNavOptions.shouldLaunchSingleTop())
+            setRestoreState(userNavOptions.shouldRestoreState())
+        }
+    }
+    return navigate(route, defaultNavOptionsBuilder.build(), navigatorExtras)
+}
+
 @Composable
 fun FMBottomBar(
-    navController: NavController,
+    navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
     val currentDestination by navController.currentBackStackEntryAsState()
+    val defaultNavOptionsBuilder = {
+        NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(
+                destinationId = navController.graph.findStartDestination().id,
+                inclusive = false,
+                saveState = true
+            )
+            .setRestoreState(true)
+    }
     Box(
         modifier = Modifier
             .background(color = colors.background)
@@ -66,11 +103,10 @@ fun FMBottomBar(
                         destination.screen
                     ),
                     onClick = {
-                        navController.navigate(Screen.getRoute(destination.screen)) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        navController.navigateTopSingle(
+                            Screen.getRoute(destination.screen),
+                            defaultNavOptionsBuilder().build()
+                        )
                     },
                     enabled = currentDestination?.destination?.route != Screen.getRoute(destination.screen),
                     colors = NavigationBarItemDefaults.colors(

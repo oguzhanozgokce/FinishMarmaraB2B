@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
@@ -12,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,26 +24,33 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
-fun CustomTextField(
+fun FMOutlineTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     isPassword: Boolean = false,
-    leadingIcon: @Composable () -> Unit,
+    leadingIcon: (@Composable (() -> Unit))? = null,
     isError: Boolean = false,
     errorMessage: String? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        imeAction = ImeAction.Next,
+        keyboardType = KeyboardType.Text
+    ),
+    indicatorsColor: Color = colors.primary.copy(alpha = 0.3f)
 ) {
     val containerColor =
         if (isError) colors.primary else colors.white
     val indicatorColor =
-        if (isError) colors.red else colors.primary.copy(alpha = 0.3f)
+        if (isError) colors.red else indicatorsColor
 
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            leadingIcon = { leadingIcon() },
+            leadingIcon = leadingIcon?.let {
+                { it() }
+            },
             label = {
                 Text(
                     label,
@@ -58,7 +69,8 @@ fun CustomTextField(
                 unfocusedTextColor = colors.black
             ),
             isError = isError,
-            singleLine = true
+            singleLine = true,
+            keyboardOptions = keyboardOptions
         )
         if (isError && errorMessage != null) {
             Text(
@@ -78,7 +90,7 @@ fun CustomTextField(
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    CustomTextField(
+    FMOutlineTextField(
         value = "",
         onValueChange = {},
         label = "email",

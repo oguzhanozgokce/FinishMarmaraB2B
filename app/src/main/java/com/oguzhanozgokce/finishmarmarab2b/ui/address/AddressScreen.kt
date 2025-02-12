@@ -1,175 +1,278 @@
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
+import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+
+@Composable
+fun AddressScreen(
+    uiState: AddressContract.UiState,
+    uiEffect: Flow<AddressContract.UiEffect>,
+    onAction: (AddressContract.UiAction) -> Unit,
+) {
+
+    val context = LocalContext.current
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is AddressContract.UiEffect.ShowToast -> context.showToast(effect.message)
+        }
+    }
+
+    AddressScreenContent(uiState = uiState)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddressScreen(
-    navController: NavController
+fun AddressScreenContent(
+    uiState: AddressContract.UiState
 ) {
-    var name by remember { mutableStateOf("") }
-    var surname by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var district by remember { mutableStateOf("") }
-    var neighborhood by remember { mutableStateOf("") }
-    var address by remember { mutableStateOf("") }
-    var addressTitle by remember { mutableStateOf("") }
-
     val focusManager = LocalFocusManager.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp).verticalScroll(rememberScrollState())
+            .background(colors.background)
+            .verticalScroll(rememberScrollState())
     ) {
-        // Üst Bar
-        TopAppBar(
-            title = { Text("Yeni Adres Ekle") },
-            navigationIcon = {
-                IconButton(onClick = {
-                    navController.navigate("payment_screen") {
-                        popUpTo("payment_screen") { inclusive = true }
-                    }
-                }) {
-                    Icon(Icons.Default.ArrowBack, "Geri")
-                }
-            }
-        )
-        Column (
-            modifier = Modifier.fillMaxWidth()
+        Surface(
+            shadowElevation = 4.dp
         ) {
-
-
-            // Uyarı Mesajı
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                tonalElevation = 1.dp
-            ) {
-                Text(
-                    text = "Ekleyeceğiniz bu adres sadece Uygulamadaki alışverişler için geçerlidir. Uygulama Yemek veya Market içerisinde gösterilmeyecektir.",
-                    modifier = Modifier.padding(FMTheme.padding.dimension16)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension16))
-
-            // İletişim Bilgileri Bölümü
-            Text(
-                text = "İletişim Bilgileri",
-                style = FMTheme.typography.titleMediumMedium()
-            )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Ad") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                }
+            TopAppBar(
+                title = { Text("Yeni Adres Ekle", style = typography.titleMediumMedium()) },
+                navigationIcon = {
+                    IconButton(onClick = { /* Geri tuşu işlevi */ }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Geri",
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = colors.white,
+                    titleContentColor = colors.black
                 )
             )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            OutlinedTextField(
-                value = surname,
-                onValueChange = { surname = it },
-                label = { Text("Soyad") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                })
-            )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            OutlinedTextField(
-                value = phone,
-                onValueChange = { phone = it },
-                label = { Text("Cep Telefonu") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension16))
-
-            // Adres Bilgileri Bölümü
-            Text(
-                text = "Adres Bilgileri",
-                style = FMTheme.typography.titleMediumMedium()
-            )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(FMTheme.padding.dimension8)
-            ) {
-                OutlinedTextField(
-                    value = city,
-                    onValueChange = { city = it },
-                    label = { Text("İl") },
-                    modifier = Modifier.weight(1f)
-                )
-
-                OutlinedTextField(
-                    value = district,
-                    onValueChange = { district = it },
-                    label = { Text("İlçe") },
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            OutlinedTextField(
-                value = neighborhood,
-                onValueChange = { neighborhood = it },
-                label = { Text("Mahalle") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
-
-            OutlinedTextField(
-                value = address,
-                onValueChange = { address = it },
-                label = { Text("Adres") },
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 3
-            )
-
-            Text(
-                text = "Paketinin sana güvenle ulaşması için mahalle, cadde, sokak, bina ve kat bilgilerini eksiksiz doldurmalısın.",
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(vertical = FMTheme.padding.dimension8)
-            )
-
         }
+
+        Spacer(modifier = Modifier.height(padding.dimension4))
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(padding.dimension4),
+            color = colors.error.copy(alpha = 0.1f),
+            tonalElevation = 1.dp,
+            shape = RoundedCornerShape(padding.dimension8)
+        ) {
+            Text(
+                text = "This address you will add is only valid for purchases in the App. The application will not be displayed in Food or Market.",
+                modifier = Modifier.padding(padding.dimension16),
+                style = typography.bodySmallNormal().copy(
+                    color = colors.error.copy(alpha = 0.7f)
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(padding.dimension4))
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colors.white),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                modifier = Modifier.padding(
+                    horizontal = padding.dimension16,
+                    vertical = padding.dimension8
+                ),
+                text = "Contact Details",
+                style = typography.titleMediumMedium().copy(
+                    fontSize = fontSize.mediumSmall
+                )
+            )
+            FMHorizontalDivider(modifier = Modifier.padding(horizontal = padding.dimension16))
+            Spacer(modifier = Modifier.height(padding.dimension8))
+            FMOutlineTextField(
+                modifier = Modifier.padding(horizontal = padding.dimension16),
+                value = uiState.addressName,
+                onValueChange = {},
+                label = "Name",
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Name"
+                    )
+                },
+                indicatorsColor = colors.text.copy(alpha = 0.3f),
+            )
+            Spacer(modifier = Modifier.height(padding.dimension8))
+            FMOutlineTextField(
+                modifier = Modifier.padding(horizontal = padding.dimension16),
+                value = uiState.addressSurname,
+                onValueChange = {},
+                label = "Surname",
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Surname"
+                    )
+                },
+                indicatorsColor = colors.text.copy(alpha = 0.3f),
+                //focusManager.moveFocus(FocusDirection.Down)
+            )
+            Spacer(modifier = Modifier.height(padding.dimension8))
+            FMOutlineTextField(
+                modifier = Modifier.padding(horizontal = padding.dimension16),
+                value = uiState.addressTel,
+                onValueChange = {},
+                label = "Phone",
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Phone,
+                        contentDescription = "Phone"
+                    )
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                indicatorsColor = colors.text.copy(alpha = 0.3f)
+            )
+            Spacer(modifier = Modifier.height(padding.dimension16))
+        }
+        Spacer(modifier = Modifier.height(padding.dimension8))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colors.white),
+        ) {
+            Text(
+                text = "Address Details",
+                style = typography.titleMediumMedium(),
+                modifier = Modifier
+                    .padding(horizontal = padding.dimension16, vertical = padding.dimension8)
+            )
+            FMHorizontalDivider(modifier = Modifier.padding(horizontal = padding.dimension16))
+            Spacer(modifier = Modifier.height(padding.dimension8))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colors.white)
+                    .padding(horizontal = padding.dimension16),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Place,
+                    contentDescription = "Province",
+                    modifier = Modifier.size(padding.dimension32)
+                )
+                Spacer(modifier = Modifier.width(padding.dimension8))
+                FMOutlineTextField(
+                    modifier = Modifier.weight(1f),
+                    value = uiState.province,
+                    onValueChange = {},
+                    label = "Province",
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                )
+                Spacer(modifier = Modifier.width(padding.dimension8))
+                FMOutlineTextField(
+                    modifier = Modifier.weight(1f),
+                    value = uiState.city,
+                    onValueChange = {},
+                    label = "City",
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(padding.dimension8))
+
+            FMOutlineTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 56.dp, end = 16.dp),
+                value = uiState.openAddress,
+                onValueChange = { },
+                label = "Open Address",
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                indicatorsColor = colors.text.copy(alpha = 0.3f)
+            )
+            Spacer(modifier = Modifier.height(padding.dimension4))
+            Text(
+                text = "In order for your parcel to reach you safely, you must fill in the neighbourhood, street, street, building and floor information completely.",
+                style = typography.bodySmallNormal().copy(
+                    color = colors.text.copy(alpha = 0.5f)
+                ),
+                modifier = Modifier.padding(
+                    start = padding.dimension56,
+                    end = padding.dimension16,
+                    bottom = padding.dimension4,
+                    top = padding.dimension4
+                )
+            )
+            FMOutlineTextField(
+                modifier = Modifier.padding(start = padding.dimension56, end = padding.dimension16),
+                value = uiState.addressTitle,
+                onValueChange = {},
+                label = "Address Title",
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Place,
+                        contentDescription = "Zip Code"
+                    )
+                },
+                indicatorsColor = colors.text.copy(alpha = 0.3f),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+            )
+        }
+        Spacer(modifier = Modifier.height(padding.dimension8))
+        FMButton(
+            text = "Save",
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = padding.dimension16)
+                .align(Alignment.End),
+        )
     }
 }
 
@@ -180,8 +283,10 @@ fun AddressScreen(
 @Composable
 fun AddressScreenPreview() {
     FMTheme {
-        // Preview için fake NavController oluşturuyoruz
-        val previewNavController = rememberNavController()
-        AddressScreen(previewNavController)
+        AddressScreen(
+            uiState = AddressContract.UiState(),
+            uiEffect = emptyFlow(),
+            onAction = {}
+        )
     }
 } 

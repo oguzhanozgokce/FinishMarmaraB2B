@@ -7,5 +7,7 @@ data class Address(
     val city: String,
     val openAddress: String,
     val addressTel: String,
-    val addressTitle: String
+    val addressTitle: String,
+    val addressName: String,
+    val addressSurname: String,
 )

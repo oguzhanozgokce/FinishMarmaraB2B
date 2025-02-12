@@ -29,7 +29,9 @@ fun AddressDto.mapToAddress(): Address {
         city = this.city.orEmpty(),
         openAddress = this.openAddress.orEmpty(),
         addressTel = this.addressTel.orEmpty(),
-        addressTitle = this.addressTitle.orEmpty()
+        addressTitle = this.addressTitle.orEmpty(),
+        addressName = this.addressName.orEmpty(),
+        addressSurname = this.addressSurname.orEmpty()
     )
 }
 

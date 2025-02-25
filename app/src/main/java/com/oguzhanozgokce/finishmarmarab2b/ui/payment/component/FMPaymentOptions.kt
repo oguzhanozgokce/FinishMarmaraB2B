@@ -49,7 +49,7 @@ fun FMPaymentOptions(
     ) {
         Text(
             modifier = Modifier.padding(bottom = padding.dimension8),
-            text = "Payment Options",
+            text = "Card Information",
             style = FMTheme.typography.titleMediumMedium().copy(
                 fontSize = FMTheme.fontSize.mediumSmall
             )

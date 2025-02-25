@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Place
@@ -28,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,9 +67,8 @@ fun AddressScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressScreenContent(
-    uiState: AddressContract.UiState
+    uiState: AddressContract.UiState,
 ) {
-    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,12 +79,12 @@ fun AddressScreenContent(
             shadowElevation = 4.dp
         ) {
             TopAppBar(
-                title = { Text("Yeni Adres Ekle", style = typography.titleMediumMedium()) },
+                title = { Text("Add New Address", style = typography.titleMediumMedium()) },
                 navigationIcon = {
-                    IconButton(onClick = { /* Geri tuşu işlevi */ }) {
+                    IconButton(onClick = { /* Back */ }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Geri",
+                            contentDescription = "Back",
                         )
                     }
                 },
@@ -133,49 +132,62 @@ fun AddressScreenContent(
             )
             FMHorizontalDivider(modifier = Modifier.padding(horizontal = padding.dimension16))
             Spacer(modifier = Modifier.height(padding.dimension8))
-            FMOutlineTextField(
-                modifier = Modifier.padding(horizontal = padding.dimension16),
-                value = uiState.addressName,
-                onValueChange = {},
-                label = "Name",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Name"
-                    )
-                },
-                indicatorsColor = colors.text.copy(alpha = 0.3f),
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = padding.dimension16),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Name",
+                    modifier = Modifier.size(padding.dimension32)
+                )
+                Spacer(modifier = Modifier.width(padding.dimension8))
+                FMOutlineTextField(
+                    value = uiState.addressName,
+                    onValueChange = {},
+                    label = "Name",
+                    indicatorsColor = colors.text.copy(alpha = 0.3f),
+                )
+            }
             Spacer(modifier = Modifier.height(padding.dimension8))
-            FMOutlineTextField(
-                modifier = Modifier.padding(horizontal = padding.dimension16),
-                value = uiState.addressSurname,
-                onValueChange = {},
-                label = "Surname",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Surname"
-                    )
-                },
-                indicatorsColor = colors.text.copy(alpha = 0.3f),
-                //focusManager.moveFocus(FocusDirection.Down)
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = padding.dimension16),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.size(padding.dimension40))
+                FMOutlineTextField(
+                    value = uiState.addressSurname,
+                    onValueChange = {},
+                    label = "Surname",
+                    indicatorsColor = colors.text.copy(alpha = 0.3f),
+                )
+            }
             Spacer(modifier = Modifier.height(padding.dimension8))
-            FMOutlineTextField(
-                modifier = Modifier.padding(horizontal = padding.dimension16),
-                value = uiState.addressTel,
-                onValueChange = {},
-                label = "Phone",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = "Phone"
-                    )
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                indicatorsColor = colors.text.copy(alpha = 0.3f)
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = padding.dimension16),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = "Phone",
+                    modifier = Modifier.size(padding.dimension32)
+                )
+                Spacer(modifier = Modifier.width(padding.dimension8))
+                FMOutlineTextField(
+                    value = uiState.addressTel,
+                    onValueChange = {},
+                    label = "Phone",
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                )
+            }
             Spacer(modifier = Modifier.height(padding.dimension16))
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
@@ -210,8 +222,14 @@ fun AddressScreenContent(
                     value = uiState.province,
                     onValueChange = {},
                     label = "Province",
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Select Province"
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                    indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
@@ -219,6 +237,12 @@ fun AddressScreenContent(
                     value = uiState.city,
                     onValueChange = {},
                     label = "City",
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Select City"
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     indicatorsColor = colors.text.copy(alpha = 0.3f)
                 )
@@ -232,7 +256,26 @@ fun AddressScreenContent(
                     .padding(start = 56.dp, end = 16.dp),
                 value = uiState.openAddress,
                 onValueChange = { },
-                label = "Open Address",
+                label = "Neighbourhood",
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Select Neighbourhood"
+                    )
+                },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                indicatorsColor = colors.text.copy(alpha = 0.3f)
+            )
+
+            Spacer(modifier = Modifier.height(padding.dimension8))
+
+            FMOutlineTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = padding.dimension56, end = padding.dimension16),
+                value = uiState.addressName,
+                onValueChange = {},
+                label = "Address",
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 indicatorsColor = colors.text.copy(alpha = 0.3f)
             )
@@ -249,20 +292,27 @@ fun AddressScreenContent(
                     top = padding.dimension4
                 )
             )
-            FMOutlineTextField(
-                modifier = Modifier.padding(start = padding.dimension56, end = padding.dimension16),
-                value = uiState.addressTitle,
-                onValueChange = {},
-                label = "Address Title",
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Place,
-                        contentDescription = "Zip Code"
-                    )
-                },
-                indicatorsColor = colors.text.copy(alpha = 0.3f),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = padding.dimension16),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Place,
+                    contentDescription = "Zip Code",
+                    modifier = Modifier.size(padding.dimension32)
+                )
+                Spacer(modifier = Modifier.width(padding.dimension8))
+                FMOutlineTextField(
+                    value = uiState.addressTitle,
+                    onValueChange = {},
+                    label = "Address Title",
+                    indicatorsColor = colors.text.copy(alpha = 0.3f),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
         FMButton(

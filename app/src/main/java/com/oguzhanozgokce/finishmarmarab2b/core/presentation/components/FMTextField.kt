@@ -30,6 +30,7 @@ fun FMOutlineTextField(
     label: String,
     isPassword: Boolean = false,
     leadingIcon: (@Composable (() -> Unit))? = null,
+    trailingIcon: (@Composable (() -> Unit))? = null,
     isError: Boolean = false,
     errorMessage: String? = null,
     modifier: Modifier = Modifier,
@@ -49,6 +50,9 @@ fun FMOutlineTextField(
             value = value,
             onValueChange = onValueChange,
             leadingIcon = leadingIcon?.let {
+                { it() }
+            },
+            trailingIcon = trailingIcon?.let {
                 { it() }
             },
             label = {

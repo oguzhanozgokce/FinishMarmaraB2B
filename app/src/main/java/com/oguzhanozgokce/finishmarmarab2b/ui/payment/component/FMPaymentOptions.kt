@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.payment.component
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ fun FMPaymentOptions(
     modifier: Modifier = Modifier,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
+    var showNewCreditCart by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -47,13 +49,33 @@ fun FMPaymentOptions(
             )
             .padding(horizontal = padding.dimension16, vertical = padding.dimension16)
     ) {
-        Text(
-            modifier = Modifier.padding(bottom = padding.dimension8),
-            text = "Card Information",
-            style = FMTheme.typography.titleMediumMedium().copy(
-                fontSize = FMTheme.fontSize.mediumSmall
-            )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = padding.dimension8),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         )
+        {
+            Text(
+                modifier = Modifier.padding(bottom = padding.dimension8),
+                text = "Card Information",
+                style = FMTheme.typography.titleMediumMedium().copy(
+                    fontSize = FMTheme.fontSize.mediumSmall
+                )
+            )
+            Text(
+                modifier = Modifier
+                    .clickable { showNewCreditCart = true }
+                    .padding(bottom = padding.dimension8),
+                text = "Pay With Another Card",
+                style = FMTheme.typography.titleMediumMedium().copy(
+                    fontSize = FMTheme.fontSize.small,
+                    color = colors.button
+                )
+            )
+        }
+
         FMHorizontalDivider()
         Row(
             modifier = Modifier
@@ -97,6 +119,10 @@ fun FMPaymentOptions(
                     FMCreditCard(creditCard = it)
                 }
             }
+        }
+
+        if (showNewCreditCart){
+            FMNewCreditCart()
         }
     }
 }

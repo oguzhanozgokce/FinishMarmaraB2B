@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,8 +30,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 
 @Composable
 fun FMNewCreditCart(
-    creditCard: CreditCard,
-    onCreditCard: (CreditCard) -> Unit,
 ) {
     var cardNumber by remember { mutableStateOf("") }
     var selectedMonth by remember { mutableStateOf("") }
@@ -44,16 +43,14 @@ fun FMNewCreditCart(
             .padding(16.dp)
             .background(FMTheme.colors.background)
     ) {
-        // Üst kısım: Kart Numarası
         Text(
-            text = "Kart Numarası",
+            text = "Card Number",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
         OutlinedTextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
-            placeholder = { Text("XXXX XXXX XXXX XXXX") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -61,34 +58,32 @@ fun FMNewCreditCart(
 
 
         Text(
-            text = "Kart Sahibi",
+            text = "Card Holder",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
         OutlinedTextField(
             value = cardName,
             onValueChange = { cardName = it },
-            placeholder = { Text("İsim Soyisim") },
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Alt kısım: Son Kullanma Tarihi ve CVV
-        Row(modifier = Modifier.fillMaxWidth()) {
-
-            // Solda: Son Kullanma Tarihi
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Bottom
+        ) {
             Column(
                 modifier = Modifier
                     .weight(1f)
             ) {
                 Text(
-                    text = "Son Kullanma Tarihi",
+                    text = " Expiration date",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Gray
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-
                 Row {
-                    // Ay
+
                     OutlinedTextField(
                         value = selectedMonth,
                         onValueChange = { selectedMonth = it },
@@ -107,7 +102,6 @@ fun FMNewCreditCart(
                         }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    // Yıl
                     OutlinedTextField(
                         value = selectedYear,
                         onValueChange = { selectedYear = it },
@@ -128,7 +122,6 @@ fun FMNewCreditCart(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Sağda: CVV
             Column(
                 modifier = Modifier
                     .weight(0.4f)
@@ -138,30 +131,24 @@ fun FMNewCreditCart(
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Gray
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-
-                OutlinedTextField(
-                    value = cvv,
-                    onValueChange = { cvv = it },
-                    placeholder = { Text("***") },
-                    singleLine = true,
-                    // CVV alanı için trailingIcon ekleyebilirsiniz
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            // Burada "?" ikonuna tıklanınca yapılacak işlemi ekleyebilirsiniz
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Info, // veya kendi ? ikonunuz
-                                contentDescription = "CVV Info",
-                                tint = Color.Gray
-                            )
-                        }
-                    }
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = cvv,
+                        onValueChange = { cvv = it },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "CVV",
+                        tint = FMTheme.colors.lightGray
+                    )
+                }
             }
         }
     }
-
 
 }
 
@@ -170,15 +157,7 @@ fun FMNewCreditCart(
 fun FMNewCreditCartPreview() {
     FMTheme {
         FMNewCreditCart(
-            creditCard = CreditCard(
-                cardTitle = "Test",
-                cardNumber = "5367890123456436",
-                cardHolder = "John Doe",
-                expirationDate = "12/25",
-                cvv = "123",
-                cardType = CardType.MASTERCARD,
-            ),
-            onCreditCard = {}
         )
+
     }
 }

@@ -21,9 +21,9 @@ object PaymentContract {
     sealed class UiAction {
         data object HideDialog : UiAction()
         data object ShowDialog : UiAction()
-        data class OnChangeCardNumber( val cardNumber: String) : UiAction()
-         data class OnChangeExpirationDate( val expirationDateValue: String) : UiAction()
-        data class OnChangeCvv( val cvv: String) : UiAction()
+        data class OnChangeCardNumber(val cardNumber: String) : UiAction()
+        data class OnChangeExpirationDate(val expirationDateValue: String) : UiAction()
+        data class OnChangeCvv(val cvv: String) : UiAction()
         data class OnChangeCardName(val cardName: String) : UiAction()
     }
 

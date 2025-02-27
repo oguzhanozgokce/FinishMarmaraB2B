@@ -29,7 +29,10 @@ class PaymentViewModel @Inject constructor(
             is UiAction.HideDialog -> hideDialog()
             is UiAction.ShowDialog -> showDialog()
             is UiAction.OnChangeCardNumber -> updateState { copy(cardNumber = uiAction.cardNumber) }
-            is UiAction.OnChangeCardName -> updateState { copy(cardName = uiAction.cardName) }
+            is UiAction.OnChangeCardName -> {
+                updateState { copy(cardName = uiAction.cardName) }
+            }
+
             is UiAction.OnChangeExpirationDate -> updateState { copy(expirationDateValue = uiAction.expirationDateValue) }
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }

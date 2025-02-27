@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData.sampleCities
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -199,10 +198,10 @@ fun PreviewFMDistrictsBottomSheetContent() {
             sheetState = fakeSheetState,
             onDismissRequest = {},
             selectedCity = null,
-            cities = PreviewMockData.sampleProvince.cities,
-            onCitySelected = { selectedDistrict ->
-                println("Selected District: $selectedDistrict")
-            }
+            onCitySelected = { selectedCity ->
+                println("Selected City: $selectedCity")
+            },
+            selectedProvince = sampleCities.first()
         )
     }
 }

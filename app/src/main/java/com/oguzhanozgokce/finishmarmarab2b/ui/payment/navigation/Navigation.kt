@@ -21,7 +21,6 @@ fun NavGraphBuilder.payment(
         val viewModel: PaymentViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
-
         PaymentScreen(
             uiState = uiState,
             uiEffect = uiEffect,

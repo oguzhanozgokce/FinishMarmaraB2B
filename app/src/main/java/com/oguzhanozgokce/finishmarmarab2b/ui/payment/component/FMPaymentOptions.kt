@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIcon
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -121,8 +122,10 @@ fun FMPaymentOptions(
             }
         }
 
-        if (showNewCreditCart){
-            FMNewCreditCart()
+        if (showNewCreditCart) {
+            FMNewCreditCart(
+                uiState = PaymentContract.UiState()
+            )
         }
     }
 }

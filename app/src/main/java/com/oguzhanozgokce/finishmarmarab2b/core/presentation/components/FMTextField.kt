@@ -27,7 +27,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMOutlineTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String?= null,
+    label: String? = null,
     isPassword: Boolean = false,
     leadingIcon: (@Composable (() -> Unit))? = null,
     trailingIcon: (@Composable (() -> Unit))? = null,
@@ -39,11 +39,13 @@ fun FMOutlineTextField(
         keyboardType = KeyboardType.Text
     ),
     indicatorsColor: Color = colors.primary.copy(alpha = 0.3f),
+    visualTransformation: VisualTransformation? = null,
 ) {
     val containerColor =
         if (isError) colors.primary else colors.white
     val indicatorColor =
         if (isError) colors.red else indicatorsColor
+
 
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -63,7 +65,8 @@ fun FMOutlineTextField(
                     )
                 }
             },
-            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = visualTransformation
+                ?: if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(padding.dimension8),
             colors = TextFieldDefaults.colors(
@@ -72,7 +75,9 @@ fun FMOutlineTextField(
                 focusedIndicatorColor = indicatorColor,
                 unfocusedIndicatorColor = indicatorColor,
                 focusedTextColor = colors.black,
-                unfocusedTextColor = colors.black
+                unfocusedTextColor = colors.black,
+                focusedPlaceholderColor = colors.black,
+                unfocusedPlaceholderColor = colors.black,
             ),
             isError = isError,
             singleLine = true,
@@ -90,7 +95,9 @@ fun FMOutlineTextField(
                 )
             )
         }
+
     }
+
 }
 
 @Preview(showBackground = true)

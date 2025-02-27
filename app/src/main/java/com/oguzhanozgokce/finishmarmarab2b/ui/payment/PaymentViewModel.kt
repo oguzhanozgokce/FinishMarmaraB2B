@@ -17,7 +17,7 @@ import javax.inject.Inject
 class PaymentViewModel @Inject constructor(
     private val getBasketProductsUseCase: GetBasketProductsUseCase,
     private val getCitiesUseCase: GetCitiesUseCase,
-    private val getDistrictsForCityUseCase: GetDistrictsForCityUseCase
+    private val getDistrictsForCityUseCase: GetDistrictsForCityUseCase,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -28,6 +28,10 @@ class PaymentViewModel @Inject constructor(
         when (uiAction) {
             is UiAction.HideDialog -> hideDialog()
             is UiAction.ShowDialog -> showDialog()
+            is UiAction.OnChangeCardNumber -> updateState { copy(cardNumber = uiAction.cardNumber) }
+            is UiAction.OnChangeCardName -> updateState { copy(cardName = uiAction.cardName) }
+            is UiAction.OnChangeExpirationDate -> updateState { copy(expirationDateValue = uiAction.expirationDateValue) }
+            is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }
     }
 

@@ -50,6 +50,9 @@ sealed interface Screen {
     data object Splash : Screen
 
     @Serializable
+    data object Address : Screen
+
+    @Serializable
     data class CategoryProducts(val id: Int, val name: String) : Screen
 
     companion object {

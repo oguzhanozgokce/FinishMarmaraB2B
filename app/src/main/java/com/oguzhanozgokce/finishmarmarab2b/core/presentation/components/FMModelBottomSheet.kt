@@ -19,15 +19,11 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.City
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData.sampleCities
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
@@ -61,14 +57,13 @@ fun FMModelBottomSheet(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FMCitiesBottomSheetContent(
+fun FMProvincesBottomSheetContent(
     sheetState: SheetState,
     onDismissRequest: () -> Unit,
-    cities: List<City>,
-    onCitySelected: (City) -> Unit
+    provinces: List<Province>,
+    selectedProvince: Province?, // Seçili ili dışarıdan alıyoruz
+    onProvinceSelected: (Province) -> Unit
 ) {
-    var selectedCity by remember { mutableStateOf<City?>(null) }
-
     FMModelBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismissRequest,
@@ -83,14 +78,13 @@ fun FMCitiesBottomSheetContent(
                         bottom = padding.dimension8
                     )
             ) {
-                items(cities) { city ->
+                items(provinces) { province ->
                     CityItem(
-                        name = city.cityName,
-                        isSelected = city == selectedCity,
-                        textColor = if (city == selectedCity) colors.primary else colors.text,
+                        name = province.name,
+                        isSelected = province == selectedProvince,
+                        textColor = if (province == selectedProvince) colors.primary else colors.text,
                         onClick = {
-                            selectedCity = city
-                            onCitySelected(city)
+                            onProvinceSelected(province)
                         }
                     )
                 }
@@ -99,16 +93,16 @@ fun FMCitiesBottomSheetContent(
     )
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FMDistrictsBottomSheetContent(
+fun FMCitiesBottomSheetContent(
     sheetState: SheetState,
     onDismissRequest: () -> Unit,
-    selectedCity: City,
-    selectedDistrict: String?,
-    onDistrictSelected: (String) -> Unit
+    selectedProvince: Province?,
+    selectedCity: String?,
+    onCitySelected: (String) -> Unit
 ) {
-
     FMModelBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismissRequest,
@@ -123,13 +117,15 @@ fun FMDistrictsBottomSheetContent(
                         bottom = padding.dimension8
                     )
             ) {
-                items(selectedCity.districts) { district ->
-                    CityItem(
-                        name = district,
-                        isSelected = district == selectedDistrict,
-                        textColor = if (district == selectedDistrict) colors.primary else colors.text,
-                        onClick = { onDistrictSelected(district) }
-                    )
+                if (selectedProvince != null) {
+                    items(selectedProvince.cities) { city ->
+                        CityItem(
+                            name = city,
+                            isSelected = city == selectedCity,
+                            textColor = if (city == selectedCity) colors.primary else colors.text,
+                            onClick = { onCitySelected(city) }
+                        )
+                    }
                 }
             }
         }
@@ -178,12 +174,13 @@ fun PreviewFMCitiesBottomSheetContent() {
     val fakeSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     FMTheme {
-        FMCitiesBottomSheetContent(
+        FMProvincesBottomSheetContent(
             sheetState = fakeSheetState,
             onDismissRequest = {},
-            cities = sampleCities,
-            onCitySelected = { selectedCity ->
-                println("Selected City: ${selectedCity.cityName}")
+            provinces = sampleCities,
+            selectedProvince = null,
+            onProvinceSelected = { selectedProvince ->
+                println("Selected Province: $selectedProvince")
             }
         )
     }
@@ -198,12 +195,12 @@ fun PreviewFMDistrictsBottomSheetContent() {
     val fakeSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     FMTheme {
-        FMDistrictsBottomSheetContent(
+        FMCitiesBottomSheetContent(
             sheetState = fakeSheetState,
             onDismissRequest = {},
-            selectedCity = PreviewMockData.sampleCity,
-            selectedDistrict = null,
-            onDistrictSelected = { selectedDistrict ->
+            selectedCity = null,
+            cities = PreviewMockData.sampleProvince.cities,
+            onCitySelected = { selectedDistrict ->
                 println("Selected District: $selectedDistrict")
             }
         )

@@ -2,6 +2,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,20 +26,31 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCitiesBottomSheetContent
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMPhoneTextField
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProvincesBottomSheetContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract
+import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -47,27 +59,68 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressScreen(
     uiState: AddressContract.UiState,
     uiEffect: Flow<AddressContract.UiEffect>,
     onAction: (AddressContract.UiAction) -> Unit,
+    navAction: AddressNavAction
 ) {
-
+    var showProvincesBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var showCitiesBottomSheet by rememberSaveable { mutableStateOf(false) }
+    val state = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val context = LocalContext.current
+
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is AddressContract.UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
 
-    AddressScreenContent(uiState = uiState)
+    if (showProvincesBottomSheet) {
+        FMProvincesBottomSheetContent(
+            sheetState = state,
+            onDismissRequest = { showProvincesBottomSheet = false },
+            provinces = uiState.provinces,
+            selectedProvince = uiState.selectedProvince,
+            onProvinceSelected = { selectedProvince ->
+                showProvincesBottomSheet = false
+                onAction(AddressContract.UiAction.ProvinceSelected(selectedProvince))
+            }
+        )
+    }
+
+    if (showCitiesBottomSheet) {
+        FMCitiesBottomSheetContent(
+            sheetState = state,
+            onDismissRequest = { showCitiesBottomSheet = false },
+            selectedProvince = uiState.selectedProvince,
+            selectedCity = uiState.selectedCity,
+            onCitySelected = { selectedCity ->
+                showCitiesBottomSheet = false
+                onAction(AddressContract.UiAction.CitySelected(selectedCity))
+            }
+        )
+    }
+
+    AddressScreenContent(
+        uiState = uiState,
+        onNavigationCitiesBottomSheet = { showProvincesBottomSheet = true },
+        onNavigationDistrictsBottomSheet = { showCitiesBottomSheet = true },
+        navAction = navAction,
+        onAction = onAction
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressScreenContent(
     uiState: AddressContract.UiState,
+    onNavigationCitiesBottomSheet: () -> Unit,
+    onNavigationDistrictsBottomSheet: () -> Unit,
+    navAction: AddressNavAction,
+    onAction: (AddressContract.UiAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -81,7 +134,7 @@ fun AddressScreenContent(
             TopAppBar(
                 title = { Text("Add New Address", style = typography.titleMediumMedium()) },
                 navigationIcon = {
-                    IconButton(onClick = { /* Back */ }) {
+                    IconButton(onClick = { navAction.navigateToBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -91,28 +144,36 @@ fun AddressScreenContent(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = colors.white,
                     titleContentColor = colors.black
-                )
+                ),
+                windowInsets = WindowInsets(0.dp)
             )
         }
-
-        Spacer(modifier = Modifier.height(padding.dimension4))
-        Surface(
+        Spacer(modifier = Modifier.height(padding.dimension8))
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(padding.dimension4),
-            color = colors.error.copy(alpha = 0.1f),
-            tonalElevation = 1.dp,
-            shape = RoundedCornerShape(padding.dimension8)
+                .background(colors.primary.copy(alpha = 0.1f))
+                .clip(RoundedCornerShape(padding.dimension8))
+                .padding(padding.dimension8),
+            verticalAlignment = Alignment.Top,
         ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_info),
+                contentDescription = "Info",
+                modifier = Modifier
+                    .padding(start = padding.dimension4)
+                    .size(padding.dimension16),
+                tint = colors.primary
+            )
+            Spacer(modifier = Modifier.width(padding.dimension8))
             Text(
                 text = "This address you will add is only valid for purchases in the App. The application will not be displayed in Food or Market.",
-                modifier = Modifier.padding(padding.dimension16),
                 style = typography.bodySmallNormal().copy(
-                    color = colors.error.copy(alpha = 0.7f)
+                    color = colors.primary.copy(alpha = 0.7f)
                 )
             )
         }
-        Spacer(modifier = Modifier.height(padding.dimension4))
+        Spacer(modifier = Modifier.height(padding.dimension8))
 
         Column(
             modifier = Modifier
@@ -180,14 +241,20 @@ fun AddressScreenContent(
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
-                FMOutlineTextField(
-                    value = uiState.addressTel,
-                    onValueChange = {},
-                    label = "Phone",
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                FMPhoneTextField(
+                    phoneNumber = uiState.addressTel,
+                    onPhoneNumberChange = {
+                        onAction(
+                            AddressContract.UiAction.OnPhoneNumberChanged(
+                                it
+                            )
+                        )
+                    },
+                    isError = false,
+                    errorMessage = null
                 )
             }
+
             Spacer(modifier = Modifier.height(padding.dimension16))
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
@@ -228,6 +295,11 @@ fun AddressScreenContent(
                             contentDescription = "Select Province"
                         )
                     },
+                    readOnly = true,
+                    onClick = {
+                        onAction(AddressContract.UiAction.LoadProvinces)
+                        onNavigationCitiesBottomSheet()
+                    },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
@@ -242,6 +314,10 @@ fun AddressScreenContent(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = "Select City"
                         )
+                    },
+                    onClick = {
+                        onAction(AddressContract.UiAction.LoadCities)
+                        onNavigationDistrictsBottomSheet()
                     },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     indicatorsColor = colors.text.copy(alpha = 0.3f)
@@ -300,8 +376,8 @@ fun AddressScreenContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Place,
-                    contentDescription = "Zip Code",
+                    painter = painterResource(id = R.drawable.ic_apartment),
+                    contentDescription = "Apartment",
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
@@ -313,6 +389,7 @@ fun AddressScreenContent(
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
                 )
             }
+            Spacer(modifier = Modifier.height(padding.dimension16))
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
         FMButton(
@@ -320,7 +397,11 @@ fun AddressScreenContent(
             onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = padding.dimension16)
+                .padding(
+                    start = padding.dimension16,
+                    end = padding.dimension16,
+                    bottom = padding.dimension8
+                )
                 .align(Alignment.End),
         )
     }
@@ -336,7 +417,8 @@ fun AddressScreenPreview() {
         AddressScreen(
             uiState = AddressContract.UiState(),
             uiEffect = emptyFlow(),
-            onAction = {}
+            onAction = {},
+            navAction = AddressNavAction {}
         )
     }
 } 

@@ -1,28 +1,26 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation
+package com.oguzhanozgokce.finishmarmarab2b.ui.address
 
+import AddressScreen
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
-import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentViewModel
 
-data class PaymentNavAction(
-    val navigateToBack: () -> Unit,
-    val navigateToAddress: () -> Unit
+data class AddressNavAction(
+    val navigateToBack: () -> Unit
 )
 
-fun NavGraphBuilder.payment(
-    navAction: PaymentNavAction
+fun NavGraphBuilder.address(
+    navAction: AddressNavAction
 ) {
-    composable<Screen.Payment> {
-        val viewModel: PaymentViewModel = hiltViewModel()
+    composable<Screen.Address> {
+        val viewModel: AddressViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
 
-        PaymentScreen(
+        AddressScreen(
             uiState = uiState,
             uiEffect = uiEffect,
             onAction = viewModel::onAction,

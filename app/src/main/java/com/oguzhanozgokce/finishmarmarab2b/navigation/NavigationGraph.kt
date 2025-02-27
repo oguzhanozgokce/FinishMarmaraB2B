@@ -10,6 +10,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
+import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.CategoryNavActions
@@ -101,6 +103,12 @@ fun NavigationGraph(
             )
             payment(
                 navAction = PaymentNavAction(
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToAddress = { navController.navigate(route = Address) }
+                )
+            )
+            address(
+                navAction = AddressNavAction(
                     navigateToBack = { navController.navigateUp() }
                 )
             )

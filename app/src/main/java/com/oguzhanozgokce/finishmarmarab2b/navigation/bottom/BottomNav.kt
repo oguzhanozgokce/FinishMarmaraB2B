@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -74,8 +73,7 @@ fun FMBottomBar(
     ) {
         NavigationBar(
             modifier = modifier
-                .background(color = colors.background)
-                .height(72.dp),
+                .background(color = colors.background),
             containerColor = colors.cardBackground,
             contentColor = colors.text
         ) {
@@ -83,7 +81,6 @@ fun FMBottomBar(
                 val selected =
                     currentDestination?.destination?.route == Screen.getRoute(destination.screen)
                 NavigationBarItem(
-                    modifier = Modifier.padding(top = 12.dp),
                     icon = {
                         Icon(
                             imageVector = destination.icon(),

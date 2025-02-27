@@ -1,9 +1,9 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.mock
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.City
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
@@ -173,15 +173,15 @@ object PreviewMockData {
     )
 
     val sampleCities = listOf(
-        City("Ankara", listOf("Çankaya", "Keçiören", "Sincan")),
-        City("İstanbul", listOf("Kadıköy", "Beşiktaş", "Şişli")),
-        City("İzmir", listOf("Konak", "Karşıyaka", "Bornova")),
-        City("Adana", listOf("Seyhan", "Gelendost", "Keşan")),
-        City("Antalya", listOf("Yenimahalle", "Keçiören", "Çankaya")),
-        City("Bursa", listOf("Osmangazi", "Nilüfer", "Osmangazi")),
+        Province("Ankara", listOf("Çankaya", "Keçiören", "Sincan")),
+        Province("İstanbul", listOf("Kadıköy", "Beşiktaş", "Şişli")),
+        Province("İzmir", listOf("Konak", "Karşıyaka", "Bornova")),
+        Province("Adana", listOf("Seyhan", "Gelendost", "Keşan")),
+        Province("Antalya", listOf("Yenimahalle", "Keçiören", "Çankaya")),
+        Province("Bursa", listOf("Osmangazi", "Nilüfer", "Osmangazi")),
     )
 
-    val sampleCity = City(
+    val sampleProvince = Province(
         "Ankara",
         listOf("Çankaya", "Keçiören", "Sincan", "Yenimahalle", "Keçiören", "Çankaya")
     )

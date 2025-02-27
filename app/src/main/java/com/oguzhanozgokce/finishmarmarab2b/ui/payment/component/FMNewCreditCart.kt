@@ -29,7 +29,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 @Composable
 fun FMNewCreditCart(
     uiState: PaymentContract.UiState,
-    onAction: (PaymentContract.UiAction) -> Unit = {},
+    onAction: (PaymentContract.UiAction) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +51,7 @@ fun FMNewCreditCart(
         )
         Spacer(modifier = Modifier.height(16.dp))
         FMOutlineTextField(
-            value = uiState.cardNumber.toString(),
+            value = uiState.cardNumber,
             onValueChange = { onAction(PaymentContract.UiAction.OnChangeCardNumber(it)) },
             modifier = Modifier.fillMaxWidth(),
             indicatorsColor = colors.text.copy(alpha = 0.3f),
@@ -114,7 +114,8 @@ fun FMNewCreditCart(
 fun FMNewCreditCartPreview() {
     FMTheme {
         FMNewCreditCart(
-            uiState = PaymentContract.UiState()
+            uiState = PaymentContract.UiState(),
+            onAction = {}
         )
 
     }

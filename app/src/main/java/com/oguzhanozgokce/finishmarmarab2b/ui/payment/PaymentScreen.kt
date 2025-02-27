@@ -68,7 +68,8 @@ fun PaymentScreen(
         uiState.products.isEmpty() -> EmptyScreen()
         else -> PaymentContent(
             uiState = uiState,
-            onAction = onAction
+            onAction = onAction,
+            navAction = navAction
         )
     }
 }
@@ -76,7 +77,8 @@ fun PaymentScreen(
 @Composable
 fun PaymentContent(
     uiState: UiState,
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
+    navAction: PaymentNavAction
 ) {
     Scaffold(
         topBar = {
@@ -101,8 +103,11 @@ fun PaymentContent(
         ) {
             Spacer(modifier = Modifier.height(padding.dimension8))
             ProductsToBuy(basketProduct = uiState.products)
-            FMDeliveryAddress()
-            FMPaymentOptions()
+            FMDeliveryAddress(onAddClick = navAction.navigateToAddress)
+            FMPaymentOptions(
+                uiState = uiState,
+                onAction = onAction
+            )
         }
     }
 }
@@ -118,7 +123,8 @@ fun PaymentScreenPreview(
             uiEffect = emptyFlow(),
             onAction = {},
             navAction = PaymentNavAction(
-                navigateToBack = {}
+                navigateToBack = {},
+                navigateToAddress = {}
             )
         )
     }

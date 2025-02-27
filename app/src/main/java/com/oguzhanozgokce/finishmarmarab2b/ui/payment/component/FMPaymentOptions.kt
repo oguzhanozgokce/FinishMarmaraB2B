@@ -34,6 +34,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMPaymentOptions(
+    uiState: PaymentContract.UiState,
+    onAction: (PaymentContract.UiAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -124,7 +126,8 @@ fun FMPaymentOptions(
 
         if (showNewCreditCart) {
             FMNewCreditCart(
-                uiState = PaymentContract.UiState()
+                uiState = uiState,
+                onAction = onAction
             )
         }
     }
@@ -134,6 +137,9 @@ fun FMPaymentOptions(
 @Composable
 fun FMPaymentOptionsPreview() {
     FMTheme {
-        FMPaymentOptions()
+        FMPaymentOptions(
+            uiState = PaymentContract.UiState(),
+            onAction = {}
+        )
     }
 }

@@ -23,6 +23,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun FMDeliveryAddress(
     modifier: Modifier = Modifier,
+    onAddClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -53,7 +54,7 @@ fun FMDeliveryAddress(
                 )
             )
             TextButton(
-                onClick = { }
+                onClick = { onAddClick() }
             ) {
                 Text(
                     text = "Add",
@@ -85,6 +86,8 @@ data class FMAddress(
 @Composable
 fun FMDeliveryAddressPreview() {
     FMTheme {
-        FMDeliveryAddress()
+        FMDeliveryAddress(
+            onAddClick = {}
+        )
     }
 }

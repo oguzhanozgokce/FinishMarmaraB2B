@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,24 +40,22 @@ fun FMOutlineTextField(
         keyboardType = KeyboardType.Text
     ),
     indicatorsColor: Color = colors.primary.copy(alpha = 0.3f),
-    visualTransformation: VisualTransformation? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    readOnly: Boolean = false,
+    onClick: (() -> Unit)? = null
 ) {
     val containerColor =
         if (isError) colors.primary else colors.white
     val indicatorColor =
         if (isError) colors.red else indicatorsColor
 
-
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            leadingIcon = leadingIcon?.let {
-                { it() }
-            },
-            trailingIcon = trailingIcon?.let {
-                { it() }
-            },
+            readOnly = readOnly,
+            leadingIcon = leadingIcon?.let { { it() } },
+            trailingIcon = trailingIcon?.let { { it() } },
             label = {
                 if (label != null) {
                     Text(
@@ -65,9 +64,10 @@ fun FMOutlineTextField(
                     )
                 }
             },
-            visualTransformation = visualTransformation
-                ?: if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else visualTransformation,
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier),
             shape = RoundedCornerShape(padding.dimension8),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = containerColor,
@@ -95,9 +95,7 @@ fun FMOutlineTextField(
                 )
             )
         }
-
     }
-
 }
 
 @Preview(showBackground = true)

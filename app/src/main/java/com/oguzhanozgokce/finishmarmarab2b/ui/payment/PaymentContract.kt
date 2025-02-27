@@ -11,12 +11,20 @@ object PaymentContract {
         val showDialog: Boolean = false,
         val cities: List<City> = emptyList(),
         val districts: List<String> = emptyList(),
-        val errorMessage: String? = null
+        val errorMessage: String? = null,
+        val cardNumber: String = "",
+        val expirationDateValue: String = "",
+        val cvv: String = "",
+        val cardName: String = "",
     )
 
     sealed class UiAction {
         data object HideDialog : UiAction()
         data object ShowDialog : UiAction()
+        data class OnChangeCardNumber( val cardNumber: String) : UiAction()
+         data class OnChangeExpirationDate( val expirationDateValue: String) : UiAction()
+        data class OnChangeCvv( val cvv: String) : UiAction()
+        data class OnChangeCardName(val cardName: String) : UiAction()
     }
 
     sealed class UiEffect {

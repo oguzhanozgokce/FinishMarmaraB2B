@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
 @Composable
 fun FMNewCreditCart(
@@ -41,17 +42,17 @@ fun FMNewCreditCart(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .background(FMTheme.colors.background)
     ) {
         Text(
             text = "Card Number",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
-        OutlinedTextField(
+        FMOutlineTextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            indicatorsColor = colors.text.copy(alpha = 0.3f)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -62,10 +63,11 @@ fun FMNewCreditCart(
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
-        OutlinedTextField(
+        FMOutlineTextField(
             value = cardName,
             onValueChange = { cardName = it },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            indicatorsColor = colors.text.copy(alpha = 0.3f)
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -84,10 +86,9 @@ fun FMNewCreditCart(
                 )
                 Row {
 
-                    OutlinedTextField(
+                    FMOutlineTextField(
                         value = selectedMonth,
                         onValueChange = { selectedMonth = it },
-                        placeholder = { Text("Month") },
                         modifier = Modifier.weight(2.5f),
                         trailingIcon = {
                             IconButton(onClick = {}) {
@@ -97,15 +98,13 @@ fun FMNewCreditCart(
                                     tint = FMTheme.colors.lightGray
                                 )
                             }
-
-
-                        }
+                        },
+                        indicatorsColor = colors.text.copy(alpha = 0.3f)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    OutlinedTextField(
+                    FMOutlineTextField(
                         value = selectedYear,
                         onValueChange = { selectedYear = it },
-                        placeholder = { Text("Year") },
                         modifier = Modifier.weight(2.5f),
                         trailingIcon = {
                             IconButton(onClick = {}) {
@@ -115,7 +114,8 @@ fun FMNewCreditCart(
                                     tint = FMTheme.colors.lightGray
                                 )
                             }
-                        }
+                        },
+                        indicatorsColor = colors.text.copy(alpha = 0.3f)
                     )
                 }
             }
@@ -134,11 +134,11 @@ fun FMNewCreditCart(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    OutlinedTextField(
+                    FMOutlineTextField(
                         value = cvv,
                         onValueChange = { cvv = it },
-                        singleLine = true,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        indicatorsColor = colors.text.copy(alpha = 0.3f)
                     )
                     Icon(
                         imageVector = Icons.Default.Close,

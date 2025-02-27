@@ -27,7 +27,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMOutlineTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
+    label: String?= null,
     isPassword: Boolean = false,
     leadingIcon: (@Composable (() -> Unit))? = null,
     trailingIcon: (@Composable (() -> Unit))? = null,
@@ -38,7 +38,7 @@ fun FMOutlineTextField(
         imeAction = ImeAction.Next,
         keyboardType = KeyboardType.Text
     ),
-    indicatorsColor: Color = colors.primary.copy(alpha = 0.3f)
+    indicatorsColor: Color = colors.primary.copy(alpha = 0.3f),
 ) {
     val containerColor =
         if (isError) colors.primary else colors.white
@@ -56,10 +56,12 @@ fun FMOutlineTextField(
                 { it() }
             },
             label = {
-                Text(
-                    label,
-                    color = colors.black
-                )
+                if (label != null) {
+                    Text(
+                        label,
+                        color = colors.black
+                    )
+                }
             },
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             modifier = Modifier.fillMaxWidth(),

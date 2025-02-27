@@ -28,7 +28,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMOutlineTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
+    label: String? = null,
     isPassword: Boolean = false,
     leadingIcon: (@Composable (() -> Unit))? = null,
     trailingIcon: (@Composable (() -> Unit))? = null,
@@ -56,7 +56,14 @@ fun FMOutlineTextField(
             readOnly = readOnly,
             leadingIcon = leadingIcon?.let { { it() } },
             trailingIcon = trailingIcon?.let { { it() } },
-            label = { Text(label, color = colors.black) },
+            label = {
+                if (label != null) {
+                    Text(
+                        label,
+                        color = colors.black
+                    )
+                }
+            },
             visualTransformation = if (isPassword) PasswordVisualTransformation() else visualTransformation,
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +75,9 @@ fun FMOutlineTextField(
                 focusedIndicatorColor = indicatorColor,
                 unfocusedIndicatorColor = indicatorColor,
                 focusedTextColor = colors.black,
-                unfocusedTextColor = colors.black
+                unfocusedTextColor = colors.black,
+                focusedPlaceholderColor = colors.black,
+                unfocusedPlaceholderColor = colors.black,
             ),
             isError = isError,
             singleLine = true,

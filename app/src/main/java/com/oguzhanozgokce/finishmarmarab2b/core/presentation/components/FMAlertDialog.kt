@@ -18,7 +18,7 @@ import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 
 @Composable
-fun CustomAlertDialog(
+fun FMAlertDialog(
     errorMessage: String,
     onDismiss: () -> Unit,
     confirmButtonClickListener: (() -> Unit)? = null
@@ -65,8 +65,8 @@ fun CustomAlertDialog(
 
 @Preview(showBackground = true)
 @Composable
-fun CustomAlertDialogPreview() {
-    CustomAlertDialog(
+fun FMAlertDialogPreview() {
+    FMAlertDialog(
         errorMessage = "email_format_error",
         onDismiss = {},
         confirmButtonClickListener = {}

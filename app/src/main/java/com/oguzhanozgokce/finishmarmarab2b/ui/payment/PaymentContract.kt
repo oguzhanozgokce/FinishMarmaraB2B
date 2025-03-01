@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
@@ -11,6 +12,7 @@ object PaymentContract {
         val showDialog: Boolean = false,
         val cities: List<Province> = emptyList(),
         val districts: List<String> = emptyList(),
+        val addressList: List<Address> = emptyList(),
         val errorMessage: String? = null,
         val cardNumber: String = "",
         val expirationDateValue: String = "",

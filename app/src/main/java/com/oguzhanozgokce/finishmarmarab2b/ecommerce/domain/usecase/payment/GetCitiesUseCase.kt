@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment// package: com.example.myapp.domain.usecase
+package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment // package: com.example.myapp.domain.usecase
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province

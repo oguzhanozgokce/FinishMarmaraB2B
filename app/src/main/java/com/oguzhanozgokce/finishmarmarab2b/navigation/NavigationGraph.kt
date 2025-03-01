@@ -109,7 +109,8 @@ fun NavigationGraph(
             )
             address(
                 navAction = AddressNavAction(
-                    navigateToBack = { navController.navigateUp() }
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToPayment = { navController.navigateClearingStack(Payment, Address) }
                 )
             )
             detail(

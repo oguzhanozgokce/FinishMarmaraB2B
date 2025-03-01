@@ -1,6 +1,10 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,9 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,10 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIcon
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -38,9 +40,7 @@ fun FMPaymentOptions(
     onAction: (PaymentContract.UiAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isExpanded by remember { mutableStateOf(false) }
     var showNewCreditCart by remember { mutableStateOf(false) }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -58,59 +58,36 @@ fun FMPaymentOptions(
                 .padding(top = padding.dimension8),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-        )
-        {
+        ) {
             Text(
                 modifier = Modifier.padding(bottom = padding.dimension8),
-                text = "Card Information",
+                text = stringResource(R.string.card_information),
                 style = FMTheme.typography.titleMediumMedium().copy(
                     fontSize = FMTheme.fontSize.mediumSmall
                 )
             )
             Text(
                 modifier = Modifier
-                    .clickable { showNewCreditCart = true }
+                    .clickable { showNewCreditCart = !showNewCreditCart }
                     .padding(bottom = padding.dimension8),
-                text = "Pay With Another Card",
+                text = if (showNewCreditCart) {
+                    stringResource(R.string.pay_with_another_card)
+                } else {
+                    stringResource(
+                        R.string.pay_with_saved_cards
+                    )
+                },
                 style = FMTheme.typography.titleMediumMedium().copy(
                     fontSize = FMTheme.fontSize.small,
                     color = colors.button
                 )
             )
         }
-
         FMHorizontalDivider()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = padding.dimension8),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Pay by Debit & Credit Card",
-                style = FMTheme.typography.titleMediumMedium().copy(
-                    fontSize = FMTheme.fontSize.small
-                )
-            )
-            FMIcon(
-                backgroundColor = colors.lightGray.copy(alpha = 0.2f),
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowDown,
-                        contentDescription = "",
-                        tint = colors.black
-                    )
-                },
-                boxSize = padding.dimension36,
-                onClick = { isExpanded = !isExpanded }
-            )
-        }
-
         AnimatedVisibility(
-            visible = isExpanded,
-            modifier = Modifier
-                .fillMaxWidth()
+            visible = !showNewCreditCart,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
         ) {
             LazyRow(
                 modifier = Modifier
@@ -124,7 +101,11 @@ fun FMPaymentOptions(
             }
         }
 
-        if (showNewCreditCart) {
+        AnimatedVisibility(
+            visible = showNewCreditCart,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
             FMNewCreditCart(
                 uiState = uiState,
                 onAction = onAction

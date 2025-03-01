@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.address
 
-import AddressScreen
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -9,7 +8,8 @@ import androidx.navigation.compose.composable
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 
 data class AddressNavAction(
-    val navigateToBack: () -> Unit
+    val navigateToBack: () -> Unit,
+    val navigateToPayment: () -> Unit
 )
 
 fun NavGraphBuilder.address(

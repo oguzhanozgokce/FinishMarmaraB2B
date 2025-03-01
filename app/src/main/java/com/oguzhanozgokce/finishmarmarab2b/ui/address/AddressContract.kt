@@ -28,11 +28,13 @@ object AddressContract {
         data class OnOpenAddressChanged(val openAddress: String) : UiAction()
         data class OnAddressTitleChanged(val addressTitle: String) : UiAction()
         data class OnPhoneNumberChanged(val phoneNumber: String) : UiAction()
+        data object SaveAddress : UiAction()
         data object LoadProvinces : UiAction()
         data object LoadCities : UiAction()
     }
 
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()
+        data object NavigateToPayment : UiEffect()
     }
 }

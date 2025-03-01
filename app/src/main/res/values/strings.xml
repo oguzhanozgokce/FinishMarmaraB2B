@@ -29,4 +29,26 @@
     <string name="payment">Payment</string>
     <string name="back">Back</string>
     <string name="cart_icon">Cart Icon</string>
+    <string name="card_information">Card Information</string>
+    <string name="pay_with_another_card">Pay With My Saved Cards</string>
+    <string name="pay_with_saved_cards">Pay With Another Card</string>
+    <string name="info">Info</string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="phone">Phone</string>
+    <string name="address_details">Address Details</string>
+    <string name="province">Province</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="address_usage_info">This address you will add is only valid for purchases in the App. The application will not be displayed in Food or Market.</string>
+    <string name="address_info">In order for your parcel to reach you safely, you must fill in the neighbourhood, street, street, building and floor information completely.</string>
+    <string name="apartment">Apartment</string>
+    <string name="address_title">Address Title</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_all_products_confirmation">Are you sure you want to delete all products from the basket?</string>
 </resources>

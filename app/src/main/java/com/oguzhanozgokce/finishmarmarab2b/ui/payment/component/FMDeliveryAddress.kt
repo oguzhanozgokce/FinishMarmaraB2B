@@ -15,13 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun FMDeliveryAddress(
+    uiState: PaymentContract.UiState,
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit
 ) {
@@ -68,26 +69,18 @@ fun FMDeliveryAddress(
         FMHorizontalDivider()
         FMAddressList(
             modifier = Modifier.padding(top = padding.dimension8),
-            addresses = PreviewMockData.addressList
+            addresses = uiState.addressList
         )
     }
 }
-
-data class FMAddress(
-    val title: String,
-    val city: String,
-    val district: String,
-    val street: String,
-    val addressInfo: String,
-    val phoneNumber: String
-)
 
 @Preview(showBackground = true)
 @Composable
 fun FMDeliveryAddressPreview() {
     FMTheme {
         FMDeliveryAddress(
-            onAddClick = {}
+            onAddClick = {},
+            uiState = PaymentContract.UiState()
         )
     }
 }

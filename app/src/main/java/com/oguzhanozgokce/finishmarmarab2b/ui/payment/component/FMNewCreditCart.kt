@@ -34,7 +34,7 @@ fun FMNewCreditCart(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
         FMOutlineTextField(
             value = uiState.cardName,
@@ -85,7 +85,7 @@ fun FMNewCreditCart(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     FMOutlineTextField(
-                        value = uiState.cvv.toString(),
+                        value = uiState.cvv,
                         onValueChange = { onAction(PaymentContract.UiAction.OnChangeCvv(it)) },
                         modifier = Modifier.weight(1f),
                         indicatorsColor = colors.text.copy(alpha = 0.3f),
@@ -108,7 +108,6 @@ fun FMNewCreditCart(
     }
 }
 
-
 @Preview
 @Composable
 fun FMNewCreditCartPreview() {
@@ -117,6 +116,5 @@ fun FMNewCreditCartPreview() {
             uiState = PaymentContract.UiState(),
             onAction = {}
         )
-
     }
 }

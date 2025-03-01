@@ -16,7 +16,6 @@ fun FMPhoneTextField(
     isError: Boolean = false,
     errorMessage: String? = null
 ) {
-
     FMOutlineTextField(
         value = phoneNumber,
         onValueChange = {

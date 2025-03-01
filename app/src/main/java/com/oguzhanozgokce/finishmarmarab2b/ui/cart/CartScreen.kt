@@ -7,8 +7,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMConfirmDialog
@@ -46,10 +48,10 @@ fun CartScreen(
             onAction(UiAction.DeleteBasketAll)
             onAction(UiAction.HideDialog)
         },
-        title = "Delete All",
-        description = "Are you sure you want to delete all products from the basket?",
-        confirmText = "Delete",
-        dismissText = "Cancel"
+        title = stringResource(R.string.delete_all),
+        description = stringResource(R.string.delete_all_products_confirmation),
+        confirmText = stringResource(R.string.delete),
+        dismissText = stringResource(R.string.cancel)
     )
 
     when {

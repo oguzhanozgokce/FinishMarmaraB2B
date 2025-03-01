@@ -29,8 +29,8 @@ import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
@@ -72,7 +72,7 @@ fun SignupScreen(
     }
 
     if (alertDialogState) {
-        CustomAlertDialog(
+        FMAlertDialog(
             errorMessage = uiState.error,
             onDismiss = { alertDialogState = false },
             confirmButtonClickListener = {

@@ -45,7 +45,6 @@ fun PaymentProduct(
             )
             .padding(padding.dimension8)
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

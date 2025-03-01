@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,10 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.formatPhoneNumber
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -36,7 +37,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun FMAddressItem(
     modifier: Modifier = Modifier,
-    address: FMAddress
+    address: Address
 ) {
     var isSelected by remember { mutableStateOf(false) }
     FMCard(
@@ -52,7 +53,7 @@ fun FMAddressItem(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(
                     start = padding.dimension8,
                     end = padding.dimension8,
@@ -74,10 +75,8 @@ fun FMAddressItem(
                 )
                 Text(
                     modifier = Modifier,
-                    text = address.title,
-                    style = FMTheme.typography.titleSmallMedium().copy(
-                        color = colors.primary
-                    ),
+                    text = address.addressTitle,
+                    style = FMTheme.typography.titleMediumMedium().copy(color = colors.primary),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -94,31 +93,24 @@ fun FMAddressItem(
                 }
             }
             Text(
-                text = "${address.city} / ${address.district}",
+                text = "${address.province} / ${address.city}",
                 style = FMTheme.typography.titleMediumMedium().copy(
-                    fontSize = FMTheme.fontSize.small
+                    fontSize = FMTheme.fontSize.mediumSmall
                 )
             )
             Text(
-                text = address.street,
-                style = FMTheme.typography.titleMediumMedium().copy(
-                    fontSize = FMTheme.fontSize.small
-                )
-            )
-            Text(
-                text = address.addressInfo,
-                style = FMTheme.typography.titleMediumMedium().copy(
-                    fontSize = 10.sp
-                ),
-                maxLines = 1,
+                text = address.openAddress,
+                style = FMTheme.typography.titleSmallMedium(),
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
+            Spacer(modifier = Modifier.weight(1f))
             Text(
-                modifier = Modifier.align(Alignment.End),
-                text = address.phoneNumber.formatPhoneNumber(),
-                style = FMTheme.typography.titleMediumMedium().copy(
-                    fontSize = 10.sp
-                )
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(bottom = padding.dimension8, end = padding.dimension8),
+                text = address.addressTel.formatPhoneNumber(),
+                style = FMTheme.typography.titleSmallMedium()
             )
         }
     }
@@ -127,7 +119,7 @@ fun FMAddressItem(
 @Composable
 fun FMAddressList(
     modifier: Modifier = Modifier,
-    addresses: List<FMAddress>
+    addresses: List<Address>
 ) {
     LazyRow(
         modifier = modifier,
@@ -144,13 +136,15 @@ fun FMAddressList(
 fun FMAddressCardPreview() {
     FMTheme {
         FMAddressItem(
-            address = FMAddress(
-                title = "Home",
-                city = "İstanbul",
-                district = "Beşiktaş",
-                street = "Şimalılar",
-                addressInfo = "419. Sokak No:6, Daire:12 Beşiktaş İstanbul asdfasdfasdfasdfasfasdfasdfasdfas",
-                phoneNumber = "1234567890"
+            address = Address(
+                addressTitle = "Home",
+                province = "İstanbul",
+                city = "Beşiktaş",
+                openAddress = "419. Sokak No:6, Daire:12 Beşiktaş İstanbul asdfasdfasdfasdfasfasdfasdfasdfas",
+                addressTel = "1234567890",
+                id = 1,
+                userId = 6,
+                nameSurname = "Test Name"
             )
         )
     }

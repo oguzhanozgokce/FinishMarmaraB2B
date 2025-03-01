@@ -18,4 +18,6 @@ object ApiRoutes {
     const val GET_BASKET = "/api/Basket/{user_id}"
     const val DELETE_BASKET = "/api/Basket/{user_id}/{product_id}"
     const val DELETE_BASKET_ALL = "/api/Basket/delete-all/{user_id}"
+    const val POST_SAVE_ADDRESS = "/api/Location"
+    const val GET_LOCATIONS = "/api/Location/{user_id}"
 }

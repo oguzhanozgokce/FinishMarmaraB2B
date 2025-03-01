@@ -7,6 +7,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_LOCATIONS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DETAIL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP5
@@ -15,6 +16,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_SAVE_ADDRESS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
@@ -24,6 +26,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Ques
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
@@ -31,6 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.BasketData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostBasketResponse
@@ -145,4 +149,14 @@ interface ApiService {
     suspend fun deleteBasketAll(
         @Path("user_id") userId: Int,
     ): Response<ApiResponse<Unit>>
+
+    @POST(POST_SAVE_ADDRESS)
+    suspend fun saveAddress(
+        @Body request: SaveLocationRequest
+    ): Response<ApiResponse<Unit>>
+
+    @GET(GET_LOCATIONS)
+    suspend fun getLocations(
+        @Path("user_id") userId: Int,
+    ): Response<ApiResponse<GetLocationResponse>>
 }

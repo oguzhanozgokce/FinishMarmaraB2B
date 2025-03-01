@@ -35,6 +35,12 @@ fun NavController.navigateTopSingle(
 ) {
     val defaultNavOptionsBuilder = NavOptions.Builder()
         .setLaunchSingleTop(true)
+        .setPopUpTo(
+            graph.findStartDestination().id,
+            inclusive = false,
+            saveState = true
+        ) // Stack temizliği
+        .setRestoreState(true)
 
     navOptions?.let { userNavOptions ->
         defaultNavOptionsBuilder.apply {
@@ -43,12 +49,14 @@ fun NavController.navigateTopSingle(
             setPopEnterAnim(userNavOptions.popEnterAnim)
             setPopExitAnim(userNavOptions.popExitAnim)
             setLaunchSingleTop(userNavOptions.shouldLaunchSingleTop())
-            setPopUpTo(userNavOptions.popUpToId, userNavOptions.isPopUpToInclusive())
-            setLaunchSingleTop(userNavOptions.shouldLaunchSingleTop())
             setRestoreState(userNavOptions.shouldRestoreState())
         }
     }
-    return navigate(route, defaultNavOptionsBuilder.build(), navigatorExtras)
+
+    val currentRoute = currentBackStackEntry?.destination?.route
+    if (currentRoute != route) {
+        navigate(route, defaultNavOptionsBuilder.build(), navigatorExtras)
+    }
 }
 
 @Composable
@@ -100,10 +108,15 @@ fun FMBottomBar(
                         destination.screen
                     ),
                     onClick = {
-                        navController.navigateTopSingle(
-                            Screen.getRoute(destination.screen),
-                            defaultNavOptionsBuilder().build()
-                        )
+                        val currentRoute = navController.currentBackStackEntry?.destination?.route
+                        val targetRoute = Screen.getRoute(destination.screen)
+
+                        if (currentRoute != targetRoute) {
+                            navController.navigateTopSingle(
+                                targetRoute,
+                                defaultNavOptionsBuilder().build()
+                            )
+                        }
                     },
                     enabled = currentDestination?.destination?.route != Screen.getRoute(destination.screen),
                     colors = NavigationBarItemDefaults.colors(

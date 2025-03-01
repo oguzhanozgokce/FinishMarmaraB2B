@@ -3,8 +3,10 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.address
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetCitiesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetDistrictsForCityUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.PostSaveLocationUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiState
@@ -16,19 +18,23 @@ import javax.inject.Inject
 class AddressViewModel @Inject constructor(
     private val getCitiesUseCase: GetCitiesUseCase,
     private val getDistrictForCityUseCase: GetDistrictsForCityUseCase,
+    private val saveLocationUseCase: PostSaveLocationUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
-
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
             is UiAction.ProvinceSelected -> {
-                updateState { copy() }
+                updateState {
+                    copy(
+                        selectedProvince = uiAction.selectedProvince,
+                        selectedCity = "",
+                        cities = emptyList()
+                    )
+                }
+                loadCityForProvince(uiAction.selectedProvince.name)
             }
 
-            is UiAction.CitySelected -> {
-                updateState { copy(city = uiAction.selectedCity) }
-            }
-
+            is UiAction.CitySelected -> updateState { copy(selectedCity = uiAction.selectedCity) }
             is UiAction.OnNameChanged -> updateState { copy(addressName = uiAction.name) }
             is UiAction.OnSurnameChanged -> updateState { copy(addressSurname = uiAction.surname) }
             is UiAction.OnOpenAddressChanged -> updateState { copy(openAddress = uiAction.openAddress) }
@@ -36,6 +42,7 @@ class AddressViewModel @Inject constructor(
             is UiAction.OnPhoneNumberChanged -> updateState { copy(addressTel = uiAction.phoneNumber) }
             is UiAction.LoadProvinces -> loadProvinces()
             is UiAction.LoadCities -> loadProvinces()
+            is UiAction.SaveAddress -> saveAddress()
         }
     }
 
@@ -59,7 +66,6 @@ class AddressViewModel @Inject constructor(
         }
     }
 
-
     private fun loadCityForProvince(provinceName: String) {
         updateState { copy(isLoading = true, cities = emptyList()) }
         viewModelScope.launch {
@@ -74,5 +80,43 @@ class AddressViewModel @Inject constructor(
             )
         }
     }
-}
 
+    private fun saveAddress() {
+        val address = SaveLocationRequest(
+            province = currentState.selectedProvince?.name,
+            city = currentState.selectedCity,
+            openAddress = currentState.openAddress,
+            addressTitle = currentState.addressTitle,
+            addressTel = currentState.addressTel,
+            nameSurname = "${currentState.addressName} ${currentState.addressSurname}"
+        )
+        viewModelScope.launch {
+            saveLocationUseCase(address).fold(
+                onSuccess = {
+                    emitUiEffect(UiEffect.ShowToast("Success"))
+                    resetState()
+                    emitUiEffect(UiEffect.NavigateToPayment)
+                },
+                onError = { error ->
+                    updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun resetState() {
+        updateState {
+            copy(
+                selectedProvince = null,
+                selectedCity = "",
+                cities = emptyList(),
+                addressName = "",
+                addressSurname = "",
+                openAddress = "",
+                addressTitle = "",
+                addressTel = "",
+            )
+        }
+    }
+}

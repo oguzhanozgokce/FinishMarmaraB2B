@@ -103,7 +103,10 @@ fun PaymentContent(
         ) {
             Spacer(modifier = Modifier.height(padding.dimension8))
             ProductsToBuy(basketProduct = uiState.products)
-            FMDeliveryAddress(onAddClick = navAction.navigateToAddress)
+            FMDeliveryAddress(
+                onAddClick = navAction.navigateToAddress,
+                uiState = uiState
+            )
             FMPaymentOptions(
                 uiState = uiState,
                 onAction = onAction

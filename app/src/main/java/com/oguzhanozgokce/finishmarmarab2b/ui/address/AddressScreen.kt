@@ -1,3 +1,5 @@
+package com.oguzhanozgokce.finishmarmarab2b.ui.address
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,15 +47,13 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLife
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCitiesBottomSheetContent
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMClickableOutlinedRow
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMPhoneTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProvincesBottomSheetContent
-import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract
-import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
@@ -75,6 +75,7 @@ fun AddressScreen(
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is AddressContract.UiEffect.ShowToast -> context.showToast(effect.message)
+            is AddressContract.UiEffect.NavigateToPayment -> navAction.navigateToPayment()
         }
     }
 
@@ -106,8 +107,14 @@ fun AddressScreen(
 
     AddressScreenContent(
         uiState = uiState,
-        onNavigationCitiesBottomSheet = { showProvincesBottomSheet = true },
-        onNavigationDistrictsBottomSheet = { showCitiesBottomSheet = true },
+        onNavigationCitiesBottomSheet = {
+            onAction(AddressContract.UiAction.LoadProvinces)
+            showProvincesBottomSheet = true
+        },
+        onNavigationDistrictsBottomSheet = {
+            onAction(AddressContract.UiAction.LoadCities)
+            showCitiesBottomSheet = true
+        },
         navAction = navAction,
         onAction = onAction
     )
@@ -187,9 +194,7 @@ fun AddressScreenContent(
                     vertical = padding.dimension8
                 ),
                 text = "Contact Details",
-                style = typography.titleMediumMedium().copy(
-                    fontSize = fontSize.mediumSmall
-                )
+                style = typography.titleMediumMedium()
             )
             FMHorizontalDivider(modifier = Modifier.padding(horizontal = padding.dimension16))
             Spacer(modifier = Modifier.height(padding.dimension8))
@@ -208,7 +213,7 @@ fun AddressScreenContent(
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressName,
-                    onValueChange = {},
+                    onValueChange = { onAction(AddressContract.UiAction.OnNameChanged(it)) },
                     label = "Name",
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
@@ -223,7 +228,7 @@ fun AddressScreenContent(
                 Spacer(modifier = Modifier.size(padding.dimension40))
                 FMOutlineTextField(
                     value = uiState.addressSurname,
-                    onValueChange = {},
+                    onValueChange = { onAction(AddressContract.UiAction.OnSurnameChanged(it)) },
                     label = "Surname",
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
@@ -284,73 +289,32 @@ fun AddressScreenContent(
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
-                FMOutlineTextField(
+                FMClickableOutlinedRow(
                     modifier = Modifier.weight(1f),
-                    value = uiState.province,
-                    onValueChange = {},
                     label = "Province",
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Select Province"
-                        )
-                    },
-                    readOnly = true,
-                    onClick = {
-                        onAction(AddressContract.UiAction.LoadProvinces)
-                        onNavigationCitiesBottomSheet()
-                    },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    value = uiState.selectedProvince?.name ?: "",
+                    icon = Icons.Default.ArrowDropDown,
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
+                    onClick = { onNavigationCitiesBottomSheet() }
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
-                FMOutlineTextField(
+                FMClickableOutlinedRow(
                     modifier = Modifier.weight(1f),
-                    value = uiState.city,
-                    onValueChange = {},
                     label = "City",
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Select City"
-                        )
-                    },
-                    onClick = {
-                        onAction(AddressContract.UiAction.LoadCities)
-                        onNavigationDistrictsBottomSheet()
-                    },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f)
+                    value = uiState.selectedCity,
+                    icon = Icons.Default.ArrowDropDown,
+                    indicatorsColor = colors.text.copy(alpha = 0.3f),
+                    onClick = { onNavigationDistrictsBottomSheet() }
                 )
             }
-
-            Spacer(modifier = Modifier.height(padding.dimension8))
-
-            FMOutlineTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 56.dp, end = 16.dp),
-                value = uiState.openAddress,
-                onValueChange = { },
-                label = "Neighbourhood",
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Select Neighbourhood"
-                    )
-                },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                indicatorsColor = colors.text.copy(alpha = 0.3f)
-            )
-
             Spacer(modifier = Modifier.height(padding.dimension8))
 
             FMOutlineTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = padding.dimension56, end = padding.dimension16),
-                value = uiState.addressName,
-                onValueChange = {},
+                value = uiState.openAddress,
+                onValueChange = { onAction(AddressContract.UiAction.OnOpenAddressChanged(it)) },
                 label = "Address",
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 indicatorsColor = colors.text.copy(alpha = 0.3f)
@@ -383,7 +347,7 @@ fun AddressScreenContent(
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressTitle,
-                    onValueChange = {},
+                    onValueChange = { onAction(AddressContract.UiAction.OnAddressTitleChanged(it)) },
                     label = "Address Title",
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
@@ -392,18 +356,20 @@ fun AddressScreenContent(
             Spacer(modifier = Modifier.height(padding.dimension16))
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
-        FMButton(
-            text = "Save",
-            onClick = { /*TODO*/ },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = padding.dimension16,
-                    end = padding.dimension16,
-                    bottom = padding.dimension8
-                )
-                .align(Alignment.End),
-        )
+                .fillMaxSize()
+                .background(colors.white),
+        ) {
+            FMButton(
+                text = "Save",
+                onClick = { onAction(AddressContract.UiAction.SaveAddress) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(padding.dimension16)
+                    .align(Alignment.End),
+            )
+        }
     }
 }
 
@@ -418,7 +384,7 @@ fun AddressScreenPreview() {
             uiState = AddressContract.UiState(),
             uiEffect = emptyFlow(),
             onAction = {},
-            navAction = AddressNavAction {}
+            navAction = AddressNavAction({}, {})
         )
     }
 } 

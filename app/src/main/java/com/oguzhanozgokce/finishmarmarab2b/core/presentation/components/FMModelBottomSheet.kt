@@ -60,7 +60,7 @@ fun FMProvincesBottomSheetContent(
     sheetState: SheetState,
     onDismissRequest: () -> Unit,
     provinces: List<Province>,
-    selectedProvince: Province?, // Seçili ili dışarıdan alıyoruz
+    selectedProvince: Province?,
     onProvinceSelected: (Province) -> Unit
 ) {
     FMModelBottomSheet(
@@ -91,7 +91,6 @@ fun FMProvincesBottomSheetContent(
         }
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -169,7 +168,6 @@ fun CityItem(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun PreviewFMCitiesBottomSheetContent() {
-
     val fakeSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     FMTheme {
@@ -185,12 +183,10 @@ fun PreviewFMCitiesBottomSheetContent() {
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun PreviewFMDistrictsBottomSheetContent() {
-
     val fakeSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     FMTheme {

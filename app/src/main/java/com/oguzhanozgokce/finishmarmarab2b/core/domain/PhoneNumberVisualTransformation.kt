@@ -29,6 +29,3 @@ fun formatPhoneNumberMask(input: String): String {
         repeat(2) { i -> append(trimmed.getOrNull(i + 8) ?: ' ') }
     }
 }
-
-
-

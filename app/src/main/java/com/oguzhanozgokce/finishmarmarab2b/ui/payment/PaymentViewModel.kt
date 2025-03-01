@@ -5,6 +5,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetCitiesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetDistrictsForCityUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetUserLocationsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetBasketProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiEffect
@@ -18,10 +19,12 @@ class PaymentViewModel @Inject constructor(
     private val getBasketProductsUseCase: GetBasketProductsUseCase,
     private val getCitiesUseCase: GetCitiesUseCase,
     private val getDistrictsForCityUseCase: GetDistrictsForCityUseCase,
+    private val getUserLocationsUseCase: GetUserLocationsUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
         getBasketProducts()
+        getUserLocations()
     }
 
     override fun onAction(uiAction: UiAction) {
@@ -33,7 +36,9 @@ class PaymentViewModel @Inject constructor(
                 updateState { copy(cardName = uiAction.cardName) }
             }
 
-            is UiAction.OnChangeExpirationDate -> updateState { copy(expirationDateValue = uiAction.expirationDateValue) }
+            is UiAction.OnChangeExpirationDate -> updateState { copy(
+                expirationDateValue = uiAction.expirationDateValue
+            ) }
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }
     }
@@ -84,6 +89,20 @@ class PaymentViewModel @Inject constructor(
             getDistrictsForCityUseCase(cityName).fold(
                 onSuccess = { districts ->
                     updateState { copy(districts = districts, isLoading = false) }
+                },
+                onError = { error ->
+                    updateState { copy(isLoading = false, errorMessage = error) }
+                }
+            )
+        }
+    }
+
+    private fun getUserLocations() {
+        updateState { copy(isLoading = true) }
+        viewModelScope.launch {
+            getUserLocationsUseCase().fold(
+                onSuccess = { addressList ->
+                    updateState { copy(addressList = addressList, isLoading = false) }
                 },
                 onError = { error ->
                     updateState { copy(isLoading = false, errorMessage = error) }

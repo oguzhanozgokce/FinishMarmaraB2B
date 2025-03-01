@@ -58,8 +58,7 @@ fun FMPaymentOptions(
                 .padding(top = padding.dimension8),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-        )
-        {
+        ) {
             Text(
                 modifier = Modifier.padding(bottom = padding.dimension8),
                 text = "Card Information",

@@ -108,7 +108,6 @@ fun FMNewCreditCart(
     }
 }
 
-
 @Preview
 @Composable
 fun FMNewCreditCartPreview() {
@@ -117,6 +116,5 @@ fun FMNewCreditCartPreview() {
             uiState = PaymentContract.UiState(),
             onAction = {}
         )
-
     }
 }

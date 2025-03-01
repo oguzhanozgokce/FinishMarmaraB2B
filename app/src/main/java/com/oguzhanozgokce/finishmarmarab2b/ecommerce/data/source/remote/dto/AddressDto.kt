@@ -11,14 +11,12 @@ data class AddressDto(
     val province: String? = null,
     @SerializedName("city")
     val city: String? = null,
-    @SerializedName("open_address")
+    @SerializedName("open_Address")
     val openAddress: String? = null,
-    @SerializedName("address_tel")
+    @SerializedName("address_Tel")
     val addressTel: String? = null,
-    @SerializedName("address_title")
+    @SerializedName("address_Title")
     val addressTitle: String? = null,
-    @SerializedName("address_name")
-    val addressName: String? = null,
-    @SerializedName("address_surname")
-    val addressSurname: String? = null
+    @SerializedName("location_name_surname")
+    val nameSurname: String? = null,
 )

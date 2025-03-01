@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -139,12 +140,17 @@ fun AddressScreenContent(
             shadowElevation = 4.dp
         ) {
             TopAppBar(
-                title = { Text("Add New Address", style = typography.titleMediumMedium()) },
+                title = {
+                    Text(
+                        text = stringResource(R.string.add_new_address),
+                        style = typography.titleMediumMedium()
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navAction.navigateToBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
@@ -166,7 +172,7 @@ fun AddressScreenContent(
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_info),
-                contentDescription = "Info",
+                contentDescription = stringResource(R.string.info),
                 modifier = Modifier
                     .padding(start = padding.dimension4)
                     .size(padding.dimension16),
@@ -174,7 +180,7 @@ fun AddressScreenContent(
             )
             Spacer(modifier = Modifier.width(padding.dimension8))
             Text(
-                text = "This address you will add is only valid for purchases in the App. The application will not be displayed in Food or Market.",
+                text = stringResource(R.string.address_usage_info),
                 style = typography.bodySmallNormal().copy(
                     color = colors.primary.copy(alpha = 0.7f)
                 )
@@ -193,7 +199,7 @@ fun AddressScreenContent(
                     horizontal = padding.dimension16,
                     vertical = padding.dimension8
                 ),
-                text = "Contact Details",
+                text = stringResource(R.string.contact_details),
                 style = typography.titleMediumMedium()
             )
             FMHorizontalDivider(modifier = Modifier.padding(horizontal = padding.dimension16))
@@ -207,14 +213,14 @@ fun AddressScreenContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "Name",
+                    contentDescription = stringResource(R.string.name),
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressName,
                     onValueChange = { onAction(AddressContract.UiAction.OnNameChanged(it)) },
-                    label = "Name",
+                    label = stringResource(R.string.name),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
             }
@@ -229,7 +235,7 @@ fun AddressScreenContent(
                 FMOutlineTextField(
                     value = uiState.addressSurname,
                     onValueChange = { onAction(AddressContract.UiAction.OnSurnameChanged(it)) },
-                    label = "Surname",
+                    label = stringResource(R.string.surname),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
             }
@@ -242,7 +248,7 @@ fun AddressScreenContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Phone,
-                    contentDescription = "Phone",
+                    contentDescription = stringResource(R.string.phone),
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
@@ -269,7 +275,7 @@ fun AddressScreenContent(
                 .background(colors.white),
         ) {
             Text(
-                text = "Address Details",
+                text = stringResource(R.string.address_details),
                 style = typography.titleMediumMedium(),
                 modifier = Modifier
                     .padding(horizontal = padding.dimension16, vertical = padding.dimension8)
@@ -285,13 +291,13 @@ fun AddressScreenContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Place,
-                    contentDescription = "Province",
+                    contentDescription = stringResource(R.string.province),
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMClickableOutlinedRow(
                     modifier = Modifier.weight(1f),
-                    label = "Province",
+                    label = stringResource(R.string.province),
                     value = uiState.selectedProvince?.name ?: "",
                     icon = Icons.Default.ArrowDropDown,
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
@@ -300,7 +306,7 @@ fun AddressScreenContent(
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMClickableOutlinedRow(
                     modifier = Modifier.weight(1f),
-                    label = "City",
+                    label = stringResource(R.string.city),
                     value = uiState.selectedCity,
                     icon = Icons.Default.ArrowDropDown,
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
@@ -315,13 +321,13 @@ fun AddressScreenContent(
                     .padding(start = padding.dimension56, end = padding.dimension16),
                 value = uiState.openAddress,
                 onValueChange = { onAction(AddressContract.UiAction.OnOpenAddressChanged(it)) },
-                label = "Address",
+                label = stringResource(R.string.address),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 indicatorsColor = colors.text.copy(alpha = 0.3f)
             )
             Spacer(modifier = Modifier.height(padding.dimension4))
             Text(
-                text = "In order for your parcel to reach you safely, you must fill in the neighbourhood, street, street, building and floor information completely.",
+                text = stringResource(R.string.address_info),
                 style = typography.bodySmallNormal().copy(
                     color = colors.text.copy(alpha = 0.5f)
                 ),
@@ -341,14 +347,14 @@ fun AddressScreenContent(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_apartment),
-                    contentDescription = "Apartment",
+                    contentDescription = stringResource(R.string.apartment),
                     modifier = Modifier.size(padding.dimension32)
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressTitle,
                     onValueChange = { onAction(AddressContract.UiAction.OnAddressTitleChanged(it)) },
-                    label = "Address Title",
+                    label = stringResource(R.string.address_title),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
                 )
@@ -362,7 +368,7 @@ fun AddressScreenContent(
                 .background(colors.white),
         ) {
             FMButton(
-                text = "Save",
+                text = stringResource(R.string.save),
                 onClick = { onAction(AddressContract.UiAction.SaveAddress) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -387,4 +393,4 @@ fun AddressScreenPreview() {
             navAction = AddressNavAction({}, {})
         )
     }
-} 
+}

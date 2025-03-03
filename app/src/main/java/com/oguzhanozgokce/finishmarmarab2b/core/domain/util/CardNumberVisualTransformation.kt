@@ -7,18 +7,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 object CardNumberVisualTransformation {
     val cardNumberVisualTransformation = VisualTransformation { text ->
-        val digits = text.text
+        val digits = text.text.filter { it.isDigit() }.take(16)
         val builder = AnnotatedString.Builder()
         val mapping = mutableListOf<Int>()
-        var transformedIndex = 0
-        for ((index, char) in digits.withIndex()) {
-            if (index > 0 && index % 4 == 0) {
+        var digitCount = 0
+
+        for (char in digits) {
+            if (digitCount > 0 && digitCount % 4 == 0) {
                 builder.append(' ')
-                transformedIndex++
             }
-            builder.append(char)
-            mapping.add(transformedIndex)
-            transformedIndex++
+            if (digitCount < 16) {
+                builder.append(char)
+                mapping.add(builder.length - 1)
+                digitCount++
+            }
         }
 
         val outString = builder.toAnnotatedString()

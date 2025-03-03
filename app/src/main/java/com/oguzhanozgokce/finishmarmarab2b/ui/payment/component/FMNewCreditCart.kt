@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CardNumberVisualTransformation.cardNumberVisualTransformation
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CvvVisualTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.VisualTransformations.expirationDateTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
@@ -71,7 +72,7 @@ fun FMNewCreditCart(
                 modifier = Modifier.weight(0.4f)
             ) {
                 FMOutlineTextField(
-                    value = uiState.expirationDateValue.toString(),
+                    value = uiState.expirationDateValue,
                     onValueChange = { onAction(PaymentContract.UiAction.OnChangeExpirationDate(it)) },
                     visualTransformation = expirationDateTransformation,
                     modifier = Modifier.fillMaxWidth(),
@@ -87,6 +88,7 @@ fun FMNewCreditCart(
                     FMOutlineTextField(
                         value = uiState.cvv,
                         onValueChange = { onAction(PaymentContract.UiAction.OnChangeCvv(it)) },
+                        visualTransformation = CvvVisualTransformation(),
                         modifier = Modifier.weight(1f),
                         indicatorsColor = colors.text.copy(alpha = 0.3f),
                         label = "CVV",

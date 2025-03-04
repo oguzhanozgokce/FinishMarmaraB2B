@@ -51,4 +51,9 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="delete_all_products_confirmation">Are you sure you want to delete all products from the basket?</string>
+    <string name="cvv_info">Please enter the 3-digit CVV code\non the back of your card.</string>
+    <string name="cvv">CVV</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_name">Card Name Surname</string>
 </resources>

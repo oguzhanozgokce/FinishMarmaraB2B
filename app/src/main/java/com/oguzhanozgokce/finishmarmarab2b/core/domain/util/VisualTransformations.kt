@@ -16,15 +16,36 @@ object VisualTransformations {
             }
         }
 
-        TransformedText(
-            AnnotatedString(formattedText),
-            object : OffsetMapping {
-                override fun originalToTransformed(offset: Int): Int =
-                    if (offset <= 2) offset else offset + 1
+        val transformedText = AnnotatedString(formattedText)
 
-                override fun transformedToOriginal(offset: Int): Int =
-                    if (offset <= 2) offset else offset - 1
+        TransformedText(
+            transformedText,
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int): Int {
+                    val originalLength = digits.length
+                    val clampedOffset = offset.coerceIn(0, originalLength)
+
+                    val transformedOffset = if (clampedOffset <= 2) {
+                        clampedOffset
+                    } else {
+                        clampedOffset + 1
+                    }
+
+                    return transformedOffset.coerceIn(0, formattedText.length)
+                }
+
+                override fun transformedToOriginal(offset: Int): Int {
+                    val transformedLength = formattedText.length
+                    val clampedOffset = offset.coerceIn(0, transformedLength)
+
+                    return if (clampedOffset <= 2) {
+                        clampedOffset
+                    } else {
+                        clampedOffset - 1
+                    }.coerceIn(0, digits.length)
+                }
             }
         )
     }
 }
+

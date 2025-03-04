@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
     private val getBasketProductsUseCase: GetBasketProductsUseCase,
-    private val getUserLocationsUseCase: GetUserLocationsUseCase
+    private val getUserLocationsUseCase: GetUserLocationsUseCase,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -28,14 +28,8 @@ class PaymentViewModel @Inject constructor(
             is UiAction.HideDialog -> hideDialog()
             is UiAction.ShowDialog -> showDialog()
             is UiAction.OnChangeCardNumber -> updateState { copy(cardNumber = uiAction.cardNumber) }
-            is UiAction.OnChangeCardName -> {
-                updateState { copy(cardName = uiAction.cardName) }
-            }
-
-            is UiAction.OnChangeExpirationDate -> updateState {
-                copy(expirationDateValue = uiAction.expirationDateValue)
-            }
-
+            is UiAction.OnChangeCardName -> updateState { copy(cardName = uiAction.cardName) }
+            is UiAction.OnChangeExpirationDate -> updateState { copy(expirationDateValue = uiAction.expirationDateValue) }
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }
     }
@@ -69,14 +63,11 @@ class PaymentViewModel @Inject constructor(
     private fun getUserLocations() {
         updateState { copy(isLoading = true) }
         viewModelScope.launch {
-            getUserLocationsUseCase().fold(
-                onSuccess = { addressList ->
-                    updateState { copy(addressList = addressList, isLoading = false) }
-                },
-                onError = { error ->
-                    updateState { copy(isLoading = false, errorMessage = error) }
-                }
-            )
+            getUserLocationsUseCase().fold(onSuccess = { addressList ->
+                updateState { copy(addressList = addressList, isLoading = false) }
+            }, onError = { error ->
+                updateState { copy(isLoading = false, errorMessage = error) }
+            })
         }
     }
 }

@@ -11,26 +11,50 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CardNumberVisualTransformation.cardNumberVisualTransformation
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CvvVisualTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.VisualTransformations.expirationDateTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun FMNewCreditCart(
     uiState: PaymentContract.UiState,
     onAction: (PaymentContract.UiAction) -> Unit,
 ) {
+
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.5f)
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPadding(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBackgroundColorResource(R.color.gray)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,7 +65,7 @@ fun FMNewCreditCart(
             onValueChange = { onAction(PaymentContract.UiAction.OnChangeCardName(it)) },
             modifier = Modifier.fillMaxWidth(),
             indicatorsColor = colors.text.copy(alpha = 0.3f),
-            label = "Card Name Surname",
+            label = stringResource(R.string.card_name),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 autoCorrectEnabled = true,
@@ -55,7 +79,7 @@ fun FMNewCreditCart(
             onValueChange = { onAction(PaymentContract.UiAction.OnChangeCardNumber(it)) },
             modifier = Modifier.fillMaxWidth(),
             indicatorsColor = colors.text.copy(alpha = 0.3f),
-            label = "Card Number",
+            label = stringResource(R.string.card_number),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -71,12 +95,12 @@ fun FMNewCreditCart(
                 modifier = Modifier.weight(0.4f)
             ) {
                 FMOutlineTextField(
-                    value = uiState.expirationDateValue.toString(),
+                    value = uiState.expirationDateValue,
                     onValueChange = { onAction(PaymentContract.UiAction.OnChangeExpirationDate(it)) },
                     visualTransformation = expirationDateTransformation,
                     modifier = Modifier.fillMaxWidth(),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
-                    label = "Expiration Date"
+                    label = stringResource(R.string.expiration_date)
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -87,19 +111,33 @@ fun FMNewCreditCart(
                     FMOutlineTextField(
                         value = uiState.cvv,
                         onValueChange = { onAction(PaymentContract.UiAction.OnChangeCvv(it)) },
+                        visualTransformation = CvvVisualTransformation(),
                         modifier = Modifier.weight(1f),
                         indicatorsColor = colors.text.copy(alpha = 0.3f),
-                        label = "CVV",
+                        label = stringResource(R.string.cvv),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Done
                         ),
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = "CVV",
-                                tint = colors.lightGray
-                            )
+                            Balloon(
+                                builder = builder,
+                                balloonContent = {
+                                    Text(text = stringResource(R.string.cvv_info))
+                                }
+                            ) { balloonWindow ->
+                                IconButton(
+                                    onClick = {
+                                        balloonWindow.showAlignBottom()
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Info,
+                                        contentDescription = stringResource(R.string.cvv),
+                                        tint = colors.lightGray
+                                    )
+                                }
+                            }
                         }
                     )
                 }
@@ -118,3 +156,4 @@ fun FMNewCreditCartPreview() {
         )
     }
 }
+

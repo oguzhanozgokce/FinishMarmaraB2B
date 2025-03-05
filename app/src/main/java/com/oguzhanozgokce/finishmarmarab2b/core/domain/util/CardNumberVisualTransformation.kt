@@ -9,36 +9,28 @@ object CardNumberVisualTransformation {
     val cardNumberVisualTransformation = VisualTransformation { text ->
         val digits = text.text.filter { it.isDigit() }.take(16)
         val builder = AnnotatedString.Builder()
-        val mapping = mutableListOf<Int>()
-        var digitCount = 0
+        val mappingList = mutableListOf<Int>()
 
-        for (char in digits) {
-            if (digitCount > 0 && digitCount % 4 == 0) {
+        for (i in digits.indices) {
+            if (i > 0 && i % 4 == 0) {
                 builder.append(' ')
             }
-            if (digitCount < 16) {
-                builder.append(char)
-                mapping.add(builder.length - 1)
-                digitCount++
-            }
+            mappingList.add(builder.length)
+            builder.append(digits[i])
         }
+        mappingList.add(builder.length)
 
-        val outString = builder.toAnnotatedString()
+        val transformedText = builder.toAnnotatedString()
 
         val offsetMapping = object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
-                return if (offset < mapping.size) {
-                    mapping[offset]
-                } else {
-                    outString.length
-                }
+                return mappingList.getOrElse(offset) { transformedText.length }
             }
 
             override fun transformedToOriginal(offset: Int): Int {
-                val idx = mapping.indexOfLast { it <= offset }
-                return if (idx == -1) 0 else idx
+                return mappingList.indexOfLast { it <= offset }
             }
         }
-        TransformedText(outString, offsetMapping)
+        TransformedText(transformedText, offsetMapping)
     }
 }

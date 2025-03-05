@@ -56,4 +56,15 @@
     <string name="expiration_date">Expiration Date</string>
     <string name="card_number">Card Number</string>
     <string name="card_name">Card Name Surname</string>
+    <string name="agreement_full_text">I have read and accept the preliminary information terms and %1$s.</string>
+    <string name="agreement_highlight">the Distance Sales Agreement</string>
+    <string name="confirm_payment">Confirm Payment</string>
+    <string name="agreement_dialog_title">Sales Agreement</string>
+    <string name="agreement_dialog_content">
+        When shopping on e-commerce platforms, you must read and accept the Distance Sales Agreement.
+        This agreement regulates the rights and obligations between the buyer and the seller. It includes important terms such as
+        the delivery process of purchased products, the right of withdrawal, return conditions, and warranty coverage.
+        By making a purchase, you agree to these terms.
+    </string>
+    <string name="ok">OK</string>
 </resources>

@@ -34,6 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun ProductsToBuy(
     modifier: Modifier = Modifier,
+    totalCartCount: Int = 0,
     basketProduct: List<Product>
 ) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -60,7 +61,7 @@ fun ProductsToBuy(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Products you will buy",
+                text = "Products you will buy ($totalCartCount)",
                 style = FMTheme.typography.titleMediumMedium().copy(
                     fontSize = fontSize.mediumSmall
                 )

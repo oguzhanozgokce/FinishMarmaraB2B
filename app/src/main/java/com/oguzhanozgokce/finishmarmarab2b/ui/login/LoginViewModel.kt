@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.login
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
@@ -60,7 +59,6 @@ class LoginViewModel @Inject constructor(
                 resource.onFailure { message ->
                     updateState { copy(error = message) }
                     emitUiEffect(UiEffect.ShowToast(message))
-                    Log.e("LoginViewModel", "Error: $message")
                 }
             }.launchIn(viewModelScope)
     }

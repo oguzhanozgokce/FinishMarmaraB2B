@@ -10,6 +10,7 @@ object PaymentContract {
         val products: List<Product> = emptyList(),
         val totalPrice: Double = 0.0,
         val showDialog: Boolean = false,
+        val totalCartCount: Int = 0,
         val cities: List<Province> = emptyList(),
         val districts: List<String> = emptyList(),
         val addressList: List<Address> = emptyList(),
@@ -18,11 +19,16 @@ object PaymentContract {
         val expirationDateValue: String = "",
         val cvv: String = "",
         val cardName: String = "",
+        var isChecked: Boolean = false,
+        val isShowAgreementDialog: Boolean = false
     )
 
     sealed class UiAction {
         data object HideDialog : UiAction()
         data object ShowDialog : UiAction()
+        data object ShowAgreementDialog : UiAction()
+        data object HideAgreementDialog : UiAction()
+        data object OnCheckAgreement : UiAction()
         data class OnChangeCardNumber(val cardNumber: String) : UiAction()
         data class OnChangeExpirationDate(val expirationDateValue: String) : UiAction()
         data class OnChangeCvv(val cvv: String) : UiAction()

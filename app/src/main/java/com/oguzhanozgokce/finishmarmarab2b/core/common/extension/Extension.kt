@@ -150,3 +150,7 @@ fun NavController.navigateClearingStack(
         }
     }
 }
+
+fun String.limitDigits(maxDigits: Int): String {
+    return filter { it.isDigit() }.take(maxDigits)
+}

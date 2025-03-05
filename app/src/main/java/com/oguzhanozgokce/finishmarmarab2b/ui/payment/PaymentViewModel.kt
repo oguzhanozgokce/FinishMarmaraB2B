@@ -27,9 +27,14 @@ class PaymentViewModel @Inject constructor(
         when (uiAction) {
             is UiAction.HideDialog -> hideDialog()
             is UiAction.ShowDialog -> showDialog()
+            is UiAction.ShowAgreementDialog -> showAgreementDialog()
+            is UiAction.HideAgreementDialog -> hideAgreementDialog()
+            is UiAction.OnCheckAgreement -> updateState { copy(isChecked = !isChecked) }
             is UiAction.OnChangeCardNumber -> updateState { copy(cardNumber = uiAction.cardNumber) }
             is UiAction.OnChangeCardName -> updateState { copy(cardName = uiAction.cardName) }
-            is UiAction.OnChangeExpirationDate -> updateState { copy(expirationDateValue = uiAction.expirationDateValue) }
+            is UiAction.OnChangeExpirationDate -> updateState { copy(
+                expirationDateValue = uiAction.expirationDateValue
+            ) }
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }
     }
@@ -42,6 +47,7 @@ class PaymentViewModel @Inject constructor(
                     copy(
                         products = basketProducts,
                         totalPrice = basketProducts.sumOf { it.totalPrice },
+                        totalCartCount = basketProducts.sumOf { it.count },
                         isLoading = false
                     )
                 }
@@ -58,6 +64,14 @@ class PaymentViewModel @Inject constructor(
 
     private fun showDialog() {
         updateState { copy(showDialog = true) }
+    }
+
+    private fun showAgreementDialog() {
+        updateState { copy(isShowAgreementDialog = true) }
+    }
+
+    private fun hideAgreementDialog() {
+        updateState { copy(isShowAgreementDialog = false) }
     }
 
     private fun getUserLocations() {

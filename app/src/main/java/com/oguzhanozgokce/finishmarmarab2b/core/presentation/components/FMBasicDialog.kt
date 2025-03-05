@@ -32,12 +32,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun FMBasicDialog(
     modifier: Modifier = Modifier,
-    showDialog: Boolean,
+    isShowDialog: Boolean,
     onDismiss: () -> Unit,
     content: @Composable () -> Unit,
     securePolicy: SecureFlagPolicy = SecureFlagPolicy.Inherit
 ) {
-    if (showDialog) {
+    if (isShowDialog) {
         BasicAlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier
@@ -68,7 +68,7 @@ fun FMConfirmDialog(
     buttonFontSize: TextUnit = fontSize.medium
 ) {
     FMBasicDialog(
-        showDialog = showDialog,
+        isShowDialog = showDialog,
         onDismiss = onDismiss,
         content = {
             Column(

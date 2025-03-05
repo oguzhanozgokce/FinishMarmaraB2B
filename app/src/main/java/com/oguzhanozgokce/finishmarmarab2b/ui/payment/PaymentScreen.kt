@@ -13,8 +13,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
@@ -24,6 +26,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.CartBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMAgreementCheckbox
+import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMAgreementDialog
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMDeliveryAddress
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.FMPaymentOptions
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.component.ProductsToBuy
@@ -63,6 +67,11 @@ fun PaymentScreen(
         dismissText = "Exit",
     )
 
+    FMAgreementDialog(
+        isShowDialog = uiState.isShowAgreementDialog,
+        onDismiss = { onAction(UiAction.HideAgreementDialog) }
+    )
+
     when {
         uiState.isLoading -> LoadingBar()
         uiState.products.isEmpty() -> EmptyScreen()
@@ -86,7 +95,7 @@ fun PaymentContent(
         },
         bottomBar = {
             CartBottomBar(
-                buttonText = "Confirm Payment",
+                buttonText = stringResource(R.string.confirm_payment),
                 onConfirm = {},
                 totalPrice = uiState.totalPrice
             )
@@ -102,7 +111,7 @@ fun PaymentContent(
             verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
             Spacer(modifier = Modifier.height(padding.dimension8))
-            ProductsToBuy(basketProduct = uiState.products)
+            ProductsToBuy(basketProduct = uiState.products, totalCartCount = uiState.totalCartCount)
             FMDeliveryAddress(
                 onAddClick = navAction.navigateToAddress,
                 uiState = uiState
@@ -110,6 +119,11 @@ fun PaymentContent(
             FMPaymentOptions(
                 uiState = uiState,
                 onAction = onAction
+            )
+            FMAgreementCheckbox(
+                isChecked = uiState.isChecked,
+                onCheckedChange = { onAction(UiAction.OnCheckAgreement) },
+                onShowDialog = { onAction(UiAction.ShowAgreementDialog) }
             )
         }
     }

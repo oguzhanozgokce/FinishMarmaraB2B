@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.limitDigits
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CardNumberVisualTransformation.cardNumberVisualTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.CvvVisualTransformation
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.VisualTransformations.expirationDateTransformation
@@ -41,7 +42,6 @@ fun FMNewCreditCart(
     uiState: PaymentContract.UiState,
     onAction: (PaymentContract.UiAction) -> Unit,
 ) {
-
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
         setArrowPosition(0.5f)
@@ -76,7 +76,9 @@ fun FMNewCreditCart(
         Spacer(modifier = Modifier.height(16.dp))
         FMOutlineTextField(
             value = uiState.cardNumber,
-            onValueChange = { onAction(PaymentContract.UiAction.OnChangeCardNumber(it)) },
+            onValueChange = { newValue ->
+                onAction(PaymentContract.UiAction.OnChangeCardNumber(newValue.limitDigits(16)))
+            },
             modifier = Modifier.fillMaxWidth(),
             indicatorsColor = colors.text.copy(alpha = 0.3f),
             label = stringResource(R.string.card_number),
@@ -96,7 +98,15 @@ fun FMNewCreditCart(
             ) {
                 FMOutlineTextField(
                     value = uiState.expirationDateValue,
-                    onValueChange = { onAction(PaymentContract.UiAction.OnChangeExpirationDate(it)) },
+                    onValueChange = {
+                        onAction(
+                            PaymentContract.UiAction.OnChangeExpirationDate(
+                                it.limitDigits(
+                                    4
+                                )
+                            )
+                        )
+                    },
                     visualTransformation = expirationDateTransformation,
                     modifier = Modifier.fillMaxWidth(),
                     indicatorsColor = colors.text.copy(alpha = 0.3f),
@@ -156,4 +166,3 @@ fun FMNewCreditCartPreview() {
         )
     }
 }
-

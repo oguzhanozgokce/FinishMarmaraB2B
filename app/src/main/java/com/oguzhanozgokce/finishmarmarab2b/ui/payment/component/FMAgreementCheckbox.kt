@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -34,7 +34,7 @@ fun FMAgreementCheckbox(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.white, shape = RoundedCornerShape(padding.dimension8))
+            .background(colors.cardBackground, shape = RoundedCornerShape(padding.dimension8))
             .border(
                 padding.dimension1,
                 colors.lightGray.copy(alpha = 0.4f),
@@ -74,7 +74,7 @@ fun FMAgreementCheckbox(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun FMAgreementCheckboxPreview() {
     FMTheme {

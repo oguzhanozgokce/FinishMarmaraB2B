@@ -14,27 +14,29 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
+private const val ON_BACKGROUND_ALPHA = 0.1f
+
 @Composable
 fun CategoryCardShimmer(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
-            .wrapContentSize(),
+            .wrapContentSize()
+            .shimmer(true),
         shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
-            containerColor = colors.white
+            containerColor = colors.cardBackground
         )
     ) {
         Row(
@@ -47,25 +49,30 @@ fun CategoryCardShimmer(
             Box(
                 modifier = Modifier
                     .size(padding.dimension36)
-                    .shimmer(isLoading = true, shape = CircleShape)
                     .background(color = colors.background, shape = CircleShape),
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(padding.dimension36)
+                        .clip(CircleShape)
+                        .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
+                )
+            }
 
             Spacer(modifier = Modifier.width(padding.dimension12))
 
             Box(
                 modifier = Modifier
+                    .width(padding.dimension100)
                     .height(padding.dimension16)
-                    .fillMaxWidth(0.5f)
-                    .shimmer(isLoading = true, shape = RoundedCornerShape(4.dp))
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
-                        shape = RoundedCornerShape(4.dp)
-                    )
+                    .clip(RoundedCornerShape(padding.dimension4))
+                    .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
             )
         }
     }
 }
+
 
 @Composable
 fun CategoryListShimmer(
@@ -84,7 +91,8 @@ fun CategoryListShimmer(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@PreviewLightDark
+
 @Composable
 fun CategoryCardShimmerPreview() {
     FMTheme {

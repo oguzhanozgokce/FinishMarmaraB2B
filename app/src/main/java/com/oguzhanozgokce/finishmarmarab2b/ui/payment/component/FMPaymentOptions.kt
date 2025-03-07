@@ -29,6 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -39,12 +41,15 @@ fun FMPaymentOptions(
     uiState: PaymentContract.UiState,
     onAction: (PaymentContract.UiAction) -> Unit,
     modifier: Modifier = Modifier,
+    onCheckedSaveCard: (Boolean) -> Unit,
+    selectedCard: CreditCart? = null,
+    onSelectedCard: (CreditCart) -> Unit
 ) {
     var showNewCreditCart by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white, shape = RoundedCornerShape(padding.dimension8))
+            .background(colors.cardBackground, shape = RoundedCornerShape(padding.dimension8))
             .border(
                 padding.dimension1,
                 colors.lightGray.copy(alpha = 0.4f),
@@ -92,11 +97,15 @@ fun FMPaymentOptions(
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = padding.dimension8),
+                    .padding(top = padding.dimension16),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                items(sampleCreditCardList) {
-                    FMCreditCard(creditCard = it)
+                items(PreviewMockData.defaultCart) { card ->
+                    FMCreditCard(
+                        creditCard = card,
+                        isSelected = selectedCard == card,
+                        onSelected = { onSelectedCard(card) }
+                    )
                 }
             }
         }
@@ -108,7 +117,8 @@ fun FMPaymentOptions(
         ) {
             FMNewCreditCart(
                 uiState = uiState,
-                onAction = onAction
+                onAction = onAction,
+                onCheckedSaveCard = onCheckedSaveCard
             )
         }
     }
@@ -120,7 +130,10 @@ fun FMPaymentOptionsPreview() {
     FMTheme {
         FMPaymentOptions(
             uiState = PaymentContract.UiState(),
-            onAction = {}
+            onAction = {},
+            onCheckedSaveCard = {},
+            selectedCard = null,
+            onSelectedCard = {}
         )
     }
 }

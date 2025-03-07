@@ -81,9 +81,9 @@ private const val GRADIENT_WIDTH = 0.5f
 fun Modifier.shimmer(
     isLoading: Boolean,
     shape: Shape = MaterialTheme.shapes.medium,
-    durationMillis: Int = 1000,
+    durationMillis: Int = 1500,
     baseColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    highlightColor: Color = Color.White.copy(alpha = 0.7f)
+    highlightColor: Color = Color.White.copy(alpha = 0.6f)
 ): Modifier {
     if (!isLoading) return this
     val transition = rememberInfiniteTransition(label = "ShimmerTransition")

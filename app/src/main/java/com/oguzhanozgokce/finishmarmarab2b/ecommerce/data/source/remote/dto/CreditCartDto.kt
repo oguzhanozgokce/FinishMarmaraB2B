@@ -15,6 +15,9 @@ data class CreditCartDto(
     val cardCvv: String? = null,
     @SerializedName("card_name_surname")
     val cardNameSurname: String? = null,
+    @SerializedName("card_title")
+    val cardTitle: String? = null,
     @SerializedName("card_type")
     val cardType: String? = null
 )
+

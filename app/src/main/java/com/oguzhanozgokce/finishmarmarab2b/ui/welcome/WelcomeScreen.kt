@@ -43,7 +43,7 @@ fun WelcomeContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.white)
+            .background(colors.background)
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -26,8 +26,8 @@ fun FMNotification(
             .size(padding.dimension48)
             .padding(padding.dimension8)
             .background(
-                color = colors.white,
-                shape = RoundedCornerShape(padding.dimension16)
+                color = colors.cardBackground,
+                shape = CircleShape
             ),
         contentAlignment = Alignment.Center
     ) {

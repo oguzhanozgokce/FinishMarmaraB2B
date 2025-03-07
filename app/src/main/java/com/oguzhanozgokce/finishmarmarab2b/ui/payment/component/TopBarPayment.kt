@@ -26,7 +26,7 @@ fun TopBarPayment(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.white)
+            .background(colors.cardBackground)
             .padding(horizontal = padding.dimension8)
     ) {
         IconButton(
@@ -36,13 +36,13 @@ fun TopBarPayment(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.back),
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
         Text(
             text = stringResource(R.string.payment),
             style = FMTheme.typography.titleMediumSemiBold(),
-            color = colors.black,
+            color = colors.text,
             modifier = Modifier.align(Alignment.Center)
         )
     }

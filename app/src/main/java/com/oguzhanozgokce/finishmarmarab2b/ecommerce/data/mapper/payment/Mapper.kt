@@ -6,6 +6,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Cred
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
@@ -53,27 +54,16 @@ fun GetLocationResponse.mapToAddressList(): List<Address> {
     }
 }
 
-fun CreditCart.mapToCreditCartDto(): CreditCartDto {
-    return CreditCartDto(
-        id = this.id,
-        userId = this.userId,
-        cardNumber = this.cardNumber,
-        lastDate = this.lastDate,
-        cardCvv = this.cardCvv,
-        cardNameSurname = this.cardNameSurname,
-        cardType = this.cardType
-    )
-}
-
 fun CreditCartDto.mapToCreditCart(): CreditCart {
     return CreditCart(
         id = this.id.orZero(),
         userId = this.userId.orZero(),
+        cardTitle = this.cardTitle.orEmpty(),
         cardNumber = this.cardNumber.orEmpty(),
         lastDate = this.lastDate.orEmpty(),
         cardCvv = this.cardCvv.orEmpty(),
         cardNameSurname = this.cardNameSurname.orEmpty(),
-        cardType = this.cardType.orEmpty()
+        cardType = CardType.find(this.cardType.orEmpty())
     )
 }
 

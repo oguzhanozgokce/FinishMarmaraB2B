@@ -37,8 +37,8 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun getBasketProducts(isLoading: Boolean = false) {
-        updateState { copy(isLoading = isLoading) }
+    private fun getBasketProducts() {
+        updateState { copy(isLoading = true) }
         viewModelScope.launch {
             getBasketProductsUseCase().fold(
                 onSuccess = { products ->
@@ -53,7 +53,6 @@ class CartViewModel @Inject constructor(
                 onError = { error ->
                     updateState { copy(isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
-                    Log.e("GetBasketProducts", "Error: $error")
                 }
             )
         }

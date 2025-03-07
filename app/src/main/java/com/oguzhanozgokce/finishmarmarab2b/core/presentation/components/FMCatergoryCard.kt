@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,11 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
-import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.component.CategoryCardShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -44,12 +46,13 @@ fun CategoryCard(
             .noRippleClickable { onNavigateToCategory(category.id, category.name) },
         shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
-            containerColor = colors.white
-        )
+            containerColor = colors.cardBackground
+        ),
+        border = BorderStroke(padding.dimension1, colors.onBackground.copy(alpha = 0.1f))
     ) {
         Row(
             modifier = Modifier.padding(
-                horizontal = padding.dimension16,
+                horizontal = padding.dimension12,
                 vertical = padding.dimension8
             ),
             verticalAlignment = Alignment.CenterVertically
@@ -79,7 +82,7 @@ fun CategoryCard(
             Text(
                 text = category.name,
                 style = typography.bodyMediumNormal().copy(
-                    color = colors.black
+                    color = colors.text
                 ),
             )
         }
@@ -88,15 +91,18 @@ fun CategoryCard(
 
 @Composable
 fun CategoryList(
-    isLoading: Boolean = false,
+    isLoading: Boolean,
     modifier: Modifier = Modifier,
     categoryList: LazyPagingItems<Category>?,
     onNavigateToCategory: (Int, String) -> Unit
 ) {
+    val refreshState = categoryList?.loadState?.refresh
+    val isInitialLoading = refreshState is LoadState.Loading
+
     LazyRow(
         modifier = modifier.fillMaxWidth()
     ) {
-        if (isLoading) {
+        if (isLoading || isInitialLoading) {
             items(5) {
                 CategoryCardShimmer()
             }
@@ -114,28 +120,6 @@ fun CategoryList(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun CategoryCardShimmer(
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .wrapContentSize()
-            .shimmer(isLoading = true),
-        shape = RoundedCornerShape(padding.dimension24),
-        colors = CardDefaults.cardColors(
-            containerColor = colors.white
-        )
-    ) {
-        Text(
-            text = "Shimmer",
-            style = typography.bodyMediumNormal().copy(
-                color = colors.black
-            ),
-        )
     }
 }
 

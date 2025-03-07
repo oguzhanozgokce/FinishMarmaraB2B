@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
@@ -14,12 +15,16 @@ object PaymentContract {
         val cities: List<Province> = emptyList(),
         val districts: List<String> = emptyList(),
         val addressList: List<Address> = emptyList(),
+        val selectedAddress: Address? = null,
+        val selectedCard: CreditCart? = null,
         val errorMessage: String? = null,
         val cardNumber: String = "",
         val expirationDateValue: String = "",
         val cvv: String = "",
         val cardName: String = "",
+        val cardTitle: String = "",
         var isChecked: Boolean = false,
+        var isSaveCardChecked: Boolean = false,
         val isShowAgreementDialog: Boolean = false
     )
 
@@ -29,6 +34,10 @@ object PaymentContract {
         data object ShowAgreementDialog : UiAction()
         data object HideAgreementDialog : UiAction()
         data object OnCheckAgreement : UiAction()
+        data object OnCheckSaveCard : UiAction()
+        data class OnChangeCardTitle(val cardTitle: String) : UiAction()
+        data class OnChangeSelectedCard(val creditCart: CreditCart) : UiAction()
+        data class OnChangeAddress(val address: Address) : UiAction()
         data class OnChangeCardNumber(val cardNumber: String) : UiAction()
         data class OnChangeExpirationDate(val expirationDateValue: String) : UiAction()
         data class OnChangeCvv(val cvv: String) : UiAction()

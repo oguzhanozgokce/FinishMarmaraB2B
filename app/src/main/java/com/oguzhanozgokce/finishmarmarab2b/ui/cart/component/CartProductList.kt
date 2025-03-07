@@ -19,6 +19,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun CartProductList(
+    isLoading: Boolean,
     modifier: Modifier = Modifier,
     basketProduct: List<Product>,
     onDeleteBasket: (Int) -> Unit,
@@ -35,13 +36,19 @@ fun CartProductList(
         verticalArrangement = Arrangement.spacedBy(padding.dimension8),
         contentPadding = PaddingValues(vertical = padding.dimension8)
     ) {
-        items(basketProduct) { product ->
-            CartProductItem(
-                product = product,
-                onDeleteBasket = { onDeleteBasket(product.id) },
-                onAddToBasket = { onAddToBasket(product.id) },
-                onDetail = { onDetail(product.id) }
-            )
+        if (isLoading) {
+            items(4) {
+                CartProductItemShimmer()
+            }
+        } else {
+            items(basketProduct) { product ->
+                CartProductItem(
+                    product = product,
+                    onDeleteBasket = { onDeleteBasket(product.id) },
+                    onAddToBasket = { onAddToBasket(product.id) },
+                    onDetail = { onDetail(product.id) }
+                )
+            }
         }
     }
 }
@@ -54,7 +61,8 @@ fun CartProductListPreview() {
             basketProduct = PreviewMockData.defaultProductList,
             onDeleteBasket = {},
             onAddToBasket = {},
-            onDetail = {}
+            onDetail = {},
+            isLoading = false
         )
     }
 }

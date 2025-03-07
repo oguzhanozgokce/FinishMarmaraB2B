@@ -40,10 +40,22 @@ fun FMClickableOutlinedRow(
     icon: ImageVector = Icons.Default.ArrowDropDown,
     indicatorsColor: Color = colors.primary.copy(alpha = 0.3f),
     onClick: () -> Unit = {},
-    height: Dp = 56.dp
+    height: Dp = 56.dp,
+    enabled: Boolean = true
 ) {
-    val containerColor = if (isError) colors.primary else colors.white
-    val indicatorColor = if (isError) colors.red else indicatorsColor
+    val containerColor = when {
+        isError -> colors.primary
+        enabled -> colors.cardBackground
+        else -> colors.cardBackground
+    }
+
+    val textColor = if (enabled) colors.text else colors.text.copy(alpha = 0.5f)
+
+    val indicatorColor = when {
+        isError -> colors.red
+        enabled -> indicatorsColor
+        else -> indicatorsColor.copy(alpha = 0.2f)
+    }
 
     Column(modifier = modifier.fillMaxWidth()) {
         Row(
@@ -56,7 +68,7 @@ fun FMClickableOutlinedRow(
                 )
                 .height(height)
                 .background(containerColor)
-                .clickable { onClick() }
+                .then(if (enabled) Modifier.clickable { onClick() } else Modifier)
                 .padding(
                     horizontal = padding.dimension16,
                     vertical = padding.dimension12
@@ -66,7 +78,7 @@ fun FMClickableOutlinedRow(
             if (label.isNotEmpty() && value.isEmpty()) {
                 Text(
                     text = label,
-                    color = colors.text,
+                    color = textColor,
                     fontSize = FMTheme.fontSize.medium
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
@@ -74,20 +86,20 @@ fun FMClickableOutlinedRow(
 
             Text(
                 text = value,
-                color = colors.text,
+                color = textColor,
                 fontSize = FMTheme.fontSize.medium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onClick() }
+                    .then(if (enabled) Modifier.clickable { onClick() } else Modifier)
             )
 
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = indicatorColor,
-                modifier = Modifier.clickable { onClick() }
+                modifier = Modifier.then(if (enabled) Modifier.clickable { onClick() } else Modifier)
             )
         }
 

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 object HomeContract {
     data class UiState(
         val isLoading: Boolean = false,
+        val isCategoryLoading: Boolean = false,
+        val isProductLoading: Boolean = false,
         val list: List<String> = emptyList(),
         val categoryList: List<Category>? = emptyList(),
         val productList: List<Product> = emptyList(),

@@ -30,8 +30,8 @@ fun FMSearch(
     isLoading: Boolean = false,
     onNavigateToSearch: () -> Unit
 ) {
-    val containerColor = colors.white
-    val indicatorColor = colors.lightGray
+    val containerColor = colors.cardBackground
+    val indicatorColor = colors.onBackground.copy(alpha = 0.1f)
 
     Box(
         modifier = modifier
@@ -59,12 +59,12 @@ fun FMSearch(
                         start = padding.dimension4,
                         end = padding.dimension8
                     ),
-                tint = colors.black
+                tint = colors.onBackground
             )
             Text(
                 text = stringResource(id = R.string.search_for_products),
                 style = FMTheme.typography.titleMediumLight().copy(
-                    color = colors.black.copy(alpha = 0.6f),
+                    color = colors.text.copy(alpha = 0.6f),
                 ),
                 modifier = Modifier.weight(1f)
             )

@@ -24,6 +24,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +51,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+
+private const val ON_BACKGROUND_ALPHA = 0.1F
 
 @Composable
 fun HomeScreen(
@@ -111,18 +114,17 @@ fun HomeContent(
                     .shimmer(uiState.isLoading)
             )
             Text(
-                modifier = Modifier.shimmer(uiState.isLoading),
                 text = stringResource(id = R.string.categories),
                 style = typography.titleBodyBold()
             )
             CategoryList(
-                isLoading = uiState.isLoading,
+                isLoading = uiState.isCategoryLoading,
                 categoryList = categoryItems,
                 onNavigateToCategory = homeNavActions.navigateToCategory,
             )
-            ProductText(isLoading = uiState.isLoading)
+            ProductText()
             ProductList(
-                isLoading = uiState.isLoading,
+                isLoading = uiState.isProductLoading,
                 productList = uiState.productList,
                 onNavigateToDetail = homeNavActions.navigateToDetail,
                 onToggleFavorite = { onAction(UiAction.ToggleFavorite(it)) }
@@ -144,16 +146,25 @@ fun TopBar(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                modifier = Modifier.shimmer(uiState.isLoading),
                 text = "Hello,",
                 style = typography.titleMediumLight(),
             )
-            Text(
-                modifier = Modifier.shimmer(uiState.isLoading),
-                text = uiState.user.getFormattedName(),
-                fontFamily = poppinsFontFamily,
-                style = typography.labelLargeBold(),
-            )
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .width(padding.dimension140)
+                        .height(padding.dimension24)
+                        .clip(RoundedCornerShape(padding.dimension8))
+                        .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
+                        .shimmer(true)
+                )
+            } else {
+                Text(
+                    text = uiState.user.getFormattedName(),
+                    fontFamily = poppinsFontFamily,
+                    style = typography.labelLargeBold(),
+                )
+            }
         }
         Icon(
             imageVector = FMTheme.icons.notification,
@@ -162,7 +173,6 @@ fun TopBar(
             modifier = Modifier
                 .padding(padding.dimension16)
                 .align(Alignment.CenterVertically)
-                .shimmer(uiState.isLoading)
         )
     }
 }
@@ -237,8 +247,7 @@ fun SaleCard(
 
 @Composable
 fun ProductText(
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -248,7 +257,6 @@ fun ProductText(
         Text(
             text = stringResource(id = R.string.products),
             style = typography.titleBodyBold(),
-            modifier = Modifier.shimmer(isLoading)
         )
         TextButton(
             onClick = { /* TODO: Navigate to all products */ },
@@ -256,16 +264,14 @@ fun ProductText(
             Column {
                 Text(
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .shimmer(isLoading),
+                        .align(Alignment.CenterHorizontally),
                     text = "See all",
                     style = typography.titleMediumLight()
                 )
                 HorizontalDivider(
                     modifier = Modifier
                         .width(padding.dimension60)
-                        .height(padding.dimension2)
-                        .shimmer(isLoading),
+                        .height(padding.dimension2),
                     thickness = padding.dimension1,
                     color = colors.text
                 )

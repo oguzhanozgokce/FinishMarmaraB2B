@@ -13,8 +13,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -24,12 +27,13 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun FMDeliveryAddress(
     uiState: PaymentContract.UiState,
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onAddressClick: (Address) -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white, shape = RoundedCornerShape(padding.dimension8))
+            .background(colors.cardBackground, shape = RoundedCornerShape(padding.dimension8))
             .border(
                 padding.dimension1,
                 colors.lightGray.copy(alpha = 0.4f),
@@ -49,7 +53,7 @@ fun FMDeliveryAddress(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Delivery Address",
+                text = stringResource(R.string.delivery_address),
                 style = FMTheme.typography.titleMediumMedium().copy(
                     fontSize = FMTheme.fontSize.mediumSmall
                 )
@@ -58,7 +62,7 @@ fun FMDeliveryAddress(
                 onClick = { onAddClick() }
             ) {
                 Text(
-                    text = "Add",
+                    text = stringResource(R.string.add),
                     style = FMTheme.typography.titleMediumMedium().copy(
                         fontSize = FMTheme.fontSize.small,
                         color = colors.primary
@@ -66,11 +70,15 @@ fun FMDeliveryAddress(
                 )
             }
         }
-        FMHorizontalDivider()
-        FMAddressList(
-            modifier = Modifier.padding(top = padding.dimension8),
-            addresses = uiState.addressList
-        )
+        if (uiState.addressList.isNotEmpty()) {
+            FMHorizontalDivider()
+            FMAddressList(
+                modifier = Modifier.padding(top = padding.dimension16),
+                addresses = uiState.addressList,
+                onSelected = { onAddressClick(it) },
+                selectedAddress = uiState.selectedAddress
+            )
+        }
     }
 }
 
@@ -80,7 +88,8 @@ fun FMDeliveryAddressPreview() {
     FMTheme {
         FMDeliveryAddress(
             onAddClick = {},
-            uiState = PaymentContract.UiState()
+            uiState = PaymentContract.UiState(),
+            onAddressClick = {}
         )
     }
 }

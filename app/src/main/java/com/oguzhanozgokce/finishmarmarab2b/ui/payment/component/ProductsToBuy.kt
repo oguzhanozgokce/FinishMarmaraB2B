@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -37,15 +38,15 @@ fun ProductsToBuy(
     totalCartCount: Int = 0,
     basketProduct: List<Product>
 ) {
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white, shape = RoundedCornerShape(padding.dimension8))
+            .background(colors.cardBackground, shape = RoundedCornerShape(padding.dimension8))
             .border(
                 padding.dimension1,
-                colors.lightGray.copy(alpha = 0.4f),
+                colors.primary.copy(alpha = 0.4f),
                 shape = RoundedCornerShape(padding.dimension8)
             )
             .padding(horizontal = padding.dimension8)
@@ -103,8 +104,16 @@ fun ProductsToBuy(
 @Composable
 fun ProductsToBuyPreview() {
     FMTheme {
-        ProductsToBuy(
-            basketProduct = PreviewMockData.defaultProductList
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.white),
+            verticalArrangement = Arrangement.Center
+        ) {
+            ProductsToBuy(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                basketProduct = PreviewMockData.defaultProductList
+            )
+        }
     }
 }

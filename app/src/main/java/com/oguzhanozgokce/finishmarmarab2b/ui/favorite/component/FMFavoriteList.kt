@@ -2,11 +2,8 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mockLazyPagingItems
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
@@ -38,8 +34,8 @@ fun FMFavoriteList(
             .padding(padding.dimension8)
     ) {
         if (isRefreshing) {
-            items(5) {
-                FMFavoriteCardShimmer(
+            items(4) {
+                FMCardFavoriteShimmer(
                     modifier = Modifier.padding(bottom = padding.dimension8)
                 )
             }
@@ -69,23 +65,6 @@ fun FMFavoriteList(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun FMFavoriteCardShimmer(
-    modifier: Modifier = Modifier
-) {
-    FMCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(padding.dimension200)
-            .padding(padding.dimension8),
-        shape = RoundedCornerShape(padding.dimension8),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = padding.dimension2
-        ),
-    ) {
     }
 }
 

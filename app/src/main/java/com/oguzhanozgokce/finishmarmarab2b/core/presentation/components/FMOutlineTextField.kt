@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -42,10 +42,11 @@ fun FMOutlineTextField(
     indicatorsColor: Color = colors.primary.copy(alpha = 0.3f),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     readOnly: Boolean = false,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+    enabled: Boolean = true
 ) {
     val containerColor =
-        if (isError) colors.primary else colors.white
+        if (isError) colors.primary else colors.cardBackground
     val indicatorColor =
         if (isError) colors.red else indicatorsColor
 
@@ -56,11 +57,12 @@ fun FMOutlineTextField(
             readOnly = readOnly,
             leadingIcon = leadingIcon?.let { { it() } },
             trailingIcon = trailingIcon?.let { { it() } },
+            enabled = enabled,
             label = {
                 if (label != null) {
                     Text(
                         label,
-                        color = colors.black
+                        color = if (enabled) colors.text else colors.text.copy(alpha = 0.5f),
                     )
                 }
             },
@@ -74,10 +76,16 @@ fun FMOutlineTextField(
                 unfocusedContainerColor = containerColor,
                 focusedIndicatorColor = indicatorColor,
                 unfocusedIndicatorColor = indicatorColor,
-                focusedTextColor = colors.black,
-                unfocusedTextColor = colors.black,
-                focusedPlaceholderColor = colors.black,
-                unfocusedPlaceholderColor = colors.black,
+                focusedTextColor = colors.text,
+                unfocusedTextColor = colors.text,
+                focusedPlaceholderColor = colors.text,
+                unfocusedPlaceholderColor = colors.text,
+                disabledPlaceholderColor = colors.text.copy(alpha = 0.5f),
+                disabledTextColor = colors.text.copy(alpha = 0.2f),
+                disabledContainerColor = containerColor.copy(alpha = 0.5f),
+                disabledIndicatorColor = indicatorColor.copy(alpha = 0.2f),
+                focusedLabelColor = colors.text,
+                unfocusedLabelColor = colors.lightGray,
             ),
             isError = isError,
             singleLine = true,
@@ -98,13 +106,21 @@ fun FMOutlineTextField(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun Preview() {
-    FMOutlineTextField(
-        value = "",
-        onValueChange = {},
-        label = "email",
-        leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Password") }
-    )
+    FMTheme {
+        FMOutlineTextField(
+            value = "",
+            onValueChange = {},
+            label = "email",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Password",
+                    tint = colors.onBackground
+                )
+            }
+        )
+    }
 }

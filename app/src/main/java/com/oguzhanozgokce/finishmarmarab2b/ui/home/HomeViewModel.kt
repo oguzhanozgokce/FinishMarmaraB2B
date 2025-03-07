@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
@@ -47,19 +48,20 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchProduct() {
         viewModelScope.launch {
-            updateState { copy(isLoading = true) }
+            updateState { copy(isProductLoading = true) }
             getProductsUseCase().fold(
                 onSuccess = { paginationData ->
                     updateState {
                         copy(
                             productList = paginationData.list.orEmpty(),
-                            isLoading = false
+                            isProductLoading = false
                         )
                     }
                 },
                 onError = { error ->
-                    updateState { copy(error = error, isLoading = false) }
+                    updateState { copy(error = error, isProductLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
+                    Log.e("HomeViewModel", "Error fetching products: $error")
                 }
             )
         }
@@ -106,9 +108,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchCategory() {
-        updateState { copy(isLoading = true) }
+        updateState { copy(isCategoryLoading = true) }
         val flow = getCategoriesUseCase()
             .cachedIn(viewModelScope)
-        updateState { copy(categoryFlow = flow, isLoading = false) }
+        updateState { copy(categoryFlow = flow, isCategoryLoading = false) }
     }
 }

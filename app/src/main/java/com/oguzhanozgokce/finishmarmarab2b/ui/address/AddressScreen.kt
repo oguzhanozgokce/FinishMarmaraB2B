@@ -41,7 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
@@ -151,12 +151,13 @@ fun AddressScreenContent(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back),
+                            tint = colors.onBackground
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colors.white,
-                    titleContentColor = colors.black
+                    containerColor = colors.cardBackground,
+                    titleContentColor = colors.background
                 ),
                 windowInsets = WindowInsets(0.dp)
             )
@@ -191,7 +192,7 @@ fun AddressScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colors.white),
+                .background(colors.cardBackground),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
@@ -214,14 +215,14 @@ fun AddressScreenContent(
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = stringResource(R.string.name),
-                    modifier = Modifier.size(padding.dimension32)
+                    modifier = Modifier.size(padding.dimension32),
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressName,
                     onValueChange = { onAction(AddressContract.UiAction.OnNameChanged(it)) },
                     label = stringResource(R.string.name),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
             }
             Spacer(modifier = Modifier.height(padding.dimension8))
@@ -236,7 +237,6 @@ fun AddressScreenContent(
                     value = uiState.addressSurname,
                     onValueChange = { onAction(AddressContract.UiAction.OnSurnameChanged(it)) },
                     label = stringResource(R.string.surname),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f),
                 )
             }
             Spacer(modifier = Modifier.height(padding.dimension8))
@@ -249,7 +249,8 @@ fun AddressScreenContent(
                 Icon(
                     imageVector = Icons.Default.Phone,
                     contentDescription = stringResource(R.string.phone),
-                    modifier = Modifier.size(padding.dimension32)
+                    modifier = Modifier.size(padding.dimension32),
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMPhoneTextField(
@@ -272,7 +273,7 @@ fun AddressScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colors.white),
+                .background(colors.cardBackground),
         ) {
             Text(
                 text = stringResource(R.string.address_details),
@@ -285,14 +286,15 @@ fun AddressScreenContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.white)
+                    .background(colors.cardBackground)
                     .padding(horizontal = padding.dimension16),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Default.Place,
                     contentDescription = stringResource(R.string.province),
-                    modifier = Modifier.size(padding.dimension32)
+                    modifier = Modifier.size(padding.dimension32),
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMClickableOutlinedRow(
@@ -300,7 +302,6 @@ fun AddressScreenContent(
                     label = stringResource(R.string.province),
                     value = uiState.selectedProvince?.name ?: "",
                     icon = Icons.Default.ArrowDropDown,
-                    indicatorsColor = colors.text.copy(alpha = 0.3f),
                     onClick = { onNavigationCitiesBottomSheet() }
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
@@ -309,8 +310,8 @@ fun AddressScreenContent(
                     label = stringResource(R.string.city),
                     value = uiState.selectedCity,
                     icon = Icons.Default.ArrowDropDown,
-                    indicatorsColor = colors.text.copy(alpha = 0.3f),
-                    onClick = { onNavigationDistrictsBottomSheet() }
+                    onClick = { onNavigationDistrictsBottomSheet() },
+                    enabled = uiState.isEnableCities
                 )
             }
             Spacer(modifier = Modifier.height(padding.dimension8))
@@ -323,7 +324,7 @@ fun AddressScreenContent(
                 onValueChange = { onAction(AddressContract.UiAction.OnOpenAddressChanged(it)) },
                 label = stringResource(R.string.address),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                indicatorsColor = colors.text.copy(alpha = 0.3f)
+                enabled = uiState.isEnableOpenAddress
             )
             Spacer(modifier = Modifier.height(padding.dimension4))
             Text(
@@ -348,15 +349,16 @@ fun AddressScreenContent(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_apartment),
                     contentDescription = stringResource(R.string.apartment),
-                    modifier = Modifier.size(padding.dimension32)
+                    modifier = Modifier.size(padding.dimension32),
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 FMOutlineTextField(
                     value = uiState.addressTitle,
                     onValueChange = { onAction(AddressContract.UiAction.OnAddressTitleChanged(it)) },
                     label = stringResource(R.string.address_title),
-                    indicatorsColor = colors.text.copy(alpha = 0.3f),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    enabled = uiState.isEnableAddressTitle
                 )
             }
             Spacer(modifier = Modifier.height(padding.dimension16))
@@ -365,7 +367,7 @@ fun AddressScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.white),
+                .background(colors.cardBackground),
         ) {
             FMButton(
                 text = stringResource(R.string.save),
@@ -374,15 +376,13 @@ fun AddressScreenContent(
                     .fillMaxWidth()
                     .padding(padding.dimension16)
                     .align(Alignment.End),
+                enabled = uiState.isEnableSaveButton
             )
         }
     }
 }
 
-@Preview(
-    showBackground = true,
-    backgroundColor = 0xFFFFFFFF
-)
+@PreviewLightDark
 @Composable
 fun AddressScreenPreview() {
     FMTheme {

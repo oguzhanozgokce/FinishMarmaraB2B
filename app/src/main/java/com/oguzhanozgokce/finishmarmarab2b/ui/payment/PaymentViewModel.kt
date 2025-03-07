@@ -29,12 +29,19 @@ class PaymentViewModel @Inject constructor(
             is UiAction.ShowDialog -> showDialog()
             is UiAction.ShowAgreementDialog -> showAgreementDialog()
             is UiAction.HideAgreementDialog -> hideAgreementDialog()
+            is UiAction.OnChangeAddress -> updateState { copy(selectedAddress = uiAction.address) }
+            is UiAction.OnChangeSelectedCard -> updateState { copy(selectedCard = uiAction.creditCart) }
             is UiAction.OnCheckAgreement -> updateState { copy(isChecked = !isChecked) }
+            is UiAction.OnCheckSaveCard -> updateState { copy(isSaveCardChecked = !isSaveCardChecked) }
             is UiAction.OnChangeCardNumber -> updateState { copy(cardNumber = uiAction.cardNumber) }
             is UiAction.OnChangeCardName -> updateState { copy(cardName = uiAction.cardName) }
-            is UiAction.OnChangeExpirationDate -> updateState { copy(
-                expirationDateValue = uiAction.expirationDateValue
-            ) }
+            is UiAction.OnChangeCardTitle -> updateState { copy(cardTitle = uiAction.cardTitle) }
+            is UiAction.OnChangeExpirationDate -> updateState {
+                copy(
+                    expirationDateValue = uiAction.expirationDateValue
+                )
+            }
+
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
         }
     }

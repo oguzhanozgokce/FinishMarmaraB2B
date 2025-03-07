@@ -114,11 +114,15 @@ fun PaymentContent(
             ProductsToBuy(basketProduct = uiState.products, totalCartCount = uiState.totalCartCount)
             FMDeliveryAddress(
                 onAddClick = navAction.navigateToAddress,
-                uiState = uiState
+                uiState = uiState,
+                onAddressClick = { onAction(UiAction.OnChangeAddress(it)) },
             )
             FMPaymentOptions(
                 uiState = uiState,
-                onAction = onAction
+                onAction = onAction,
+                onCheckedSaveCard = { onAction(UiAction.OnCheckSaveCard) },
+                onSelectedCard = { onAction(UiAction.OnChangeSelectedCard(it)) },
+                selectedCard = uiState.selectedCard,
             )
             FMAgreementCheckbox(
                 isChecked = uiState.isChecked,

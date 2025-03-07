@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.cart.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -29,47 +31,57 @@ fun CartBottomBar(
     onConfirm: () -> Unit
 ) {
     val formatter = DecimalFormat("#,###.00")
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(colors.white)
-            .padding(
-                horizontal = padding.dimension8,
-                vertical = padding.dimension4
-            ),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Box(
+        modifier = Modifier
+            .background(color = colors.cardBackground)
     ) {
-        Column(
-            modifier = Modifier.padding(
-                horizontal = padding.dimension8,
-                vertical = padding.dimension4
-            ),
-            verticalArrangement = Arrangement.spacedBy(padding.dimension4)
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "Total",
-                style = typography.titleSmallMedium().copy(
-                    fontSize = fontSize.mediumSmall
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(colors.cardBackground)
+                .padding(
+                    horizontal = padding.dimension8,
+                    vertical = padding.dimension4
                 ),
-            )
-            Text(
-                text = "$${formatter.format(totalPrice)}",
-                style = typography.titleMediumSemiBold(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = padding.dimension8,
+                    vertical = padding.dimension4
+                ),
+                verticalArrangement = Arrangement.spacedBy(padding.dimension4)
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = "Total",
+                    style = typography.titleSmallMedium().copy(
+                        fontSize = fontSize.mediumSmall
+                    ),
+                )
+                Text(
+                    text = "$${formatter.format(totalPrice)}",
+                    style = typography.titleMediumSemiBold(),
+                )
+            }
+            FMButton(
+                text = buttonText,
+                onClick = { onConfirm() },
+                contentPadding = PaddingValues(
+                    horizontal = padding.dimension16,
+                    vertical = padding.dimension8
+                ),
+                backgroundColor = colors.primary,
+                textColor = colors.text,
+                height = 40.dp,
+                elevation = null
             )
         }
-        FMButton(
-            text = buttonText,
-            onClick = { onConfirm() },
-            contentPadding = PaddingValues(
-                horizontal = padding.dimension16,
-                vertical = padding.dimension8
-            ),
-            backgroundColor = colors.primary,
-            textColor = colors.white,
-            height = 40.dp,
-            elevation = null
+        FMHorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter),
         )
     }
 }

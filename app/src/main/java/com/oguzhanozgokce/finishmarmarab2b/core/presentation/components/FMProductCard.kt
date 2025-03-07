@@ -33,8 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.shimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.component.ProductCardShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -221,26 +221,6 @@ fun ProductList(
     }
 }
 
-@Composable
-fun ProductCardShimmer(
-    modifier: Modifier = Modifier
-) {
-    FMCard(
-        modifier = modifier
-            .width(padding.dimension200)
-            .height(padding.dimension280)
-            .padding(
-                start = padding.dimension4,
-                end = padding.dimension4,
-                bottom = padding.dimension8
-            )
-            .shimmer(isLoading = true),
-        shape = RoundedCornerShape(padding.dimension16),
-        cardColors = CardDefaults.cardColors(
-            containerColor = colors.cardBackground
-        )
-    ) {}
-}
 
 @Preview(showBackground = true)
 @Composable

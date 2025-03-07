@@ -36,7 +36,7 @@ fun CustomOutlinedButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             contentColor = contentColor,
-            containerColor = FMTheme.colors.white
+            containerColor = FMTheme.colors.background
         )
 
     ) {

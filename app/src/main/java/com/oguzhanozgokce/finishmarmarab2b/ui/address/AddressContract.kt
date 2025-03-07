@@ -18,7 +18,25 @@ object AddressContract {
         val selectedProvince: Province? = null,
         val selectedCity: String = "",
         val error: String = ""
-    )
+    ) {
+        val isEnableCities: Boolean
+            get() = selectedProvince != null
+
+        val isEnableOpenAddress: Boolean
+            get() = isEnableCities && selectedCity.isNotEmpty()
+
+        val isEnableAddressTitle: Boolean
+            get() = isEnableOpenAddress && openAddress.isNotEmpty()
+
+        val isEnableSaveButton: Boolean
+            get() = with(this) {
+                addressName.isNotEmpty() &&
+                        addressSurname.isNotEmpty() &&
+                        addressTel.isNotEmpty() &&
+                        addressTitle.isNotEmpty() &&
+                        isEnableAddressTitle
+            }
+    }
 
     sealed class UiAction {
         data class ProvinceSelected(val selectedProvince: Province) : UiAction()

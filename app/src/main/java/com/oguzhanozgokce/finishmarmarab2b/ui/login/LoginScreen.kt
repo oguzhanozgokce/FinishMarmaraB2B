@@ -103,7 +103,7 @@ fun LoginContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colors.white)
+            .background(color = colors.background)
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,

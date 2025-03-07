@@ -38,14 +38,14 @@ fun FMModelBottomSheet(
     sheetState: SheetState,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit,
-    dragHandle: (@Composable () -> Unit)? = { BottomSheetDefaults.DragHandle() },
+    dragHandle: (@Composable () -> Unit)? = { BottomSheetDefaults.DragHandle(color = colors.onBackground) },
 ) {
     ModalBottomSheet(
         modifier = modifier,
         sheetState = sheetState,
         onDismissRequest = onDismissRequest,
         shape = RoundedCornerShape(topStart = padding.dimension16, topEnd = padding.dimension16),
-        containerColor = colors.white,
+        containerColor = colors.cardBackground,
         contentColor = colors.white,
         tonalElevation = padding.dimension4,
         scrimColor = colors.black.copy(alpha = 0.5f),
@@ -70,7 +70,7 @@ fun FMProvincesBottomSheetContent(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.white)
+                    .background(colors.cardBackground)
                     .padding(
                         start = padding.dimension8,
                         end = padding.dimension8,
@@ -108,7 +108,7 @@ fun FMCitiesBottomSheetContent(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.white)
+                    .background(colors.cardBackground)
                     .padding(
                         start = padding.dimension8,
                         end = padding.dimension8,
@@ -140,7 +140,7 @@ fun CityItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colors.white)
+            .background(colors.cardBackground)
             .padding(padding.dimension8)
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,

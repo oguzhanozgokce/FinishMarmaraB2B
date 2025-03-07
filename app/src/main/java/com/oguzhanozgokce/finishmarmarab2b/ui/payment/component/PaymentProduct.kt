@@ -37,7 +37,7 @@ fun PaymentProduct(
     Box(
         modifier = modifier
             .width(padding.dimension120)
-            .background(colors.white, shape = RoundedCornerShape(padding.dimension8))
+            .background(colors.cardBackground, shape = RoundedCornerShape(padding.dimension8))
             .border(
                 padding.dimension1,
                 colors.lightGray.copy(alpha = 0.2f),

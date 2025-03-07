@@ -92,7 +92,7 @@ fun SignupContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(FMTheme.colors.white)
+            .background(FMTheme.colors.background)
             .padding(padding.dimension16),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,

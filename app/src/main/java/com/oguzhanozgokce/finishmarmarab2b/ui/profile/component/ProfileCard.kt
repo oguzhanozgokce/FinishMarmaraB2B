@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.profile.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,17 +21,20 @@ fun ProfileCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .background(colors.background)
             .padding(vertical = padding.dimension8),
         shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
-            containerColor = colors.white
+            containerColor = colors.cardBackground
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = padding.dimension2
         )
     ) {
         Column(
-            modifier = Modifier.padding(padding.dimension8),
+            modifier = Modifier
+                .background(colors.cardBackground)
+                .padding(padding.dimension8),
             content = content
         )
     }

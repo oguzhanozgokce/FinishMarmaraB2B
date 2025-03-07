@@ -67,4 +67,10 @@
         By making a purchase, you agree to these terms.
     </string>
     <string name="ok">OK</string>
+    <string name="card_type_visa">Card Type Visa</string>
+    <string name="card_type_mastercard">Card Type Mastercard</string>
+    <string name="add">Add</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="save_card_prompt">Would you like to save your card details for your next purchase?</string>
+    <string name="card_title">Card Title</string>
 </resources>

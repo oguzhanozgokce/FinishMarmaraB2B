@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.oguzhanozgokce.finishmarmarab2b.core.domain.PhoneNumberVisualTransformation
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.util.PhoneNumberVisualTransformation
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 
 @Composable

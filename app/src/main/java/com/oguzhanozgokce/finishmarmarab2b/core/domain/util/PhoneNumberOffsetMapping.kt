@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.core.domain
+package com.oguzhanozgokce.finishmarmarab2b.core.domain.util
 
 import androidx.compose.ui.text.input.OffsetMapping
 

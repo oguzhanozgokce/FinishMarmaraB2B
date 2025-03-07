@@ -32,7 +32,7 @@ fun CartTopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(padding.dimension56)
-            .background(color = colors.white)
+            .background(color = colors.cardBackground)
             .padding(horizontal = padding.dimension16),
         verticalAlignment = Alignment.CenterVertically
     ) {

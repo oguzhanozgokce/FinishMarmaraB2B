@@ -1,6 +1,9 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.mock
 
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
@@ -153,8 +156,104 @@ object PreviewMockData {
         Province("Bursa", listOf("Osmangazi", "Nilüfer", "Osmangazi")),
     )
 
-    val sampleProvince = Province(
-        "Ankara",
-        listOf("Çankaya", "Keçiören", "Sincan", "Yenimahalle", "Keçiören", "Çankaya")
+    val defaultCart = listOf(
+        CreditCart(
+            id = 2,
+            userId = 2,
+            cardTitle = "Test",
+            cardNumber = "5367890123456436",
+            cardNameSurname = "John Doe",
+            lastDate = "12/25",
+            cardCvv = "123",
+            cardType = CardType.MASTERCARD
+        ),
+        CreditCart(
+            id = 2,
+            userId = 2,
+            cardTitle = "Test",
+            cardNumber = "4367890123456436",
+            cardNameSurname = "Jane Smith",
+            lastDate = "11/26",
+            cardCvv = "456",
+            cardType = CardType.VISA
+        ),
     )
+
+    val defaultMasterCart = CreditCart(
+        id = 2,
+        userId = 2,
+        cardTitle = "Test",
+        cardNumber = "5367890123456436",
+        cardNameSurname = "John Doe",
+        lastDate = "12/25",
+        cardCvv = "123",
+        cardType = CardType.MASTERCARD
+    )
+
+    val defaultVisaCart = CreditCart(
+        id = 2,
+        userId = 2,
+        cardTitle = "Test",
+        cardNumber = "5367890123456436",
+        lastDate = "12/25",
+        cardNameSurname = "John Doe",
+        cardCvv = "123",
+        cardType = CardType.VISA
+    )
+
+    val defaultAddressList = listOf(
+        Address(
+            id = 1,
+            userId = 101,
+            province = "İstanbul",
+            city = "Kadıköy",
+            openAddress = "Bağdat Caddesi No:123 Daire:5",
+            addressTel = "0532 123 45 67",
+            addressTitle = "Ev",
+            nameSurname = "Ali Yılmaz"
+        ),
+        Address(
+            id = 2,
+            userId = 102,
+            province = "Ankara",
+            city = "Çankaya",
+            openAddress = "Atatürk Bulvarı No:456 Kat:3",
+            addressTel = "0543 987 65 43",
+            addressTitle = "İş",
+            nameSurname = "Ayşe Demir"
+        ),
+        Address(
+            id = 3,
+            userId = 103,
+            province = "İzmir",
+            city = "Konak",
+            openAddress = "Cumhuriyet Meydanı No:78",
+            addressTel = "0505 654 32 10",
+            addressTitle = "Aile Evi",
+            nameSurname = "Mehmet Can"
+        ),
+        Address(
+            id = 4,
+            userId = 104,
+            province = "Bursa",
+            city = "Osmangazi",
+            openAddress = "Heykel Mahallesi, Çarşı Sokak No:12",
+            addressTel = "0551 321 98 76",
+            addressTitle = "Diğer",
+            nameSurname = "Zeynep Korkmaz"
+        )
+    )
+
+    val defaultAddress = Address(
+        id = 1,
+        userId = 101,
+        province = "İstanbul",
+        city = "Kadıköy",
+        openAddress = "Bağdat Caddesi No:123 Daire:5",
+        addressTel = "0532 123 45 67",
+        addressTitle = "Ev",
+        nameSurname = "Ali Yılmaz"
+    )
+
+
 }

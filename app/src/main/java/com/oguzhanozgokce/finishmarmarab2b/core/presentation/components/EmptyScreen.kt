@@ -24,10 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
@@ -40,13 +40,12 @@ fun EmptyScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .background(color = colors.background),
+        modifier = modifier.background(color = colors.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier.size(padding.dimension120),
             imageVector = Icons.Default.Warning,
             contentDescription = "Warning",
         )
@@ -61,13 +60,14 @@ fun EmptyScreen(
 fun EmptyImageScreen(
     modifier: Modifier = Modifier,
     message: String = "No images available",
-    iconSize: Dp = 100.dp,
-    textColor: Color = colors.black,
-    iconTint: Color = colors.text
+    iconSize: Dp = padding.dimension100,
+    textColor: Color = colors.text,
+    iconTint: Color = colors.onBackground
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .background(color = colors.cardBackground)
             .padding(horizontal = padding.dimension16, vertical = padding.dimension8),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -90,17 +90,12 @@ fun EmptyImageScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun EmptyImageScreenPreview() {
-    EmptyImageScreen()
-}
-
 @Composable
 fun EmptyFavoriteScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(colors.background)
             .padding(padding.dimension16),
         verticalArrangement = Arrangement
             .spacedBy(padding.dimension16, Alignment.CenterVertically),
@@ -117,7 +112,7 @@ fun EmptyFavoriteScreen() {
             fontFamily = poppinsFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = fontSize.large,
-            color = colors.black,
+            color = colors.text,
             textAlign = TextAlign.Center
         )
         Text(
@@ -133,7 +128,7 @@ fun EmptyFavoriteScreen() {
             modifier = Modifier
                 .padding(padding.dimension16)
                 .border(
-                    BorderStroke(padding.dimension1, colors.black),
+                    BorderStroke(padding.dimension1, colors.onBackground),
                     shape = RoundedCornerShape(padding.dimension48)
                 )
                 .padding(horizontal = padding.dimension16, vertical = padding.dimension8)
@@ -149,8 +144,18 @@ fun EmptyFavoriteScreen() {
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
+@Composable
+fun EmptyImageScreenPreview() {
+    FMTheme {
+        EmptyImageScreen()
+    }
+}
+
+@PreviewLightDark
 @Composable
 fun EmptyScreenPreview() {
-    EmptyFavoriteScreen()
+    FMTheme {
+        EmptyFavoriteScreen()
+    }
 }

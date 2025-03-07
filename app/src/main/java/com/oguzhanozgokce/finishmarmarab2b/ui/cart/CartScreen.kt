@@ -14,7 +14,6 @@ import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMConfirmDialog
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState
@@ -53,15 +52,11 @@ fun CartScreen(
         confirmText = stringResource(R.string.delete),
         dismissText = stringResource(R.string.cancel)
     )
-
-    when {
-        uiState.isLoading -> LoadingBar()
-        else -> CartContent(
-            uiState = uiState,
-            onAction = onAction,
-            cartNavActions = cartNavActions
-        )
-    }
+    CartContent(
+        uiState = uiState,
+        onAction = onAction,
+        cartNavActions = cartNavActions
+    )
 }
 
 @Composable
@@ -83,6 +78,7 @@ fun CartContent(
         contentColor = colors.black,
     ) { innerPadding ->
         CartProductList(
+            isLoading = uiState.isLoading,
             modifier = Modifier.padding(innerPadding),
             basketProduct = uiState.basketProducts,
             onDeleteBasket = { onAction(UiAction.DeleteBasketProduct(it)) },

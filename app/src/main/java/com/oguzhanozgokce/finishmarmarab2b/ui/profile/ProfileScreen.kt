@@ -30,6 +30,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.ProfileCard
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.ProfileItem
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserImage
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserNameSurname
+import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserProfileShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -70,6 +71,7 @@ fun ProfileContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(colors.background)
                 .padding(padding.dimension16)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -78,8 +80,12 @@ fun ProfileContent(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                UserImage(uiState = uiState)
-                UserNameSurname(uiState = uiState)
+                if (uiState.isLoading) {
+                    UserProfileShimmer()
+                } else {
+                    UserImage(uiState = uiState)
+                    UserNameSurname(uiState = uiState)
+                }
                 Spacer(modifier = Modifier.weight(1f))
                 FMNotification()
             }

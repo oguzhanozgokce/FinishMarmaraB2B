@@ -23,7 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -127,7 +127,7 @@ fun FavoriteContent(
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Menu",
-                    tint = colors.black
+                    tint = colors.onBackground
                 )
             }
         }
@@ -152,7 +152,7 @@ fun FavoriteContent(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun FavoriteScreenPreview(
     @PreviewParameter(FavoriteScreenPreviewProvider::class) uiState: UiState,

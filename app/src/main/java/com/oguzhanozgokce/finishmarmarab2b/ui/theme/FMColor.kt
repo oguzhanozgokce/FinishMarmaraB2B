@@ -12,6 +12,7 @@ val errorLight = Color(0xFFFCBAAD)
 val buttonLight = Color(0xFF007BFF)
 val textLight = Color(0xFF000000)
 val onTextLight = Color(0xFFFFFFFF)
+val onBackgroundLight = Color(0xFF1B1B21)
 val textSecondaryLight = Color(0xFF888888)
 val backgroundLight = Color(0xFFF9F9F9)
 val cardBackgroundLight = Color(0xFFFFFFFF)
@@ -21,6 +22,7 @@ val onPrimaryDark = Color(0xFFFFFFFF)
 val errorDark = Color(0xFFD32F2F)
 val buttonDark = Color(0xFF007BFF)
 val textDark = Color(0xFFFFFFFF)
+val onBackgroundDark = Color(0xFFE4E1E9)
 val onTextDark = Color(0xFF000000)
 val textSecondaryDark = Color(0xFF888888)
 val backgroundDark = Color(0xFF222222)
@@ -32,6 +34,7 @@ fun lightColors(): FMColor = FMColor(
     error = errorLight,
     button = buttonLight,
     text = textLight,
+    onBackground = onBackgroundLight,
     onText = onTextLight,
     textSecondary = textSecondaryLight,
     background = backgroundLight,
@@ -44,6 +47,7 @@ fun darkColors(): FMColor = FMColor(
     error = errorDark,
     button = buttonDark,
     text = textDark,
+    onBackground = onBackgroundDark,
     onText = onTextDark,
     textSecondary = textSecondaryDark,
     background = backgroundDark,
@@ -58,6 +62,7 @@ data class FMColor(
     val button: Color,
     val text: Color,
     val onText: Color,
+    val onBackground: Color,
     val textSecondary: Color,
     val background: Color,
     val cardBackground: Color,

@@ -86,14 +86,14 @@ fun FMBottomBar(
             contentColor = colors.text
         ) {
             bottomBarDestination.forEach { destination ->
-                val selected =
-                    currentDestination?.destination?.route == Screen.getRoute(destination.screen)
+                val targetRoute = Screen.getRoute(destination.route)
+                val selected = currentDestination?.destination?.route == targetRoute
                 NavigationBarItem(
                     icon = {
                         Icon(
                             imageVector = destination.icon(),
                             contentDescription = destination.name,
-                            tint = if (selected) colors.primary else colors.text,
+                            tint = if (selected) colors.primary else colors.onBackground,
                             modifier = Modifier.height(20.dp)
                         )
                     },
@@ -104,13 +104,9 @@ fun FMBottomBar(
                             style = FMTheme.typography.bodySmallNormal()
                         )
                     },
-                    selected = navController.currentDestination?.route == Screen.getRoute(
-                        destination.screen
-                    ),
+                    selected = selected,
                     onClick = {
-                        val currentRoute = navController.currentBackStackEntry?.destination?.route
-                        val targetRoute = Screen.getRoute(destination.screen)
-
+                        val currentRoute = currentDestination?.destination?.route
                         if (currentRoute != targetRoute) {
                             navController.navigateTopSingle(
                                 targetRoute,
@@ -118,7 +114,7 @@ fun FMBottomBar(
                             )
                         }
                     },
-                    enabled = currentDestination?.destination?.route != Screen.getRoute(destination.screen),
+                    enabled = !selected,
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = colors.primary,
                         unselectedIconColor = colors.white,

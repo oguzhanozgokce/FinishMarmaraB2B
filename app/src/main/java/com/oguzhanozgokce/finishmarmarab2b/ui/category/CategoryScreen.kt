@@ -22,13 +22,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductCard
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductCardShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.CategoryNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.component.TopBarDetail
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.component.ProductCardShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding

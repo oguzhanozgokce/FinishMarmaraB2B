@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,6 +54,9 @@ fun FMCardFavorite(
             .height(200.dp)
             .padding(horizontal = padding.dimension8, vertical = padding.dimension4)
             .noRippleClickable { onClick() },
+        cardColors = CardDefaults.cardColors(
+            containerColor = colors.cardBackground
+        )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -168,6 +172,7 @@ fun FMCardFavorite(
                     height = padding.dimension36,
                     text = "Add to Cart",
                     onClick = onBasketClick,
+                    backgroundColor = colors.cardBackground,
                     contentPadding = PaddingValues(padding.dimension4)
                 )
             }

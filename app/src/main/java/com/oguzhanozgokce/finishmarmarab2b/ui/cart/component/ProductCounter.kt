@@ -33,13 +33,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun ProductCounter(
     product: Product,
-    count: Int,
     onIncrease: () -> Unit,
     onDelete: () -> Unit
 ) {
     Column(
         modifier = Modifier
-            .background(colors.white)
+            .background(colors.cardBackground)
             .wrapContentSize()
             .padding(padding.dimension4),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,7 +113,6 @@ fun ProductCounterPreview() {
     FMTheme {
         ProductCounter(
             product = PreviewMockData.defaultProduct,
-            count = 1,
             onIncrease = {},
             onDelete = {}
         )

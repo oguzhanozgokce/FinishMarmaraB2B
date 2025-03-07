@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -41,9 +40,7 @@ fun UserNameSurname(
         }
         Text(
             text = uiState.user.email,
-            style = FMTheme.typography.headSmallMedium().copy(
-                color = Color.DarkGray,
-            ),
+            style = FMTheme.typography.headSmallMedium(),
         )
     }
 }

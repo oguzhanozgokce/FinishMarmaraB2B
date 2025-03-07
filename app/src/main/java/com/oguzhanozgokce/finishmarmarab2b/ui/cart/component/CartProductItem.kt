@@ -12,10 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -39,12 +35,10 @@ fun CartProductItem(
     onAddToBasket: () -> Unit,
     onDetail: () -> Unit
 ) {
-    var count by remember { mutableIntStateOf(1) }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white)
+            .background(colors.cardBackground)
             .height(210.dp)
             .padding(vertical = padding.dimension8),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,7 +91,6 @@ fun CartProductItem(
         ) {
             ProductCounter(
                 product = product,
-                count = product.count,
                 onIncrease = { onAddToBasket() },
                 onDelete = { onDeleteBasket() }
             )

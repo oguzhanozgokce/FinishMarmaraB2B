@@ -35,6 +35,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostBasketResponse
@@ -51,29 +52,29 @@ import retrofit2.http.Query
 interface ApiService {
     @POST(LOGIN)
     suspend fun signIn(
-        @Body request: SignInRequest
+        @Body request: SignInRequest,
     ): Response<ApiResponse<LoginResponse>>
 
     @POST(REGISTER)
     suspend fun signUp(
-        @Body request: SignUpRequest
+        @Body request: SignUpRequest,
     ): Response<ApiResponse<RegisterResponse>>
 
     @GET(GET_USER)
     suspend fun getUser(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<ApiResponse<GetUserResponse>>
 
     @GET(GET_PRODUCTS)
     suspend fun getProduct(
         @Query("user_id") userId: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Response<ApiResponse<PaginationData<ProductDto>>>
 
     @GET(GET_PRODUCTS)
     suspend fun getCategoryProducts(
         @Query("user_id") userId: Int,
-        @Query("category_id") categoryId: Int
+        @Query("category_id") categoryId: Int,
     ): Response<ApiResponse<PaginationData<ProductDto>>>
 
     @GET(GET_FAVORITE_PRODUCTS)
@@ -85,7 +86,7 @@ interface ApiService {
 
     @POST(POST_TOGGLE_FAVORITE)
     suspend fun toggleFavorite(
-        @Body request: ToggleFavoriteRequest
+        @Body request: ToggleFavoriteRequest,
     ): Response<ApiResponse<PostToggleResponse>>
 
     @DELETE(DELETE_FAVORITE_PRODUCT)
@@ -96,7 +97,7 @@ interface ApiService {
 
     @POST(POST_ADD_FAVORITE_PRODUCT)
     suspend fun addProductToFavorites(
-        @Body request: AddFavoriteProductRequest
+        @Body request: AddFavoriteProductRequest,
     ): Response<ApiResponse<Unit>>
 
     @GET(GET_COMMENT_PRODUCT)
@@ -104,12 +105,12 @@ interface ApiService {
         @Path("product_id") productId: Int,
         @Query("page") page: Int,
         @Query("orderBy") orderBy: String,
-        @Query("sort") sort: String
+        @Query("sort") sort: String,
     ): Response<ApiResponse<PaginationData<UserCommentDto>>>
 
     @GET(GET_PRODUCT_DETAIL)
     suspend fun getProductDetail(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<ApiResponse<ProductDto>>
 
     @GET(GET_QUESTIONS_PRODUCT)
@@ -117,7 +118,7 @@ interface ApiService {
         @Path("product_id") productId: Int,
         @Query("page") page: Int,
         @Query("orderBy") orderBy: String,
-        @Query("sort") sort: String
+        @Query("sort") sort: String,
     ): Response<ApiResponse<PaginationData<QuestionAnswerDto>>>
 
     @GET(GET_CATEGORIES)
@@ -131,7 +132,7 @@ interface ApiService {
 
     @POST(POST_BASKET)
     suspend fun addProductToBasket(
-        @Body request: PostProductBasketRequest
+        @Body request: PostProductBasketRequest,
     ): Response<ApiResponse<PostBasketResponse>>
 
     @GET(GET_BASKET)
@@ -152,11 +153,17 @@ interface ApiService {
 
     @POST(POST_SAVE_ADDRESS)
     suspend fun saveAddress(
-        @Body request: SaveLocationRequest
+        @Body request: SaveLocationRequest,
     ): Response<ApiResponse<Unit>>
 
     @GET(GET_LOCATIONS)
     suspend fun getLocations(
         @Path("user_id") userId: Int,
     ): Response<ApiResponse<GetLocationResponse>>
+
+    @GET(GET_PRODUCTS)
+    suspend fun getSearchProducts(
+        @Query("user_id") userId: Int,
+        @Query("search") searchQuery: String,
+    ): Response<ApiResponse<GetSearchProductResponse>>
 }

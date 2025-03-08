@@ -83,9 +83,7 @@ fun SearchContent(
         TopBarSearch(
             searchValue = uiState.searchValue,
             onSearchValueChange = { onAction(UiAction.OnSearchValueChange(value = it)) },
-            onSearchClick = { query, listType ->
-                navActions.navigateToAllProducts(query, listType)
-            },
+            onSearchClick = navActions.navigateToAllProducts,
             onBackClick = navActions.navigateToBack,
             onCartClick = navActions.navigateToCart,
             focusRequester = focusRequester

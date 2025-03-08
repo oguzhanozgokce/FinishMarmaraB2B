@@ -27,6 +27,10 @@ class SearchViewModel @Inject constructor(
             is UiAction.OnSearchValueChange -> {
                 updateState { copy(searchValue = uiAction.value) }
             }
+
+            is UiAction.OnSearch -> {
+                searchProduct(uiAction.searchQuery)
+            }
         }
     }
 
@@ -38,6 +42,20 @@ class SearchViewModel @Inject constructor(
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun searchProduct(searchQuery: String) {
+        viewModelScope.launch {
+            getSearchProductUseCase(searchQuery = searchQuery).fold(
+                onSuccess = { productList ->
+                    updateState { copy(top5productList = productList) }
+                },
+                onError = { error ->
+                    emitUiEffect(UiEffect.ShowToast(error))
+
                 }
             )
         }

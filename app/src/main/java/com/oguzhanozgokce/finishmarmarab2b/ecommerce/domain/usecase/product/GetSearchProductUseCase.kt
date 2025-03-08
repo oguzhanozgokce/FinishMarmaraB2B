@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetSearchProductUseCase @Inject constructor(
     private val repository: SearchRepository,
 ) {
-    suspend operator fun invoke(userId: Int, searchQuery: String): Resource<List<Product>> {
-        return repository.getSearchProducts(userId, searchQuery)
+    suspend operator fun invoke(searchQuery: String): Resource<List<Product>> {
+        return repository.getSearchProducts(searchQuery)
     }
 }

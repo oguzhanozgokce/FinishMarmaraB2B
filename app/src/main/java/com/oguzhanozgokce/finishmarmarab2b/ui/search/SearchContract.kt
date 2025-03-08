@@ -8,11 +8,12 @@ object SearchContract {
         val list: List<String> = emptyList(),
         val historyList: List<HistorySearch> = emptyList(),
         val top5productList: List<Product> = emptyList(),
-        val searchValue: String = ""
+        val searchValue: String = "",
     )
 
     sealed class UiAction {
         data class OnSearchValueChange(val value: String) : UiAction()
+        data class OnSearch(val searchQuery: String) : UiAction()
     }
 
     sealed class UiEffect {

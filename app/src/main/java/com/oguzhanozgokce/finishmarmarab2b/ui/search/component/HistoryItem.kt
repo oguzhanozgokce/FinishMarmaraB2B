@@ -10,13 +10,14 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
@@ -38,6 +39,9 @@ fun HistoryItem(
             .wrapContentSize()
             .padding(horizontal = padding.dimension4),
         shape = RoundedCornerShape(padding.dimension4),
+        cardColors = CardDefaults.cardColors(
+            containerColor = colors.cardBackground
+        ),
         content = {
             Row(
                 modifier = Modifier.padding(
@@ -69,7 +73,7 @@ fun HistoryItem(
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun HistoryItemPreview() {
     FMTheme {

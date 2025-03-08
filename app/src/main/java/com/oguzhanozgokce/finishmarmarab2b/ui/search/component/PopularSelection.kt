@@ -24,7 +24,7 @@ fun PopularSelection(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = colors.white)
+            .background(color = colors.cardBackground)
             .padding(
                 top = padding.dimension16,
                 start = padding.dimension16,

@@ -17,8 +17,7 @@ data class ProductsNavActions(
 )
 
 fun NavGraphBuilder.products(actions: ProductsNavActions) {
-    composable<Screen.Products> { backStackEntry ->
-        backStackEntry.arguments?.getInt("categoryId")
+    composable<Screen.Products> {
         val viewModel: ProductsViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

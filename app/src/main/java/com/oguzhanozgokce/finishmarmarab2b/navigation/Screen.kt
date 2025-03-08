@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation
 
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import kotlinx.serialization.Serializable
 
 // inline fun <reified T> NavController.isRouteInBackStack(route: T): Boolean {
@@ -53,7 +54,11 @@ sealed interface Screen {
     data object Address : Screen
 
     @Serializable
-    data class Products(val id: Int, val name: String) : Screen
+    data class Products(
+        val id: Int? = null,
+        val name: String? = null,
+        val type: ProductListType
+    ) : Screen
 
     companion object {
         fun getRoute(screen: Screen): String = screen::class.qualifiedName.orEmpty()

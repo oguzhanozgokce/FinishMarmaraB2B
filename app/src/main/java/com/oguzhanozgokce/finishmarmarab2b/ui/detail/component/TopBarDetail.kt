@@ -33,17 +33,17 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun TopBarDetail(
+    modifier: Modifier = Modifier,
     onSearchClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
     onCartClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
-    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white)
-            .padding(horizontal = padding.dimension8, vertical = padding.dimension8),
+            .background(colors.background)
+            .padding(padding.dimension8),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -51,7 +51,7 @@ fun TopBarDetail(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
 
@@ -74,7 +74,7 @@ fun TopBarDetail(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = colors.text
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(padding.dimension8))
                 Text(
@@ -91,7 +91,7 @@ fun TopBarDetail(
             Icon(
                 imageVector = Icons.Default.ShoppingCart,
                 contentDescription = "Cart",
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
 
@@ -99,7 +99,7 @@ fun TopBarDetail(
             Icon(
                 imageVector = Icons.Default.Share,
                 contentDescription = "Share",
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
     }

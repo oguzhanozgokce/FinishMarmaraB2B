@@ -74,7 +74,7 @@ fun FMConfirmDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.white)
+                    .background(colors.cardBackground)
                     .padding(
                         top = padding.dimension16,
                         start = padding.dimension16,
@@ -110,6 +110,7 @@ fun FMConfirmDialog(
                         modifier = Modifier.weight(1f),
                         fontSize = buttonFontSize,
                         height = 44.dp,
+                        backgroundColor = colors.onBackground
                     )
                     FMButton(
                         onClick = onConfirm,

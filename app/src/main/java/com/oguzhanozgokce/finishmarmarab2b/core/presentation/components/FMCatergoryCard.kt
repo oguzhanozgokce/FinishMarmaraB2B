@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.component.CategoryCardShimmer
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -38,12 +39,18 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 fun CategoryCard(
     modifier: Modifier = Modifier,
     category: Category,
-    onNavigateToCategory: (Int, String) -> Unit
+    onNavigateToCategory: (Int, String, ProductListType) -> Unit
 ) {
     Card(
         modifier = modifier
             .wrapContentSize()
-            .noRippleClickable { onNavigateToCategory(category.id, category.name) },
+            .noRippleClickable {
+                onNavigateToCategory(
+                    category.id,
+                    category.name,
+                    ProductListType.CATEGORY
+                )
+            },
         shape = RoundedCornerShape(padding.dimension16),
         colors = CardDefaults.cardColors(
             containerColor = colors.cardBackground
@@ -94,7 +101,7 @@ fun CategoryList(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
     categoryList: LazyPagingItems<Category>?,
-    onNavigateToCategory: (Int, String) -> Unit
+    onNavigateToCategory: (Int, String, ProductListType) -> Unit
 ) {
     val refreshState = categoryList?.loadState?.refresh
     val isInitialLoading = refreshState is LoadState.Loading
@@ -132,6 +139,6 @@ fun CategoryCardPreview() {
             name = "Elektronik",
             categoryImage = "",
         ),
-        onNavigateToCategory = { _, _ -> }
+        onNavigateToCategory = { _, _, _ -> }
     )
 }

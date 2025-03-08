@@ -13,11 +13,13 @@ import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeViewModel
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 
 data class HomeNavActions(
     val navigateToDetail: (id: Int) -> Unit,
     val navigateToSearch: () -> Unit,
-    val navigateToProduct: (id: Int, name: String) -> Unit,
+    val navigateToCategoryProduct: (id: Int, name: String, type: ProductListType) -> Unit,
+    val navigateToAllProduct: (type: ProductListType) -> Unit
 )
 
 fun NavGraphBuilder.home(actions: HomeNavActions) {

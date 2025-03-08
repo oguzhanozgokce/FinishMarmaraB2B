@@ -44,6 +44,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -120,9 +121,13 @@ fun HomeContent(
             CategoryList(
                 isLoading = uiState.isCategoryLoading,
                 categoryList = categoryItems,
-                onNavigateToCategory = homeNavActions.navigateToProduct,
+                onNavigateToCategory = homeNavActions.navigateToCategoryProduct,
             )
-            ProductText()
+            ProductText(
+                onSeeAllClick = {
+                    homeNavActions.navigateToAllProduct(ProductListType.ALL_PRODUCT)
+                }
+            )
             ProductList(
                 isLoading = uiState.isProductLoading,
                 productList = uiState.productList,
@@ -247,7 +252,8 @@ fun SaleCard(
 
 @Composable
 fun ProductText(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSeeAllClick: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -259,7 +265,7 @@ fun ProductText(
             style = typography.titleBodyBold(),
         )
         TextButton(
-            onClick = { /* TODO: Navigate to all products */ },
+            onClick = { onSeeAllClick() },
         ) {
             Column {
                 Text(
@@ -293,7 +299,8 @@ fun HomeScreenPreview(
             homeNavActions = HomeNavActions(
                 navigateToDetail = {},
                 navigateToSearch = {},
-                navigateToProduct = { _, _ -> }
+                navigateToCategoryProduct = { _, _, _ -> },
+                navigateToAllProduct = {}
             )
         )
     }

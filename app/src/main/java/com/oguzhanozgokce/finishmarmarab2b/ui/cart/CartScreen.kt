@@ -66,7 +66,12 @@ fun CartContent(
     cartNavActions: CartNavActions
 ) {
     Scaffold(
-        topBar = { CartTopBar(onDeleteClick = { onAction(UiAction.ShowDialog) }) },
+        topBar = {
+            CartTopBar(
+                onDeleteClick = { onAction(UiAction.ShowDialog) },
+                isLoading = uiState.topLoading
+            )
+        },
         contentWindowInsets = WindowInsets.safeDrawing,
         bottomBar = {
             CartBottomBar(

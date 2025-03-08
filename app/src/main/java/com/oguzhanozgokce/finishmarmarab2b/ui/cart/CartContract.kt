@@ -5,6 +5,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 object CartContract {
     data class UiState(
         val isLoading: Boolean = false,
+        val topLoading: Boolean = false,
         val basketProducts: List<Product> = emptyList(),
         val totalPrice: Double = 0.0,
         val showDialog: Boolean = false

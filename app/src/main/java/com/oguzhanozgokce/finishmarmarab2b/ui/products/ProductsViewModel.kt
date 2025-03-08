@@ -8,6 +8,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCategoryProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiEffect
@@ -20,12 +21,13 @@ import javax.inject.Inject
 class ProductsViewModel @Inject constructor(
     private val getCategoryProductsUseCase: GetCategoryProductsUseCase,
     private val getProductsUseCase: GetProductsUseCase,
-    private val savedStateHandle: SavedStateHandle
+    private val getSearchProductUseCase: GetSearchProductUseCase,
+     savedStateHandle: SavedStateHandle,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private val args = savedStateHandle.toRoute<Screen.Products>()
     private val categoryId: Int? = args.id
-    private val categoryName: String = args.name ?: ""
+    private val searchQuery: String = args.searchQuery ?: ""
     private val type: ProductListType = args.type
 
     init {
@@ -43,7 +45,7 @@ class ProductsViewModel @Inject constructor(
         when (type) {
             ProductListType.ALL_PRODUCT -> fetchProduct()
             ProductListType.CATEGORY -> categoryId?.let { loadCategoryProducts(it) }
-            ProductListType.SEARCH -> {}
+            ProductListType.SEARCH -> searchProduct()
         }
     }
 
@@ -74,6 +76,26 @@ class ProductsViewModel @Inject constructor(
                         copy(
                             productList = paginationData.list.orEmpty(),
                             typeList = paginationData.list.orEmpty(),
+                            isLoading = false
+                        )
+                    }
+                },
+                onError = { error ->
+                    updateState { copy(error = error, isLoading = false) }
+                }
+            )
+        }
+    }
+
+    private fun searchProduct() {
+        viewModelScope.launch {
+            updateState { copy(isLoading = true) }
+            getSearchProductUseCase(searchQuery).fold(
+                onSuccess = { paginationData ->
+                    updateState {
+                        copy(
+                            productList = paginationData,
+                            typeList = paginationData,
                             isLoading = false
                         )
                     }

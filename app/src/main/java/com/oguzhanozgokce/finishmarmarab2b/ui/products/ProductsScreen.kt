@@ -37,7 +37,7 @@ fun ProductsScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    navActions: ProductsNavActions
+    navActions: ProductsNavActions,
 ) {
     when {
         uiState.isLoading -> LoadingBar()
@@ -100,7 +100,7 @@ fun ProductsList(
     products: List<Product>,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (id: Int) -> Unit = {},
-    onToggleFavorite: (id: Int) -> Unit
+    onToggleFavorite: (id: Int) -> Unit,
 ) {
     val listState = rememberLazyGridState()
     LazyVerticalGrid(

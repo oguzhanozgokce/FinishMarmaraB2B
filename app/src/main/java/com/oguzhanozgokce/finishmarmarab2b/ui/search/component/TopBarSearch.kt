@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearchBar
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -24,11 +25,12 @@ fun TopBarSearch(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onCartClick: () -> Unit = {},
+    onClick: () -> Unit = {},
     searchValue: String = "",
     onSearchValueChange: (String) -> Unit = {},
-    onSearchClick: () -> Unit = {},
+    onSearchClick: (String, ProductListType) -> Unit,
     onClearClick: () -> Unit = {},
-    focusRequester: FocusRequester
+    focusRequester: FocusRequester,
 ) {
     Box(
         modifier = modifier
@@ -53,9 +55,10 @@ fun TopBarSearch(
                 .fillMaxWidth(fraction = 0.75f),
             value = searchValue,
             onValueChange = { onSearchValueChange(it) },
-            onClick = onSearchClick,
+            onClick = onClick,
             onClearClick = onClearClick,
-            focusRequester = focusRequester
+            focusRequester = focusRequester,
+            onSearchClick = onSearchClick
         )
 
         IconButton(
@@ -80,9 +83,9 @@ fun TopBarSearchPreview() {
             onCartClick = { },
             searchValue = "Test Search",
             onSearchValueChange = { },
-            onSearchClick = { },
+            onSearchClick = { _, _ -> },
             onClearClick = { },
-            focusRequester = FocusRequester()
+            focusRequester = FocusRequester(),
         )
     }
 }

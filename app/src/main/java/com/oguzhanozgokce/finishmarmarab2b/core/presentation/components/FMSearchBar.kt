@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -29,13 +31,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.conditional
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
@@ -51,8 +56,11 @@ fun FMSearchBar(
     onClearClick: (() -> Unit)? = null,
     enabled: Boolean = true,
     isError: Boolean = false,
-    focusRequester: FocusRequester = FocusRequester()
+    focusRequester: FocusRequester = FocusRequester(),
+    onSearchClick: (String, ProductListType) -> Unit,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     var textFieldValueState by remember {
         mutableStateOf(TextFieldValue(value))
     }
@@ -67,6 +75,13 @@ fun FMSearchBar(
             textFieldValueState = it
             onValueChange(it.text)
         },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                onSearchClick(textFieldValueState.text, ProductListType.SEARCH)
+                keyboardController?.hide()
+            }
+        ),
         modifier = modifier
             .fillMaxWidth()
             .height(48.dp)
@@ -155,14 +170,16 @@ fun QuizAppSearchBarPreview() {
                 value = "",
                 onValueChange = {},
                 onClick = {},
-                onClearClick = {}
+                onClearClick = {},
+                onSearchClick = { _, _ -> }
             )
 
             FMSearchBar(
                 value = "Laptop",
                 onValueChange = {},
                 onClick = {},
-                onClearClick = {}
+                onClearClick = {},
+                onSearchClick = { _, _ -> }
             )
 
             FMSearchBar(
@@ -171,7 +188,8 @@ fun QuizAppSearchBarPreview() {
                 onValueChange = {},
                 placeholder = "Cannot interact",
                 onClick = {},
-                onClearClick = {}
+                onClearClick = {},
+                onSearchClick = { _, _ -> }
             )
 
             FMSearchBar(
@@ -180,7 +198,8 @@ fun QuizAppSearchBarPreview() {
                 onValueChange = {},
                 placeholder = "Error state",
                 onClick = {},
-                onClearClick = {}
+                onClearClick = {},
+                onSearchClick = { _, _ -> }
             )
         }
     }

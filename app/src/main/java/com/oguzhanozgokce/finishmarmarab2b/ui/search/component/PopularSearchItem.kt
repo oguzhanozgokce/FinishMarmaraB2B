@@ -21,6 +21,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickab
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -31,12 +32,15 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 fun PopularSearchItem(
     popularProduct: Product,
     modifier: Modifier = Modifier,
-    onPopularItemClick: (String) -> Unit = {}
+    onPopularItemClick: (String, ProductListType) -> Unit,
 ) {
     FMOutlinedCard(
         modifier = modifier
             .wrapContentSize()
-            .padding(horizontal = padding.dimension4),
+            .padding(horizontal = padding.dimension4)
+            .noRippleClickable {
+                onPopularItemClick(popularProduct.title, ProductListType.SEARCH)
+            },
         shape = RoundedCornerShape(padding.dimension4),
         cardColors = CardDefaults.cardColors(
             containerColor = colors.cardBackground
@@ -57,7 +61,7 @@ fun PopularSearchItem(
                     modifier = Modifier
                         .size(24.dp)
                         .noRippleClickable {
-                            onPopularItemClick(popularProduct.title)
+                            onPopularItemClick(popularProduct.title, ProductListType.SEARCH)
                         }
                 )
                 Text(
@@ -77,7 +81,8 @@ fun PopularSearchItem(
 fun PopularSearchItemPreview() {
     FMTheme {
         PopularSearchItem(
-            popularProduct = PreviewMockData.defaultProduct
+            popularProduct = PreviewMockData.defaultProduct,
+            onPopularItemClick = { _, _ -> }
         )
     }
 }

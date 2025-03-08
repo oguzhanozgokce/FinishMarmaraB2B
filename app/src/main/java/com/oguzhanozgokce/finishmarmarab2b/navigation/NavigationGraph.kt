@@ -8,7 +8,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Address
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Cart
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.ForgotPassword
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Payment
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Products
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Profile
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Search
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Splash
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
@@ -81,7 +93,7 @@ fun NavigationGraph(
                     },
                     navigateToSearch = { navController.navigate(route = Search) },
                     navigateToCategoryProduct = { id, name, type ->
-                        navController.navigate(route = Products(id, name, type))
+                        navController.navigate(route = Products(id = id, name = name, type = type))
                     },
                     navigateToAllProduct = { type ->
                         navController.navigate(route = Products(type = type))
@@ -127,7 +139,15 @@ fun NavigationGraph(
             search(
                 actions = SearchNavActions(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToCart = { navController.navigate(route = Cart) }
+                    navigateToCart = { navController.navigate(route = Cart) },
+                    navigateToAllProducts = { searchQuery, type ->
+                        navController.navigate(
+                            route = Products(
+                                searchQuery = searchQuery,
+                                type = type
+                            )
+                        )
+                    }
                 )
             )
             splash(

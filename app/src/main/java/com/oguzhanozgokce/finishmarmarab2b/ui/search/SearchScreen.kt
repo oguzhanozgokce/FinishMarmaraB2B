@@ -37,7 +37,7 @@ fun SearchScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    navActions: SearchNavActions
+    navActions: SearchNavActions,
 ) {
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -81,7 +81,9 @@ fun SearchContent(
             .background(color = colors.background),
     ) {
         TopBarSearch(
+            searchValue = uiState.searchValue,
             onSearchValueChange = { onAction(UiAction.OnSearchValueChange(value = it)) },
+            onSearchClick = navActions.navigateToAllProducts,
             onBackClick = navActions.navigateToBack,
             onCartClick = navActions.navigateToCart,
             focusRequester = focusRequester
@@ -95,10 +97,11 @@ fun SearchContent(
         Spacer(modifier = Modifier.height(padding.dimension8))
         PopularSelection(
             popularProduct = uiState.top5productList,
-            onPopularItemClick = { }
+            onPopularItemClick = navActions.navigateToAllProducts
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -112,7 +115,8 @@ fun SearchScreenPreview(
             onAction = {},
             navActions = SearchNavActions(
                 navigateToBack = {},
-                navigateToCart = {}
+                navigateToCart = {},
+                navigateToAllProducts = { _, _ -> }
             )
         )
     }

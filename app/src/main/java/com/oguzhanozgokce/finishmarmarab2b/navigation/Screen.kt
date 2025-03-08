@@ -57,7 +57,8 @@ sealed interface Screen {
     data class Products(
         val id: Int? = null,
         val name: String? = null,
-        val type: ProductListType
+        val searchQuery: String? = null,
+        val type: ProductListType,
     ) : Screen
 
     companion object {

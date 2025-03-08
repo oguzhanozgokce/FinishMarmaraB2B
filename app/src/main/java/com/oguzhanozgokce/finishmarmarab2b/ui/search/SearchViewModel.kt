@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.search
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetTop5ProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiEffect
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val getTop5ProductsUseCase: GetTop5ProductsUseCase
+    private val getTop5ProductsUseCase: GetTop5ProductsUseCase,
+    private val getSearchProductUseCase: GetSearchProductUseCase,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {

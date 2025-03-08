@@ -11,6 +11,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Sell
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetBasketResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
@@ -147,4 +148,10 @@ fun GetBasketResponse.toProductOrNull(): Product? {
     return product?.mapToProduct()?.copy(
         count = count.orZero()
     )
+}
+
+fun GetSearchProductResponse.toProductOrNull(): List<Product> {
+    return list.orEmpty().map { productDto ->
+        productDto.mapToProduct()
+    }
 }

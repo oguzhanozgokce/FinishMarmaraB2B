@@ -7,12 +7,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun PopularSearchList(
     popularProduct: List<Product>,
-    onPopularItemClick: (String) -> Unit = {}
+    onPopularItemClick: (String, ProductListType) -> Unit
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),

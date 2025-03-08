@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
@@ -18,8 +19,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 @Composable
 fun PopularSelection(
     popularProduct: List<Product>,
-    onPopularItemClick: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    onPopularItemClick: (String, ProductListType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier

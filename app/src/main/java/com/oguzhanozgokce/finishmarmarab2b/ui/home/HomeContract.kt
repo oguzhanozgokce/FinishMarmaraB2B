@@ -28,6 +28,5 @@ object HomeContract {
 
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()
-        data object TimeOutError : UiEffect()
     }
 }

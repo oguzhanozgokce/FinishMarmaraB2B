@@ -86,12 +86,15 @@ class CartViewModel @Inject constructor(
     }
 
     private fun postProductBasket(productId: Int) {
+        updateState { copy(topLoading = true) }
         viewModelScope.launch {
             postProductBasketUseCase(productId).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                    updateState { copy(topLoading = false) }
                 },
                 onError = {
+                    updateState { copy(topLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(it))
                 }
             )

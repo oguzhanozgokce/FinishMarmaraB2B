@@ -32,7 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.conditional
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
@@ -95,7 +95,7 @@ fun FMSearchBar(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search Icon",
-                        tint = colors.text
+                        tint = colors.onBackground
                     )
                 },
                 trailingIcon = {
@@ -125,9 +125,9 @@ fun FMSearchBar(
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
                             errorIndicatorColor = Color.Transparent,
-                            focusedContainerColor = colors.white,
-                            unfocusedContainerColor = colors.white,
-                            disabledContainerColor = colors.white,
+                            focusedContainerColor = colors.cardBackground,
+                            unfocusedContainerColor = colors.cardBackground,
+                            disabledContainerColor = colors.cardBackground,
                             errorContainerColor = colors.error,
                             disabledLeadingIconColor = colors.text.copy(alpha = 0.5f),
                             errorLeadingIconColor = colors.text,
@@ -140,7 +140,7 @@ fun FMSearchBar(
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun QuizAppSearchBarPreview() {
     FMTheme {

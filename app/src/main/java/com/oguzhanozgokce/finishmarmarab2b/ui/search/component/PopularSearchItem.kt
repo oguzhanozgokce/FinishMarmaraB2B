@@ -8,16 +8,20 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -34,6 +38,9 @@ fun PopularSearchItem(
             .wrapContentSize()
             .padding(horizontal = padding.dimension4),
         shape = RoundedCornerShape(padding.dimension4),
+        cardColors = CardDefaults.cardColors(
+            containerColor = colors.cardBackground
+        ),
         content = {
             Row(
                 modifier = Modifier.padding(
@@ -63,4 +70,14 @@ fun PopularSearchItem(
             }
         }
     )
+}
+
+@PreviewLightDark
+@Composable
+fun PopularSearchItemPreview() {
+    FMTheme {
+        PopularSearchItem(
+            popularProduct = PreviewMockData.defaultProduct
+        )
+    }
 }

@@ -1,21 +1,18 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.products
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -32,7 +29,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.products.navigation.ProductsNavAct
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
-import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -41,18 +37,21 @@ fun ProductsScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    navActions: ProductsNavActions,
+    navActions: ProductsNavActions
 ) {
     when {
         uiState.isLoading -> LoadingBar()
-        else -> ProductsContent(uiState = uiState, navActions = navActions)
+        else -> ProductsContent(
+            uiState = uiState,
+            navActions = navActions
+        )
     }
 }
 
 @Composable
 fun ProductsContent(
     uiState: UiState,
-    navActions: ProductsNavActions
+    navActions: ProductsNavActions,
 ) {
     Scaffold(
         topBar = {
@@ -63,35 +62,26 @@ fun ProductsContent(
                 onSearchClick = navActions.navigateToSearch
             )
         },
-        content = { paddingValues ->
-            if (uiState.categoryProducts.isEmpty()) {
-                EmptyScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                )
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = colors.background)
-                        .padding(paddingValues)
-                ) {
-                    Text(
-                        text = uiState.categoryName,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(colors.white)
-                            .padding(padding.dimension8)
-                            .align(Alignment.CenterHorizontally),
-                        style = typography.titleMediumMedium().copy(
-                            color = colors.primary
-                        )
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.background)
+                .padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = colors.background)
+            ) {
+                if (uiState.typeList.isEmpty()) {
+                    EmptyScreen(
+                        modifier = Modifier.fillMaxSize()
                     )
-                    Spacer(modifier = Modifier.height(padding.dimension4))
-                    CategoryProductsList(
+                } else {
+                    ProductsList(
                         isLoading = uiState.isLoading,
-                        products = uiState.categoryProducts,
+                        products = uiState.typeList,
                         onNavigateToDetail = navActions.navigateToProductDetail,
                         onToggleFavorite = {},
                         modifier = Modifier
@@ -101,11 +91,11 @@ fun ProductsContent(
                 }
             }
         }
-    )
+    }
 }
 
 @Composable
-fun CategoryProductsList(
+fun ProductsList(
     isLoading: Boolean,
     products: List<Product>,
     modifier: Modifier = Modifier,

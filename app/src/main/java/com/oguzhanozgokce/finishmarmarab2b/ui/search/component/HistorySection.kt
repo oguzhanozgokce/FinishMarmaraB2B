@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.search.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
@@ -35,13 +37,13 @@ fun HistorySection(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = colors.white)
+            .background(color = colors.cardBackground)
             .padding(horizontal = padding.dimension16, vertical = padding.dimension8)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = colors.white),
+                .background(color = colors.cardBackground),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -52,6 +54,7 @@ fun HistorySection(
             TextButton(
                 onClick = { onClearAllClick() },
                 modifier = Modifier.wrapContentSize(),
+                contentPadding = PaddingValues(0.dp)
             ) {
                 Text(
                     text = stringResource(R.string.clear_all),
@@ -70,7 +73,7 @@ fun HistorySection(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun HistorySectionPreview() {
     FMTheme {

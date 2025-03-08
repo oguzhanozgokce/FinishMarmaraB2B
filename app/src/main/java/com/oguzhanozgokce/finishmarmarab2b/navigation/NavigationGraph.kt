@@ -80,8 +80,11 @@ fun NavigationGraph(
                         navController.navigate(route = Detail(id))
                     },
                     navigateToSearch = { navController.navigate(route = Search) },
-                    navigateToProduct = { id, name ->
-                        navController.navigate(route = Products(id, name))
+                    navigateToCategoryProduct = { id, name, type ->
+                        navController.navigate(route = Products(id, name, type))
+                    },
+                    navigateToAllProduct = { type ->
+                        navController.navigate(route = Products(type = type))
                     }
                 )
             )

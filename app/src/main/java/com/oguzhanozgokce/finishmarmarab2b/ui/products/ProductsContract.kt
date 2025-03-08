@@ -6,7 +6,10 @@ object ProductsContract {
     data class UiState(
         val isLoading: Boolean = false,
         val categoryProducts: List<Product> = emptyList(),
-        val categoryName: String = ""
+        val productList: List<Product> = emptyList(),
+        val typeList: List<Product> = emptyList(),
+        val categoryName: String = "",
+        val error: String = ""
     )
 
     sealed class UiAction {

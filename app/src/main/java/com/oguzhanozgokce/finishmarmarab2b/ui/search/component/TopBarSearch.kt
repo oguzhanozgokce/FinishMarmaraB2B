@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearchBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -43,7 +43,7 @@ fun TopBarSearch(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
 
@@ -65,13 +65,13 @@ fun TopBarSearch(
             Icon(
                 imageVector = Icons.Default.ShoppingCart,
                 contentDescription = "ShoppingCart",
-                tint = colors.black
+                tint = colors.onBackground
             )
         }
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun TopBarSearchPreview() {
     FMTheme {

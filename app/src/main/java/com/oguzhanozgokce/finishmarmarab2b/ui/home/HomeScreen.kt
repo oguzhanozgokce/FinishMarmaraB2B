@@ -120,7 +120,7 @@ fun HomeContent(
             CategoryList(
                 isLoading = uiState.isCategoryLoading,
                 categoryList = categoryItems,
-                onNavigateToCategory = homeNavActions.navigateToCategory,
+                onNavigateToCategory = homeNavActions.navigateToProduct,
             )
             ProductText()
             ProductList(
@@ -293,7 +293,7 @@ fun HomeScreenPreview(
             homeNavActions = HomeNavActions(
                 navigateToDetail = {},
                 navigateToSearch = {},
-                navigateToCategory = { _, _ -> }
+                navigateToProduct = { _, _ -> }
             )
         )
     }

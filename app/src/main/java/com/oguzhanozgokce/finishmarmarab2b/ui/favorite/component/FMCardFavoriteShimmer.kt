@@ -28,7 +28,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
-
 private const val ON_BACKGROUND_ALPHA = 0.1f
 
 @Composable

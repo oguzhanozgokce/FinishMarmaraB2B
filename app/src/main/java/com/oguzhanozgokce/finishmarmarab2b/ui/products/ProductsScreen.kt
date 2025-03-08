@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.category
+package com.oguzhanozgokce.finishmarmarab2b.ui.products
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -23,12 +23,12 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScr
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.ProductCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiAction
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiEffect
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.CategoryNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.component.TopBarDetail
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.component.ProductCardShimmer
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiEffect
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.navigation.ProductsNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -37,22 +37,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
-fun CategoryScreen(
+fun ProductsScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    navActions: CategoryNavActions,
+    navActions: ProductsNavActions,
 ) {
     when {
         uiState.isLoading -> LoadingBar()
-        else -> CategoryContent(uiState = uiState, navActions = navActions)
+        else -> ProductsContent(uiState = uiState, navActions = navActions)
     }
 }
 
 @Composable
-fun CategoryContent(
+fun ProductsContent(
     uiState: UiState,
-    navActions: CategoryNavActions
+    navActions: ProductsNavActions
 ) {
     Scaffold(
         topBar = {
@@ -140,15 +140,15 @@ fun CategoryProductsList(
 
 @Preview(showBackground = true)
 @Composable
-fun CategoryScreenPreview(
-    @PreviewParameter(CategoryScreenPreviewProvider::class) uiState: UiState,
+fun ProductsScreenPreview(
+    @PreviewParameter(ProductsScreenPreviewProvider::class) uiState: UiState,
 ) {
     FMTheme {
-        CategoryScreen(
+        ProductsScreen(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
-            navActions = CategoryNavActions(
+            navActions = ProductsNavActions(
                 navigateToBack = {},
                 navigateToCart = {},
                 navigateToProductDetail = {},

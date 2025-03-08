@@ -73,7 +73,6 @@ fun CategoryCardShimmer(
     }
 }
 
-
 @Composable
 fun CategoryListShimmer(
     modifier: Modifier = Modifier
@@ -92,7 +91,6 @@ fun CategoryListShimmer(
 }
 
 @PreviewLightDark
-
 @Composable
 fun CategoryCardShimmerPreview() {
     FMTheme {

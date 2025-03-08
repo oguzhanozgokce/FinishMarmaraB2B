@@ -14,8 +14,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.CategoryNavActions
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.navigation.categoryProducts
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
@@ -26,6 +24,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.login
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.navigation.password
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.PaymentNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.payment
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.navigation.ProductsNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.navigation.products
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.navigation.profile
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.SearchNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.search
@@ -80,8 +80,8 @@ fun NavigationGraph(
                         navController.navigate(route = Detail(id))
                     },
                     navigateToSearch = { navController.navigate(route = Search) },
-                    navigateToCategory = { id, name ->
-                        navController.navigate(route = CategoryProducts(id, name))
+                    navigateToProduct = { id, name ->
+                        navController.navigate(route = Products(id, name))
                     }
                 )
             )
@@ -131,8 +131,8 @@ fun NavigationGraph(
                 onNavigateToHome = { navController.navigateClearingStack(Home, Splash) },
                 onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Splash) }
             )
-            categoryProducts(
-                actions = CategoryNavActions(
+            products(
+                actions = ProductsNavActions(
                     navigateToBack = { navController.navigateUp() },
                     navigateToCart = { navController.navigate(route = Cart) },
                     navigateToSearch = { navController.navigate(route = Search) },

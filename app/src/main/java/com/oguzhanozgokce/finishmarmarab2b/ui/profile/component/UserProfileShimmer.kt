@@ -86,7 +86,6 @@ fun UserProfileShimmer(
     }
 }
 
-
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun UserProfileShimmerPreview() {

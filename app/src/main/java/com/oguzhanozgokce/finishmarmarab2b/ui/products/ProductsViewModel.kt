@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.category
+package com.oguzhanozgokce.finishmarmarab2b.ui.products
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -7,20 +7,20 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCategoryProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiAction
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiEffect
-import com.oguzhanozgokce.finishmarmarab2b.ui.category.CategoryContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiEffect
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
+class ProductsViewModel @Inject constructor(
     private val getCategoryProductsUseCase: GetCategoryProductsUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    private val args = savedStateHandle.toRoute<Screen.CategoryProducts>()
+    private val args = savedStateHandle.toRoute<Screen.Products>()
 
     init {
         updateState { copy(categoryName = args.name) }

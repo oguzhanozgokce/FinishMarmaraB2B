@@ -20,4 +20,3 @@ data class CreditCartDto(
     @SerializedName("card_type")
     val cardType: String? = null
 )
-

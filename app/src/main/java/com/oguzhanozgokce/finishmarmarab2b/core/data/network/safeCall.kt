@@ -6,6 +6,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException
+import java.net.SocketTimeoutException
 
 suspend fun <T> safeApiCall(
     execute: suspend () -> Response<ApiResponse<T>>
@@ -28,6 +29,8 @@ suspend fun <T> safeApiCall(
         }
     } catch (e: IOException) {
         Resource.Error("Network error: ${e.localizedMessage}")
+    } catch (e: SocketTimeoutException) {
+        Resource.Error("", SocketTimeoutException("Timeout"))
     } catch (e: Exception) {
         Resource.Error("Unexpected error: ${e.localizedMessage}")
     }

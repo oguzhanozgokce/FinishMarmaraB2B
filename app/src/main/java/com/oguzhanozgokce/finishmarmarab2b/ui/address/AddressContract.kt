@@ -31,10 +31,10 @@ object AddressContract {
         val isEnableSaveButton: Boolean
             get() = with(this) {
                 addressName.isNotEmpty() &&
-                        addressSurname.isNotEmpty() &&
-                        addressTel.isNotEmpty() &&
-                        addressTitle.isNotEmpty() &&
-                        isEnableAddressTitle
+                    addressSurname.isNotEmpty() &&
+                    addressTel.isNotEmpty() &&
+                    addressTitle.isNotEmpty() &&
+                    isEnableAddressTitle
             }
     }
 

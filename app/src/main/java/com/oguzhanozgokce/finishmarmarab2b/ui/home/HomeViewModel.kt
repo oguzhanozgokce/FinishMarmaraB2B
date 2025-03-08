@@ -1,8 +1,8 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.home
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.oguzhanozgokce.finishmarmarab2b.core.common.Constant
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(
     private fun fetchProduct() {
         viewModelScope.launch {
             updateState { copy(isProductLoading = true) }
-            getProductsUseCase().fold(
+            getProductsUseCase(Constant.PAGE_LIMIT).fold(
                 onSuccess = { paginationData ->
                     updateState {
                         copy(
@@ -61,7 +61,6 @@ class HomeViewModel @Inject constructor(
                 onError = { error ->
                     updateState { copy(error = error, isProductLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
-                    Log.e("HomeViewModel", "Error fetching products: $error")
                 }
             )
         }

@@ -68,7 +68,6 @@ fun ProductQuestionsSection(
     }
 }
 
-
 @Composable
 fun ProductQuestionsShimmer(
     modifier: Modifier = Modifier

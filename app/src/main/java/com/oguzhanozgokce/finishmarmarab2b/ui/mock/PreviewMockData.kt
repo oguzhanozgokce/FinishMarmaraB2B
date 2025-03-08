@@ -254,6 +254,4 @@ object PreviewMockData {
         addressTitle = "Ev",
         nameSurname = "Ali Yılmaz"
     )
-
-
 }

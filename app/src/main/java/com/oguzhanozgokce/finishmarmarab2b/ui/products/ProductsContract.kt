@@ -1,8 +1,8 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.category
+package com.oguzhanozgokce.finishmarmarab2b.ui.products
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 
-object CategoryContract {
+object ProductsContract {
     data class UiState(
         val isLoading: Boolean = false,
         val categoryProducts: List<Product> = emptyList(),

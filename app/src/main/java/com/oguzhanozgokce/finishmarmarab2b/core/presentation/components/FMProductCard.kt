@@ -221,7 +221,6 @@ fun ProductList(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductCard() {

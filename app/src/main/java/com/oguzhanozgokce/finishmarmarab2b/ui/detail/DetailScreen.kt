@@ -138,7 +138,7 @@ fun DetailContent(
                         rate = product.rate,
                         commentCount = product.commentCount,
                         comments = commentItem,
-                        onSeeAllClick = {}
+                        onSeeAllClick = navActions.navigationEToEvaluation
                     )
                     Spacer(modifier = Modifier.height(padding.dimension8))
                 }
@@ -160,7 +160,8 @@ fun DetailScreenPreview(
             navActions = DetailNavActions(
                 navigateToBack = {},
                 navigateToCart = {},
-                navigateToSearch = {}
+                navigateToSearch = {},
+                navigationEToEvaluation = {}
             )
         )
     }

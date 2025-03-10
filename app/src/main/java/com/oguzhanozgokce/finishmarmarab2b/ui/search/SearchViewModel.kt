@@ -55,7 +55,6 @@ class SearchViewModel @Inject constructor(
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))
-
                 }
             )
         }

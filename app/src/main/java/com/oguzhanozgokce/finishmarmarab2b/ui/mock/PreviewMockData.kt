@@ -126,6 +126,24 @@ object PreviewMockData {
             userName = "B** B**",
             sellerName = "Nimbus Market",
             sellerImageUrl = "https://upload.wikimedia.org/wikipedia/tr/7/70/Marmara_%C3%9Cniversitesi_logo.png"
+        ),
+        QuestionAnswer(
+            id = 4,
+            question = "Bu ürünün garanti süresi ne kadar ve garanti kapsamında hangi durumlar yer alıyor? Ayrıca, garanti süresi boyunca kullanıcı hatası sayılabilecek durumlar neler olur?",
+            answer = "Bu ürün, üretici firma tarafından **2 yıl resmi garanti** kapsamında sunulmaktadır. Garanti süresi boyunca, üretici hatalarından kaynaklanan arızalar ve bileşen sorunları ücretsiz olarak giderilir. Ancak, kullanıcı hatasına bağlı olan ekran kırılmaları, sıvı teması, aşırı sıcaklığa maruz bırakma ve yanlış kullanım nedeniyle oluşabilecek mekanik arızalar garanti kapsamına girmez. Eğer ürünle ilgili herhangi bir garanti talebiniz olursa, yetkili servis noktalarına başvurabilirsiniz veya müşteri hizmetlerimizle iletişime geçebilirsiniz.",
+            date = "23 Ocak 2025 | 09:45",
+            userName = "C** C**",
+            sellerName = "Nimbus Market",
+            sellerImageUrl = "https://upload.wikimedia.org/wikipedia/tr/7/70/Marmara_%C3%9Cniversitesi_logo.png"
+        ),
+        QuestionAnswer(
+            id = 5,
+            question = "Bu telefonun kamera özellikleri nelerdir? Gece çekim modu var mı ve düşük ışıkta nasıl bir performans sunar? Ayrıca, video kayıt yetenekleri hakkında bilgi verebilir misiniz?",
+            answer = "Bu model, **50 MP ana kamera, 12 MP ultra geniş açılı lens ve 10 MP telefoto lens** olmak üzere üçlü kamera sistemine sahiptir. **Gece modu** sayesinde düşük ışık koşullarında bile net ve parlak fotoğraflar çekebilirsiniz. Yapay zeka destekli görüntü işleme teknolojisi sayesinde gürültü azaltma ve kontrast optimizasyonu sağlanarak gece çekimlerinde daha canlı renkler elde edilir. Video kayıt özelliklerine gelince, **4K 60 FPS** ve **1080p 240 FPS ağır çekim** destekleri bulunmaktadır. Aynı zamanda **OIS (Optik Görüntü Sabitleme)** özelliği sayesinde hareketli sahnelerde bile net görüntüler elde edebilirsiniz.",
+            date = "24 Ocak 2025 | 12:30",
+            userName = "D** D**",
+            sellerName = "Nimbus Market",
+            sellerImageUrl = "https://upload.wikimedia.org/wikipedia/tr/7/70/Marmara_%C3%9Cniversitesi_logo.png"
         )
     )
 

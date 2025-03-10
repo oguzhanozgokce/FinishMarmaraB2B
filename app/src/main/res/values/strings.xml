@@ -73,4 +73,7 @@
     <string name="delivery_address">Delivery Address</string>
     <string name="save_card_prompt">Would you like to save your card details for your next purchase?</string>
     <string name="card_title">Card Title</string>
+    <string name="product_evaluation">Product Evaluation</string>
+    <string name="search">Search icon</string>
+    <string name="seller_image">Seller Image</string>
 </resources>

@@ -138,7 +138,6 @@ fun EvaluationItem(
     Spacer(modifier = Modifier.height(FMTheme.padding.dimension8))
 }
 
-
 @PreviewLightDark
 @Composable
 fun EvaluationItemPreview() {

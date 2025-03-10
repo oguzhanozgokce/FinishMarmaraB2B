@@ -8,19 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Address
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Cart
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.ForgotPassword
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Payment
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Products
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Profile
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Search
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Splash
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
@@ -28,6 +16,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
+import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.evaluation
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
@@ -132,7 +122,8 @@ fun NavigationGraph(
                 actions = DetailNavActions(
                     navigateToBack = { navController.navigateUp() },
                     navigateToCart = { navController.navigate(route = Cart) },
-                    navigateToSearch = { navController.navigate(route = Search) }
+                    navigateToSearch = { navController.navigate(route = Search) },
+                    navigationEToEvaluation = { navController.navigate(route = Evaluation) }
                 )
             )
             password()
@@ -162,6 +153,12 @@ fun NavigationGraph(
                     navigateToProductDetail = { id ->
                         navController.navigate(route = Detail(id))
                     }
+                )
+            )
+            evaluation(
+                actions = EvaluationNavActions(
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToSearch = { navController.navigate(route = Search) }
                 )
             )
         }

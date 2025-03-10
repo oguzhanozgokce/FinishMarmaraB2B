@@ -18,8 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -37,7 +39,7 @@ fun SellerSection(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(colors.white)
+            .background(colors.cardBackground)
             .padding(padding.dimension16),
         horizontalArrangement = Arrangement.spacedBy(padding.dimension8)
     ) {
@@ -87,5 +89,18 @@ fun SellerSection(
                 style = typography.headSmallMedium().copy(color = Color.Red)
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun SellerSectionPreview() {
+    FMTheme {
+        SellerSection(
+            sellerName = "Apple",
+            sellerImageUrl = "",
+            followerCount = 15600,
+            onFollowClick = {}
+        )
     }
 }

@@ -71,7 +71,7 @@ fun FMOutlinedButton(
     modifier: Modifier = Modifier,
     borderColor: Color = colors.primary,
     textColor: Color = colors.primary,
-    backgroundColor: Color = colors.white,
+    backgroundColor: Color = colors.cardBackground,
     enabled: Boolean = true,
     height: Dp = padding.dimension56,
     elevation: ButtonElevation? = null,

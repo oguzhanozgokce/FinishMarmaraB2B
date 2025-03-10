@@ -22,7 +22,7 @@ class ProductsViewModel @Inject constructor(
     private val getCategoryProductsUseCase: GetCategoryProductsUseCase,
     private val getProductsUseCase: GetProductsUseCase,
     private val getSearchProductUseCase: GetSearchProductUseCase,
-     savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private val args = savedStateHandle.toRoute<Screen.Products>()

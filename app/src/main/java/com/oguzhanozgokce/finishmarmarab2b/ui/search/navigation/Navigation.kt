@@ -13,7 +13,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchViewModel
 data class SearchNavActions(
     val navigateToBack: () -> Unit,
     val navigateToCart: () -> Unit,
-    val navigateToAllProducts: (name:String,type:ProductListType) -> Unit
+    val navigateToAllProducts: (name: String, type: ProductListType) -> Unit
 )
 
 fun NavGraphBuilder.search(actions: SearchNavActions) {

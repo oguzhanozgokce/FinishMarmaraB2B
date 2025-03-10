@@ -164,6 +164,6 @@ interface ApiService {
     @GET(GET_PRODUCTS)
     suspend fun getSearchProducts(
         @Query("user_id") userId: Int,
-        @Query("search") searchQuery: String,
+        @Query("searchTerm") searchQuery: String,
     ): Response<ApiResponse<GetSearchProductResponse>>
 }

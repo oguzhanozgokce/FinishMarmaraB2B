@@ -146,7 +146,6 @@ fun EvaluationItemShimmer(
                         .shimmer(true)
                 )
                 Spacer(modifier = Modifier.height(FMTheme.padding.dimension4))
-
             }
         }
     }

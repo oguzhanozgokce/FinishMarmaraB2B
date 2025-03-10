@@ -54,6 +54,9 @@ sealed interface Screen {
     data object Address : Screen
 
     @Serializable
+    data object Evaluation : Screen
+
+    @Serializable
     data class Products(
         val id: Int? = null,
         val name: String? = null,

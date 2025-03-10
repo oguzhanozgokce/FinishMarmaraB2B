@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation
+package com.oguzhanozgokce.finishmarmarab2b.ui.evaluation
 
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -6,22 +6,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
-import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailScreen
-import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailViewModel
 
-data class DetailNavActions(
+data class EvaluationNavActions(
     val navigateToBack: () -> Unit,
-    val navigateToCart: () -> Unit,
     val navigateToSearch: () -> Unit,
-    val navigationEToEvaluation: () -> Unit
 )
 
-fun NavGraphBuilder.detail(actions: DetailNavActions) {
-    composable<Screen.Detail> {
-        val viewModel: DetailViewModel = hiltViewModel()
+fun NavGraphBuilder.evaluation(actions: EvaluationNavActions) {
+    composable<Screen.Evaluation> {
+        val viewModel: EvaluationViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
-        DetailScreen(
+        EvaluationScreen(
             uiState = uiState,
             uiEffect = uiEffect,
             onAction = viewModel::onAction,

@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Address
 
 data class AddressNavAction(
     val navigateToBack: () -> Unit,
@@ -15,7 +15,7 @@ data class AddressNavAction(
 fun NavGraphBuilder.address(
     navAction: AddressNavAction
 ) {
-    composable<Screen.Address> {
+    composable<Address> {
         val viewModel: AddressViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

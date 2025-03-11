@@ -1,14 +1,14 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.*
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
@@ -41,11 +41,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.navigation.welcome
 fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    isBottomBarVisible: Boolean
 ) {
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
+        modifier = Modifier.imePadding(),
         bottomBar = {
-            if (Screen.showBottomBar(currentRoute)) {
+            if (isBottomBarVisible) {
                 FMBottomBar(navController = navController)
             }
         }
@@ -53,6 +54,7 @@ fun NavigationGraph(
         NavHost(
             modifier = Modifier
                 .then(modifier)
+                .consumeWindowInsets(innerPadding)
                 .padding(innerPadding),
             navController = navController,
             startDestination = Splash,

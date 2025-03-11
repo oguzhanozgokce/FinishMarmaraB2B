@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.profile
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMNotification
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIcon
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileContract.UiEffect
@@ -33,6 +35,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserNameSurname
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.component.UserProfileShimmer
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -87,7 +90,22 @@ fun ProfileContent(
                     UserNameSurname(uiState = uiState)
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                FMNotification()
+                FMIcon(
+                    backgroundColor = colors.cardBackground,
+                    boxSize = padding.dimension40,
+                    onClick = { },
+                    icon = {
+                        Icon(
+                            imageVector = icons.notification,
+                            contentDescription = "Notifications",
+                            tint = colors.primary
+                        )
+                    },
+                    border = BorderStroke(
+                        width = padding.dimension1,
+                        color = colors.primary.copy(alpha = 0.5f)
+                    )
+                )
             }
             HorizontalDivider(
                 modifier = Modifier

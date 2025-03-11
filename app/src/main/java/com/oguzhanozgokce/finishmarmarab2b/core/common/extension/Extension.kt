@@ -16,7 +16,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Pagi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
@@ -140,14 +139,16 @@ fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
 }
 
 fun NavController.navigateClearingStack(
-    route: Screen,
-    popUpToRoute: Screen,
+    route: Any,
+    popUpToRoute: Any,
     inclusive: Boolean = true
 ) {
     navigate(route) {
         popUpTo(popUpToRoute) {
             this.inclusive = inclusive
         }
+        launchSingleTop = true
+        restoreState = true
     }
 }
 

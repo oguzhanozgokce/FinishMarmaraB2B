@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.login
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
@@ -24,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,12 +37,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginContract.UiAction
@@ -108,11 +111,18 @@ fun LoginContent(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        BackIconButton(
-            onClick = loginNavActions.navigateToBack,
+        FMIconButton(
             modifier = Modifier
-                .padding(vertical = padding.dimension8)
-                .align(Alignment.Start)
+                .padding(start = padding.dimension8)
+                .align(Alignment.Start),
+            border = BorderStroke(
+                width = padding.dimension1,
+                color = colors.primary
+            ),
+            iconVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            tintColor = colors.primary,
+            shape = RoundedCornerShape(padding.dimension16),
+            onClick = loginNavActions.navigateToBack
         )
         Spacer(modifier = Modifier.height(padding.dimension20))
         Text(
@@ -125,7 +135,13 @@ fun LoginContent(
             value = uiState.email,
             onValueChange = { onAction(UiAction.EmailChanged(it)) },
             label = "Email",
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Email",
+                    tint = colors.onBackground
+                )
+            }
         )
         Spacer(modifier = Modifier.height(padding.dimension16))
         FMOutlineTextField(
@@ -136,7 +152,8 @@ fun LoginContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "Password"
+                    contentDescription = "Password",
+                    tint = colors.onBackground
                 )
             },
         )
@@ -201,10 +218,16 @@ fun LoginContent(
                 .padding(top = padding.dimension16),
             horizontalArrangement = Arrangement.Center
         ) {
-            CustomIconButton(
+            FMIconButton(
                 iconResId = R.drawable.ic_google,
-                onClickAction = { onAction(UiAction.LoginClicked) },
-                modifier = Modifier.align(Alignment.CenterVertically)
+                onClick = { onAction(UiAction.LoginClicked) },
+                modifier = Modifier.align(Alignment.CenterVertically),
+                tintColor = Color.Unspecified,
+                border = BorderStroke(
+                    width = padding.dimension1,
+                    color = colors.primary
+                ),
+                shape = RoundedCornerShape(padding.dimension16)
             )
         }
     }

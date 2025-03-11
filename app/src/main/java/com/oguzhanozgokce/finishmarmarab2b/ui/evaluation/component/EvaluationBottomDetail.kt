@@ -12,13 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun EvaluationBottomDetail(
-    onAddToCart: () -> Unit,
+    product: Product,
+    onAddToCart: (Int) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -37,7 +40,7 @@ fun EvaluationBottomDetail(
         Spacer(modifier = Modifier.width(padding.dimension8))
         FMButton(
             text = "Add to basket",
-            onClick = { onAddToCart() },
+            onClick = { onAddToCart(product.id) },
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -52,6 +55,7 @@ fun EvaluationBottomDetail(
 fun EvaluationContentPreview() {
     FMTheme {
         EvaluationBottomDetail(
+            product = PreviewMockData.defaultProduct,
             onAddToCart = {}
         )
     }

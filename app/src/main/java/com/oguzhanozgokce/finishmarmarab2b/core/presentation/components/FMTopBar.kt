@@ -37,7 +37,7 @@ fun FMTopBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onNavigationClick) {
+            IconButton(onClick = { onNavigationClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),

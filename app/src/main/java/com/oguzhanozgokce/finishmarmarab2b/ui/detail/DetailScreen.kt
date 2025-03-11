@@ -123,7 +123,7 @@ fun DetailContent(
                     ProductDescriptionSection(product = product)
                     Spacer(modifier = Modifier.height(padding.dimension8))
                     SellerSection(
-                        sellerName = product.seller?.name,
+                        sellerName = product.seller.name,
                         sellerImageUrl = product.sellerImageUrl,
                         followerCount = 15600,
                         onFollowClick = { }

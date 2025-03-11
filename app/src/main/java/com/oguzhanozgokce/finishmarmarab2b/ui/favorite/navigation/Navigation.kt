@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Favorite
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteViewModel
@@ -14,7 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteViewModel
 fun NavGraphBuilder.favorite(
     onNavigateToDetail: (Int) -> Unit
 ) {
-    composable<Screen.Favorite> {
+    composable<Favorite> {
         val viewModel: FavoriteViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

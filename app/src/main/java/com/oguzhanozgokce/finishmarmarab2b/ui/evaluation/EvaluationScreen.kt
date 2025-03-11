@@ -21,14 +21,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMTopBar
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.component.EvaluationBottomDetail
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.component.EvaluationList
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -43,26 +42,24 @@ fun EvaluationScreen(
     navActions: EvaluationNavActions
 ) {
     val context = LocalContext.current
-    uiEffect.CollectWithLifecycle { uiEffect ->
-        when (uiEffect) {
-            is UiEffect.ShowToast -> context.showToast(uiEffect.message)
+    uiEffect.CollectWithLifecycle { effect ->
+        when (effect) {
+            is UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
 
-    when {
-        uiState.isLoading -> LoadingBar()
-        uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> EvaluationContent(
-            uiState = uiState,
-            navActions = navActions
-        )
-    }
+    EvaluationContent(
+        uiState = uiState,
+        navActions = navActions,
+        onAction = onAction
+    )
 }
 
 @Composable
 fun EvaluationContent(
     uiState: UiState,
-    navActions: EvaluationNavActions
+    navActions: EvaluationNavActions,
+    onAction: (UiAction) -> Unit
 ) {
     Scaffold(
         modifier = Modifier,
@@ -70,7 +67,7 @@ fun EvaluationContent(
             FMTopBar(
                 title = stringResource(R.string.product_evaluation),
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = { navActions.navigateToSearch() }) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = stringResource(R.string.search),
@@ -78,12 +75,13 @@ fun EvaluationContent(
                         )
                     }
                 },
-                onNavigationClick = {}
+                onNavigationClick = { navActions.navigateToBack() }
             )
         },
         bottomBar = {
             EvaluationBottomDetail(
-                onAddToCart = { }
+                product = PreviewMockData.defaultProduct,
+                onAddToCart = { onAction(UiAction.PostProductBasket(it)) }
             )
         },
         containerColor = colors.cardBackground,

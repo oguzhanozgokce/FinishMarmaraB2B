@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.getActivity
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Welcome
 import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.WelcomeScreen
 
 data class WelcomeNavActions(
@@ -14,7 +14,7 @@ data class WelcomeNavActions(
 )
 
 fun NavGraphBuilder.welcome(actions: WelcomeNavActions) {
-    composable<Screen.Welcome> {
+    composable<Welcome> {
         val context = LocalContext.current
         BackHandler {
             context.getActivity()?.finish()

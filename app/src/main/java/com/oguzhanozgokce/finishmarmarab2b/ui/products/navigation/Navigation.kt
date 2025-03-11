@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Products
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsViewModel
 
@@ -17,7 +17,7 @@ data class ProductsNavActions(
 )
 
 fun NavGraphBuilder.products(actions: ProductsNavActions) {
-    composable<Screen.Products> {
+    composable<Products> {
         val viewModel: ProductsViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

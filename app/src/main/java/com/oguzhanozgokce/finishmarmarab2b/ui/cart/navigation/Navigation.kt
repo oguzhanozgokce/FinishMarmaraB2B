@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartViewModel
 
@@ -17,7 +17,7 @@ data class CartNavActions(
 fun NavGraphBuilder.cart(
     actions: CartNavActions
 ) {
-    composable<Screen.Cart> {
+    composable<Cart> {
         val viewModel: CartViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

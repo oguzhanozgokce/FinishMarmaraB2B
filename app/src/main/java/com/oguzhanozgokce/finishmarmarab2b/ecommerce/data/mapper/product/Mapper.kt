@@ -7,6 +7,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Cate
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SearchHistoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetBasketResponse
@@ -16,6 +17,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import java.time.LocalDateTime
@@ -155,3 +157,8 @@ fun GetSearchProductResponse.toProductOrNull(): List<Product> {
         productDto.mapToProduct()
     }
 }
+
+fun SearchHistoryDto.toSearchHistoryDomain() = SearchHistory(
+    id = this.id.orZero(),
+    searchHistory = this.searchHistory.orEmpty()
+)

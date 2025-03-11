@@ -38,7 +38,6 @@ fun EmptyCartContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
         FMAnimatedPreloader(
             modifier = Modifier.size(300.dp),
             lottieFile = R.raw.animation_basket_empty,

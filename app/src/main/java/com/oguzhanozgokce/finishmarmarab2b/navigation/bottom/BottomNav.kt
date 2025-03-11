@@ -19,9 +19,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
@@ -30,16 +31,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
 @Composable
 fun FMBottomBar(
-    navController: NavHostController,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val bottomScreens = listOf(
-        BottomScreens.HomeBottom,
-        BottomScreens.FavoriteBottom,
-        BottomScreens.CartBottom,
-        BottomScreens.ProfileBottom
-    )
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -53,30 +47,27 @@ fun FMBottomBar(
             contentColor = colors.text
         ) {
             bottomScreens.forEach { screen ->
-                val isSelected = currentDestination?.hierarchy?.any {
-                    it.route == screen.route::class.qualifiedName
-                } == true
-                Log.d("NavDebug", "Screen: ${screen.route}, isSelected: $isSelected")
+                val selected =
+                    currentDestination?.hierarchy?.any { it.hasRoute(screen.route::class) } == true
+                Log.d("NavDebug", "Screen: ${screen.route}, isSelected: $selected")
                 NavigationBarItem(
                     icon = {
                         Icon(
                             imageVector = ImageVector.vectorResource(screen.icon),
                             contentDescription = screen.name,
-                            tint = if (isSelected) colors.primary else colors.onBackground,
+                            tint = if (selected) colors.primary else colors.onBackground,
                             modifier = Modifier.height(20.dp)
                         )
                     },
                     label = {
                         Text(
                             text = screen.name,
-                            color = if (isSelected) colors.primary else colors.text,
+                            color = if (selected) colors.primary else colors.text,
                             style = FMTheme.typography.bodySmallNormal()
                         )
                     },
-                    selected = isSelected,
+                    selected = selected,
                     onClick = {
-                        Log.d("NavDebug", "Selected screen: $isSelected")
-                        if (isSelected) return@NavigationBarItem
                         Log.d("NavDebug", "Navigating to: ${screen.route}")
                         navController.navigate(screen.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
@@ -86,7 +77,7 @@ fun FMBottomBar(
                             restoreState = true
                         }
                     },
-                    enabled = !isSelected,
+                    enabled = !selected,
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = colors.primary,
                         unselectedIconColor = colors.white,

@@ -4,11 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -28,6 +30,7 @@ fun FMAnimatedPreloader(
     lottieFile: Int = R.raw.animation_welcome,
     height: Dp = padding.dimension200,
     backgroundColor: Color = colors.background,
+    shape: Shape = CircleShape,
 ) {
     val preloaderLottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(lottieFile)
@@ -43,7 +46,7 @@ fun FMAnimatedPreloader(
     Box(
         modifier = modifier
             .height(height)
-            .background(color = backgroundColor),
+            .background(color = backgroundColor, shape = shape),
         contentAlignment = Alignment.Center,
     ) {
         LottieAnimation(

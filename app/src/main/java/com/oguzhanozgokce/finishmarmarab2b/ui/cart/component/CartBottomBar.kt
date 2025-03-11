@@ -28,7 +28,8 @@ fun CartBottomBar(
     modifier: Modifier = Modifier,
     totalPrice: Double = 0.0,
     buttonText: String = "Confirm Cart",
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    isEnabled: Boolean = true
 ) {
     val formatter = DecimalFormat("#,###.00")
     Box(
@@ -75,7 +76,8 @@ fun CartBottomBar(
                 backgroundColor = colors.primary,
                 textColor = colors.text,
                 height = 40.dp,
-                elevation = null
+                elevation = null,
+                enabled = isEnabled
             )
         }
         FMHorizontalDivider(

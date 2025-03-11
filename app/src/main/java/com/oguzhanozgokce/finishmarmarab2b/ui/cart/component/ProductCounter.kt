@@ -69,7 +69,7 @@ fun ProductCounter(
         ) {
             IconButton(
                 onClick = {
-                    if (product.count > ONE) onDelete()
+                    if (product.count >= ONE) onDelete()
                 },
                 modifier = Modifier.size(padding.dimension16)
             ) {

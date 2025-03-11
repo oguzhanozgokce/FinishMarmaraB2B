@@ -1,16 +1,16 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.mock
 
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
 import java.time.LocalDateTime
 
 object PreviewMockData {
@@ -157,12 +157,22 @@ object PreviewMockData {
     )
 
     val historyList = listOf(
-        HistorySearch(text = "Iphone 13"),
-        HistorySearch(text = "Headphones"),
-        HistorySearch(text = "Camera"),
-        HistorySearch(text = "Iphone 13"),
-        HistorySearch(text = "Headphones"),
-        HistorySearch(text = "Camera"),
+        SearchHistory(id = 2, searchHistory = "Iphone 13"),
+        SearchHistory(id = 3, searchHistory = "Headphones"),
+        SearchHistory(id = 4, searchHistory = "Camera"),
+        SearchHistory(id = 5, searchHistory = "Iphone 13"),
+        SearchHistory(id = 6, searchHistory = "Headphones"),
+        SearchHistory(id = 7, searchHistory = "Camera"),
+    )
+
+    val defaultSearchHistory = SearchHistory(
+        id = 2,
+        searchHistory = "Iphone 13"
+    )
+
+    val defaultLongSearchHistory = SearchHistory(
+        id = 3,
+        searchHistory = "HeadphonesHeadphones"
     )
 
     val sampleCities = listOf(
@@ -219,8 +229,8 @@ object PreviewMockData {
         cardType = CardType.VISA
     )
 
-    val defaultAddressList = listOf(
-        Address(
+    val defaultLocationLists = listOf(
+        Location(
             id = 1,
             userId = 101,
             province = "İstanbul",
@@ -230,7 +240,7 @@ object PreviewMockData {
             addressTitle = "Ev",
             nameSurname = "Ali Yılmaz"
         ),
-        Address(
+        Location(
             id = 2,
             userId = 102,
             province = "Ankara",
@@ -240,7 +250,7 @@ object PreviewMockData {
             addressTitle = "İş",
             nameSurname = "Ayşe Demir"
         ),
-        Address(
+        Location(
             id = 3,
             userId = 103,
             province = "İzmir",
@@ -250,7 +260,7 @@ object PreviewMockData {
             addressTitle = "Aile Evi",
             nameSurname = "Mehmet Can"
         ),
-        Address(
+        Location(
             id = 4,
             userId = 104,
             province = "Bursa",
@@ -262,7 +272,7 @@ object PreviewMockData {
         )
     )
 
-    val defaultAddress = Address(
+    val defaultLocation = Location(
         id = 1,
         userId = 101,
         province = "İstanbul",

@@ -1,9 +1,12 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.address
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetCitiesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetDistrictsForCityUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.PostSaveLocationUseCase
@@ -18,8 +21,15 @@ import javax.inject.Inject
 class AddressViewModel @Inject constructor(
     private val getCitiesUseCase: GetCitiesUseCase,
     private val getDistrictForCityUseCase: GetDistrictsForCityUseCase,
-    private val saveLocationUseCase: PostSaveLocationUseCase
+    private val saveLocationUseCase: PostSaveLocationUseCase,
+    savedStateHandle: SavedStateHandle
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
+
+    private val args = savedStateHandle.toRoute<Location>()
+
+    init {
+        updateUiStateWithLocation(args)
+    }
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
@@ -43,6 +53,20 @@ class AddressViewModel @Inject constructor(
             is UiAction.LoadProvinces -> loadProvinces()
             is UiAction.LoadCities -> loadProvinces()
             is UiAction.SaveAddress -> saveAddress()
+        }
+    }
+
+    private fun updateUiStateWithLocation(location: Location) {
+        updateState {
+            copy(
+                selectedProvince = provinces.find { it.name == location.province },
+                selectedCity = location.city,
+                openAddress = location.openAddress,
+                addressTitle = location.addressTitle,
+                addressTel = location.addressTel,
+                addressName = location.nameSurname.split(" ")[0],
+                addressSurname = location.nameSurname.split(" ")[1]
+            )
         }
     }
 

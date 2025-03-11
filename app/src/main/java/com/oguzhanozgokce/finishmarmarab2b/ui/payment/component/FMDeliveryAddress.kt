@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -28,7 +28,9 @@ fun FMDeliveryAddress(
     uiState: PaymentContract.UiState,
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit,
-    onAddressClick: (Address) -> Unit
+    onAddressClick: (Location) -> Unit,
+    onEditClick: (Location) -> Unit,
+    onDeleteClick: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -70,13 +72,15 @@ fun FMDeliveryAddress(
                 )
             }
         }
-        if (uiState.addressList.isNotEmpty()) {
+        if (uiState.locationList.isNotEmpty()) {
             FMHorizontalDivider()
             FMAddressList(
                 modifier = Modifier.padding(top = padding.dimension16),
-                addresses = uiState.addressList,
+                locations = uiState.locationList,
                 onSelected = { onAddressClick(it) },
-                selectedAddress = uiState.selectedAddress
+                selectedLocation = uiState.selectedLocation,
+                onEditClick = { onEditClick(it) },
+                onDeleteClick = { onDeleteClick(it) }
             )
         }
     }
@@ -89,7 +93,9 @@ fun FMDeliveryAddressPreview() {
         FMDeliveryAddress(
             onAddClick = {},
             uiState = PaymentContract.UiState(),
-            onAddressClick = {}
+            onAddressClick = {},
+            onEditClick = {},
+            onDeleteClick = {}
         )
     }
 }

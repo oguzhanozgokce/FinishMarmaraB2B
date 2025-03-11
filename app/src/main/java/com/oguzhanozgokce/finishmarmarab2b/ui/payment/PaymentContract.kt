@@ -1,7 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
@@ -14,8 +14,8 @@ object PaymentContract {
         val totalCartCount: Int = 0,
         val cities: List<Province> = emptyList(),
         val districts: List<String> = emptyList(),
-        val addressList: List<Address> = emptyList(),
-        val selectedAddress: Address? = null,
+        val locationList: List<Location> = emptyList(),
+        val selectedLocation: Location? = null,
         val selectedCard: CreditCart? = null,
         val errorMessage: String? = null,
         val cardNumber: String = "",
@@ -37,11 +37,12 @@ object PaymentContract {
         data object OnCheckSaveCard : UiAction()
         data class OnChangeCardTitle(val cardTitle: String) : UiAction()
         data class OnChangeSelectedCard(val creditCart: CreditCart) : UiAction()
-        data class OnChangeAddress(val address: Address) : UiAction()
+        data class OnChangeAddress(val location: Location) : UiAction()
         data class OnChangeCardNumber(val cardNumber: String) : UiAction()
         data class OnChangeExpirationDate(val expirationDateValue: String) : UiAction()
         data class OnChangeCvv(val cvv: String) : UiAction()
         data class OnChangeCardName(val cardName: String) : UiAction()
+        data class DeleteLocation(val locationId: Int) : UiAction()
     }
 
     sealed class UiEffect {

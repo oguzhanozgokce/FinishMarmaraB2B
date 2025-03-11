@@ -8,10 +8,11 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.mapToAddressList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.toDomainProvinces
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.toSaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.CitiesRepository
 import javax.inject.Inject
@@ -51,7 +52,7 @@ class CitiesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserLocations(): Resource<List<Address>> {
+    override suspend fun getUserLocations(): Resource<List<Location>> {
         val userId = getUserId()
         return safeApiCall {
             apiService.getLocations(userId)
@@ -65,6 +66,20 @@ class CitiesRepositoryImpl @Inject constructor(
         val requestWithUserId = address.copy(userId = userId)
         return safeApiCall {
             apiService.saveAddress(requestWithUserId)
+        }
+    }
+
+    override suspend fun putLocation(location: Location): Resource<Unit> {
+        val userId = getUserId()
+        val requestWithUserId = location.toSaveLocationRequest(userId)
+        return safeApiCall {
+            apiService.updateLocation(requestWithUserId)
+        }
+    }
+
+    override suspend fun deleteLocation(locationId: Int): Resource<Unit> {
+        return safeApiCall {
+            apiService.deleteLocation(locationId)
         }
     }
 }

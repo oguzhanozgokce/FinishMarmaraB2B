@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
@@ -110,6 +111,8 @@ fun CartProductItem(
                         style = typography.bodySmallNormal().copy(
                             color = colors.text.copy(alpha = 0.6f)
                         ),
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis
                     )
                     if (product.stock in 1..10) {
                         Text(

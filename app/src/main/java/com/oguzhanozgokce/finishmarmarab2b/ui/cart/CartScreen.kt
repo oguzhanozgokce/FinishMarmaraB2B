@@ -20,7 +20,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.CartBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.CartProductList
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.CartTopBar
+import com.oguzhanozgokce.finishmarmarab2b.ui.cart.component.EmptyCartContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import kotlinx.coroutines.flow.Flow
@@ -69,27 +71,37 @@ fun CartContent(
         topBar = {
             CartTopBar(
                 onDeleteClick = { onAction(UiAction.ShowDialog) },
-                isLoading = uiState.topLoading
+                isLoading = uiState.topLoading,
+                isShowIcon = uiState.basketProducts.isNotEmpty(),
+                basketCount = uiState.basketProducts.size
             )
         },
         contentWindowInsets = WindowInsets.safeDrawing,
         bottomBar = {
             CartBottomBar(
                 totalPrice = uiState.totalPrice,
-                onConfirm = cartNavActions.navigateToPayment
+                onConfirm = cartNavActions.navigateToPayment,
+                isEnabled = uiState.basketProducts.isNotEmpty()
             )
         },
         containerColor = colors.background,
         contentColor = colors.black,
     ) { innerPadding ->
-        CartProductList(
-            isLoading = uiState.isLoading,
-            modifier = Modifier.padding(innerPadding),
-            basketProduct = uiState.basketProducts,
-            onDeleteBasket = { onAction(UiAction.DeleteBasketProduct(it)) },
-            onAddToBasket = { onAction(UiAction.PostProductBasket(it)) },
-            onDetail = cartNavActions.navigateToDetail
-        )
+        if (uiState.basketProducts.isEmpty()) {
+            EmptyCartContent(
+                modifier = Modifier.padding(innerPadding),
+                onClick = { cartNavActions.navigateToAllProduct(ProductListType.ALL_PRODUCT) }
+            )
+        } else {
+            CartProductList(
+                isLoading = uiState.isLoading,
+                modifier = Modifier.padding(innerPadding),
+                basketProduct = uiState.basketProducts,
+                onDeleteBasket = { onAction(UiAction.DeleteBasketProduct(it)) },
+                onAddToBasket = { onAction(UiAction.PostProductBasket(it)) },
+                onDetail = cartNavActions.navigateToDetail
+            )
+        }
     }
 }
 
@@ -105,7 +117,8 @@ fun CartScreenPreview(
             onAction = {},
             cartNavActions = CartNavActions(
                 navigateToDetail = {},
-                navigateToPayment = {}
+                navigateToPayment = {},
+                navigateToAllProduct = {}
             )
         )
     }

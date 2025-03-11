@@ -21,7 +21,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -30,9 +31,10 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun HistoryItem(
-    historySearch: HistorySearch,
+    searchHistory: SearchHistory,
     modifier: Modifier = Modifier,
-    onHistoryItemClick: (String) -> Unit = {}
+    onHistoryItemClick: (String) -> Unit,
+    onDeleteClick: (Int) -> Unit
 ) {
     FMOutlinedCard(
         modifier = modifier
@@ -44,29 +46,29 @@ fun HistoryItem(
         ),
         content = {
             Row(
-                modifier = Modifier.padding(
-                    vertical = padding.dimension4,
-                    horizontal = padding.dimension8
-                ),
+                modifier = Modifier
+                    .padding(
+                        vertical = padding.dimension4,
+                        horizontal = padding.dimension8
+                    )
+                    .noRippleClickable { onHistoryItemClick(searchHistory.searchHistory) },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(padding.dimension4)
             ) {
                 Text(
-                    text = historySearch.text,
+                    text = searchHistory.searchHistory,
                     style = typography.bodySmallLight().copy(
                         fontWeight = FontWeight.Medium,
                         fontSize = fontSize.mediumSmall
                     )
                 )
                 Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .noRippleClickable { onDeleteClick(searchHistory.id) },
                     imageVector = Icons.Default.Clear,
                     contentDescription = null,
                     tint = colors.primary,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .noRippleClickable {
-                            onHistoryItemClick(historySearch.text)
-                        }
                 )
             }
         }
@@ -79,15 +81,15 @@ fun HistoryItemPreview() {
     FMTheme {
         Row {
             HistoryItem(
-                historySearch = HistorySearch(
-                    text = "Iphone 13"
-                )
+                searchHistory = PreviewMockData.defaultSearchHistory,
+                onHistoryItemClick = {},
+                onDeleteClick = {}
             )
             Spacer(modifier = Modifier.width(padding.dimension8))
             HistoryItem(
-                historySearch = HistorySearch(
-                    text = "Headphones"
-                )
+                searchHistory = PreviewMockData.defaultLongSearchHistory,
+                onHistoryItemClick = {},
+                onDeleteClick = {}
             )
         }
     }

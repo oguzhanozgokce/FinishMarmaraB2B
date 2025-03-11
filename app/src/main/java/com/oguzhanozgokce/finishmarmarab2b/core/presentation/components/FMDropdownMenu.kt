@@ -16,7 +16,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
-
 data class FMDropdownMenuItem(
     val text: String,
     val icon: ImageVector,

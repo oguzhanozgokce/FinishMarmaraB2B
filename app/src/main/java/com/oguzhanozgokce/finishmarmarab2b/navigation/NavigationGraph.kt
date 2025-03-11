@@ -105,15 +105,22 @@ fun NavigationGraph(
                     navigateToDetail = { id ->
                         navController.navigate(route = Detail(id))
                     },
-                    navigateToPayment = { navController.navigate(route = Payment) }
+                    navigateToPayment = { navController.navigate(route = Payment) },
+                    navigateToAllProduct = { type ->
+                        navController.navigateClearingStack(route = Products(type = type), Cart)
+                    }
                 )
             )
             payment(
                 navAction = PaymentNavAction(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToAddress = { navController.navigate(route = Address) }
+                    navigateToAddress = { navController.navigate(route = Address) },
+                    navigateToEditAddress = {
+                        navController.navigate(route = Address)
+                    }
                 )
             )
+
             address(
                 navAction = AddressNavAction(
                     navigateToBack = { navController.navigateUp() },

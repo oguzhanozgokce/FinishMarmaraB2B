@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiState
@@ -51,9 +50,7 @@ fun SearchScreen(
     val context = LocalContext.current
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
-            is UiEffect.ShowToast -> {
-                context.showToast(effect.message)
-            }
+            is UiEffect.ShowToast -> context.showToast(effect.message)
         }
     }
 
@@ -89,11 +86,14 @@ fun SearchContent(
             focusRequester = focusRequester
         )
         Spacer(modifier = Modifier.height(padding.dimension8))
-        HistorySection(
-            historyList = PreviewMockData.historyList,
-            onClearAllClick = { },
-            onHistoryItemClick = { }
-        )
+        if (uiState.searchHistoryList.isNotEmpty()) {
+            HistorySection(
+                searchHistoryList = uiState.searchHistoryList,
+                onClearAllClick = { },
+                onHistoryItemClick = { onAction(UiAction.OnSearchValueChange(value = it)) },
+                onDeleteClick = { onAction(UiAction.DeleteSearchHistory(id = it)) }
+            )
+        }
         Spacer(modifier = Modifier.height(padding.dimension8))
         PopularSelection(
             popularProduct = uiState.top5productList,

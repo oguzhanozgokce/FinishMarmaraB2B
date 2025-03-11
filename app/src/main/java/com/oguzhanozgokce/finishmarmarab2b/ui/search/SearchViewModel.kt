@@ -3,6 +3,8 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.search
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteSearchHistoryUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetTop5ProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.SearchContract.UiAction
@@ -16,21 +18,20 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getTop5ProductsUseCase: GetTop5ProductsUseCase,
     private val getSearchProductUseCase: GetSearchProductUseCase,
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
+    private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
+        searchHistory()
         loadTop5Products()
     }
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
-            is UiAction.OnSearchValueChange -> {
-                updateState { copy(searchValue = uiAction.value) }
-            }
-
-            is UiAction.OnSearch -> {
-                searchProduct(uiAction.searchQuery)
-            }
+            is UiAction.OnSearchValueChange -> updateState { copy(searchValue = uiAction.value) }
+            is UiAction.OnSearch -> searchProduct(uiAction.searchQuery)
+            is UiAction.DeleteSearchHistory -> deleteSearchHistory(uiAction.id)
         }
     }
 
@@ -52,6 +53,35 @@ class SearchViewModel @Inject constructor(
             getSearchProductUseCase(searchQuery = searchQuery).fold(
                 onSuccess = { productList ->
                     updateState { copy(top5productList = productList) }
+                },
+                onError = { error ->
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun searchHistory() {
+        updateState { copy(isLoading = true) }
+        viewModelScope.launch {
+            getSearchHistoryUseCase().fold(
+                onSuccess = { searchHistoryList ->
+                    updateState { copy(searchHistoryList = searchHistoryList, isLoading = false) }
+                },
+                onError = { error ->
+                    updateState { copy(isLoading = false) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun deleteSearchHistory(id: Int) {
+        viewModelScope.launch {
+            deleteSearchHistoryUseCase(id).fold(
+                onSuccess = {
+                    val updatedList = currentState.searchHistoryList.filter { it.id != id }
+                    updateState { copy(searchHistoryList = updatedList) }
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))

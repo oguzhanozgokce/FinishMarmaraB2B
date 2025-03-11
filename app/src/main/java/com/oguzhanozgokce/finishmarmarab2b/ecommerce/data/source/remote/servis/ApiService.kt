@@ -3,6 +3,8 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET_ALL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_LOCATION
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
@@ -13,16 +15,19 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP5
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_SAVE_ADDRESS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_LOCATION
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SearchHistoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
@@ -46,6 +51,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -166,4 +172,24 @@ interface ApiService {
         @Query("user_id") userId: Int,
         @Query("searchTerm") searchQuery: String,
     ): Response<ApiResponse<GetSearchProductResponse>>
+
+    @PUT(PUT_LOCATION)
+    suspend fun updateLocation(
+        @Body request: SaveLocationRequest,
+    ): Response<ApiResponse<Unit>>
+
+    @DELETE(DELETE_LOCATION)
+    suspend fun deleteLocation(
+        @Path("location_id") locationId: Int,
+    ): Response<ApiResponse<Unit>>
+
+    @GET(GET_USER_SEARCH_HISTORY)
+    suspend fun getUserSearchHistory(
+        @Query("user_id") userId: Int,
+    ): Response<ApiResponse<List<SearchHistoryDto>>>
+
+    @DELETE(DELETE_USER_SEARCH_HISTORY)
+    suspend fun deleteUserSearchHistory(
+        @Path("id") id: Int,
+    ): Response<ApiResponse<Unit>>
 }

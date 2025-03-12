@@ -6,6 +6,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 private const val PHONE_NUMBER_LENGTH = 10
 private const val VISIBLE_PREFIX_LENGTH = 3
@@ -57,7 +58,7 @@ fun String?.toLocalDateOrDefault(
     return this?.let {
         try {
             LocalDateTime.parse(it, formatter).toLocalDate()
-        } catch (e: Exception) {
+        } catch (e: DateTimeParseException) {
             defaultDate
         }
     } ?: defaultDate
@@ -70,7 +71,7 @@ fun String?.toLocalDateTimeOrDefault(
     return this?.let {
         try {
             LocalDateTime.parse(it, formatter)
-        } catch (e: Exception) {
+        } catch (e: DateTimeParseException) {
             defaultDateTime
         }
     } ?: defaultDateTime

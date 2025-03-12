@@ -28,6 +28,13 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
+private const val ON_BACKGROUND_ALPHA = 0.1f
+private const val MAX_WIDTH_1 = 1f
+private const val MAX_WIDTH_05 = 0.5f
+private const val MAX_WIDTH_08 = 0.8f
+private const val MAX_WIDTH_03 = 0.3f
+private const val MAX_WIDTH_04 = 0.4f
+
 @Composable
 fun ProductDetailShimmer(
     modifier: Modifier = Modifier
@@ -44,7 +51,7 @@ fun ProductDetailShimmer(
                 .fillMaxWidth()
                 .height(250.dp)
                 .clip(RoundedCornerShape(padding.dimension8))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
 
@@ -52,10 +59,10 @@ fun ProductDetailShimmer(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.5f)
+                .fillMaxWidth(MAX_WIDTH_05)
                 .height(padding.dimension20)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
 
@@ -63,20 +70,20 @@ fun ProductDetailShimmer(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.8f)
+                .fillMaxWidth(MAX_WIDTH_08)
                 .height(padding.dimension16)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
 
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.8f)
+                .fillMaxWidth(MAX_WIDTH_08)
                 .height(padding.dimension16)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
 
@@ -94,19 +101,19 @@ fun ProductDetailShimmer(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.4f)
+                    .fillMaxWidth(MAX_WIDTH_04)
                     .height(padding.dimension16)
                     .clip(RoundedCornerShape(padding.dimension4))
-                    .background(colors.onBackground.copy(alpha = 0.1f))
+                    .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                     .shimmer(true)
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(MAX_WIDTH_1))
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.3f)
+                    .fillMaxWidth(MAX_WIDTH_03)
                     .height(padding.dimension16)
                     .clip(RoundedCornerShape(padding.dimension4))
-                    .background(colors.onBackground.copy(alpha = 0.1f))
+                    .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                     .shimmer(true)
             )
         }
@@ -121,7 +128,7 @@ fun ProductDetailShimmer(
                 modifier = Modifier
                     .size(padding.dimension48)
                     .clip(CircleShape)
-                    .background(colors.onBackground.copy(alpha = 0.1f))
+                    .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                     .shimmer(true)
             )
             Column(
@@ -132,7 +139,7 @@ fun ProductDetailShimmer(
                         .width(padding.dimension120)
                         .height(padding.dimension16)
                         .clip(RoundedCornerShape(padding.dimension4))
-                        .background(colors.onBackground.copy(alpha = 0.1f))
+                        .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                         .shimmer(true)
                 )
                 Box(
@@ -140,7 +147,7 @@ fun ProductDetailShimmer(
                         .width(padding.dimension80)
                         .height(padding.dimension12)
                         .clip(RoundedCornerShape(padding.dimension4))
-                        .background(colors.onBackground.copy(alpha = 0.1f))
+                        .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                         .shimmer(true)
                 )
             }
@@ -151,7 +158,7 @@ fun ProductDetailShimmer(
                 .fillMaxWidth()
                 .height(padding.dimension12)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
@@ -160,7 +167,7 @@ fun ProductDetailShimmer(
                 .fillMaxWidth()
                 .height(padding.dimension12)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
         Spacer(modifier = Modifier.height(padding.dimension4))
@@ -169,7 +176,7 @@ fun ProductDetailShimmer(
                 .fillMaxWidth()
                 .height(padding.dimension12)
                 .clip(RoundedCornerShape(padding.dimension4))
-                .background(colors.onBackground.copy(alpha = 0.1f))
+                .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 .shimmer(true)
         )
         Spacer(modifier = Modifier.height(padding.dimension16))

@@ -48,6 +48,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.delay
 
+private const val DELAY_MILLIS_100 = 100L
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FMSearchBar(
@@ -71,7 +73,7 @@ fun FMSearchBar(
     LaunchedEffect(Unit) {
         withFrameNanos { }
         focusRequester.requestFocus()
-        delay(100)
+        delay(DELAY_MILLIS_100)
         keyboardController?.show()
     }
 

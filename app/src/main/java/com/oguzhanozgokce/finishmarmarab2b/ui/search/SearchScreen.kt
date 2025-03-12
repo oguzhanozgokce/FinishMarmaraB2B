@@ -33,7 +33,6 @@ fun SearchScreen(
     onAction: (UiAction) -> Unit,
     navActions: SearchNavActions,
 ) {
-
     val context = LocalContext.current
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {

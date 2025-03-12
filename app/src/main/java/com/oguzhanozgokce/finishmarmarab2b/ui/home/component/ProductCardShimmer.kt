@@ -26,6 +26,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 private const val ON_BACKGROUND_ALPHA = 0.1F
+private const val MAX_WEIGHT_06 = 0.6f
 private const val PRODUCT_SHIMMER_COUNT = 6
 
 @Composable
@@ -82,7 +83,7 @@ fun ProductCardShimmer(
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.6f)
+                        .fillMaxWidth(MAX_WEIGHT_06)
                         .height(padding.dimension16)
                         .clip(RoundedCornerShape(padding.dimension4))
                         .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))

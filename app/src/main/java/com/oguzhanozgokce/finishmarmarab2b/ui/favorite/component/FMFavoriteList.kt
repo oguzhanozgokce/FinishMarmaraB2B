@@ -8,7 +8,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mockLazyPagingItems
@@ -16,6 +15,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
+
+private const val SIMMER_COUNT = 4
 
 @Composable
 fun FMFavoriteList(
@@ -34,10 +35,8 @@ fun FMFavoriteList(
             .padding(padding.dimension8)
     ) {
         if (isRefreshing) {
-            items(4) {
-                FMCardFavoriteShimmer(
-                    modifier = Modifier.padding(bottom = padding.dimension8)
-                )
+            items(SIMMER_COUNT) {
+                FMCardFavoriteShimmer(modifier = Modifier.padding(bottom = padding.dimension8))
             }
         } else {
             items(
@@ -61,7 +60,7 @@ fun FMFavoriteList(
                 CircularProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp)
+                        .padding(vertical = padding.dimension16)
                 )
             }
         }

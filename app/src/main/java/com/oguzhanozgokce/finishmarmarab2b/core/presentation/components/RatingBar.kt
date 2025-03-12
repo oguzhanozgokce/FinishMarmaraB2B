@@ -76,7 +76,7 @@ fun StarIcon(
         val innerRadius = radius * INNER_RADIUS_RATIO
 
         val starPath = Path().apply {
-            (FIRST_INDEX until STAR_POINTS).forEach { i ->
+            for (i in FIRST_INDEX until STAR_POINTS) {
                 val angle =
                     Math.toRadians((i * STAR_ANGLE_STEP_DEGREE - STAR_ROTATION_OFFSET_DEGREE).toDouble())
                 val r = if (i % TWO == EVEN_INDEX) radius else innerRadius

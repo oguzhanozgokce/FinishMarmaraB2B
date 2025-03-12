@@ -6,16 +6,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.oguzhanozgokce.finishmarmarab2b.R
 
+internal val LocalLMIcons = staticCompositionLocalOf { LMIcons() }
+
 class LMIcons {
-    val home: ImageVector
-        @Composable
-        get() = ImageVector.vectorResource(id = R.drawable.ic_home)
     val cart: ImageVector
         @Composable
         get() = ImageVector.vectorResource(id = R.drawable.ic_cart)
-    val profile: ImageVector
-        @Composable
-        get() = ImageVector.vectorResource(id = R.drawable.ic_person)
     val notification: ImageVector
         @Composable
         get() = ImageVector.vectorResource(id = R.drawable.ic_notification)
@@ -35,5 +31,3 @@ class LMIcons {
         @Composable
         get() = ImageVector.vectorResource(id = R.drawable.ic_star_half)
 }
-
-internal val LocalLMIcons = staticCompositionLocalOf { LMIcons() }

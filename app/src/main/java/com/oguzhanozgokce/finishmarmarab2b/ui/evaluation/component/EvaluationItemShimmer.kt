@@ -25,6 +25,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
 private const val ON_BACKGROUND_ALPHA = 0.1F
 private const val WEIGHT_1F = 1f
+private const val WEIGHT_09F = 0.5f
 
 @Composable
 fun EvaluationItemShimmer(
@@ -82,7 +83,7 @@ fun EvaluationItemShimmer(
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
+                    .fillMaxWidth(WEIGHT_09F)
                     .height(FMTheme.padding.dimension32)
                     .clip(RoundedCornerShape(FMTheme.padding.dimension4))
                     .background(colors.onBackground.copy(ON_BACKGROUND_ALPHA))

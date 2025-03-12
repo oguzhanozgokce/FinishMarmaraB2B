@@ -4,6 +4,11 @@ style:
   MagicNumber:
     active: true
     excludes: [ '**/theme/**' ]
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludes:
+      - '**/ui/mock/PreviewMockData.kt'
 
 naming:
   FunctionNaming:

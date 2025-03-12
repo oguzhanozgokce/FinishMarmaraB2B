@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -43,20 +45,20 @@ fun ProductDescriptionSection(
         )
         product.seller?.let { seller ->
             Text(
-                text = "- This product will be sent by ${seller.name}",
+                text = stringResource(R.string.product_shipping_seller, seller.name),
                 style = typography.bodySmallLight().copy(
                     fontWeight = FontWeight.Normal
                 ),
             )
         }
         Text(
-            text = "- The sales price of the product you have reviewed is determined by the seller.",
+            text = stringResource(R.string.product_price_determined_by_seller),
             style = typography.bodySmallLight().copy(
                 fontWeight = FontWeight.Normal
             ),
         )
         Text(
-            text = "- A maximum of 15 pieces of this product can be ordered. Marmara reserves the right to cancel orders over 15 pieces.",
+            text = stringResource(R.string.product_max_order_info),
             style = typography.bodySmallLight().copy(
                 fontWeight = FontWeight.Normal
             ),

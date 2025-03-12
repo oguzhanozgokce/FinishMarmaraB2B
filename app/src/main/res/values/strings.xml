@@ -80,4 +80,7 @@
     <string name="desc_exit_payment">Are you sure you want to leave the payment process? You can continue your shopping from where you left off.</string>
     <string name="btn_continue">Continue</string>
     <string name="exit">Exit</string>
+    <string name="product_shipping_seller">- This product will be sent by %1$s</string>
+    <string name="product_price_determined_by_seller">- The sales price of the product you have reviewed is determined by the seller.</string>
+    <string name="product_max_order_info">- A maximum of 15 pieces of this product can be ordered. Marmara reserves the right to cancel orders over 15 pieces.</string>
 </resources>

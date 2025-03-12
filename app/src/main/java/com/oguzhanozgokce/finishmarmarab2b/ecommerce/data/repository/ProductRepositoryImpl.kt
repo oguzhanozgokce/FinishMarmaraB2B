@@ -152,7 +152,6 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getSearchHistory(): Resource<List<SearchHistory>> {
         val userId = getUserId()
         return safeApiCall { apiService.getUserSearchHistory(userId) }

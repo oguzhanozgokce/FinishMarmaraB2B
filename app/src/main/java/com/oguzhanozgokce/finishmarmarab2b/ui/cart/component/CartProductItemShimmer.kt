@@ -26,6 +26,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 private const val ON_BACKGROUND_ALPHA = 0.1F
+private const val MAX_WEIGHT_08 = 0.8f
+private const val MAX_WEIGHT_1 = 1f
 
 @Composable
 fun CartProductItemShimmer(
@@ -103,7 +105,7 @@ fun CartProductItemShimmer(
             Column(
                 modifier = Modifier
                     .padding(bottom = padding.dimension8)
-                    .weight(1f),
+                    .weight(MAX_WEIGHT_1),
                 verticalArrangement = Arrangement.spacedBy(padding.dimension4)
             ) {
                 Box(
@@ -116,7 +118,7 @@ fun CartProductItemShimmer(
                 Spacer(modifier = Modifier.height(padding.dimension6))
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(MAX_WEIGHT_08)
                         .height(padding.dimension12)
                         .clip(RoundedCornerShape(padding.dimension4))
                         .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
@@ -129,7 +131,7 @@ fun CartProductItemShimmer(
                         .clip(RoundedCornerShape(padding.dimension4))
                         .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(MAX_WEIGHT_1))
                 Box(
                     modifier = Modifier
                         .width(padding.dimension80)

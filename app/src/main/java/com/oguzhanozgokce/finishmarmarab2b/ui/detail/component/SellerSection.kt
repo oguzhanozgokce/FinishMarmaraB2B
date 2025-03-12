@@ -33,7 +33,6 @@ fun SellerSection(
     sellerName: String?,
     sellerImageUrl: String?,
     followerCount: Int,
-    onFollowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -100,7 +99,6 @@ fun SellerSectionPreview() {
             sellerName = "Apple",
             sellerImageUrl = "",
             followerCount = 15600,
-            onFollowClick = {}
         )
     }
 }

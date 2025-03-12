@@ -48,6 +48,7 @@ private const val BALLOON_PADDING = 12
 private const val BALLOON_MARGIN_HORIZONTAL = 12
 private const val BALLOON_CORNER_RADIUS = 8f
 private const val INDICATORS_COLOR_ALPHA = 0.3f
+private const val MAX_WEIGHT_04 = 0.4f
 private const val LIMIT_DIGITS_4 = 4
 private const val LIMIT_DIGITS_16 = 16
 
@@ -115,7 +116,7 @@ fun FMNewCreditCart(
             verticalAlignment = Alignment.Bottom
         ) {
             Column(
-                modifier = Modifier.weight(0.4f)
+                modifier = Modifier.weight(MAX_WEIGHT_04)
             ) {
                 FMOutlineTextField(
                     value = uiState.expirationDateValue,
@@ -136,7 +137,7 @@ fun FMNewCreditCart(
             }
             Spacer(modifier = Modifier.width(padding.dimension16))
             Column(
-                modifier = Modifier.weight(0.4f)
+                modifier = Modifier.weight(MAX_WEIGHT_04)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     FMOutlineTextField(
@@ -144,7 +145,7 @@ fun FMNewCreditCart(
                         onValueChange = { onAction(PaymentContract.UiAction.OnChangeCvv(it)) },
                         visualTransformation = CvvVisualTransformation(),
                         modifier = Modifier.weight(1f),
-                        indicatorsColor = colors.text.copy(alpha = 0.3f),
+                        indicatorsColor = colors.text.copy(alpha = INDICATORS_COLOR_ALPHA),
                         label = stringResource(R.string.cvv),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,

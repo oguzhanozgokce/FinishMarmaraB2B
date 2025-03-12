@@ -29,6 +29,10 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 private const val ON_BACKGROUND_ALPHA = 0.1f
+private const val MAX_WEIGHT_1 = 1f
+private const val MAX_WEIGHT_08 = 0.8F
+private const val MAX_WEIGHT_06 = 0.6F
+private const val SHIMMER_COUNT = 4
 
 @Composable
 fun FMCardFavoriteShimmer(
@@ -72,12 +76,12 @@ fun FMCardFavoriteShimmer(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(MAX_WEIGHT_1),
                         horizontalAlignment = Alignment.Start,
                     ) {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth(0.6f)
+                                .fillMaxWidth(MAX_WEIGHT_06)
                                 .height(padding.dimension16)
                                 .clip(RoundedCornerShape(padding.dimension4))
                                 .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
@@ -85,7 +89,7 @@ fun FMCardFavoriteShimmer(
                         Spacer(modifier = Modifier.height(padding.dimension6))
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth(0.8f)
+                                .fillMaxWidth(MAX_WEIGHT_08)
                                 .height(padding.dimension12)
                                 .clip(RoundedCornerShape(padding.dimension4))
                                 .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
@@ -179,7 +183,7 @@ fun FMCardFavoriteShimmer(
                             .background(colors.onBackground.copy(alpha = ON_BACKGROUND_ALPHA))
                     )
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(MAX_WEIGHT_1))
 
                 Box(
                     modifier = Modifier
@@ -202,7 +206,7 @@ fun FavoriteListShimmer(
             .fillMaxWidth()
             .padding(padding.dimension8)
     ) {
-        repeat(4) {
+        repeat(SHIMMER_COUNT) {
             FMCardFavoriteShimmer(
                 modifier = Modifier.padding(end = padding.dimension8)
             )

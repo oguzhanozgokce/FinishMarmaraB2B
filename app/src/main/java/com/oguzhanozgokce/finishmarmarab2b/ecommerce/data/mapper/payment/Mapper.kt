@@ -1,27 +1,14 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.AddressDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CreditCartDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.LocationDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
-
-fun Location.toAddressDto(userId: Int): AddressDto {
-    return AddressDto(
-        id = this.id,
-        userId = userId,
-        province = this.province,
-        city = this.city,
-        openAddress = this.openAddress,
-        addressTel = this.addressTel,
-        addressTitle = this.addressTitle,
-        nameSurname = this.nameSurname
-    )
-}
 
 fun Location.toSaveLocationRequest(userId: Int): SaveLocationRequest {
     return SaveLocationRequest(
@@ -35,7 +22,7 @@ fun Location.toSaveLocationRequest(userId: Int): SaveLocationRequest {
     )
 }
 
-fun AddressDto.mapToAddress(): Location {
+fun LocationDto.mapToAddress(): Location {
     return Location(
         id = this.id.orZero(),
         userId = this.userId.orZero(),

@@ -20,6 +20,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ORDER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_SAVE_ADDRESS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_LOCATION
@@ -30,6 +31,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Prod
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
@@ -197,5 +199,10 @@ interface ApiService {
     @DELETE(DELETE_USER_ALL_SEARCH_HISTORY)
     suspend fun deleteUserAllSearchHistory(
         @Path("user_id") userId: Int,
+    ): Response<ApiResponse<Unit>>
+
+    @POST(POST_ORDER)
+    suspend fun postOrder(
+        @Body request: OrderRequest,
     ): Response<ApiResponse<Unit>>
 }

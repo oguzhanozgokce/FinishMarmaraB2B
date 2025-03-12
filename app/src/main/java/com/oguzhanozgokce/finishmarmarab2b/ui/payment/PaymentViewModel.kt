@@ -3,9 +3,9 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.GetBasketProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.DeleteLocationUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetUserLocationsUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetBasketProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiState
@@ -43,6 +43,7 @@ class PaymentViewModel @Inject constructor(
                     expirationDateValue = uiAction.expirationDateValue
                 )
             }
+
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
             is UiAction.DeleteLocation -> deleteLocation(uiAction.locationId)
         }

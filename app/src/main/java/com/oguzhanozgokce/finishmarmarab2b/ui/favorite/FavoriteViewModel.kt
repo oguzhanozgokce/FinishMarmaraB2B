@@ -7,9 +7,9 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetUserUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState

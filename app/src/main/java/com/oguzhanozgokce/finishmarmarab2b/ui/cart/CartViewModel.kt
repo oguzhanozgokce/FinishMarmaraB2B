@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteBasketAllUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteBasketProductUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetBasketProductsUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.DeleteBasketAllUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.DeleteBasketProductUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.GetBasketProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.CartContract.UiState

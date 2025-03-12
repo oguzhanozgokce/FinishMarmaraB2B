@@ -6,10 +6,10 @@ import androidx.navigation.toRoute
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductCommentsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductDetailUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductQuestionsAndAnswersUseCase
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.navigation.Detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiEffect

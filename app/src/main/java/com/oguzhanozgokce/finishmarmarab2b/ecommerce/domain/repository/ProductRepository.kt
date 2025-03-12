@@ -22,10 +22,6 @@ interface ProductRepository {
     suspend fun getProductDetail(productId: Int): Resource<Product>
     fun getCategories(): Flow<PagingData<Category>>
     suspend fun getTop5Products(): Resource<List<Product>>
-    suspend fun postProductBasket(productId: Int): Resource<Int>
-    suspend fun getBasketProducts(): Resource<List<Product>>
-    suspend fun deleteBasketProduct(productId: Int): Resource<Unit>
-    suspend fun deleteBasketAll(): Resource<Unit>
     suspend fun getSearchHistory(): Resource<List<SearchHistory>>
     suspend fun deleteSearchHistory(id: Int): Resource<Unit>
     suspend fun deleteAllSearchHistory(): Resource<Unit>

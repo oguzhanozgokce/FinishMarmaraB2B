@@ -1,6 +1,6 @@
 [versions]
 accompanistSystemuicontroller = "0.32.0"
-agp = "8.7.3"
+agp = "8.9.0"
 balloonCompose = "1.6.12"
 datastorePreferences = "1.1.2"
 kotlin = "2.1.0"

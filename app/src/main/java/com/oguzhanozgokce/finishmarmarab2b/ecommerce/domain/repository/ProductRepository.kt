@@ -7,6 +7,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import kotlinx.coroutines.flow.Flow
 
@@ -25,4 +26,7 @@ interface ProductRepository {
     suspend fun getBasketProducts(): Resource<List<Product>>
     suspend fun deleteBasketProduct(productId: Int): Resource<Unit>
     suspend fun deleteBasketAll(): Resource<Unit>
+    suspend fun getSearchHistory(): Resource<List<SearchHistory>>
+    suspend fun deleteSearchHistory(id: Int): Resource<Unit>
+    suspend fun deleteAllSearchHistory(): Resource<Unit>
 }

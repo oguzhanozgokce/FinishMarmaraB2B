@@ -1,26 +1,14 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.navigateClearingStack
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Address
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Cart
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Detail
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.ForgotPassword
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Home
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Login
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Payment
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Products
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Profile
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Search
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Signup
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Splash
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen.Welcome
 import com.oguzhanozgokce.finishmarmarab2b.navigation.bottom.FMBottomBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
@@ -28,6 +16,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
+import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.evaluation
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
@@ -51,11 +41,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.welcome.navigation.welcome
 fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    isBottomBarVisible: Boolean
 ) {
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
+        modifier = Modifier.imePadding(),
         bottomBar = {
-            if (Screen.showBottomBar(currentRoute)) {
+            if (isBottomBarVisible) {
                 FMBottomBar(navController = navController)
             }
         }
@@ -63,6 +54,7 @@ fun NavigationGraph(
         NavHost(
             modifier = Modifier
                 .then(modifier)
+                .consumeWindowInsets(innerPadding)
                 .padding(innerPadding),
             navController = navController,
             startDestination = Splash,
@@ -113,15 +105,22 @@ fun NavigationGraph(
                     navigateToDetail = { id ->
                         navController.navigate(route = Detail(id))
                     },
-                    navigateToPayment = { navController.navigate(route = Payment) }
+                    navigateToPayment = { navController.navigate(route = Payment) },
+                    navigateToAllProduct = { type ->
+                        navController.navigateClearingStack(route = Products(type = type), Cart)
+                    }
                 )
             )
             payment(
                 navAction = PaymentNavAction(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToAddress = { navController.navigate(route = Address) }
+                    navigateToAddress = { navController.navigate(route = Address) },
+                    navigateToEditAddress = {
+                        navController.navigate(route = Address)
+                    }
                 )
             )
+
             address(
                 navAction = AddressNavAction(
                     navigateToBack = { navController.navigateUp() },
@@ -132,7 +131,8 @@ fun NavigationGraph(
                 actions = DetailNavActions(
                     navigateToBack = { navController.navigateUp() },
                     navigateToCart = { navController.navigate(route = Cart) },
-                    navigateToSearch = { navController.navigate(route = Search) }
+                    navigateToSearch = { navController.navigate(route = Search) },
+                    navigationEToEvaluation = { navController.navigate(route = Evaluation) }
                 )
             )
             password()
@@ -162,6 +162,12 @@ fun NavigationGraph(
                     navigateToProductDetail = { id ->
                         navController.navigate(route = Detail(id))
                     }
+                )
+            )
+            evaluation(
+                actions = EvaluationNavActions(
+                    navigateToBack = { navController.navigateUp() },
+                    navigateToSearch = { navController.navigate(route = Search) }
                 )
             )
         }

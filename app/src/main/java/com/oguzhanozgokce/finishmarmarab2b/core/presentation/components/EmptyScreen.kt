@@ -124,7 +124,7 @@ fun EmptyFavoriteScreen() {
             textAlign = TextAlign.Center
         )
         TextButton(
-            onClick = { /* TODO: Navigate to the home page */ },
+            onClick = { },
             modifier = Modifier
                 .padding(padding.dimension16)
                 .border(

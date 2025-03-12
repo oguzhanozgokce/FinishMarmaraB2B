@@ -42,6 +42,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
+private const val SHIMMER_COUNT = 5
+
 @Composable
 fun ProductCard(
     product: Product,
@@ -191,9 +193,9 @@ fun ProductInfo(
 
 @Composable
 fun ProductList(
+    modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     productList: List<Product>,
-    modifier: Modifier = Modifier,
     onNavigateToDetail: (id: Int) -> Unit = {},
     onToggleFavorite: (productId: Int) -> Unit
 ) {
@@ -203,7 +205,7 @@ fun ProductList(
         state = listState
     ) {
         if (isLoading) {
-            items(5) {
+            items(SHIMMER_COUNT) {
                 ProductCardShimmer()
             }
         } else {

@@ -21,6 +21,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val BASE_URL = "http://13.61.126.114:5000/"
+    private const val TIMEOUT = 20L
 
     @Provides
     @Singleton
@@ -28,9 +29,9 @@ object NetworkModule {
         chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(chuckerInterceptor)
             .addInterceptor(

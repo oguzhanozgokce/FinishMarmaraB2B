@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,18 +15,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,6 +48,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizo
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMPhoneTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMProvincesBottomSheetContent
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMTopBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -121,7 +117,6 @@ fun AddressScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressScreenContent(
     uiState: AddressContract.UiState,
@@ -139,27 +134,9 @@ fun AddressScreenContent(
         Surface(
             shadowElevation = 4.dp
         ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.add_new_address),
-                        style = typography.titleMediumMedium()
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navAction.navigateToBack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back),
-                            tint = colors.onBackground
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colors.cardBackground,
-                    titleContentColor = colors.background
-                ),
-                windowInsets = WindowInsets(0.dp)
+            FMTopBar(
+                title = stringResource(R.string.add_new_address),
+                onNavigationClick = { navAction.navigateToBack() }
             )
         }
         Spacer(modifier = Modifier.height(padding.dimension8))

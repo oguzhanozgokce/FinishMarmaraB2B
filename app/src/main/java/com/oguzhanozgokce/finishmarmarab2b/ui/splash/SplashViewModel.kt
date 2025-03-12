@@ -17,13 +17,17 @@ class SplashViewModel @Inject constructor(
     private val userDataSource: LocalDataSource
 ) : MVI<Unit, UiEffect, UiAction>(Unit) {
 
+    companion object {
+        private const val SPLASH_DELAY = 1000L
+    }
+
     private val splashShowFlow = MutableStateFlow(true)
     val isSplashShow = splashShowFlow.asStateFlow()
 
     init {
         viewModelScope.launch {
             splashShowFlow.value = false
-            delay(1000)
+            delay(SPLASH_DELAY)
             checkUserLogin()
         }
     }

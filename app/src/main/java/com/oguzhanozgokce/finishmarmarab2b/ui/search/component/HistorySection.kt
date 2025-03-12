@@ -19,8 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
-import com.oguzhanozgokce.finishmarmarab2b.ui.search.HistorySearch
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -29,10 +30,11 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun HistorySection(
-    historyList: List<HistorySearch>,
-    onClearAllClick: () -> Unit = {},
-    onHistoryItemClick: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    searchHistoryList: List<SearchHistory>,
+    onClearAllClick: () -> Unit,
+    onHistoryItemClick: (String, ProductListType) -> Unit,
+    onDeleteClick: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -67,8 +69,9 @@ fun HistorySection(
         }
         Spacer(modifier = Modifier.height(padding.dimension8))
         HistoryItemList(
-            historyList = historyList,
-            onHistoryItemClick = onHistoryItemClick
+            searchHistoryList = searchHistoryList,
+            onHistoryItemClick = onHistoryItemClick,
+            onDeleteClick = onDeleteClick
         )
     }
 }
@@ -78,9 +81,10 @@ fun HistorySection(
 fun HistorySectionPreview() {
     FMTheme {
         HistorySection(
-            historyList = PreviewMockData.historyList,
+            searchHistoryList = PreviewMockData.historyList,
             onClearAllClick = { },
-            onHistoryItemClick = { }
+            onHistoryItemClick = { _, _ -> },
+            onDeleteClick = { }
         )
     }
 }

@@ -5,17 +5,21 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toLocalDateTimeOrDefault
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ImageDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SearchHistoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetBasketResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import java.time.LocalDateTime
@@ -154,4 +158,24 @@ fun GetSearchProductResponse.toProductOrNull(): List<Product> {
     return list.orEmpty().map { productDto ->
         productDto.mapToProduct()
     }
+}
+
+fun SearchHistoryDto.toSearchHistoryDomain() = SearchHistory(
+    id = this.id.orZero(),
+    userId = this.userId.orZero(),
+    searchHistory = this.searchHistory.orEmpty(),
+    createdAt = this.createdAt.orEmpty()
+)
+
+fun GetSearchHistoryResponse.toSearchHistoryListDomain(): List<SearchHistory> {
+    return list.orEmpty().map { searchHistoryDto ->
+        searchHistoryDto.toSearchHistoryDomain()
+    }
+}
+
+fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
+    return PaginationData(
+        list = this.list?.map { it.mapToProduct() } ?: emptyList(),
+        pagination = this.pagination
+    )
 }

@@ -62,7 +62,13 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             deleteBasketProductUseCase(productId).fold(
                 onSuccess = {
-                    emitUiEffect(UiEffect.ShowToast("Product deleted from basket"))
+                    val updateList = currentState.basketProducts.filterNot { it.id == productId }
+                    updateState {
+                        copy(
+                            basketProducts = updateList,
+                            totalPrice = updateList.sumOf { it.totalPrice }
+                        )
+                    }
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))
@@ -75,7 +81,8 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             deleteBasketAllUseCase().fold(
                 onSuccess = {
-                    emitUiEffect(UiEffect.ShowToast("All products deleted from basket"))
+                    emitUiEffect(UiEffect.ShowToast("Your basket is empty"))
+                    updateState { copy(basketProducts = emptyList()) }
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))

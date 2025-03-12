@@ -10,7 +10,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetP
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductDetailUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductQuestionsAndAnswersUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostProductBasketUseCase
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.DetailContract.UiState
@@ -27,7 +27,7 @@ class DetailViewModel @Inject constructor(
     private val postProductBasketUseCase: PostProductBasketUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    private val args = savedStateHandle.toRoute<Screen.Detail>()
+    private val args = savedStateHandle.toRoute<Detail>()
 
     init {
         fetchProductDetail(args.id)

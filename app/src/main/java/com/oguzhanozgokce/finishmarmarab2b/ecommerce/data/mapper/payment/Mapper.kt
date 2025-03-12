@@ -5,12 +5,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Addr
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CreditCartDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
-fun Address.toAddressDto(userId: Int): AddressDto {
+fun Location.toAddressDto(userId: Int): AddressDto {
     return AddressDto(
         id = this.id,
         userId = userId,
@@ -23,7 +23,7 @@ fun Address.toAddressDto(userId: Int): AddressDto {
     )
 }
 
-fun Address.toSaveLocationRequest(userId: Int): SaveLocationRequest {
+fun Location.toSaveLocationRequest(userId: Int): SaveLocationRequest {
     return SaveLocationRequest(
         userId = userId,
         province = this.province,
@@ -35,8 +35,8 @@ fun Address.toSaveLocationRequest(userId: Int): SaveLocationRequest {
     )
 }
 
-fun AddressDto.mapToAddress(): Address {
-    return Address(
+fun AddressDto.mapToAddress(): Location {
+    return Location(
         id = this.id.orZero(),
         userId = this.userId.orZero(),
         province = this.province.orEmpty(),
@@ -48,7 +48,7 @@ fun AddressDto.mapToAddress(): Address {
     )
 }
 
-fun GetLocationResponse.mapToAddressList(): List<Address> {
+fun GetLocationResponse.mapToAddressList(): List<Location> {
     return list.orEmpty().map { addressDto ->
         addressDto.mapToAddress()
     }

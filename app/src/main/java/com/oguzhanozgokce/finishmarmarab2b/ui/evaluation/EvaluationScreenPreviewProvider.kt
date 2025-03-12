@@ -1,19 +1,19 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.productlist
+package com.oguzhanozgokce.finishmarmarab2b.ui.evaluation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-class ProductListScreenPreviewProvider : PreviewParameterProvider<ProductListContract.UiState> {
-    override val values: Sequence<ProductListContract.UiState>
+class EvaluationScreenPreviewProvider : PreviewParameterProvider<EvaluationContract.UiState> {
+    override val values: Sequence<EvaluationContract.UiState>
         get() = sequenceOf(
-            ProductListContract.UiState(
+            EvaluationContract.UiState(
                 isLoading = true,
                 list = emptyList(),
             ),
-            ProductListContract.UiState(
+            EvaluationContract.UiState(
                 isLoading = false,
                 list = emptyList(),
             ),
-            ProductListContract.UiState(
+            EvaluationContract.UiState(
                 isLoading = false,
                 list = listOf("Item 1", "Item 2", "Item 3")
             ),

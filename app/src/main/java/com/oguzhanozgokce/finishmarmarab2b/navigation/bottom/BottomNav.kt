@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation.bottom
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,104 +15,66 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigator
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
-fun NavController.navigateTopSingle(
-    route: String,
-    navOptions: NavOptions? = null,
-    navigatorExtras: Navigator.Extras? = null,
-) {
-    val defaultNavOptionsBuilder = NavOptions.Builder()
-        .setLaunchSingleTop(true)
-        .setPopUpTo(
-            graph.findStartDestination().id,
-            inclusive = false,
-            saveState = true
-        ) // Stack temizliği
-        .setRestoreState(true)
-
-    navOptions?.let { userNavOptions ->
-        defaultNavOptionsBuilder.apply {
-            setEnterAnim(userNavOptions.enterAnim)
-            setExitAnim(userNavOptions.exitAnim)
-            setPopEnterAnim(userNavOptions.popEnterAnim)
-            setPopExitAnim(userNavOptions.popExitAnim)
-            setLaunchSingleTop(userNavOptions.shouldLaunchSingleTop())
-            setRestoreState(userNavOptions.shouldRestoreState())
-        }
-    }
-
-    val currentRoute = currentBackStackEntry?.destination?.route
-    if (currentRoute != route) {
-        navigate(route, defaultNavOptionsBuilder.build(), navigatorExtras)
-    }
-}
-
 @Composable
 fun FMBottomBar(
-    navController: NavHostController,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val currentDestination by navController.currentBackStackEntryAsState()
-    val defaultNavOptionsBuilder = {
-        NavOptions.Builder()
-            .setLaunchSingleTop(true)
-            .setPopUpTo(
-                destinationId = navController.graph.findStartDestination().id,
-                inclusive = false,
-                saveState = true
-            )
-            .setRestoreState(true)
-    }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
     Box(
         modifier = Modifier
             .background(color = colors.background)
     ) {
         NavigationBar(
-            modifier = modifier
-                .background(color = colors.background),
+            modifier = modifier.background(color = colors.background),
             containerColor = colors.cardBackground,
             contentColor = colors.text
         ) {
-            bottomBarDestination.forEach { destination ->
-                val targetRoute = Screen.getRoute(destination.route)
-                val selected = currentDestination?.destination?.route == targetRoute
+            bottomScreens.forEach { screen ->
+                val selected =
+                    currentDestination?.hierarchy?.any { it.hasRoute(screen.route::class) } == true
+                Log.d("NavDebug", "Screen: ${screen.route}, isSelected: $selected")
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            imageVector = destination.icon(),
-                            contentDescription = destination.name,
+                            imageVector = ImageVector.vectorResource(screen.icon),
+                            contentDescription = screen.name,
                             tint = if (selected) colors.primary else colors.onBackground,
                             modifier = Modifier.height(20.dp)
                         )
                     },
                     label = {
                         Text(
-                            text = destination.name,
+                            text = screen.name,
                             color = if (selected) colors.primary else colors.text,
                             style = FMTheme.typography.bodySmallNormal()
                         )
                     },
                     selected = selected,
                     onClick = {
-                        val currentRoute = currentDestination?.destination?.route
-                        if (currentRoute != targetRoute) {
-                            navController.navigateTopSingle(
-                                targetRoute,
-                                defaultNavOptionsBuilder().build()
-                            )
+                        Log.d("NavDebug", "Navigating to: ${screen.route}")
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
                     },
                     enabled = !selected,

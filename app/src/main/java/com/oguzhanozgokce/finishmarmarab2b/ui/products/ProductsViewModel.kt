@@ -9,7 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCategoryProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchProductUseCase
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Products
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductsContract.UiState
@@ -22,10 +22,10 @@ class ProductsViewModel @Inject constructor(
     private val getCategoryProductsUseCase: GetCategoryProductsUseCase,
     private val getProductsUseCase: GetProductsUseCase,
     private val getSearchProductUseCase: GetSearchProductUseCase,
-     savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    private val args = savedStateHandle.toRoute<Screen.Products>()
+    private val args = savedStateHandle.toRoute<Products>()
     private val categoryId: Int? = args.id
     private val searchQuery: String = args.searchQuery ?: ""
     private val type: ProductListType = args.type

@@ -12,7 +12,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMSearchBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
@@ -30,7 +29,6 @@ fun TopBarSearch(
     onSearchValueChange: (String) -> Unit = {},
     onSearchClick: (String, ProductListType) -> Unit,
     onClearClick: () -> Unit = {},
-    focusRequester: FocusRequester,
 ) {
     Box(
         modifier = modifier
@@ -57,7 +55,6 @@ fun TopBarSearch(
             onValueChange = { onSearchValueChange(it) },
             onClick = onClick,
             onClearClick = onClearClick,
-            focusRequester = focusRequester,
             onSearchClick = onSearchClick
         )
 
@@ -85,7 +82,6 @@ fun TopBarSearchPreview() {
             onSearchValueChange = { },
             onSearchClick = { _, _ -> },
             onClearClick = { },
-            focusRequester = FocusRequester(),
         )
     }
 }

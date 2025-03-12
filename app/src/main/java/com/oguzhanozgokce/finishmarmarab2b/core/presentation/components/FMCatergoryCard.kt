@@ -35,6 +35,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.icons
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
+private const val SHIMMER_COUNT = 5
+
 @Composable
 fun CategoryCard(
     modifier: Modifier = Modifier,
@@ -110,7 +112,7 @@ fun CategoryList(
         modifier = modifier.fillMaxWidth()
     ) {
         if (isLoading || isInitialLoading) {
-            items(5) {
+            items(SHIMMER_COUNT) {
                 CategoryCardShimmer()
             }
         } else {

@@ -1,6 +1,9 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model
 
-data class Address(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Location(
     val id: Int,
     val userId: Int,
     val province: String,

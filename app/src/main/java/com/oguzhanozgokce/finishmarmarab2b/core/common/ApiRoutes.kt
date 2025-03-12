@@ -20,4 +20,9 @@ object ApiRoutes {
     const val DELETE_BASKET_ALL = "/api/Basket/delete-all/{user_id}"
     const val POST_SAVE_ADDRESS = "/api/Location"
     const val GET_LOCATIONS = "/api/Location/{user_id}"
+    const val PUT_LOCATION = "/api/Location"
+    const val DELETE_LOCATION = "/api/Location/{location_id}"
+    const val GET_USER_SEARCH_HISTORY = "/api/UserSearchHistory"
+    const val DELETE_USER_SEARCH_HISTORY = "/api/UserSearchHistory/{id}"
+    const val DELETE_USER_ALL_SEARCH_HISTORY = "/api/UserSearchHistory/user/{user_id}"
 }

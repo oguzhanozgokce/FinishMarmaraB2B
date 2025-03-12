@@ -15,6 +15,6 @@ data class SellerDto(
     @SerializedName("address")
     val address: String? = null,
 
-    @SerializedName("image_url")
+    @SerializedName("image_Url")
     val imageUrl: String? = null
 )

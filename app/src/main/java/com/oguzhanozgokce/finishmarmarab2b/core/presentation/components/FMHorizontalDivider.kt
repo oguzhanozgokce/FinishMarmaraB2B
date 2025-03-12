@@ -15,7 +15,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 fun FMHorizontalDivider(
     modifier: Modifier = Modifier,
     thickness: Dp = 1.dp,
-    color: Color = FMTheme.colors.lightGray.copy(alpha = 0.5f),
+    color: Color = FMTheme.colors.gray.copy(alpha = 0.5f),
     paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
     HorizontalDivider(

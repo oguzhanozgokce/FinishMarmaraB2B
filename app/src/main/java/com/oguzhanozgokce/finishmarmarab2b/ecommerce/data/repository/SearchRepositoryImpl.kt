@@ -21,11 +21,9 @@ class SearchRepositoryImpl @Inject constructor(
         searchQuery: String,
     ): Resource<List<Product>> {
         return safeApiCall {
-            apiService.getSearchProducts(getUserId(),searchQuery)
+            apiService.getSearchProducts(getUserId(), searchQuery)
         }.toResourceMap { response ->
             response.toProductOrNull()
         }
     }
 }
-
-

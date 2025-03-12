@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.welcome
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,18 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.oguzhanozgokce.finishmarmarab2b.R
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.CustomOutlinedButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAnimatedPreloader
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedButton
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -48,14 +44,7 @@ fun WelcomeContent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_welcomee),
-            contentDescription = "Welcome Image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(350.dp)
-                .padding(padding.dimension16),
-        )
+        FMAnimatedPreloader()
         Text(
             text = "Marmara B2B",
             style = typography.headSizeTitleThin().copy(
@@ -72,8 +61,10 @@ fun WelcomeContent(
             text = "Login",
             onClick = { welcomeNavActions.navigateToLogin() }
         )
-        CustomOutlinedButton(
-            text = "Register",
+        Spacer(modifier = Modifier.height(padding.dimension16))
+        FMOutlinedButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Sign Up",
             onClick = { welcomeNavActions.navigateToSignup() }
         )
         Spacer(modifier = Modifier.height(padding.dimension48))

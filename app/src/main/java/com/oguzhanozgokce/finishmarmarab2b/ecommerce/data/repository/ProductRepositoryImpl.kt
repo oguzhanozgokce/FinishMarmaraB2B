@@ -5,15 +5,16 @@ import androidx.paging.map
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.createPager
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mapDomain
-import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mapToPaginationData
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToPaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toCategoryDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProductList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toQuestionAnswerDomain
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toSearchHistoryListDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserCommentDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
@@ -25,6 +26,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
@@ -179,5 +181,22 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun deleteBasketAll(): Resource<Unit> {
         val userId = getUserId()
         return safeApiCall { apiService.deleteBasketAll(userId) }
+    }
+
+    override suspend fun getSearchHistory(): Resource<List<SearchHistory>> {
+        val userId = getUserId()
+        return safeApiCall { apiService.getUserSearchHistory(userId) }
+            .toResourceMap { response ->
+                response.toSearchHistoryListDomain()
+            }
+    }
+
+    override suspend fun deleteSearchHistory(id: Int): Resource<Unit> {
+        return safeApiCall { apiService.deleteUserSearchHistory(id) }
+    }
+
+    override suspend fun deleteAllSearchHistory(): Resource<Unit> {
+        val userId = getUserId()
+        return safeApiCall { apiService.deleteUserAllSearchHistory(userId) }
     }
 }

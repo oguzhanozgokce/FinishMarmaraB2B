@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.DeleteLocationUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetUserLocationsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetBasketProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract.UiAction
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class PaymentViewModel @Inject constructor(
     private val getBasketProductsUseCase: GetBasketProductsUseCase,
     private val getUserLocationsUseCase: GetUserLocationsUseCase,
+    private val deleteLocationUseCase: DeleteLocationUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -29,7 +31,7 @@ class PaymentViewModel @Inject constructor(
             is UiAction.ShowDialog -> showDialog()
             is UiAction.ShowAgreementDialog -> showAgreementDialog()
             is UiAction.HideAgreementDialog -> hideAgreementDialog()
-            is UiAction.OnChangeAddress -> updateState { copy(selectedAddress = uiAction.address) }
+            is UiAction.OnChangeAddress -> updateState { copy(selectedLocation = uiAction.location) }
             is UiAction.OnChangeSelectedCard -> updateState { copy(selectedCard = uiAction.creditCart) }
             is UiAction.OnCheckAgreement -> updateState { copy(isChecked = !isChecked) }
             is UiAction.OnCheckSaveCard -> updateState { copy(isSaveCardChecked = !isSaveCardChecked) }
@@ -41,10 +43,15 @@ class PaymentViewModel @Inject constructor(
                     expirationDateValue = uiAction.expirationDateValue
                 )
             }
-
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
+            is UiAction.DeleteLocation -> deleteLocation(uiAction.locationId)
         }
     }
+
+    private fun hideDialog() = updateState { copy(showDialog = false) }
+    private fun showDialog() = updateState { copy(showDialog = true) }
+    private fun showAgreementDialog() = updateState { copy(isShowAgreementDialog = true) }
+    private fun hideAgreementDialog() = updateState { copy(isShowAgreementDialog = false) }
 
     private fun getBasketProducts() {
         updateState { copy(isLoading = true) }
@@ -65,30 +72,27 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    private fun hideDialog() {
-        updateState { copy(showDialog = false) }
-    }
-
-    private fun showDialog() {
-        updateState { copy(showDialog = true) }
-    }
-
-    private fun showAgreementDialog() {
-        updateState { copy(isShowAgreementDialog = true) }
-    }
-
-    private fun hideAgreementDialog() {
-        updateState { copy(isShowAgreementDialog = false) }
-    }
-
     private fun getUserLocations() {
         updateState { copy(isLoading = true) }
         viewModelScope.launch {
             getUserLocationsUseCase().fold(onSuccess = { addressList ->
-                updateState { copy(addressList = addressList, isLoading = false) }
+                updateState { copy(locationList = addressList, isLoading = false) }
             }, onError = { error ->
                 updateState { copy(isLoading = false, errorMessage = error) }
             })
+        }
+    }
+
+    private fun deleteLocation(locationId: Int) {
+        viewModelScope.launch {
+            deleteLocationUseCase(locationId).fold(
+                onSuccess = {
+                    emitUiEffect(UiEffect.ShowToast("Location Deleted"))
+                },
+                onError = { error ->
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
         }
     }
 }

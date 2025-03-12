@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Signup
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupViewModel
 
@@ -15,7 +15,7 @@ data class SignUpNavActions(
 )
 
 fun NavGraphBuilder.signUp(actions: SignUpNavActions) {
-    composable<Screen.Signup> {
+    composable<Signup> {
         val viewModel: SignupViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

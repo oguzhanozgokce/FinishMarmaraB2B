@@ -1,11 +1,14 @@
 package com.oguzhanozgokce.finishmarmarab2b
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
+
+private const val FOUR = 4
+private const val TWO = 2
 
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        assertEquals(FOUR, TWO + TWO)
     }
 }

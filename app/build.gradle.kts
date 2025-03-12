@@ -128,6 +128,9 @@ dependencies {
     // SystemUiController
     implementation(libs.accompanist.systemuicontroller)
 
+    //lottie
+    implementation(libs.lottie.compose)
+
     //Test
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)

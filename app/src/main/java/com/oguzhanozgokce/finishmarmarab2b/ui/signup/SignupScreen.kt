@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.signup
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
@@ -23,15 +27,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.BackIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMAlertDialog
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMIconButton
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlineTextField
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiAction
@@ -39,6 +45,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.SignupContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.SignUpNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
+import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 import kotlinx.coroutines.flow.Flow
@@ -97,11 +104,18 @@ fun SignupContent(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
     ) {
-        BackIconButton(
-            onClick = { signupNavActions.navigateToBack() },
+        FMIconButton(
             modifier = Modifier
-                .padding(vertical = padding.dimension8)
-                .align(Alignment.Start)
+                .padding(start = padding.dimension8)
+                .align(Alignment.Start),
+            border = BorderStroke(
+                width = padding.dimension1,
+                color = colors.primary
+            ),
+            iconVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            tintColor = colors.primary,
+            shape = RoundedCornerShape(padding.dimension16),
+            onClick = signupNavActions.navigateToBack
         )
         Spacer(modifier = Modifier.height(padding.dimension20))
         Text(
@@ -117,7 +131,8 @@ fun SignupContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "Name"
+                    contentDescription = "Name",
+                    tint = FMTheme.colors.onBackground
                 )
             },
             modifier = Modifier.padding(vertical = padding.dimension4)
@@ -130,7 +145,8 @@ fun SignupContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "Surname"
+                    contentDescription = "Surname",
+                    tint = FMTheme.colors.onBackground
                 )
             },
             modifier = Modifier.padding(vertical = padding.dimension4)
@@ -143,7 +159,8 @@ fun SignupContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    contentDescription = "Email"
+                    contentDescription = "Email",
+                    tint = FMTheme.colors.onBackground
                 )
             },
             modifier = Modifier.padding(vertical = padding.dimension4)
@@ -157,7 +174,8 @@ fun SignupContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "Password"
+                    contentDescription = "Password",
+                    tint = FMTheme.colors.onBackground
                 )
             },
             modifier = Modifier.padding(vertical = padding.dimension4)
@@ -170,10 +188,15 @@ fun SignupContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Phone,
-                    contentDescription = "Phone number"
+                    contentDescription = "Phone number",
+                    tint = FMTheme.colors.onBackground
                 )
             },
-            modifier = Modifier.padding(vertical = padding.dimension4)
+            modifier = Modifier.padding(vertical = padding.dimension4),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            )
         )
         Spacer(modifier = Modifier.height(padding.dimension32))
         FMButton(

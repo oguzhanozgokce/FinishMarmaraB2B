@@ -29,11 +29,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 fun CartTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean = true,
-    onDeleteClick: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    isShowIcon: Boolean = true,
+    basketCount: Int
 ) {
     Box(
-        modifier = Modifier
-            .background(color = colors.background)
+        modifier = Modifier.background(color = colors.background)
     ) {
         Row(
             modifier = modifier
@@ -53,18 +54,22 @@ fun CartTopBar(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "(15 product)",
-                    style = typography.bodySmallNormal(),
+                    text = "($basketCount)",
+                    style = typography.bodySmallNormal().copy(
+                        fontSize = FMTheme.fontSize.mediumSmall
+                    ),
                     color = colors.text.copy(alpha = 0.6f)
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = onDeleteClick) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Clear Basket",
-                    tint = colors.primary
-                )
+            if (isShowIcon) {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Clear Basket",
+                        tint = colors.primary
+                    )
+                }
             }
         }
 
@@ -84,6 +89,9 @@ fun CartTopBar(
 @Composable
 fun CartTopBarPreview() {
     FMTheme {
-        CartTopBar()
+        CartTopBar(
+            isLoading = true,
+            basketCount = 5
+        )
     }
 }

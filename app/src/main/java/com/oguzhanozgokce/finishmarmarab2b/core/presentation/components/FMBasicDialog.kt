@@ -110,7 +110,7 @@ fun FMConfirmDialog(
                         modifier = Modifier.weight(1f),
                         fontSize = buttonFontSize,
                         height = 44.dp,
-                        backgroundColor = colors.onBackground
+                        backgroundColor = colors.cardBackground
                     )
                     FMButton(
                         onClick = onConfirm,

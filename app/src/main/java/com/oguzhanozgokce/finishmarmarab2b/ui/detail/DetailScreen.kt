@@ -123,7 +123,7 @@ fun DetailContent(
                     ProductDescriptionSection(product = product)
                     Spacer(modifier = Modifier.height(padding.dimension8))
                     SellerSection(
-                        sellerName = product.seller?.name,
+                        sellerName = product.seller.name,
                         sellerImageUrl = product.sellerImageUrl,
                         followerCount = 15600,
                         onFollowClick = { }
@@ -138,7 +138,7 @@ fun DetailContent(
                         rate = product.rate,
                         commentCount = product.commentCount,
                         comments = commentItem,
-                        onSeeAllClick = {}
+                        onSeeAllClick = navActions.navigationEToEvaluation
                     )
                     Spacer(modifier = Modifier.height(padding.dimension8))
                 }
@@ -160,7 +160,8 @@ fun DetailScreenPreview(
             navActions = DetailNavActions(
                 navigateToBack = {},
                 navigateToCart = {},
-                navigateToSearch = {}
+                navigateToSearch = {},
+                navigationEToEvaluation = {}
             )
         )
     }

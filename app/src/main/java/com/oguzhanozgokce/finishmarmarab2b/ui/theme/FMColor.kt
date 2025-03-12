@@ -16,6 +16,8 @@ val onBackgroundLight = Color(0xFF1B1B21)
 val textSecondaryLight = Color(0xFF888888)
 val backgroundLight = Color(0xFFF9F9F9)
 val cardBackgroundLight = Color(0xFFFFFFFF)
+val grayLight = Color(0xFFD3D3D3)
+val whiteBlackLight = Color(0xFFFFFFFF)
 
 val primaryDark = Color(0xFF007BFF)
 val onPrimaryDark = Color(0xFFFFFFFF)
@@ -27,6 +29,8 @@ val onTextDark = Color(0xFF000000)
 val textSecondaryDark = Color(0xFF888888)
 val backgroundDark = Color(0xFF222222)
 val cardBackgroundDark = Color(0xFF444444)
+val grayDark = Color(0xFF777777)
+val whiteBlackDark = Color(0xFF000000)
 
 fun lightColors(): FMColor = FMColor(
     primary = primaryLight,
@@ -39,6 +43,8 @@ fun lightColors(): FMColor = FMColor(
     textSecondary = textSecondaryLight,
     background = backgroundLight,
     cardBackground = cardBackgroundLight,
+    gray = grayLight,
+    whiteBlack = whiteBlackLight
 )
 
 fun darkColors(): FMColor = FMColor(
@@ -52,6 +58,8 @@ fun darkColors(): FMColor = FMColor(
     textSecondary = textSecondaryDark,
     background = backgroundDark,
     cardBackground = cardBackgroundDark,
+    gray = grayDark,
+    whiteBlack = whiteBlackDark
 )
 
 @Immutable
@@ -69,5 +77,7 @@ data class FMColor(
     val black: Color = Color.Black,
     val red: Color = Color.Red,
     val white: Color = Color.White,
+    val gray: Color,
+    val whiteBlack: Color,
     val lightGray: Color = Color.LightGray,
 )

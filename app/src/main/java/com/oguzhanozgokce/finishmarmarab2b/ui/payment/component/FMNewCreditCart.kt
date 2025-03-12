@@ -48,6 +48,8 @@ private const val BALLOON_PADDING = 12
 private const val BALLOON_MARGIN_HORIZONTAL = 12
 private const val BALLOON_CORNER_RADIUS = 8f
 private const val INDICATORS_COLOR_ALPHA = 0.3f
+private const val LIMIT_DIGITS_4 = 4
+private const val LIMIT_DIGITS_16 = 16
 
 @Composable
 fun FMNewCreditCart(
@@ -90,7 +92,13 @@ fun FMNewCreditCart(
         FMOutlineTextField(
             value = uiState.cardNumber,
             onValueChange = { newValue ->
-                onAction(PaymentContract.UiAction.OnChangeCardNumber(newValue.limitDigits(16)))
+                onAction(
+                    PaymentContract.UiAction.OnChangeCardNumber(
+                        newValue.limitDigits(
+                            LIMIT_DIGITS_16
+                        )
+                    )
+                )
             },
             modifier = Modifier.fillMaxWidth(),
             indicatorsColor = colors.text.copy(alpha = INDICATORS_COLOR_ALPHA),
@@ -113,7 +121,11 @@ fun FMNewCreditCart(
                     value = uiState.expirationDateValue,
                     onValueChange = {
                         onAction(
-                            PaymentContract.UiAction.OnChangeExpirationDate(it.limitDigits(4))
+                            PaymentContract.UiAction.OnChangeExpirationDate(
+                                it.limitDigits(
+                                    LIMIT_DIGITS_4
+                                )
+                            )
                         )
                     },
                     visualTransformation = expirationDateTransformation,

@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oguzhanozgokce.finishmarmarab2b.navigation.Screen
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Login
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginScreen
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.LoginViewModel
 
@@ -18,7 +18,7 @@ data class LoginNavActions(
 fun NavGraphBuilder.login(
     actions: LoginNavActions,
 ) {
-    composable<Screen.Login> {
+    composable<Login> {
         val viewModel: LoginViewModel = hiltViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect

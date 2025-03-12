@@ -61,10 +61,10 @@ fun PaymentScreen(
             navAction.navigateToBack()
         },
         onConfirm = { onAction(UiAction.HideDialog) },
-        title = "Exit Payment",
-        description = "Are you sure you want to leave the payment process? You can continue your shopping from where you left off.",
-        confirmText = "Continue",
-        dismissText = "Exit",
+        title = stringResource(R.string.exit_payment),
+        description = stringResource(R.string.desc_exit_payment),
+        confirmText = stringResource(R.string.btn_continue),
+        dismissText = stringResource(R.string.exit),
     )
 
     FMAgreementDialog(
@@ -116,6 +116,8 @@ fun PaymentContent(
                 onAddClick = navAction.navigateToAddress,
                 uiState = uiState,
                 onAddressClick = { onAction(UiAction.OnChangeAddress(it)) },
+                onEditClick = { navAction.navigateToEditAddress },
+                onDeleteClick = { onAction(UiAction.DeleteLocation(it)) }
             )
             FMPaymentOptions(
                 uiState = uiState,
@@ -145,7 +147,8 @@ fun PaymentScreenPreview(
             onAction = {},
             navAction = PaymentNavAction(
                 navigateToBack = {},
-                navigateToAddress = {}
+                navigateToAddress = {},
+                navigateToEditAddress = {}
             )
         )
     }

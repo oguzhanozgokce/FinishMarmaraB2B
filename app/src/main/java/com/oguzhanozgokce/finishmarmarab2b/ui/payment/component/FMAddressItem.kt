@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.payment.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.CardDefaults
@@ -22,6 +25,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,7 +37,9 @@ import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.formatPhoneNumber
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Address
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMDropdownMenu
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMDropdownMenuItem
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -39,10 +48,13 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun FMAddressItem(
     modifier: Modifier = Modifier,
-    address: Address,
+    location: Location,
     isSelected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    onEditClick: (Location) -> Unit,
+    onDeleteClick: (Int) -> Unit
 ) {
+    var menuExpanded by rememberSaveable { mutableStateOf(false) }
     FMCard(
         modifier = modifier
             .size(padding.dimension200, padding.dimension140)
@@ -79,32 +91,52 @@ fun FMAddressItem(
                 )
                 Text(
                     modifier = Modifier,
-                    text = address.addressTitle,
+                    text = location.addressTitle,
                     style = FMTheme.typography.titleMediumMedium().copy(color = colors.primary),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(
-                    modifier = Modifier.size(padding.dimension24),
-                    onClick = { }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = "",
-                        tint = colors.primary
+                Box {
+                    IconButton(
+                        modifier = Modifier.size(padding.dimension24),
+                        onClick = { menuExpanded = true }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "",
+                            tint = colors.primary
+                        )
+                    }
+                    FMDropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false },
+                        menuItems = listOf(
+                            FMDropdownMenuItem(
+                                text = "Edit",
+                                icon = Icons.Default.Edit,
+                                onClick = {
+                                    onEditClick(location)
+                                }
+                            ),
+                            FMDropdownMenuItem(
+                                text = "Delete",
+                                icon = Icons.Default.Delete,
+                                onClick = { onDeleteClick(location.id) }
+                            )
+                        )
                     )
                 }
             }
             Text(
-                text = "${address.province} / ${address.city}",
+                text = "${location.province} / ${location.city}",
                 style = FMTheme.typography.titleMediumMedium().copy(
                     fontSize = FMTheme.fontSize.mediumSmall
                 )
             )
             Spacer(modifier = Modifier.height(padding.dimension4))
             Text(
-                text = address.openAddress,
+                text = location.openAddress,
                 style = FMTheme.typography.titleSmallMedium(),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
@@ -114,7 +146,7 @@ fun FMAddressItem(
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(bottom = padding.dimension8, end = padding.dimension8),
-                text = address.addressTel.formatPhoneNumber(),
+                text = location.addressTel.formatPhoneNumber(),
                 style = FMTheme.typography.titleSmallMedium()
             )
         }
@@ -124,19 +156,23 @@ fun FMAddressItem(
 @Composable
 fun FMAddressList(
     modifier: Modifier = Modifier,
-    addresses: List<Address>,
-    selectedAddress: Address?,
-    onSelected: (Address) -> Unit
+    locations: List<Location>,
+    selectedLocation: Location?,
+    onSelected: (Location) -> Unit,
+    onEditClick: (Location) -> Unit,
+    onDeleteClick: (Int) -> Unit
 ) {
     LazyRow(
         modifier = modifier.padding(start = padding.dimension8, bottom = padding.dimension8),
         horizontalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
-        items(addresses) { address ->
+        items(locations) { address ->
             FMAddressItem(
-                address = address,
-                isSelected = selectedAddress == address,
-                onSelected = { onSelected(address) }
+                location = address,
+                isSelected = selectedLocation == address,
+                onSelected = { onSelected(address) },
+                onEditClick = onEditClick,
+                onDeleteClick = onDeleteClick
             )
         }
     }
@@ -152,11 +188,13 @@ fun FMAddressListPreview() {
                 .padding(padding.dimension8),
             horizontalArrangement = Arrangement.spacedBy(padding.dimension16)
         ) {
-            items(PreviewMockData.defaultAddressList) { address ->
+            items(PreviewMockData.defaultLocationLists) { address ->
                 FMAddressItem(
-                    address = address,
+                    location = address,
                     isSelected = false,
-                    onSelected = {}
+                    onSelected = {},
+                    onEditClick = {},
+                    onDeleteClick = {}
                 )
             }
         }
@@ -168,9 +206,11 @@ fun FMAddressListPreview() {
 fun FMAddressCardPreview() {
     FMTheme {
         FMAddressItem(
-            address = PreviewMockData.defaultAddress,
+            location = PreviewMockData.defaultLocation,
             isSelected = true,
-            onSelected = {}
+            onSelected = {},
+            onEditClick = {},
+            onDeleteClick = {}
         )
     }
 }

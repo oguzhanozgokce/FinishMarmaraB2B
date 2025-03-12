@@ -9,14 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun HistoryItemList(
     searchHistoryList: List<SearchHistory>,
-    onHistoryItemClick: (String) -> Unit,
-    onDeleteClick: (Int) -> Unit
+    onHistoryItemClick: (String, ProductListType) -> Unit,
+    onDeleteClick: (Int) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -43,7 +44,7 @@ fun HistoryItemListPreview() {
             items(PreviewMockData.historyList) {
                 HistoryItem(
                     searchHistory = it,
-                    onHistoryItemClick = {},
+                    onHistoryItemClick = { _, _ -> },
                     onDeleteClick = {}
                 )
             }

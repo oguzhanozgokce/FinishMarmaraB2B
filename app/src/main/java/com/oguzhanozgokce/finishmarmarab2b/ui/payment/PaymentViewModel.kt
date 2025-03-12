@@ -43,7 +43,6 @@ class PaymentViewModel @Inject constructor(
                     expirationDateValue = uiAction.expirationDateValue
                 )
             }
-
             is UiAction.OnChangeCvv -> updateState { copy(cvv = uiAction.cvv) }
             is UiAction.DeleteLocation -> deleteLocation(uiAction.locationId)
         }

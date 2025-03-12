@@ -16,6 +16,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
+private const val DROPDOWN_OFFSET_X = -32
+private const val DROPDOWN_OFFSET_Y = 0
+
 data class FMDropdownMenuItem(
     val text: String,
     val icon: ImageVector,
@@ -27,7 +30,7 @@ fun FMDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    offset: DpOffset = DpOffset((-32).dp, 0.dp),
+    offset: DpOffset = DpOffset((DROPDOWN_OFFSET_X).dp, DROPDOWN_OFFSET_Y.dp),
     containerColor: Color = colors.cardBackground,
     border: BorderStroke = BorderStroke(
         width = padding.dimension1,

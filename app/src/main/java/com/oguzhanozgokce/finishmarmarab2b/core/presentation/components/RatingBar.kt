@@ -16,12 +16,26 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import kotlin.math.cos
 import kotlin.math.sin
 
+private const val DEFAULT_TOTAL_STARS = 5
+private const val DEFAULT_STAR_SIZE = 12
+private const val STAR_POINTS = 10
+private const val STAR_ROTATION_OFFSET_DEGREE = 90
+private const val STAR_ANGLE_STEP_DEGREE = 36
+private const val INNER_RADIUS_RATIO = 0.5f
+private const val STAR_STROKE_WIDTH = 0.1f
+private const val FULL_STAR = 1f
+private const val EMPTY_STAR = 0f
+private const val FIRST_INDEX = 0
+private const val EVEN_INDEX = 0
+private const val STARTING_PAGE_INDEX = 1
+private const val TWO = 2
+
 @Composable
 fun RatingBar(
     rating: Double,
     modifier: Modifier = Modifier,
-    totalStars: Int = 5,
-    starSize: Dp = 12.dp,
+    totalStars: Int = DEFAULT_TOTAL_STARS,
+    starSize: Dp = DEFAULT_STAR_SIZE.dp,
     filledStarColor: Color = colors.primary,
     strokeColor: Color = colors.primary,
     backgroundColor: Color = colors.background,
@@ -31,11 +45,11 @@ fun RatingBar(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(spacing)
     ) {
-        for (i in 1..totalStars) {
+        for (i in STARTING_PAGE_INDEX..totalStars) {
             val fraction = when {
-                i <= rating.toFloat() -> 1f
-                i - 1 < rating.toFloat() -> (rating.toFloat() - (i - 1))
-                else -> 0f
+                i <= rating.toFloat() -> FULL_STAR
+                i - STARTING_PAGE_INDEX < rating.toFloat() -> (rating.toFloat() - (i - STARTING_PAGE_INDEX))
+                else -> EMPTY_STAR
             }
 
             StarIcon(
@@ -58,16 +72,17 @@ fun StarIcon(
     backgroundColor: Color
 ) {
     Canvas(modifier = Modifier.size(size)) {
-        val radius = size.toPx() / 2
-        val innerRadius = radius * 0.5f
+        val radius = size.toPx() / TWO
+        val innerRadius = radius * INNER_RADIUS_RATIO
 
         val starPath = Path().apply {
-            (0 until 10).forEach { i ->
-                val angle = Math.toRadians((i * 36 - 90).toDouble())
-                val r = if (i % 2 == 0) radius else innerRadius
+            (FIRST_INDEX until STAR_POINTS).forEach { i ->
+                val angle =
+                    Math.toRadians((i * STAR_ANGLE_STEP_DEGREE - STAR_ROTATION_OFFSET_DEGREE).toDouble())
+                val r = if (i % TWO == EVEN_INDEX) radius else innerRadius
                 val x = (radius + r * cos(angle)).toFloat()
                 val y = (radius + r * sin(angle)).toFloat()
-                if (i == 0) moveTo(x, y) else lineTo(x, y)
+                if (i == FIRST_INDEX) moveTo(x, y) else lineTo(x, y)
             }
             close()
         }
@@ -86,7 +101,7 @@ fun StarIcon(
         drawPath(
             path = starPath,
             color = unfilledStarColor,
-            style = Stroke(width = 0.1.dp.toPx())
+            style = Stroke(width = STAR_STROKE_WIDTH.dp.toPx())
         )
     }
 }

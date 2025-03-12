@@ -4,6 +4,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET_ALL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_LOCATION
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_ALL_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
@@ -27,7 +28,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Cate
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SearchHistoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
@@ -40,6 +40,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
@@ -186,10 +187,15 @@ interface ApiService {
     @GET(GET_USER_SEARCH_HISTORY)
     suspend fun getUserSearchHistory(
         @Query("user_id") userId: Int,
-    ): Response<ApiResponse<List<SearchHistoryDto>>>
+    ): Response<ApiResponse<GetSearchHistoryResponse>>
 
     @DELETE(DELETE_USER_SEARCH_HISTORY)
     suspend fun deleteUserSearchHistory(
         @Path("id") id: Int,
+    ): Response<ApiResponse<Unit>>
+
+    @DELETE(DELETE_USER_ALL_SEARCH_HISTORY)
+    suspend fun deleteUserAllSearchHistory(
+        @Path("user_id") userId: Int,
     ): Response<ApiResponse<Unit>>
 }

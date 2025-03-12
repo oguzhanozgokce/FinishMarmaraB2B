@@ -11,6 +11,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
+private const val SHIMMER_COUNT = 4
+
 @Composable
 fun EvaluationList(
     isLoading: Boolean,
@@ -23,7 +25,7 @@ fun EvaluationList(
             .background(colors.background)
     ) {
         if (isLoading) {
-            items(4) {
+            items(SHIMMER_COUNT) {
                 EvaluationItemShimmer()
             }
         } else {

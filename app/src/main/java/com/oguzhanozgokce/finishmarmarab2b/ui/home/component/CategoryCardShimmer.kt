@@ -25,6 +25,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 private const val ON_BACKGROUND_ALPHA = 0.1f
+private const val CATEGORY_SHIMMER_COUNT = 5
 
 @Composable
 fun CategoryCardShimmer(
@@ -82,7 +83,7 @@ fun CategoryListShimmer(
             .fillMaxWidth()
             .shimmer(isLoading = true)
     ) {
-        repeat(5) {
+        repeat(CATEGORY_SHIMMER_COUNT) {
             CategoryCardShimmer(
                 modifier = Modifier.padding(end = padding.dimension8)
             )

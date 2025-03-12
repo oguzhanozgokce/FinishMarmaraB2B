@@ -16,6 +16,8 @@ object SearchContract {
         data class OnSearchValueChange(val value: String) : UiAction()
         data class OnSearch(val searchQuery: String) : UiAction()
         data class DeleteSearchHistory(val id: Int) : UiAction()
+        data object LoadSearchHistory : UiAction()
+        data object DeleteAllSearchHistory : UiAction()
     }
 
     sealed class UiEffect {

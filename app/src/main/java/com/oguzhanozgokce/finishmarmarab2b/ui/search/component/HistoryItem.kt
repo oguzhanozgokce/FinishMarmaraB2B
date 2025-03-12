@@ -23,6 +23,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickab
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -33,7 +34,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 fun HistoryItem(
     searchHistory: SearchHistory,
     modifier: Modifier = Modifier,
-    onHistoryItemClick: (String) -> Unit,
+    onHistoryItemClick: (String, ProductListType) -> Unit,
     onDeleteClick: (Int) -> Unit
 ) {
     FMOutlinedCard(
@@ -51,7 +52,12 @@ fun HistoryItem(
                         vertical = padding.dimension4,
                         horizontal = padding.dimension8
                     )
-                    .noRippleClickable { onHistoryItemClick(searchHistory.searchHistory) },
+                    .noRippleClickable {
+                        onHistoryItemClick(
+                            searchHistory.searchHistory,
+                            ProductListType.SEARCH
+                        )
+                    },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(padding.dimension4)
             ) {
@@ -82,13 +88,13 @@ fun HistoryItemPreview() {
         Row {
             HistoryItem(
                 searchHistory = PreviewMockData.defaultSearchHistory,
-                onHistoryItemClick = {},
+                onHistoryItemClick = { _, _ -> },
                 onDeleteClick = {}
             )
             Spacer(modifier = Modifier.width(padding.dimension8))
             HistoryItem(
                 searchHistory = PreviewMockData.defaultLongSearchHistory,
-                onHistoryItemClick = {},
+                onHistoryItemClick = { _, _ -> },
                 onDeleteClick = {}
             )
         }

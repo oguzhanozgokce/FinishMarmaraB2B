@@ -157,22 +157,44 @@ object PreviewMockData {
     )
 
     val historyList = listOf(
-        SearchHistory(id = 2, searchHistory = "Iphone 13"),
-        SearchHistory(id = 3, searchHistory = "Headphones"),
-        SearchHistory(id = 4, searchHistory = "Camera"),
-        SearchHistory(id = 5, searchHistory = "Iphone 13"),
-        SearchHistory(id = 6, searchHistory = "Headphones"),
-        SearchHistory(id = 7, searchHistory = "Camera"),
+        SearchHistory(
+            id = 2,
+            userId = 4,
+            searchHistory = "Iphone 13",
+            createdAt = "20 Ocak 2025 | 12:00"
+        ),
+        SearchHistory(
+            id = 2,
+            userId = 4,
+            searchHistory = "Headphones",
+            createdAt = "20 Ocak 2025 | 12:00"
+        ),
+        SearchHistory(
+            id = 2,
+            userId = 4,
+            searchHistory = "Camera",
+            createdAt = "20 Ocak 2025 | 12:00"
+        ),
+        SearchHistory(
+            id = 2,
+            userId = 4,
+            searchHistory = "Headphones",
+            createdAt = "20 Ocak 2025 | 12:00"
+        )
     )
 
     val defaultSearchHistory = SearchHistory(
         id = 2,
-        searchHistory = "Iphone 13"
+        userId = 2,
+        searchHistory = "Iphone 13",
+        createdAt = "20 Ocak 2025 | 12:00"
     )
 
     val defaultLongSearchHistory = SearchHistory(
         id = 3,
-        searchHistory = "HeadphonesHeadphones"
+        searchHistory = "HeadphonesHeadphones",
+        userId = 2,
+        createdAt = "20 Ocak 2025 | 12:00"
     )
 
     val sampleCities = listOf(

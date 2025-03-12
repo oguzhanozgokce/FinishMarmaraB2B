@@ -19,28 +19,28 @@ class GenericPagingSource<T : Any>(
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
             val response = apiCall(page)
-
-            if (response.isSuccessful) {
-                response.body()?.let { apiResponse ->
-                    if (apiResponse.status) {
-                        val paginationData = apiResponse.data
-                        val items = paginationData.list ?: emptyList()
-                        val pagination = paginationData.pagination
-                        val currentPage = pagination?.page ?: STARTING_PAGE_INDEX
-                        val totalPages = pagination?.max ?: STARTING_PAGE_INDEX
-
-                        return LoadResult.Page(
-                            data = items,
-                            prevKey = if (currentPage > STARTING_PAGE_INDEX) currentPage - 1 else null,
-                            nextKey = if (currentPage < totalPages) currentPage + 1 else null
-                        )
-                    } else {
-                        return LoadResult.Error(Exception(apiResponse.message))
-                    }
-                } ?: LoadResult.Error(Exception("Response body is null"))
-            } else {
-                LoadResult.Error(HttpException(response))
+            if (!response.isSuccessful) {
+                return LoadResult.Error(HttpException(response))
             }
+
+            val apiResponse =
+                response.body() ?: return LoadResult.Error(Exception("Response body is null"))
+
+            if (!apiResponse.status) {
+                return LoadResult.Error(Exception(apiResponse.message))
+            }
+
+            val paginationData = apiResponse.data
+            val items = paginationData.list ?: emptyList()
+            val pagination = paginationData.pagination
+            val currentPage = pagination?.page ?: STARTING_PAGE_INDEX
+            val totalPages = pagination?.max ?: STARTING_PAGE_INDEX
+
+            LoadResult.Page(
+                data = items,
+                prevKey = if (currentPage > STARTING_PAGE_INDEX) currentPage - 1 else null,
+                nextKey = if (currentPage < totalPages) currentPage + 1 else null
+            )
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

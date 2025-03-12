@@ -320,7 +320,7 @@ fun FrontSideCreditCardPreview() {
                 modifier = Modifier
                     .padding(padding.dimension16)
                     .size(250.dp, 150.dp),
-                cardBackgroundColor = Color(0xFFE3F2FD),
+                cardBackgroundColor = colors.cardBackground,
                 borderColor = colors.primary.copy(alpha = BORDER_ALPHA),
                 onFlip = {}
             )

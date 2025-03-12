@@ -28,4 +28,5 @@ interface ProductRepository {
     suspend fun deleteBasketAll(): Resource<Unit>
     suspend fun getSearchHistory(): Resource<List<SearchHistory>>
     suspend fun deleteSearchHistory(id: Int): Resource<Unit>
+    suspend fun deleteAllSearchHistory(): Resource<Unit>
 }

@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.core.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -44,6 +46,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,7 +69,10 @@ fun FMSearchBar(
     }
 
     LaunchedEffect(Unit) {
+        withFrameNanos { }
         focusRequester.requestFocus()
+        delay(100)
+        keyboardController?.show()
     }
 
     BasicTextField(
@@ -88,7 +94,8 @@ fun FMSearchBar(
             .conditional(onClick != null) {
                 noRippleClickable { onClick?.invoke() }
             }
-            .focusRequester(focusRequester),
+            .focusRequester(focusRequester)
+            .focusable(),
         singleLine = true,
         textStyle = typography.bodySmallLight().copy(fontWeight = FontWeight.Medium),
         decorationBox = { innerTextField ->
@@ -171,7 +178,8 @@ fun QuizAppSearchBarPreview() {
                 onValueChange = {},
                 onClick = {},
                 onClearClick = {},
-                onSearchClick = { _, _ -> }
+                onSearchClick = { _, _ -> },
+                focusRequester = FocusRequester()
             )
 
             FMSearchBar(
@@ -179,7 +187,8 @@ fun QuizAppSearchBarPreview() {
                 onValueChange = {},
                 onClick = {},
                 onClearClick = {},
-                onSearchClick = { _, _ -> }
+                onSearchClick = { _, _ -> },
+                focusRequester = FocusRequester()
             )
 
             FMSearchBar(
@@ -189,7 +198,8 @@ fun QuizAppSearchBarPreview() {
                 placeholder = "Cannot interact",
                 onClick = {},
                 onClearClick = {},
-                onSearchClick = { _, _ -> }
+                onSearchClick = { _, _ -> },
+                focusRequester = FocusRequester()
             )
 
             FMSearchBar(
@@ -199,7 +209,8 @@ fun QuizAppSearchBarPreview() {
                 placeholder = "Error state",
                 onClick = {},
                 onClearClick = {},
-                onSearchClick = { _, _ -> }
+                onSearchClick = { _, _ -> },
+                focusRequester = FocusRequester()
             )
         }
     }

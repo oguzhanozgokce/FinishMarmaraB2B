@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val MIN_CLICK_INTERVAL = 500L
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getUserCase: GetUserUseCase,
@@ -68,7 +70,7 @@ class HomeViewModel @Inject constructor(
 
     private fun toggleFavorite(productId: Int) {
         val currentTime = System.currentTimeMillis()
-        if (currentTime - lastClickTime < 500) {
+        if (currentTime - lastClickTime < MIN_CLICK_INTERVAL) {
             return
         }
         lastClickTime = currentTime

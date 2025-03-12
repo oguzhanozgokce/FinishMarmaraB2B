@@ -17,6 +17,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
+private const val CARD_SHIMMER_COUNT = 4
+
 @Composable
 fun CartProductList(
     isLoading: Boolean,
@@ -37,7 +39,7 @@ fun CartProductList(
         contentPadding = PaddingValues(vertical = padding.dimension8)
     ) {
         if (isLoading) {
-            items(4) {
+            items(CARD_SHIMMER_COUNT) {
                 CartProductItemShimmer()
             }
         } else {

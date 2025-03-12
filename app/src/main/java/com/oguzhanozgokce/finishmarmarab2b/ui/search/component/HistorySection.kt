@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.fontSize
@@ -32,8 +33,8 @@ fun HistorySection(
     modifier: Modifier = Modifier,
     searchHistoryList: List<SearchHistory>,
     onClearAllClick: () -> Unit,
-    onHistoryItemClick: (String) -> Unit,
-    onDeleteClick: (Int) -> Unit
+    onHistoryItemClick: (String, ProductListType) -> Unit,
+    onDeleteClick: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -82,7 +83,7 @@ fun HistorySectionPreview() {
         HistorySection(
             searchHistoryList = PreviewMockData.historyList,
             onClearAllClick = { },
-            onHistoryItemClick = { },
+            onHistoryItemClick = { _, _ -> },
             onDeleteClick = { }
         )
     }

@@ -28,6 +28,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
+private const val MIN_STOCK = 1
+private const val MAX_STOCK = 10
+
 @Composable
 fun CartProductItem(
     modifier: Modifier = Modifier,
@@ -114,11 +117,18 @@ fun CartProductItem(
                         maxLines = 4,
                         overflow = TextOverflow.Ellipsis
                     )
-                    if (product.stock in 1..10) {
+                    if (product.stock in MIN_STOCK..MAX_STOCK) {
+                        val stockText = if (product.stock == MIN_STOCK) {
+                            "Last 1 Product!"
+                        } else {
+                            "Stock ${product.stock} products left"
+                        }
+                        val stockColor =
+                            if (product.stock == MIN_STOCK) colors.error else colors.text
                         Text(
-                            text = if (product.stock == 1) "Last 1 Product!" else "Stock ${product.stock} products left",
+                            text = stockText,
                             style = typography.bodySmallNormal(),
-                            color = if (product.stock == 1) colors.error else colors.text,
+                            color = stockColor
                         )
                     }
                 }

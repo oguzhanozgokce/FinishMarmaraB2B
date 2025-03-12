@@ -32,6 +32,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
+private const val PRODUCT_SHIMMER_COUNT = 6
+private const val GRID_COUNT = 2
+
 @Composable
 fun ProductsScreen(
     uiState: UiState,
@@ -104,13 +107,13 @@ fun ProductsList(
 ) {
     val listState = rememberLazyGridState()
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(GRID_COUNT),
         modifier = modifier.fillMaxWidth(),
         state = listState,
         contentPadding = PaddingValues(padding.dimension8),
     ) {
         if (isLoading) {
-            items(6) {
+            items(PRODUCT_SHIMMER_COUNT) {
                 ProductCardShimmer()
             }
         } else {

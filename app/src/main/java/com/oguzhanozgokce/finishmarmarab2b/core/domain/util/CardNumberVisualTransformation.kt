@@ -5,15 +5,20 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
+private const val MAX_CARD_NUMBER_LENGTH = 16
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val SPACE_CHARACTER = ' '
+private const val ZERO = 0
+
 object CardNumberVisualTransformation {
     val cardNumberVisualTransformation = VisualTransformation { text ->
-        val digits = text.text.filter { it.isDigit() }.take(16)
+        val digits = text.text.filter { it.isDigit() }.take(MAX_CARD_NUMBER_LENGTH)
         val builder = AnnotatedString.Builder()
         val mappingList = mutableListOf<Int>()
 
         for (i in digits.indices) {
-            if (i > 0 && i % 4 == 0) {
-                builder.append(' ')
+            if (i > ZERO && i % CARD_NUMBER_GROUP_SIZE == ZERO) {
+                builder.append(SPACE_CHARACTER)
             }
             mappingList.add(builder.length)
             builder.append(digits[i])

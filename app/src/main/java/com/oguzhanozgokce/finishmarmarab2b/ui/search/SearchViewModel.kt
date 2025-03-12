@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.search
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteAllSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchProductUseCase
@@ -19,11 +20,11 @@ class SearchViewModel @Inject constructor(
     private val getTop5ProductsUseCase: GetTop5ProductsUseCase,
     private val getSearchProductUseCase: GetSearchProductUseCase,
     private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
-    private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase
+    private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase,
+    private val deleteAllSearchHistoryUseCase: DeleteAllSearchHistoryUseCase
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
-        searchHistory()
         loadTop5Products()
     }
 
@@ -32,6 +33,8 @@ class SearchViewModel @Inject constructor(
             is UiAction.OnSearchValueChange -> updateState { copy(searchValue = uiAction.value) }
             is UiAction.OnSearch -> searchProduct(uiAction.searchQuery)
             is UiAction.DeleteSearchHistory -> deleteSearchHistory(uiAction.id)
+            is UiAction.LoadSearchHistory -> searchHistory()
+            is UiAction.DeleteAllSearchHistory -> deleteAllSearchHistory()
         }
     }
 
@@ -82,6 +85,19 @@ class SearchViewModel @Inject constructor(
                 onSuccess = {
                     val updatedList = currentState.searchHistoryList.filter { it.id != id }
                     updateState { copy(searchHistoryList = updatedList) }
+                },
+                onError = { error ->
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun deleteAllSearchHistory() {
+        viewModelScope.launch {
+            deleteAllSearchHistoryUseCase().fold(
+                onSuccess = {
+                    updateState { copy(searchHistoryList = emptyList()) }
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))

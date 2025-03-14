@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.R
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.PaymentContract
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -100,7 +99,7 @@ fun FMPaymentOptions(
                     .padding(top = padding.dimension16),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                items(PreviewMockData.defaultCart) { card ->
+                items(uiState.creditCartList) { card ->
                     FMCreditCard(
                         creditCard = card,
                         isSelected = selectedCard == card,

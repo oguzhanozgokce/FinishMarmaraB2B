@@ -63,7 +63,6 @@ private const val ROTATION_THRESHOLD = 90f
 private const val ANIMATION_DURATION = 600
 private const val BORDER_ALPHA = 0.2f
 private const val ICON_ALPHA = 0.5f
-private const val CARD_BACKGROUND_ALPHA = 0.1f
 private const val SPACER_WEIGHT = 1f
 private const val CAMERA_DISTANCE_MULTIPLIER = 30f
 private const val TRANSFORM_ORIGIN_X = 0.5f
@@ -83,7 +82,6 @@ fun FMCreditCard(
         targetValue = if (isFlipped) FLIPPED_ROTATION else DEFAULT_ROTATION,
         animationSpec = tween(durationMillis = ANIMATION_DURATION)
     )
-    val cardBackgroundColor = colors.lightGray.copy(alpha = CARD_BACKGROUND_ALPHA)
     val iconBackgroundColor =
         if (isSelected) colors.primary.copy(alpha = ICON_ALPHA) else colors.primary.copy(alpha = BORDER_ALPHA)
     Box(
@@ -106,14 +104,12 @@ fun FMCreditCard(
         if (rotationAngle <= ROTATION_THRESHOLD) {
             FrontSideCreditCard(
                 creditCard,
-                cardBackgroundColor = cardBackgroundColor,
                 borderColor = iconBackgroundColor,
                 onFlip = { isFlipped = !isFlipped },
             )
         } else {
             BackSideCreditCard(
                 creditCard = creditCard,
-                cardBackgroundColor = cardBackgroundColor,
                 borderColor = iconBackgroundColor,
                 modifier = Modifier
                     .fillMaxSize()
@@ -132,18 +128,16 @@ fun FMCreditCard(
 fun FrontSideCreditCard(
     creditCard: CreditCart,
     modifier: Modifier = Modifier,
-    cardBackgroundColor: Color = colors.lightGray.copy(alpha = CARD_BACKGROUND_ALPHA),
     borderColor: Color,
     onFlip: () -> Unit
 ) {
     FMCard(
-        modifier = modifier.background(
-            color = cardBackgroundColor,
-            shape = RoundedCornerShape(padding.dimension16)
-        ),
+        modifier = modifier,
         cardColors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
+            containerColor = colors.cardBackground
         ),
+        shape = RoundedCornerShape(padding.dimension16),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Box(
             modifier = Modifier
@@ -207,18 +201,16 @@ fun FrontSideCreditCard(
 fun BackSideCreditCard(
     creditCard: CreditCart,
     modifier: Modifier = Modifier,
-    cardBackgroundColor: Color = colors.lightGray.copy(alpha = CARD_BACKGROUND_ALPHA),
     borderColor: Color,
     onFlip: () -> Unit
 ) {
     FMCard(
-        modifier = modifier.background(
-            color = cardBackgroundColor,
-            shape = RoundedCornerShape(padding.dimension16)
-        ),
+        modifier = modifier,
         cardColors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
+            containerColor = colors.cardBackground
         ),
+        shape = RoundedCornerShape(padding.dimension16),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Box(
             modifier = Modifier
@@ -236,7 +228,7 @@ fun BackSideCreditCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = creditCard.cardTitle,
+                        text = creditCard.cardNameSurname,
                         style = typography.titleMediumMedium()
                     )
                     FMIcon(
@@ -320,7 +312,6 @@ fun FrontSideCreditCardPreview() {
                 modifier = Modifier
                     .padding(padding.dimension16)
                     .size(250.dp, 150.dp),
-                cardBackgroundColor = colors.cardBackground,
                 borderColor = colors.primary.copy(alpha = BORDER_ALPHA),
                 onFlip = {}
             )

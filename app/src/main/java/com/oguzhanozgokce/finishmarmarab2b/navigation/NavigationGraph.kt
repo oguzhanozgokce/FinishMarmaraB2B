@@ -23,6 +23,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.login
+import com.oguzhanozgokce.finishmarmarab2b.ui.ordersuccess.orderSuccess
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.navigation.password
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.PaymentNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.payment
@@ -117,6 +118,12 @@ fun NavigationGraph(
                     navigateToAddress = { navController.navigate(route = Address) },
                     navigateToEditAddress = {
                         navController.navigate(route = Address)
+                    },
+                    navigateToOrderSuccess = {
+                        navController.navigateClearingStack(
+                            OrderSuccess,
+                            Payment
+                        )
                     }
                 )
             )
@@ -169,6 +176,9 @@ fun NavigationGraph(
                     navigateToBack = { navController.navigateUp() },
                     navigateToSearch = { navController.navigate(route = Search) }
                 )
+            )
+            orderSuccess(
+                onNavigateToHome = { navController.navigateClearingStack(Home, OrderSuccess) }
             )
         }
     }

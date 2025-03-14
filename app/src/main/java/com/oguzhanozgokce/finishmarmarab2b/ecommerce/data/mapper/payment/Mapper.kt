@@ -1,13 +1,17 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.formatDate
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CreditCartDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.LocationDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.OrderDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCreditCardResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Order
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 
 fun Location.toSaveLocationRequest(userId: Int): SaveLocationRequest {
@@ -54,6 +58,12 @@ fun CreditCartDto.mapToCreditCart(): CreditCart {
     )
 }
 
+fun GetCreditCardResponse.mapToCreditCartList(): List<CreditCart> {
+    return list.orEmpty().map { creditCartDto ->
+        creditCartDto.mapToCreditCart()
+    }
+}
+
 fun Map<String, List<String>>.toDomainProvinces(): List<Province> {
     return this.map { (provinceName, cities) ->
         Province(
@@ -62,3 +72,14 @@ fun Map<String, List<String>>.toDomainProvinces(): List<Province> {
         )
     }
 }
+
+fun OrderDto.mapToOrder(): Order = Order(
+    id = id.orZero(),
+    userId = userId.orZero(),
+    locationId = locationId.orZero(),
+    creditCardId = creditCardId.orZero(),
+    totalPrice = totalPrice.orZero(),
+    orderStatus = orderStatus.orEmpty(),
+    createdAt = createdAt.formatDate(),
+    updatedAt = updatedAt.formatDate()
+)

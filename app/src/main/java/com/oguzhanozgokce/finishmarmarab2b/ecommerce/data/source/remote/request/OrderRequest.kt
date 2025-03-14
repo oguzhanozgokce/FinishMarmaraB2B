@@ -10,7 +10,7 @@ data class OrderRequest(
     @SerializedName("credit_Card_Id")
     val creditCardId: Int? = null,
     @SerializedName("total_Price")
-    val totalPrice: Int? = null,
+    val totalPrice: Double? = null,
     @SerializedName("order_Status")
     val orderStatus: String? = null
 )

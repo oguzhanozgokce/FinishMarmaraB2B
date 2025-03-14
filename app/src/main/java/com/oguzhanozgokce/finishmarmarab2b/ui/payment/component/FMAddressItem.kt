@@ -59,7 +59,7 @@ fun FMAddressItem(
         modifier = modifier
             .size(padding.dimension200, padding.dimension140)
             .noRippleClickable { onSelected() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         border = BorderStroke(
             width = if (isSelected) padding.dimension2 else padding.dimension1,
             color = if (isSelected) colors.primary else colors.primary.copy(alpha = 0.3f)

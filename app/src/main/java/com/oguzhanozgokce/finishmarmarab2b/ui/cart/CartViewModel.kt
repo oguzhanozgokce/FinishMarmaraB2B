@@ -62,11 +62,10 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             deleteBasketProductUseCase(productId).fold(
                 onSuccess = {
-                    val updateList = currentState.basketProducts.filterNot { it.id == productId }
                     updateState {
                         copy(
-                            basketProducts = updateList,
-                            totalPrice = updateList.sumOf { it.totalPrice }
+                            basketProducts = basketProducts,
+                            totalPrice = basketProducts.sumOf { it.totalPrice }
                         )
                     }
                 },

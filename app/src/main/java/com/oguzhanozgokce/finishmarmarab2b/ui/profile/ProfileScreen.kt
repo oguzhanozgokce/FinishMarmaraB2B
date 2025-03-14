@@ -121,6 +121,9 @@ fun ProfileContent(
                 ProfileItem(text = "Change Password", onClick = {})
             }
             ProfileCard {
+                ProfileItem(text = "My Cards", onClick = {})
+            }
+            ProfileCard {
                 ProfileItem(text = "Terms & Conditions", onClick = {})
                 ProfileItem(text = "Privacy Policy", onClick = {})
             }

@@ -46,6 +46,9 @@ data object Address
 data object Evaluation
 
 @Serializable
+data object OrderSuccess
+
+@Serializable
 data class Products(
     val id: Int? = null,
     val name: String? = null,

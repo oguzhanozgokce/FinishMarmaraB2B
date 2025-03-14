@@ -14,6 +14,7 @@ data class PaymentNavAction(
     val navigateToBack: () -> Unit,
     val navigateToAddress: () -> Unit,
     val navigateToEditAddress: (Location) -> Unit,
+    val navigateToOrderSuccess: () -> Unit
 )
 
 fun NavGraphBuilder.payment(

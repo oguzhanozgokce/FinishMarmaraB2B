@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 
@@ -13,4 +14,5 @@ interface BasketRepository {
     suspend fun deleteBasketAll(): Resource<Unit>
     suspend fun postOrder(request: OrderRequest): Flow<Resource<Unit>>
     suspend fun postCreditCart(request: CreditCartRequest): Resource<Unit>
+    suspend fun getCreditCart(): Resource<List<CreditCart>>
 }

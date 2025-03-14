@@ -4,12 +4,14 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.mapToCreditCartList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProductList
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.BasketRepository
 import kotlinx.coroutines.Dispatchers
@@ -64,5 +66,12 @@ class BasketRepositoryImpl @Inject constructor(
     override suspend fun postCreditCart(request: CreditCartRequest): Resource<Unit> {
         val userId = getUserId()
         return safeApiCall { apiService.postCreditCard(request.copy(userId = userId)) }
+    }
+
+    override suspend fun getCreditCart(): Resource<List<CreditCart>> {
+        val userId = getUserId()
+        return safeApiCall { apiService.getCreditCard(userId) }.toResourceMap { response ->
+            response.mapToCreditCartList()
+        }
     }
 }

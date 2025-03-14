@@ -76,3 +76,27 @@ fun String?.toLocalDateTimeOrDefault(
         }
     } ?: defaultDateTime
 }
+
+fun String?.toLocalDateTimeOrDefaultPerform(
+    formatter: DateTimeFormatter,
+    defaultDateTime: () -> LocalDateTime = { LocalDateTime.now() }
+): LocalDateTime {
+    return this?.let {
+        runCatching { LocalDateTime.parse(it, formatter) }.getOrDefault(defaultDateTime())
+    } ?: defaultDateTime()
+}
+
+fun String?.formatDate(): String {
+    return this?.toLocalDateTimeOrDefaultPerform(DateTimeFormatter.ISO_DATE_TIME)
+        ?.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")) ?: ""
+}
+
+fun String.convertToValidExpirationDate(): String {
+    val regex = Regex("""^\d{2}/\d{2}$""")
+    if (!this.matches(regex)) return this
+
+    val (month, shortYear) = this.split("/")
+    val fullYear = "20$shortYear"
+
+    return "$month/$fullYear"
+}

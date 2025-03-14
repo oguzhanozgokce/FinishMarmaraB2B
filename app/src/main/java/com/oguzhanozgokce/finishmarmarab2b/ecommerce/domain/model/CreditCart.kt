@@ -11,13 +11,13 @@ data class CreditCart(
     val cardType: CardType
 )
 
-enum class CardType(
-    val displayName: String,
-) {
+enum class CardType(val displayName: String) {
     VISA("Visa"),
     MASTERCARD("Mastercard");
 
     companion object {
-        fun find(value: String): CardType = entries.find { it.displayName == value } ?: VISA
+        fun find(value: String?): CardType {
+            return entries.find { it.displayName.equals(value, ignoreCase = true) } ?: MASTERCARD
+        }
     }
 }

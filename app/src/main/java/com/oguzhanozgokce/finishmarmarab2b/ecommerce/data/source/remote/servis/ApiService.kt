@@ -9,6 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEA
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CREDIT_CARD
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_LOCATIONS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
@@ -42,6 +43,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.BasketData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCreditCardResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
@@ -212,4 +214,9 @@ interface ApiService {
     suspend fun postCreditCard(
         @Body request: CreditCartRequest,
     ): Response<ApiResponse<Unit>>
+
+    @GET(GET_CREDIT_CARD)
+    suspend fun getCreditCard(
+        @Path("user_id") userId: Int,
+    ): Response<ApiResponse<GetCreditCardResponse>>
 }

@@ -7,16 +7,16 @@ data class CreditCartDto(
     val id: Int? = null,
     @SerializedName("user_Id")
     val userId: Int? = null,
-    @SerializedName("card_number")
+    @SerializedName("card_Number")
     val cardNumber: String? = null,
-    @SerializedName("last_date")
+    @SerializedName("last_Date")
     val lastDate: String? = null,
-    @SerializedName("card_ccv")
+    @SerializedName("card_Ccv")
     val cardCvv: String? = null,
-    @SerializedName("card_name_surname")
+    @SerializedName("card_Name_Surname")
     val cardNameSurname: String? = null,
-    @SerializedName("card_title")
+    @SerializedName("card_Title")
     val cardTitle: String? = null,
-    @SerializedName("card_type")
+    @SerializedName("card_Type")
     val cardType: String? = null
 )

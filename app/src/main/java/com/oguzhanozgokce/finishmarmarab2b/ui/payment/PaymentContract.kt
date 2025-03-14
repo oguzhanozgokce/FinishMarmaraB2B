@@ -15,6 +15,7 @@ object PaymentContract {
         val cities: List<Province> = emptyList(),
         val districts: List<String> = emptyList(),
         val locationList: List<Location> = emptyList(),
+        val creditCartList: List<CreditCart> = emptyList(),
         val selectedLocation: Location? = null,
         val selectedCard: CreditCart? = null,
         val errorMessage: String? = null,
@@ -43,9 +44,11 @@ object PaymentContract {
         data class OnChangeCvv(val cvv: String) : UiAction()
         data class OnChangeCardName(val cardName: String) : UiAction()
         data class DeleteLocation(val locationId: Int) : UiAction()
+        data object PostOrder : UiAction()
     }
 
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()
+        data object NavigateToOrderSuccess : UiEffect()
     }
 }

@@ -50,6 +50,7 @@ fun PaymentScreen(
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowToast -> context.showToast(effect.message)
+            is UiEffect.NavigateToOrderSuccess -> navAction.navigateToOrderSuccess()
         }
     }
 
@@ -96,7 +97,7 @@ fun PaymentContent(
         bottomBar = {
             CartBottomBar(
                 buttonText = stringResource(R.string.confirm_payment),
-                onConfirm = {},
+                onConfirm = { onAction(UiAction.PostOrder) },
                 totalPrice = uiState.totalPrice
             )
         },
@@ -148,7 +149,8 @@ fun PaymentScreenPreview(
             navAction = PaymentNavAction(
                 navigateToBack = {},
                 navigateToAddress = {},
-                navigateToEditAddress = {}
+                navigateToEditAddress = {},
+                navigateToOrderSuccess = {}
             )
         )
     }

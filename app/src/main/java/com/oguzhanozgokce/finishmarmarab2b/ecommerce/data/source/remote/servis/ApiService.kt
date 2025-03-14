@@ -20,6 +20,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_CREDIT_CARD
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ORDER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_SAVE_ADDRESS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
@@ -31,6 +32,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Prod
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
@@ -204,5 +206,10 @@ interface ApiService {
     @POST(POST_ORDER)
     suspend fun postOrder(
         @Body request: OrderRequest,
+    ): Response<ApiResponse<Unit>>
+
+    @POST(POST_CREDIT_CARD)
+    suspend fun postCreditCard(
+        @Body request: CreditCartRequest,
     ): Response<ApiResponse<Unit>>
 }

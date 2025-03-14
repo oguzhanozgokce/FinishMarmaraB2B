@@ -26,4 +26,5 @@ object ApiRoutes {
     const val DELETE_USER_SEARCH_HISTORY = "/api/UserSearchHistory/{id}"
     const val DELETE_USER_ALL_SEARCH_HISTORY = "/api/UserSearchHistory/user/{user_id}"
     const val POST_ORDER = "/api/Order"
+    const val POST_CREDIT_CARD = "/api/CreditCard"
 }

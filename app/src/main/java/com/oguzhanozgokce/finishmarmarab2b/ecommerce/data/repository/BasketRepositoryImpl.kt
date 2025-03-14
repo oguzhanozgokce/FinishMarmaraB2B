@@ -5,11 +5,17 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProductList
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.BasketRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class BasketRepositoryImpl @Inject constructor(
@@ -47,5 +53,16 @@ class BasketRepositoryImpl @Inject constructor(
     override suspend fun deleteBasketAll(): Resource<Unit> {
         val userId = getUserId()
         return safeApiCall { apiService.deleteBasketAll(userId) }
+    }
+
+    override suspend fun postOrder(request: OrderRequest): Flow<Resource<Unit>> = flow {
+        val userId = getUserId()
+        val response = safeApiCall { apiService.postOrder(request.copy(userId = userId)) }
+        emit(response)
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun postCreditCart(request: CreditCartRequest): Resource<Unit> {
+        val userId = getUserId()
+        return safeApiCall { apiService.postCreditCard(request.copy(userId = userId)) }
     }
 }

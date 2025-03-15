@@ -4,7 +4,9 @@ import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import com.oguzhanozgokce.finishmarmarab2b.BuildConfig
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.BasketService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,7 +67,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ProductService {
+        return retrofit.create(ProductService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBasketService(retrofit: Retrofit): BasketService {
+        return retrofit.create(BasketService::class.java)
     }
 }

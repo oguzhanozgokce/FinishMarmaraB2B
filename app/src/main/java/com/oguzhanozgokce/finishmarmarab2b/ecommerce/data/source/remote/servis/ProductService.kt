@@ -1,82 +1,38 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_BASKET_ALL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE_PRODUCT
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_LOCATION
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_ALL_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEARCH_HISTORY
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_BASKET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CREDIT_CARD
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_LOCATIONS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DETAIL
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP5
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH_HISTORY
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ADD_FAVORITE_PRODUCT
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_BASKET
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_CREDIT_CARD
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_ORDER
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_SAVE_ADDRESS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_LOCATION
-import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.AddFavoriteProductRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.BasketData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCreditCardResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetLocationResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostBasketResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiService {
-    @POST(LOGIN)
-    suspend fun signIn(
-        @Body request: SignInRequest,
-    ): Response<ApiResponse<LoginResponse>>
-
-    @POST(REGISTER)
-    suspend fun signUp(
-        @Body request: SignUpRequest,
-    ): Response<ApiResponse<RegisterResponse>>
-
-    @GET(GET_USER)
-    suspend fun getUser(
-        @Path("id") id: Int,
-    ): Response<ApiResponse<GetUserResponse>>
+interface ProductService {
 
     @GET(GET_PRODUCTS)
     suspend fun getProduct(
@@ -108,11 +64,6 @@ interface ApiService {
         @Path("product_id") productId: Int,
     ): Response<ApiResponse<DeleteFavoriteResponse>>
 
-    @POST(POST_ADD_FAVORITE_PRODUCT)
-    suspend fun addProductToFavorites(
-        @Body request: AddFavoriteProductRequest,
-    ): Response<ApiResponse<Unit>>
-
     @GET(GET_COMMENT_PRODUCT)
     suspend fun getUserComments(
         @Path("product_id") productId: Int,
@@ -143,52 +94,11 @@ interface ApiService {
     @GET(GET_PRODUCT_TOP5)
     suspend fun getTop5Products(): Response<ApiResponse<List<ProductDto>>>
 
-    @POST(POST_BASKET)
-    suspend fun addProductToBasket(
-        @Body request: PostProductBasketRequest,
-    ): Response<ApiResponse<PostBasketResponse>>
-
-    @GET(GET_BASKET)
-    suspend fun getBasket(
-        @Path("user_id") userId: Int,
-    ): Response<ApiResponse<BasketData>>
-
-    @DELETE(DELETE_BASKET)
-    suspend fun deleteBasket(
-        @Path("user_id") userId: Int,
-        @Path("product_id") productId: Int,
-    ): Response<ApiResponse<Unit>>
-
-    @DELETE(DELETE_BASKET_ALL)
-    suspend fun deleteBasketAll(
-        @Path("user_id") userId: Int,
-    ): Response<ApiResponse<Unit>>
-
-    @POST(POST_SAVE_ADDRESS)
-    suspend fun saveAddress(
-        @Body request: SaveLocationRequest,
-    ): Response<ApiResponse<Unit>>
-
-    @GET(GET_LOCATIONS)
-    suspend fun getLocations(
-        @Path("user_id") userId: Int,
-    ): Response<ApiResponse<GetLocationResponse>>
-
     @GET(GET_PRODUCTS)
     suspend fun getSearchProducts(
         @Query("user_id") userId: Int,
         @Query("searchTerm") searchQuery: String,
     ): Response<ApiResponse<GetSearchProductResponse>>
-
-    @PUT(PUT_LOCATION)
-    suspend fun updateLocation(
-        @Body request: SaveLocationRequest,
-    ): Response<ApiResponse<Unit>>
-
-    @DELETE(DELETE_LOCATION)
-    suspend fun deleteLocation(
-        @Path("location_id") locationId: Int,
-    ): Response<ApiResponse<Unit>>
 
     @GET(GET_USER_SEARCH_HISTORY)
     suspend fun getUserSearchHistory(
@@ -205,18 +115,4 @@ interface ApiService {
         @Path("user_id") userId: Int,
     ): Response<ApiResponse<Unit>>
 
-    @POST(POST_ORDER)
-    suspend fun postOrder(
-        @Body request: OrderRequest,
-    ): Response<ApiResponse<Unit>>
-
-    @POST(POST_CREDIT_CARD)
-    suspend fun postCreditCard(
-        @Body request: CreditCartRequest,
-    ): Response<ApiResponse<Unit>>
-
-    @GET(GET_CREDIT_CARD)
-    suspend fun getCreditCard(
-        @Path("user_id") userId: Int,
-    ): Response<ApiResponse<GetCreditCardResponse>>
 }

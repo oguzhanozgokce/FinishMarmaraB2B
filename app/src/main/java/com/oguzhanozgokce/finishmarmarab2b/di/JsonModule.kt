@@ -2,7 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.di
 
 import android.content.Context
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.CitiesRepositoryImpl
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.BasketService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.CitiesRepository
 import dagger.Module
@@ -20,9 +20,9 @@ object JsonModule {
     @Singleton
     fun provideCitiesRepository(
         @ApplicationContext context: Context,
-        apiService: ApiService,
+        basketService: BasketService,
         localDataSource: LocalDataSource
     ): CitiesRepository {
-        return CitiesRepositoryImpl(context, apiService, localDataSource)
+        return CitiesRepositoryImpl(context, basketService, localDataSource)
     }
 }

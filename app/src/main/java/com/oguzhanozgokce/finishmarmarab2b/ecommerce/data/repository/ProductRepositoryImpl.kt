@@ -18,7 +18,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Pagi
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val productService: ProductService,
     private val localDataSource: LocalDataSource
 ) : ProductRepository {
 
@@ -42,7 +42,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getProducts(limit: Int): Resource<PaginationData<Product>> {
         val userId = getUserId()
         return safeApiCall {
-            apiService.getProduct(userId = userId, limit = limit)
+            productService.getProduct(userId = userId, limit = limit)
         }.toResourceMap { paginationDataDto ->
             paginationDataDto.mapToPaginationData()
         }
@@ -51,7 +51,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getCategoryProducts(categoryId: Int): Resource<PaginationData<Product>> {
         val userId = getUserId()
         return safeApiCall {
-            apiService.getCategoryProducts(userId = userId, categoryId = categoryId)
+            productService.getCategoryProducts(userId = userId, categoryId = categoryId)
         }.toResourceMap { paginationDataDto ->
             paginationDataDto.mapToPaginationData()
         }
@@ -63,7 +63,7 @@ class ProductRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        apiService.getFavoriteProducts(userId = userId, page = page)
+                        productService.getFavoriteProducts(userId = userId, page = page)
                     }
                 )
             }
@@ -79,13 +79,13 @@ class ProductRepositoryImpl @Inject constructor(
             userId = getUserId(),
             productId = productId,
         )
-        return safeApiCall { apiService.toggleFavorite(request) }
+        return safeApiCall { productService.toggleFavorite(request) }
     }
 
     override suspend fun deleteFavoriteProduct(productId: Int): Resource<Int> {
         val userId = getUserId()
         return safeApiCall {
-            apiService.deleteFavoriteProduct(userId, productId)
+            productService.deleteFavoriteProduct(userId, productId)
         }.toResourceMap { response ->
             response.productId
         }
@@ -96,7 +96,7 @@ class ProductRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        apiService.getUserComments(
+                        productService.getUserComments(
                             productId = productId,
                             page = page,
                             orderBy = "id",
@@ -113,7 +113,7 @@ class ProductRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 GenericPagingSource(
                     apiCall = { page ->
-                        apiService.getQuestionsAndAnswers(
+                        productService.getQuestionsAndAnswers(
                             productId = productId,
                             page = page,
                             orderBy = "id",
@@ -128,7 +128,7 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun getProductDetail(productId: Int): Resource<Product> {
         return safeApiCall {
-            apiService.getProductDetail(productId)
+            productService.getProductDetail(productId)
         }.toResourceMap { productDto ->
             productDto.mapToProduct()
         }
@@ -138,7 +138,7 @@ class ProductRepositoryImpl @Inject constructor(
         pagingSourceFactory = {
             GenericPagingSource(
                 apiCall = { page ->
-                    apiService.getCategories(page = page)
+                    productService.getCategories(page = page)
                 }
             )
         }
@@ -147,25 +147,25 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTop5Products(): Resource<List<Product>> {
-        return safeApiCall { apiService.getTop5Products() }.toResourceMap { productDtoList ->
+        return safeApiCall { productService.getTop5Products() }.toResourceMap { productDtoList ->
             productDtoList.map { it.mapToProduct() }
         }
     }
 
     override suspend fun getSearchHistory(): Resource<List<SearchHistory>> {
         val userId = getUserId()
-        return safeApiCall { apiService.getUserSearchHistory(userId) }
+        return safeApiCall { productService.getUserSearchHistory(userId) }
             .toResourceMap { response ->
                 response.toSearchHistoryListDomain()
             }
     }
 
     override suspend fun deleteSearchHistory(id: Int): Resource<Unit> {
-        return safeApiCall { apiService.deleteUserSearchHistory(id) }
+        return safeApiCall { productService.deleteUserSearchHistory(id) }
     }
 
     override suspend fun deleteAllSearchHistory(): Resource<Unit> {
         val userId = getUserId()
-        return safeApiCall { apiService.deleteUserAllSearchHistory(userId) }
+        return safeApiCall { productService.deleteUserAllSearchHistory(userId) }
     }
 }

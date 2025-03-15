@@ -10,7 +10,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.mapToAd
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.toDomainProvinces
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.payment.toSaveLocationRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.BasketService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class CitiesRepositoryImpl @Inject constructor(
     private val context: Context,
-    private val apiService: ApiService,
+    private val basketService: BasketService,
     private val localDataSource: LocalDataSource
 ) : CitiesRepository {
 
@@ -55,7 +55,7 @@ class CitiesRepositoryImpl @Inject constructor(
     override suspend fun getUserLocations(): Resource<List<Location>> {
         val userId = getUserId()
         return safeApiCall {
-            apiService.getLocations(userId)
+            basketService.getLocations(userId)
         }.toResourceMap { response ->
             response.mapToAddressList()
         }
@@ -65,7 +65,7 @@ class CitiesRepositoryImpl @Inject constructor(
         val userId = getUserId()
         val requestWithUserId = address.copy(userId = userId)
         return safeApiCall {
-            apiService.saveAddress(requestWithUserId)
+            basketService.saveAddress(requestWithUserId)
         }
     }
 
@@ -73,13 +73,13 @@ class CitiesRepositoryImpl @Inject constructor(
         val userId = getUserId()
         val requestWithUserId = location.toSaveLocationRequest(userId)
         return safeApiCall {
-            apiService.updateLocation(requestWithUserId)
+            basketService.updateLocation(requestWithUserId)
         }
     }
 
     override suspend fun deleteLocation(locationId: Int): Resource<Unit> {
         return safeApiCall {
-            apiService.deleteLocation(locationId)
+            basketService.deleteLocation(locationId)
         }
     }
 }

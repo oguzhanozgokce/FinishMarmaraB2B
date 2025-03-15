@@ -9,7 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProdu
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostProductBasketRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.BasketService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class BasketRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val basketService: BasketService,
     private val localDataSource: LocalDataSource
 ) : BasketRepository {
 
@@ -34,14 +34,14 @@ class BasketRepositoryImpl @Inject constructor(
             productId = productId,
             userId = getUserId()
         )
-        return safeApiCall { apiService.addProductToBasket(request) }.toResourceMap { response ->
+        return safeApiCall { basketService.addProductToBasket(request) }.toResourceMap { response ->
             response.count.orZero()
         }
     }
 
     override suspend fun getBasketProducts(): Resource<List<Product>> {
         val userId = getUserId()
-        return safeApiCall { apiService.getBasket(userId) }
+        return safeApiCall { basketService.getBasket(userId) }
             .toResourceMap { response ->
                 response.list.toProductList()
             }
@@ -49,28 +49,28 @@ class BasketRepositoryImpl @Inject constructor(
 
     override suspend fun deleteBasketProduct(productId: Int): Resource<Unit> {
         val userId = getUserId()
-        return safeApiCall { apiService.deleteBasket(userId, productId) }
+        return safeApiCall { basketService.deleteBasket(userId, productId) }
     }
 
     override suspend fun deleteBasketAll(): Resource<Unit> {
         val userId = getUserId()
-        return safeApiCall { apiService.deleteBasketAll(userId) }
+        return safeApiCall { basketService.deleteBasketAll(userId) }
     }
 
     override suspend fun postOrder(request: OrderRequest): Flow<Resource<Unit>> = flow {
         val userId = getUserId()
-        val response = safeApiCall { apiService.postOrder(request.copy(userId = userId)) }
+        val response = safeApiCall { basketService.postOrder(request.copy(userId = userId)) }
         emit(response)
     }.flowOn(Dispatchers.IO)
 
     override suspend fun postCreditCart(request: CreditCartRequest): Resource<Unit> {
         val userId = getUserId()
-        return safeApiCall { apiService.postCreditCard(request.copy(userId = userId)) }
+        return safeApiCall { basketService.postCreditCard(request.copy(userId = userId)) }
     }
 
     override suspend fun getCreditCart(): Resource<List<CreditCart>> {
         val userId = getUserId()
-        return safeApiCall { apiService.getCreditCard(userId) }.toResourceMap { response ->
+        return safeApiCall { basketService.getCreditCard(userId) }.toResourceMap { response ->
             response.mapToCreditCartList()
         }
     }

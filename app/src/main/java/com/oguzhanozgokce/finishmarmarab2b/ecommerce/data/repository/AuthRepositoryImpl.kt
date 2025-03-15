@@ -8,7 +8,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ApiService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.UserService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AuthRepository
@@ -18,12 +18,12 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val userService: UserService,
     private val localDataSource: LocalDataSource
 ) : AuthRepository {
 
     override fun signIn(request: SignInRequest): Flow<Resource<LoginResponse>> = flow {
-        val response = safeApiCall { apiService.signIn(request) }
+        val response = safeApiCall { userService.signIn(request) }
         if (response is Resource.Success) {
             localDataSource.saveOrUpdateUserId(response.data.id)
         }
@@ -31,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun signUp(request: SignUpRequest): Flow<Resource<RegisterResponse>> = flow {
-        val response = safeApiCall { apiService.signUp(request) }
+        val response = safeApiCall { userService.signUp(request) }
         if (response is Resource.Success) {
             localDataSource.saveOrUpdateUserId(response.data.id)
         }
@@ -46,7 +46,7 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Resource.Error("User ID not found in local storage."))
             return@flow
         }
-        val response = safeApiCall { apiService.getUser(userId) }
+        val response = safeApiCall { userService.getUser(userId) }
         val mappedResponse = response.toResourceMap { it.mapToUser() }
         emit(mappedResponse)
     }.catch { e ->

@@ -14,4 +14,3 @@ class CreditCardViewModel @Inject constructor() : MVI<UiState, UiAction, UiEffec
         super.onAction(uiAction)
     }
 }
-

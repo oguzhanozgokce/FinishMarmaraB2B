@@ -117,7 +117,7 @@ fun PaymentContent(
                 onAddClick = navAction.navigateToAddress,
                 uiState = uiState,
                 onAddressClick = { onAction(UiAction.OnChangeAddress(it)) },
-                onEditClick = { navAction.navigateToEditAddress },
+                onEditClick = { navAction.navigateToEditAddress(it) },
                 onDeleteClick = { onAction(UiAction.DeleteLocation(it)) }
             )
             FMPaymentOptions(

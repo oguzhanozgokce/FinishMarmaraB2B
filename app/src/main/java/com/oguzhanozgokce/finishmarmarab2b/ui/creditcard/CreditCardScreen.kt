@@ -69,7 +69,6 @@ fun CreditCardContent() {
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
         }
     }
 }
@@ -87,5 +86,3 @@ fun CreditCardScreenPreview(
         )
     }
 }
-
-

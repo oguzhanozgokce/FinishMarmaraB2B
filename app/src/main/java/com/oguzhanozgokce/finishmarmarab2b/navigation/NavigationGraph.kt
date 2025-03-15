@@ -115,9 +115,9 @@ fun NavigationGraph(
             payment(
                 navAction = PaymentNavAction(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToAddress = { navController.navigate(route = Address) },
+                    navigateToAddress = { navController.navigate(route = Address.default()) },
                     navigateToEditAddress = {
-                        navController.navigate(route = Address)
+                        navController.navigate(route = Address(it))
                     },
                     navigateToOrderSuccess = {
                         navController.navigateClearingStack(
@@ -131,7 +131,12 @@ fun NavigationGraph(
             address(
                 navAction = AddressNavAction(
                     navigateToBack = { navController.navigateUp() },
-                    navigateToPayment = { navController.navigateClearingStack(Payment, Address) }
+                    navigateToPayment = {
+                        navController.navigateClearingStack(
+                            Payment,
+                            Search
+                        )
+                    }
                 )
             )
             detail(

@@ -2,7 +2,6 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.address
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SaveLocationRequest
@@ -10,6 +9,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetCitiesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.GetDistrictsForCityUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.payment.PostSaveLocationUseCase
+import com.oguzhanozgokce.finishmarmarab2b.navigation.Address
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressContract.UiState
@@ -25,10 +25,11 @@ class AddressViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-    private val args = savedStateHandle.toRoute<Location>()
+    private val args = Address.from(savedStateHandle)
+    private val location = args.location
 
     init {
-        updateUiStateWithLocation(args)
+        updateUiStateWithLocation(location)
     }
 
     override fun onAction(uiAction: UiAction) {
@@ -38,7 +39,8 @@ class AddressViewModel @Inject constructor(
                     copy(
                         selectedProvince = uiAction.selectedProvince,
                         selectedCity = "",
-                        cities = emptyList()
+                        cities = emptyList(),
+                        province = uiAction.selectedProvince.name
                     )
                 }
                 loadCityForProvince(uiAction.selectedProvince.name)
@@ -59,13 +61,13 @@ class AddressViewModel @Inject constructor(
     private fun updateUiStateWithLocation(location: Location) {
         updateState {
             copy(
-                selectedProvince = provinces.find { it.name == location.province },
+                province = location.province,
                 selectedCity = location.city,
                 openAddress = location.openAddress,
                 addressTitle = location.addressTitle,
                 addressTel = location.addressTel,
-                addressName = location.nameSurname.split(" ")[0],
-                addressSurname = location.nameSurname.split(" ")[1]
+                addressName = location.nameSurname.substringBefore(" "),
+                addressSurname = location.nameSurname.substringAfter(" ", "")
             )
         }
     }

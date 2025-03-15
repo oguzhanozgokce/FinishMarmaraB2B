@@ -10,7 +10,6 @@ object AddressContract {
         val addressSurname: String = "",
         val addressTel: String = "",
         val province: String = "",
-        val city: String = "",
         val openAddress: String = "",
         val addressTitle: String = "",
         val provinces: List<Province> = emptyList(),
@@ -20,7 +19,7 @@ object AddressContract {
         val error: String = ""
     ) {
         val isEnableCities: Boolean
-            get() = selectedProvince != null
+            get() = province.isNotEmpty()
 
         val isEnableOpenAddress: Boolean
             get() = isEnableCities && selectedCity.isNotEmpty()

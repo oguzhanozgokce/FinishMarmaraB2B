@@ -34,4 +34,3 @@ class OrderSuccessViewModel @Inject constructor() : ViewModel() {
         _uiEffect.send(uiEffect)
     }
 }
-

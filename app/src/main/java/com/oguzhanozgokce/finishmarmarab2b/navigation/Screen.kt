@@ -1,7 +1,11 @@
 package com.oguzhanozgokce.finishmarmarab2b.navigation
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
 import com.oguzhanozgokce.finishmarmarab2b.ui.products.ProductListType
 import kotlinx.serialization.Serializable
+import kotlin.reflect.typeOf
 
 @Serializable
 data object Home
@@ -40,7 +44,13 @@ data object Search
 data object Splash
 
 @Serializable
-data object Address
+data class Address(val location: Location) {
+    companion object {
+        val typeMap = mapOf(typeOf<Location>() to serializableType<Location>())
+        fun from(savedStateHandle: SavedStateHandle) = savedStateHandle.toRoute<Address>(typeMap)
+        fun default() = Address(Location.default())
+    }
+}
 
 @Serializable
 data object Evaluation

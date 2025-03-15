@@ -82,9 +82,9 @@ fun AddressScreen(
             onDismissRequest = { showProvincesBottomSheet = false },
             provinces = uiState.provinces,
             selectedProvince = uiState.selectedProvince,
-            onProvinceSelected = { selectedProvince ->
+            onProvinceSelected = { province ->
                 showProvincesBottomSheet = false
-                onAction(AddressContract.UiAction.ProvinceSelected(selectedProvince))
+                onAction(AddressContract.UiAction.ProvinceSelected(province))
             }
         )
     }
@@ -277,7 +277,7 @@ fun AddressScreenContent(
                 FMClickableOutlinedRow(
                     modifier = Modifier.weight(1f),
                     label = stringResource(R.string.province),
-                    value = uiState.selectedProvince?.name ?: "",
+                    value = uiState.province,
                     icon = Icons.Default.ArrowDropDown,
                     onClick = { onNavigationCitiesBottomSheet() }
                 )

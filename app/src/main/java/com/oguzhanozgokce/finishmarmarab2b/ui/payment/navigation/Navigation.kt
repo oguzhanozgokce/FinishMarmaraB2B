@@ -28,7 +28,7 @@ fun NavGraphBuilder.payment(
             uiState = uiState,
             uiEffect = uiEffect,
             onAction = viewModel::onAction,
-            navAction = navAction
+            navAction = navAction,
         )
     }
 }

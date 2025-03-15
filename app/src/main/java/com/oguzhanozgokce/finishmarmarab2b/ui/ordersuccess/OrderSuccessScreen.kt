@@ -77,8 +77,7 @@ fun OrderSuccessContent(
 
 @Preview(showBackground = true)
 @Composable
-fun OrderSuccessScreenPreview(
-) {
+fun OrderSuccessScreenPreview() {
     FMTheme {
         OrderSuccessScreen(
             uiState = UiState(),

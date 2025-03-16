@@ -43,7 +43,7 @@ interface BasketService {
     suspend fun deleteBasket(
         @Path("user_id") userId: Int,
         @Path("product_id") productId: Int,
-    ): Response<ApiResponse<Unit>>
+    ): Response<ApiResponse<PostBasketResponse>>
 
     @DELETE(DELETE_BASKET_ALL)
     suspend fun deleteBasketAll(

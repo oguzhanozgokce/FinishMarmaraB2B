@@ -60,12 +60,12 @@ class CartViewModel @Inject constructor(
 
     private fun deleteBasketProduct(productId: Int) {
         viewModelScope.launch {
-            deleteBasketProductUseCase(productId).fold(
-                onSuccess = {
+            deleteBasketProductUseCase(productId, currentState.basketProducts).fold(
+                onSuccess = { updatedList ->
                     updateState {
                         copy(
-                            basketProducts = basketProducts,
-                            totalPrice = basketProducts.sumOf { it.totalPrice }
+                            basketProducts = updatedList,
+                            totalPrice = updatedList.sumOf { it.totalPrice }
                         )
                     }
                 },
@@ -95,9 +95,17 @@ class CartViewModel @Inject constructor(
         updateState { copy(topLoading = true) }
         viewModelScope.launch {
             postProductBasketUseCase(productId).fold(
-                onSuccess = {
-                    emitUiEffect(UiEffect.ShowToast("Product added to basket"))
-                    updateState { copy(topLoading = false) }
+                onSuccess = { newCount ->
+                    updateState {
+                        copy(
+                            basketProducts = basketProducts.map { product ->
+                                if (product.id == productId) product.copy(count = newCount)
+                                else product
+                            },
+                            totalPrice = basketProducts.sumOf { it.totalPrice },
+                            topLoading = false
+                        )
+                    }
                 },
                 onError = {
                     updateState { copy(topLoading = false) }

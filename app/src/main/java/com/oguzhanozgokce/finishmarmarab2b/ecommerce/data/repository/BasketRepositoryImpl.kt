@@ -47,9 +47,11 @@ class BasketRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun deleteBasketProduct(productId: Int): Resource<Unit> {
+    override suspend fun deleteBasketProduct(productId: Int): Resource<Int> {
         val userId = getUserId()
-        return safeApiCall { basketService.deleteBasket(userId, productId) }
+        return safeApiCall { basketService.deleteBasket(userId, productId) }.toResourceMap {
+            it.count.orZero()
+        }
     }
 
     override suspend fun deleteBasketAll(): Resource<Unit> {

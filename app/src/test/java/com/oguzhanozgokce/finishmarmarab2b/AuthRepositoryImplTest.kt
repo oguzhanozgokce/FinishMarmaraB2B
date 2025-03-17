@@ -7,9 +7,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.UserService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
-import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -33,76 +33,63 @@ private const val NO_INTERNET_CONNECTION = "Network error: No internet connectio
 
 class AuthRepositoryImplTest {
     private lateinit var repository: AuthRepositoryImpl
-    private val productService: ProductService = mock()
+    private val userService: UserService = mock()
     private val localDataSource: LocalDataSource = mock()
 
     @Before
     fun setUp() {
-        repository = AuthRepositoryImpl(productService, localDataSource)
+        repository = AuthRepositoryImpl(userService, localDataSource)
     }
 
     @Test
     fun `signIn success - returns Unit`() = runTest {
-        val signInRequest = SignInRequest(
-            email = USER_EMAIL,
-            password = USER_PASSWORD
-        )
-
+        val signInRequest = SignInRequest(email = USER_EMAIL, password = USER_PASSWORD)
         val apiResponse = ApiResponse(
             status = true,
             message = SUCCESS,
             data = LoginResponse(id = USER_ID)
         )
-        val mockResponse = Response.success(apiResponse)
-        whenever(productService.signIn(signInRequest)).thenReturn(mockResponse)
+        whenever(userService.signIn(signInRequest)).thenReturn(Response.success(apiResponse))
         val result = repository.signIn(signInRequest).first()
-        assert(result is Resource.Success)
-        val response = (result as Resource.Success).data
-        assertEquals(USER_ID, response.id)
+        assertTrue(result is Resource.Success)
+        assertEquals(USER_ID, (result as Resource.Success).data.id)
         verify(localDataSource).saveOrUpdateUserId(USER_ID)
     }
 
     @Test
     fun `signIn error - returns error message`() = runTest {
-        val signInRequest = SignInRequest(
-            email = NOT_USER_EMAIL,
-            password = USER_PASSWORD,
-        )
-
+        val signInRequest = SignInRequest(email = NOT_USER_EMAIL, password = USER_PASSWORD)
         val apiResponse = ApiResponse(
             status = false,
             message = ERROR,
             data = LoginResponse(id = USER_ID)
         )
-
-        val mockResponse = Response.success(apiResponse)
-
-        whenever(productService.signIn(signInRequest)).thenReturn(mockResponse)
-
+        whenever(userService.signIn(signInRequest)).thenReturn(Response.success(apiResponse))
         val result = repository.signIn(signInRequest).first()
-
-        assert(result is Resource.Error)
-        val errorMessage = (result as Resource.Error).message
-        assertEquals(ERROR, errorMessage)
+        assertTrue(result is Resource.Error)
+        assertEquals(ERROR, (result as Resource.Error).message)
     }
 
     @Test
-    fun `signIn exception - returns Resource Error with default message`() = runTest {
-        val signInRequest = SignInRequest(
-            email = USER_EMAIL,
-            password = USER_PASSWORD,
-        )
-        whenever(productService.signIn(signInRequest)).doAnswer {
-            throw IOException(NO_INTERNET_CONNECTION)
+    fun `signIn exception - returns Resource Error`() = runTest {
+        // Arrange
+        val signInRequest = SignInRequest(email = USER_EMAIL, password = USER_PASSWORD)
+
+        whenever(userService.signIn(signInRequest)).doAnswer {
+            throw IOException(
+                NO_INTERNET_CONNECTION
+            )
         }
+
         val result = repository.signIn(signInRequest).first()
-        assert(result is Resource.Error)
-        val errorMessage = (result as Resource.Error).message
-        assertEquals("Network error: $NO_INTERNET_CONNECTION", errorMessage)
+
+        assertTrue(result is Resource.Error)
+        assertEquals("Network error: $NO_INTERNET_CONNECTION", (result as Resource.Error).message)
     }
 
+
     @Test
-    fun `signUp success - returns Unit`() = runTest {
+    fun `signUp success - saves user ID and returns success`() = runTest {
         val signUpRequest = SignUpRequest(
             name = USER_NAME,
             surname = USER_SURNAME,
@@ -116,14 +103,18 @@ class AuthRepositoryImplTest {
             message = SUCCESS,
             data = RegisterResponse(id = USER_ID, email = USER_EMAIL)
         )
-        val mockResponse = Response.success(apiResponse)
-        whenever(productService.signUp(signUpRequest)).thenReturn(mockResponse)
+
+        whenever(userService.signUp(signUpRequest)).thenReturn(Response.success(apiResponse))
+
         val result = repository.signUp(signUpRequest).first()
-        assert(result is Resource.Success)
-        val response = (result as Resource.Success).data
-        assertEquals(USER_ID, response.id)
-        assertEquals(USER_EMAIL, response.email)
+
+        assertTrue(result is Resource.Success)
+        assertEquals(USER_ID, (result as Resource.Success).data.id)
+
+        assertEquals(USER_EMAIL, result.data.email)
+        verify(localDataSource).saveOrUpdateUserId(USER_ID)
     }
+
 
     @Test
     fun `signUp error - returns error message`() = runTest {
@@ -138,17 +129,17 @@ class AuthRepositoryImplTest {
         val apiResponse = ApiResponse(
             status = false,
             message = ERROR,
-            data = RegisterResponse(id = USER_ID, email = USER_EMAIL)
+            data = RegisterResponse(id = -1, email = "")
         )
 
-        val mockResponse = Response.success(apiResponse)
-
-        whenever(productService.signUp(signUpRequest)).thenReturn(mockResponse)
+        whenever(userService.signUp(signUpRequest)).thenReturn(Response.success(apiResponse))
 
         val result = repository.signUp(signUpRequest).first()
 
-        assert(result is Resource.Error)
+        assertTrue(result is Resource.Error)
+
         val errorMessage = (result as Resource.Error).message
         assertEquals(ERROR, errorMessage)
     }
+
 }

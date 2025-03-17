@@ -11,6 +11,10 @@ import java.time.format.DateTimeParseException
 private const val PHONE_NUMBER_LENGTH = 10
 private const val VISIBLE_PREFIX_LENGTH = 3
 private const val VISIBLE_SUFFIX_LENGTH = 2
+private const val EXPIRY_DATE_LENGTH = 4
+private const val EXPIRY_DATE_MONTH_END = 2
+private const val EXPIRY_DATE_YEAR_START = 2
+private const val EXPIRY_DATE_YEAR_END = 4
 
 fun Int?.orZero(): Int = this ?: 0
 fun Double?.orDoubleZero(): Double = this ?: 0.0
@@ -92,5 +96,14 @@ fun String?.formatDate(): String {
 }
 
 fun String.toExpirationDateFormat(): String {
-    return if (length == 4) "${substring(0, 2)}/${substring(2, 4)}" else this
+    return if (length == EXPIRY_DATE_LENGTH) {
+        "${substring(0, EXPIRY_DATE_MONTH_END)}/${
+            substring(
+                EXPIRY_DATE_YEAR_START,
+                EXPIRY_DATE_YEAR_END
+            )
+        }"
+    } else {
+        this
+    }
 }

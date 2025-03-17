@@ -18,7 +18,7 @@ suspend fun <T> safeApiCall(
             if (body != null && body.status) {
                 Resource.Success(body.data)
             } else {
-                Resource.Error("Empty response body")
+                Resource.Error(body?.message ?: "Empty response body")
             }
         } else {
             val errorBody = response.errorBody()?.string()

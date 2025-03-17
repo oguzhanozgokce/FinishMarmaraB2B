@@ -138,6 +138,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 
     implementation(libs.balloon.compose)
+    testImplementation(kotlin("test"))
 
 }
 

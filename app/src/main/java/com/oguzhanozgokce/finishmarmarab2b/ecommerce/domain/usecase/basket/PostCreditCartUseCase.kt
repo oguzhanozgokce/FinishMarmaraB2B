@@ -35,6 +35,12 @@ sealed class CreditCardValidationResult {
 
 object CreditCardValidator {
 
+    private const val MAX_NAME_LENGTH = 25
+    private const val CARD_NUMBER_LENGTH = 16
+    private const val CVV_LENGTH = 3
+    private const val MAX_TITLE_LENGTH = 25
+    private const val ZERO = 0
+
     private data class ValidationRule(
         val condition: (CreditCartRequest) -> Boolean,
         val error: CreditCardValidationError
@@ -46,7 +52,7 @@ object CreditCardValidator {
             CreditCardValidationError.EMPTY_CARD_NAME
         ),
         ValidationRule(
-            { (it.cardNameSurname?.length ?: 0) > 25 },
+            { (it.cardNameSurname?.length ?: ZERO) > MAX_NAME_LENGTH },
             CreditCardValidationError.LONG_CARD_NAME
         ),
         ValidationRule(
@@ -54,7 +60,7 @@ object CreditCardValidator {
             CreditCardValidationError.EMPTY_CARD_NUMBER
         ),
         ValidationRule(
-            { it.cardNumber?.length != 16 || it.cardNumber?.all { c -> c.isDigit() } == false },
+            { it.cardNumber?.length != CARD_NUMBER_LENGTH || it.cardNumber?.all { c -> c.isDigit() } == false },
             CreditCardValidationError.INVALID_CARD_NUMBER
         ),
         ValidationRule(
@@ -66,7 +72,7 @@ object CreditCardValidator {
             CreditCardValidationError.EMPTY_CVV
         ),
         ValidationRule(
-            { it.cardCvv?.length != 3 || it.cardCvv?.all { c -> c.isDigit() } == false },
+            { it.cardCvv?.length != CVV_LENGTH || it.cardCvv?.all { c -> c.isDigit() } == false },
             CreditCardValidationError.INVALID_CVV
         ),
         ValidationRule(
@@ -74,7 +80,7 @@ object CreditCardValidator {
             CreditCardValidationError.EMPTY_CARD_TITLE
         ),
         ValidationRule(
-            { (it.cardTitle?.length ?: 0) > 25 },
+            { (it.cardTitle?.length ?: ZERO) > MAX_TITLE_LENGTH },
             CreditCardValidationError.LONG_CARD_TITLE
         )
     )

@@ -1,21 +1,22 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.creditcard
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 
 class CreditCardScreenPreviewProvider : PreviewParameterProvider<CreditCardContract.UiState> {
     override val values: Sequence<CreditCardContract.UiState>
         get() = sequenceOf(
             CreditCardContract.UiState(
                 isLoading = true,
-                list = emptyList(),
+                creditCardList = emptyList(),
             ),
             CreditCardContract.UiState(
                 isLoading = false,
-                list = emptyList(),
+                creditCardList = emptyList(),
             ),
             CreditCardContract.UiState(
                 isLoading = false,
-                list = listOf("Item 1", "Item 2", "Item 3")
+                creditCardList = PreviewMockData.defaultCart
             ),
         )
 }

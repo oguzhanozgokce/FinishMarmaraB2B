@@ -9,9 +9,7 @@ object CreditCardContract {
         val error: String = "",
     )
 
-    sealed class UiAction {
-
-    }
+    sealed class UiAction
 
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()

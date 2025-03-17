@@ -16,8 +16,11 @@ class DeleteBasketProductUseCase @Inject constructor(
         return productRepository.deleteBasketProduct(productId).toResourceMap { newCount ->
             currentBasketProducts.filterNot { it.id == productId && newCount == 0 }
                 .map { product ->
-                    if (product.id == productId) product.copy(count = newCount)
-                    else product
+                    if (product.id == productId) {
+                        product.copy(count = newCount)
+                    } else {
+                        product
+                    }
                 }
         }
     }

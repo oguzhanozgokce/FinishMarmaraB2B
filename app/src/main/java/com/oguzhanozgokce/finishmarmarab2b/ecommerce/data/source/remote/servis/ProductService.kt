@@ -114,5 +114,4 @@ interface ProductService {
     suspend fun deleteUserAllSearchHistory(
         @Path("user_id") userId: Int,
     ): Response<ApiResponse<Unit>>
-
 }

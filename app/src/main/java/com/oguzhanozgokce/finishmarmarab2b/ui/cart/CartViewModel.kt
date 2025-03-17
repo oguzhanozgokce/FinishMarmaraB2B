@@ -102,8 +102,11 @@ class CartViewModel @Inject constructor(
                     updateState {
                         copy(
                             basketProducts = basketProducts.map { product ->
-                                if (product.id == productId) product.copy(count = newCount)
-                                else product
+                                if (product.id == productId) {
+                                    product.copy(count = newCount)
+                                } else {
+                                    product
+                                }
                             },
                             totalPrice = basketProducts.sumOf { it.totalPrice },
                             topLoading = false

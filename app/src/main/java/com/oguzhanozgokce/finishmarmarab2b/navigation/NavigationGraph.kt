@@ -14,6 +14,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.address.AddressNavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.address.address
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.CartNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.cart.navigation.cart
+import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.NavAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.creditCard
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationNavActions
@@ -94,7 +96,8 @@ fun NavigationGraph(
                 )
             )
             profile(
-                onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) }
+                onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) },
+                onNavigateCreditCart = { navController.navigate(route = CreditCard) }
             )
             favorite(
                 onNavigateToDetail = { id ->
@@ -184,6 +187,11 @@ fun NavigationGraph(
             )
             orderSuccess(
                 onNavigateToHome = { navController.navigateClearingStack(Home, OrderSuccess) }
+            )
+            creditCard(
+                action = NavAction(
+                    navigateToBack = { navController.navigateUp() },
+                )
             )
         }
     }

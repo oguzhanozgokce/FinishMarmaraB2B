@@ -1,8 +1,8 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.payment
 
 import androidx.lifecycle.viewModelScope
-import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.convertToValidExpirationDate
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toExpirationDateFormat
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.CreditCartRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.OrderRequest
@@ -138,7 +138,7 @@ class PaymentViewModel @Inject constructor(
             cardNumber = currentState.cardNumber.trim(),
             cardNameSurname = currentState.cardName,
             cardTitle = currentState.cardTitle,
-            lastDate = currentState.expirationDateValue.convertToValidExpirationDate(),
+            lastDate = currentState.expirationDateValue.toExpirationDateFormat(),
             cardCvv = currentState.cvv
         )
         viewModelScope.launch {
@@ -161,7 +161,6 @@ class PaymentViewModel @Inject constructor(
             locationId = currentState.selectedLocation?.id,
             creditCardId = currentState.selectedCard?.id,
             totalPrice = currentState.totalPrice,
-            orderStatus = "Test"
         )
         viewModelScope.launch {
             postOrderUseCase(request)

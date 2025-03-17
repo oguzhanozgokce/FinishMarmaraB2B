@@ -91,12 +91,6 @@ fun String?.formatDate(): String {
         ?.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")) ?: ""
 }
 
-fun String.convertToValidExpirationDate(): String {
-    val regex = Regex("""^\d{2}/\d{2}$""")
-    if (!this.matches(regex)) return this
-
-    val (month, shortYear) = this.split("/")
-    val fullYear = "20$shortYear"
-
-    return "$month/$fullYear"
+fun String.toExpirationDateFormat(): String {
+    return if (length == 4) "${substring(0, 2)}/${substring(2, 4)}" else this
 }

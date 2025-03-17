@@ -11,6 +11,4 @@ data class OrderRequest(
     val creditCardId: Int? = null,
     @SerializedName("total_Price")
     val totalPrice: Double? = null,
-    @SerializedName("order_Status")
-    val orderStatus: String? = null
 )

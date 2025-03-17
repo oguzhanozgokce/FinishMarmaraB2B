@@ -59,17 +59,20 @@ class CartViewModel @Inject constructor(
     }
 
     private fun deleteBasketProduct(productId: Int) {
+        updateState { copy(topLoading = true) }
         viewModelScope.launch {
             deleteBasketProductUseCase(productId, currentState.basketProducts).fold(
                 onSuccess = { updatedList ->
                     updateState {
                         copy(
+                            topLoading = false,
                             basketProducts = updatedList,
-                            totalPrice = updatedList.sumOf { it.totalPrice }
+                            totalPrice = updatedList.sumOf { it.totalPrice },
                         )
                     }
                 },
                 onError = { error ->
+                    updateState { copy(topLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
                 }
             )

@@ -59,6 +59,9 @@ data object Evaluation
 data object OrderSuccess
 
 @Serializable
+data object CreditCard
+
+@Serializable
 data class Products(
     val id: Int? = null,
     val name: String? = null,

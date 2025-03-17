@@ -46,6 +46,7 @@ fun ProfileScreen(
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
     onNavigateToWelcome: () -> Unit,
+    onNavigateToCreditCart: () -> Unit,
 ) {
     val context = LocalContext.current
     uiEffect.CollectWithLifecycle { effect ->
@@ -57,14 +58,19 @@ fun ProfileScreen(
     when {
         uiState.isLoading -> LoadingBar()
         uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> ProfileContent(uiState = uiState, onAction = onAction)
+        else -> ProfileContent(
+            uiState = uiState,
+            onAction = onAction,
+            onNavigateToCreditCart = onNavigateToCreditCart
+        )
     }
 }
 
 @Composable
 fun ProfileContent(
     uiState: UiState,
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
+    onNavigateToCreditCart: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -121,7 +127,7 @@ fun ProfileContent(
                 ProfileItem(text = "Change Password", onClick = {})
             }
             ProfileCard {
-                ProfileItem(text = "My Cards", onClick = {})
+                ProfileItem(text = "My Cards", onClick = { onNavigateToCreditCart() })
             }
             ProfileCard {
                 ProfileItem(text = "Terms & Conditions", onClick = {})
@@ -148,7 +154,8 @@ fun ProfileScreenPreview(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
-            onNavigateToWelcome = {}
+            onNavigateToWelcome = {},
+            onNavigateToCreditCart = { }
         )
     }
 }

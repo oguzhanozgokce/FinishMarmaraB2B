@@ -20,8 +20,6 @@ data class OrderDto(
     val creditCardId: Int? = null,
     @SerializedName("total_Price")
     val totalPrice: Int? = null,
-    @SerializedName("order_Status")
-    val orderStatus: String? = null,
     @SerializedName("created_At")
     val createdAt: String? = null,
     @SerializedName("updated_At")

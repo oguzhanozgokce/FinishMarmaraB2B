@@ -79,7 +79,6 @@ fun OrderDto.mapToOrder(): Order = Order(
     locationId = locationId.orZero(),
     creditCardId = creditCardId.orZero(),
     totalPrice = totalPrice.orZero(),
-    orderStatus = orderStatus.orEmpty(),
     createdAt = createdAt.formatDate(),
     updatedAt = updatedAt.formatDate()
 )

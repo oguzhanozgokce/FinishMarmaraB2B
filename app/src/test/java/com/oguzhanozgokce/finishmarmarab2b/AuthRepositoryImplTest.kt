@@ -5,10 +5,12 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.repository.AuthReposit
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetUserResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.RegisterResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.UserService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import junit.framework.TestCase.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -87,7 +89,6 @@ class AuthRepositoryImplTest {
         assertEquals("Network error: $NO_INTERNET_CONNECTION", (result as Resource.Error).message)
     }
 
-
     @Test
     fun `signUp success - saves user ID and returns success`() = runTest {
         val signUpRequest = SignUpRequest(
@@ -115,7 +116,6 @@ class AuthRepositoryImplTest {
         verify(localDataSource).saveOrUpdateUserId(USER_ID)
     }
 
-
     @Test
     fun `signUp error - returns error message`() = runTest {
         val signUpRequest = SignUpRequest(
@@ -142,4 +142,68 @@ class AuthRepositoryImplTest {
         assertEquals(ERROR, errorMessage)
     }
 
+    @Test
+    fun `getUser success - returns mapped user data`() = runTest {
+        val userId = USER_ID
+        val apiResponse = ApiResponse(
+            status = true,
+            message = SUCCESS,
+            data = GetUserResponse(userId, USER_NAME, USER_SURNAME, USER_EMAIL)
+        )
+
+        val expectedUser = User(userId, USER_NAME, USER_SURNAME, USER_EMAIL)
+
+        whenever(localDataSource.getUserId()).thenReturn(userId)
+        whenever(userService.getUser(userId)).thenReturn(Response.success(apiResponse))
+
+        val result = repository.getUser().first()
+
+        assertTrue(result is Resource.Success)
+        assertEquals(expectedUser, (result as Resource.Success).data)
+    }
+
+    @Test
+    fun `getUser fails when userId is null`() = runTest {
+        whenever(localDataSource.getUserId()).thenReturn(null)
+
+        val result = repository.getUser().first()
+
+        assertTrue(result is Resource.Error)
+        assertEquals("User ID not found in local storage.", (result as Resource.Error).message)
+    }
+
+    @Test
+    fun `getUser API call fails - returns error message`() = runTest {
+        val userId = USER_ID
+
+        whenever(localDataSource.getUserId()).thenReturn(userId)
+        whenever(userService.getUser(userId)).doAnswer { throw IOException(NO_INTERNET_CONNECTION) }
+
+        val result = repository.getUser().first()
+
+        assertTrue(result is Resource.Error)
+        assertEquals("Network error: $NO_INTERNET_CONNECTION", (result as Resource.Error).message)
+    }
+
+    @Test
+    fun `saveOrUpdateEmail - verifies email is saved`() = runTest {
+        val testEmail = USER_EMAIL
+        repository.saveOrUpdateEmail(testEmail)
+        verify(localDataSource).saveOrUpdateEmail(testEmail)
+    }
+
+    @Test
+    fun `getEmail - returns saved email`() = runTest {
+        val testEmail = USER_EMAIL
+        whenever(localDataSource.getEmail()).thenReturn(testEmail)
+        val result = repository.getEmail()
+        assertEquals(testEmail, result)
+    }
+
+    @Test
+    fun `getEmail - returns null if no email is found`() = runTest {
+        whenever(localDataSource.getEmail()).thenReturn(null)
+        val result = repository.getEmail()
+        assertNull(result)
+    }
 }

@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.tools.core)
     implementation(libs.benchmark.macro)
     implementation(libs.storage)
+    implementation(libs.junit.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)

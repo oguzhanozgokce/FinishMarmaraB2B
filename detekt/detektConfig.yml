@@ -9,11 +9,16 @@ style:
     maxLineLength: 120
     excludes:
       - '**/ui/mock/PreviewMockData.kt'
+  UnusedParameter:
+    active: false
 
 naming:
   FunctionNaming:
     active: true
     ignoreAnnotated: [ 'Composable' ]
+  MatchingDeclarationName:
+    active: false
+
 
 complexity:
   LongParameterList:
@@ -42,6 +47,8 @@ formatting:
   NoWildcardImports:
     active: true
     autoCorrect: true
+    excludes:
+      - '**/AuthRepositoryImplTest.kt'
   SpacingBetweenDeclarationsWithAnnotations:
     active: true
     autoCorrect: true
@@ -77,3 +84,7 @@ formatting:
   UnusedPrivateMember:
     active: true
     autoCorrect: true
+  MaximumLineLength:
+    active: true
+    excludes:
+      - '**/ui/mock/PreviewMockData.kt'

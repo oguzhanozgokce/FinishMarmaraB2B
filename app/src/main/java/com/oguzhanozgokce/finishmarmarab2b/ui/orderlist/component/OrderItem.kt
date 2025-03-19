@@ -227,7 +227,9 @@ fun OrderItemPreview() {
                 totalPrice = 100.0,
                 status = "Success",
                 orderImage = listOf(
-                    "", "", ""
+                    "",
+                    "",
+                    ""
                 )
             ),
             onClick = { },

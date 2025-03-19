@@ -140,8 +140,7 @@ fun AddCollectionBottomSheetContent(
 
 @PreviewLightDark
 @Composable
-fun AddCollectionBottomSheetContentPreview(
-) {
+fun AddCollectionBottomSheetContentPreview() {
     FMTheme {
         AddCollectionBottomSheetContent(
             uiState = UiState(),

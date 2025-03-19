@@ -68,8 +68,7 @@ fun OrderListContent(
 
 @Preview(showBackground = true)
 @Composable
-fun OrderListScreenPreview(
-) {
+fun OrderListScreenPreview() {
     FMTheme {
         OrderListScreen(
             uiState = UiState(),
@@ -82,5 +81,3 @@ fun OrderListScreenPreview(
         )
     }
 }
-
-

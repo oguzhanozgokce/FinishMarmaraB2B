@@ -12,7 +12,6 @@ class OrderListViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction
 
     override fun onAction(uiAction: UiAction) {
     }
-
 }
 
 object OrderListContract {

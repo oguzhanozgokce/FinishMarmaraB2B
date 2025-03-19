@@ -372,5 +372,4 @@ object PreviewMockData {
             )
         )
     )
-
 }

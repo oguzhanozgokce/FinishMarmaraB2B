@@ -41,8 +41,7 @@ fun CollectionsTabRowList(
 
 @PreviewLightDark
 @Composable
-fun CollectionsTabRowListPreview(
-) {
+fun CollectionsTabRowListPreview() {
     FMTheme {
         val collectionsList = listOf(
             Collections(

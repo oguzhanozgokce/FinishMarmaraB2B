@@ -70,7 +70,7 @@ fun FMSecondaryTabRow(
             targetState = selectedTabIndex,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) + slideInHorizontally(initialOffsetX = { it / 4 }) togetherWith
-                        fadeOut(animationSpec = tween(300)) + slideOutHorizontally(targetOffsetX = { -it / 4 })
+                    fadeOut(animationSpec = tween(300)) + slideOutHorizontally(targetOffsetX = { -it / 4 })
             },
             label = "SharedAxis"
         ) { tabIndex ->

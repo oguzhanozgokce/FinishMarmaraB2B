@@ -122,7 +122,6 @@ fun ProfileContent(
             )
             ProfileCard {
                 ProfileItem(text = "My Orders", onClick = {})
-                ProfileItem(text = "Favourites", onClick = {})
                 ProfileItem(text = "Edit Profile", onClick = {})
                 ProfileItem(text = "Change Password", onClick = {})
             }

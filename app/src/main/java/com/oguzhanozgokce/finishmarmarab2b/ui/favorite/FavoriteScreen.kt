@@ -1,41 +1,39 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyFavoriteScreen
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
+import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMModelBottomSheet
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.CollectionsTabRowList
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddCollectionBottomSheetContent
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.CollectionsTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FMSecondaryTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FavoriteTabRow
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteScreen(
     uiState: UiState,
@@ -45,11 +43,27 @@ fun FavoriteScreen(
 ) {
     val context = LocalContext.current
     val favoriteItems = uiState.favoriteList.collectAsLazyPagingItems()
+    val sheetState = rememberModalBottomSheetState()
     uiEffect.CollectWithLifecycle { effect ->
         when (effect) {
             is UiEffect.ShowToast -> context.showToast(effect.message)
             is UiEffect.Refresh -> favoriteItems.refresh()
         }
+    }
+    if (uiState.isShowBottomSheet) {
+        FMModelBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = { onAction(UiAction.HideBottomSheet) },
+            content = {
+                AddCollectionBottomSheetContent(
+                    uiState = uiState,
+                    onAction = onAction,
+                    onDismissRequest = { onAction(UiAction.HideBottomSheet) },
+                    onAddCollection = { onAction(UiAction.HideBottomSheet) }
+                )
+            },
+            dragHandle = null
+        )
     }
     when {
         favoriteItems.itemCount == 0 -> EmptyFavoriteScreen()
@@ -57,7 +71,8 @@ fun FavoriteScreen(
             uiState = uiState,
             favoriteItems = favoriteItems,
             onAction = onAction,
-            onNavigateToDetail = onNavigateToDetail
+            onNavigateToDetail = onNavigateToDetail,
+            onCreateCollectionClick = { onAction(UiAction.ShowBottomSheet) }
         )
     }
 }
@@ -67,7 +82,8 @@ fun FavoriteContent(
     uiState: UiState,
     favoriteItems: LazyPagingItems<Product>,
     onAction: (UiAction) -> Unit,
-    onNavigateToDetail: (Int) -> Unit
+    onNavigateToDetail: (Int) -> Unit,
+    onCreateCollectionClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -92,34 +108,11 @@ fun FavoriteContent(
                         onNavigateToDetail = onNavigateToDetail
                     )
 
-                    1 -> CollectionsTabRow()
+                    1 -> CollectionsTabRow(
+                        onCreateCollectionClick = onCreateCollectionClick
+                    )
                 }
             }
-        )
-    }
-}
-
-@Composable
-fun CollectionsTabRow() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-    ) {
-        CollectionsTabRowList(
-            collectionsList = PreviewMockData.defaultCollection,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 72.dp)
-        )
-
-        FMButton(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp),
-            text = "Create Collection",
-            onClick = { /* todo: implement create collection action */ },
-            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp)
         )
     }
 }

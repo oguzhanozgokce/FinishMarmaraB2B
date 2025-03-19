@@ -10,6 +10,8 @@ object FavoriteContract {
         val isLoading: Boolean = false,
         val favoriteList: Flow<PagingData<Product>> = emptyFlow(),
         var selectedTabIndex: Int = 0,
+        var collectionName: String = "",
+        val isShowBottomSheet: Boolean = false,
         val error: String? = "",
     )
 
@@ -18,6 +20,9 @@ object FavoriteContract {
         data class DeleteFavorite(val productId: Int) : UiAction()
         data class PostProductBasket(val productId: Int) : UiAction()
         data class ToggleSelectedTabIndex(val tabIndex: Int) : UiAction()
+        data class OnChangeCollectionName(val collectionName: String) : UiAction()
+        data object ShowBottomSheet : UiAction()
+        data object HideBottomSheet : UiAction()
     }
 
     sealed class UiEffect {

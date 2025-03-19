@@ -27,8 +27,14 @@ class FavoriteViewModel @Inject constructor(
             is UiAction.DeleteFavorite -> deleteFavorite(uiAction.productId)
             is UiAction.PostProductBasket -> postProductBasket(uiAction.productId)
             is UiAction.ToggleSelectedTabIndex -> updateState { copy(selectedTabIndex = uiAction.tabIndex) }
+            is UiAction.OnChangeCollectionName -> updateState { copy(collectionName = uiAction.collectionName) }
+            is UiAction.ShowBottomSheet -> showBottomSheet()
+            is UiAction.HideBottomSheet -> hideBottomSheet()
         }
     }
+
+    private fun showBottomSheet() = updateState { copy(isShowBottomSheet = true) }
+    private fun hideBottomSheet() = updateState { copy(isShowBottomSheet = false) }
 
     private fun deleteFavorite(productId: Int) {
         viewModelScope.launch {

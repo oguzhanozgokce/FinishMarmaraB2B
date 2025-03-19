@@ -25,6 +25,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.HomeNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.home.navigation.home
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.LoginNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.login.navigation.login
+import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderNavAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.orderList
 import com.oguzhanozgokce.finishmarmarab2b.ui.ordersuccess.orderSuccess
 import com.oguzhanozgokce.finishmarmarab2b.ui.password.navigation.password
 import com.oguzhanozgokce.finishmarmarab2b.ui.payment.navigation.PaymentNavAction
@@ -97,7 +99,8 @@ fun NavigationGraph(
             )
             profile(
                 onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) },
-                onNavigateCreditCart = { navController.navigate(route = CreditCard) }
+                onNavigateCreditCart = { navController.navigate(route = CreditCard) },
+                onNavigateToOrderList = { navController.navigate(route = OrderList) },
             )
             favorite(
                 onNavigateToDetail = { id ->
@@ -191,6 +194,12 @@ fun NavigationGraph(
             creditCard(
                 action = NavAction(
                     navigateToBack = { navController.navigateUp() },
+                )
+            )
+            orderList(
+                navAction = OrderNavAction(
+                    navigationBack = { navController.navigateUp() },
+                    navigateToOrderDetails = { }
                 )
             )
         }

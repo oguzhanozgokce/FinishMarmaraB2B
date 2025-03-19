@@ -5,6 +5,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.OrderInfo
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Province
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
@@ -338,4 +339,38 @@ object PreviewMockData {
             )
         )
     )
+
+    val defaultOrderInfoList = listOf(
+        OrderInfo(
+            id = 1,
+            totalPrice = 199.99,
+            status = "Pending",
+            createdAt = "2025-03-18",
+            orderImage = listOf(
+                "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/samsung/thumb/1-171_large.jpg",
+                "https://cdn.akakce.com/z/marshall/marshall-major-iv-katlanabilir-kablosuz-kulak-ustu.jpg"
+            )
+        ),
+        OrderInfo(
+            id = 2,
+            totalPrice = 349.50,
+            status = "Shipped",
+            createdAt = "2025-03-15",
+            orderImage = listOf(
+                "https://cdn.akakce.com/z/samsung/samsung-990-evo-plus-mz-v9s1t0bw-pci-express-1-tb-m-2.jpg",
+                "https://iis-akakce.akamaized.net/p.x?%2f%2fproductimages.hepsiburada.net%2fs%2f777%2f600%2f110000805819136.jpg"
+            )
+        ),
+        OrderInfo(
+            id = 3,
+            totalPrice = 89.99,
+            status = "Delivered",
+            createdAt = "2025-03-12",
+            orderImage = listOf(
+                "https://cdn.akakce.com/z/apple/apple-watch-series-10-gps-46mm-aluminyum-kasa-spor-kordon.jpg",
+                "https://cdn.akakce.com/x/samsung/samsung-galaxy-watch-7-44mm.jpg"
+            )
+        )
+    )
+
 }

@@ -9,3 +9,11 @@ data class Order(
     val createdAt: String,
     val updatedAt: String
 )
+
+data class OrderInfo(
+    val id: Int,
+    val totalPrice: Double,
+    val status: String,
+    val createdAt: String,
+    val orderImage: List<String>
+)

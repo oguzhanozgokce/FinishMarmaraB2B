@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -25,7 +26,9 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.typography
 
 @Composable
 fun FMCard(
-    modifier: Modifier = Modifier.background(colors.white).padding(padding.dimension8),
+    modifier: Modifier = Modifier
+        .background(colors.white)
+        .padding(padding.dimension8),
     shape: RoundedCornerShape = RoundedCornerShape(8.dp),
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     cardColors: CardColors = CardDefaults.cardColors(
@@ -46,14 +49,15 @@ fun FMCard(
 
 @Composable
 fun FMOutlinedCard(
-    modifier: Modifier = Modifier.background(colors.white).padding(padding.dimension8),
+    modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(8.dp),
-    cardColors: CardColors = CardDefaults.outlinedCardColors(containerColor = colors.white),
+    cardColors: CardColors = CardDefaults.outlinedCardColors(),
     border: BorderStroke = BorderStroke(1.dp, colors.primary.copy(alpha = 0.4f)),
-    content: @Composable () -> Unit
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit,
 ) {
     OutlinedCard(
-        modifier = modifier,
+        modifier = modifier.noRippleClickable(onClick = onClick),
         shape = shape,
         colors = cardColors,
         border = border,

@@ -12,6 +12,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.profile.ProfileViewModel
 fun NavGraphBuilder.profile(
     onNavigateToWelcome: () -> Unit,
     onNavigateCreditCart: () -> Unit,
+    onNavigateToOrderList: () -> Unit,
 ) {
     composable<Profile> {
         val viewModel: ProfileViewModel = hiltViewModel()
@@ -23,7 +24,8 @@ fun NavGraphBuilder.profile(
             uiEffect = uiEffect,
             onAction = viewModel::onAction,
             onNavigateToWelcome = onNavigateToWelcome,
-            onNavigateToCreditCart = onNavigateCreditCart
+            onNavigateToCreditCart = onNavigateCreditCart,
+            onNavigateToOrderList = onNavigateToOrderList
         )
     }
 }

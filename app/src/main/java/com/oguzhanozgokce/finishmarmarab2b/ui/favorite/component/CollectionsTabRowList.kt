@@ -11,14 +11,14 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.Collections
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun CollectionsTabRowList(
-    collectionsList: List<Collections>,
+    collectionsList: List<Collection>,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -44,31 +44,31 @@ fun CollectionsTabRowList(
 fun CollectionsTabRowListPreview() {
     FMTheme {
         val collectionsList = listOf(
-            Collections(
+            Collection(
                 id = 1,
-                totalProducts = 10,
+                productCount = 10,
                 name = "Example Collection",
-                imageProducts = listOf(
+                imageList = listOf(
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",
                 ),
             ),
-            Collections(
+            Collection(
                 id = 2,
-                totalProducts = 15,
+                productCount = 15,
                 name = "Example Collection 2",
-                imageProducts = listOf(
+                imageList = listOf(
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",
                 ),
             ),
-            Collections(
+            Collection(
                 id = 2,
-                totalProducts = 15,
+                productCount = 15,
                 name = "Example Collection 2",
-                imageProducts = listOf(
+                imageList = listOf(
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                     "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",

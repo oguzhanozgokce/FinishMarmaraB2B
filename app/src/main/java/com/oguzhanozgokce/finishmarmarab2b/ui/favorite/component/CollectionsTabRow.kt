@@ -11,11 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMButton
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
 @Composable
 fun CollectionsTabRow(
+    collectionsList: List<Collection>,
     onCreateCollectionClick: () -> Unit
 ) {
     Box(
@@ -24,7 +25,7 @@ fun CollectionsTabRow(
             .background(colors.background)
     ) {
         CollectionsTabRowList(
-            collectionsList = PreviewMockData.defaultCollection,
+            collectionsList = collectionsList,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 72.dp)

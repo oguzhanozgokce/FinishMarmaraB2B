@@ -27,14 +27,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.Collections
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @Composable
 fun CollectionTabRowItem(
-    collections: Collections,
+    collections: Collection,
     modifier: Modifier = Modifier,
 ) {
     FMCard(
@@ -59,7 +59,7 @@ fun CollectionTabRowItem(
                 horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(collections.imageProducts) { imageProduct ->
+                items(collections.imageList) { imageProduct ->
                     AsyncImage(
                         model = imageProduct,
                         modifier = Modifier
@@ -87,7 +87,7 @@ fun CollectionTabRowItem(
                     .align(Alignment.CenterHorizontally),
             ) {
                 Text(
-                    text = "${collections.name} (${collections.totalProducts})",
+                    text = "${collections.name} (${collections.productCount})",
                     style = FMTheme.typography.titleSmallMedium().copy(
                         fontSize = FMTheme.fontSize.mediumSmall
                     ),
@@ -107,11 +107,11 @@ fun CollectionTabRowItem(
 @Composable
 fun CollectionTabRowItemPreview() {
     FMTheme {
-        val collections = Collections(
+        val collections = Collection(
             id = 1,
-            totalProducts = 10,
+            productCount = 10,
             name = "Example Collection",
-            imageProducts = listOf(
+            imageList = listOf(
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg"

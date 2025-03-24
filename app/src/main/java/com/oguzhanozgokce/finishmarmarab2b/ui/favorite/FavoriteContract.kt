@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
 import androidx.paging.PagingData
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -12,6 +13,7 @@ object FavoriteContract {
         var selectedTabIndex: Int = 0,
         var collectionName: String = "",
         val isShowBottomSheet: Boolean = false,
+        val collectionList: List<Collection> = emptyList(),
         val error: String? = "",
     )
 

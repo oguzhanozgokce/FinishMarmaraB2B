@@ -46,6 +46,7 @@ fun ProductsScreen(
         uiState.isLoading -> LoadingBar()
         else -> ProductsContent(
             uiState = uiState,
+            onAction = onAction,
             navActions = navActions
         )
     }
@@ -54,6 +55,7 @@ fun ProductsScreen(
 @Composable
 fun ProductsContent(
     uiState: UiState,
+    onAction: (UiAction) -> Unit,
     navActions: ProductsNavActions,
 ) {
     Scaffold(
@@ -86,7 +88,7 @@ fun ProductsContent(
                         isLoading = uiState.isLoading,
                         products = uiState.typeList,
                         onNavigateToDetail = navActions.navigateToProductDetail,
-                        onToggleFavorite = {},
+                        onToggleFavorite = { id -> onAction(UiAction.ToggleFavorite(id)) },
                         modifier = Modifier
                             .fillMaxSize()
                             .background(color = colors.background)

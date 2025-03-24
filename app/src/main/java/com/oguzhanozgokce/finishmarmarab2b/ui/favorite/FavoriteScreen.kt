@@ -109,6 +109,7 @@ fun FavoriteContent(
                     )
 
                     1 -> CollectionsTabRow(
+                        collectionsList = uiState.collectionList,
                         onCreateCollectionClick = onCreateCollectionClick
                     )
                 }

@@ -65,6 +65,9 @@ data object CreditCard
 data object OrderList
 
 @Serializable
+data class AddCollections(val collectionName: String)
+
+@Serializable
 data class Products(
     val id: Int? = null,
     val name: String? = null,

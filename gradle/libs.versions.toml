@@ -39,6 +39,8 @@ storage = "1.5.0"
 coreSplashscreen = "1.0.1"
 lottieCompose = "6.3.0"
 junitKtx = "1.2.1"
+googleGmsGoogleServices = "4.4.2"
+firebaseAnalytics = "22.4.0"
 
 
 [libraries]
@@ -90,6 +92,7 @@ storage = { group = "androidx.test.services", name = "storage", version.ref = "s
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 
 [plugins]
@@ -100,3 +103,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.detekt)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.google.gms.google.services)
 
 }
 
@@ -68,6 +69,7 @@ dependencies {
     implementation(libs.benchmark.macro)
     implementation(libs.storage)
     implementation(libs.junit.ktx)
+    implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.espresso.core)

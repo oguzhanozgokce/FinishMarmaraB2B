@@ -27,4 +27,8 @@ object ApiRoutes {
     const val POST_ORDER = "/api/Order"
     const val POST_CREDIT_CARD = "/api/CreditCard"
     const val GET_CREDIT_CARD = "/api/CreditCard/{user_id}"
+    const val GET_COLLECTIONS = "/api/Collection/{user_id}"
+    const val POST_COLLECTION = "/api/Collection"
+    const val POST_COLLECTION_ADD_PRODUCT = "/api/Collection/add-product"
+    const val POST_COLLECTION_ADD_PRODUCTS = "/api/Collection/add-products"
 }

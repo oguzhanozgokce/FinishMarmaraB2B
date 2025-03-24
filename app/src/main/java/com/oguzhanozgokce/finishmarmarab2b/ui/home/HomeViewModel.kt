@@ -7,6 +7,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onFailure
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.onSuccess
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.auth.GetUserUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCategoriesUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductsUseCase
@@ -29,7 +30,8 @@ class HomeViewModel @Inject constructor(
     private val getUserCase: GetUserUseCase,
     private val getProductsUseCase: GetProductsUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private var lastClickTime = 0L
@@ -78,6 +80,12 @@ class HomeViewModel @Inject constructor(
             toggleFavoriteUseCase(productId)
                 .onSuccess { response ->
                     updateProductFavoriteStatus(response.productId, response.isFavorite)
+                    if (response.isFavorite) {
+                        val product = currentState.productList.find { it.id == response.productId }
+                        product?.let {
+                            analyticsManager.logProductAddedToFavorites(it.id)
+                        }
+                    }
                 }.onFailure {
                     UiEffect.ShowToast(it)
                 }

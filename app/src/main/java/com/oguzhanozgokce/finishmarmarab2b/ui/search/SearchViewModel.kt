@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.search
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteAllSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteSearchHistoryUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetSearchHistoryUseCase
@@ -21,7 +22,8 @@ class SearchViewModel @Inject constructor(
     private val getSearchProductUseCase: GetSearchProductUseCase,
     private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
     private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase,
-    private val deleteAllSearchHistoryUseCase: DeleteAllSearchHistoryUseCase
+    private val deleteAllSearchHistoryUseCase: DeleteAllSearchHistoryUseCase,
+    private val analyticsManager: AnalyticsManager,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -56,6 +58,7 @@ class SearchViewModel @Inject constructor(
             getSearchProductUseCase(searchQuery = searchQuery).fold(
                 onSuccess = { productList ->
                     updateState { copy(top5productList = productList) }
+                    analyticsManager.logSearchQuery(searchQuery)
                 },
                 onError = { error ->
                     emitUiEffect(UiEffect.ShowToast(error))

@@ -4,8 +4,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCollectionsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
@@ -18,8 +20,14 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
     private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase,
-    private val postProductBasketUseCase: PostProductBasketUseCase
+    private val postProductBasketUseCase: PostProductBasketUseCase,
+    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
+
+    init {
+        getCollection()
+    }
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
@@ -63,9 +71,25 @@ class FavoriteViewModel @Inject constructor(
             postProductBasketUseCase(productId).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                    analyticsManager.logProductAddedToCart(productId)
                 },
                 onError = { error ->
                     updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
+    }
+
+    private fun getCollection() {
+        updateState { copy(isLoading = true) }
+        viewModelScope.launch {
+            getCollectionsUseCase().fold(
+                onSuccess = { collectionList ->
+                    updateState { copy(collectionList = collectionList, isLoading = false) }
+                },
+                onError = { error ->
+                    updateState { copy(error = error, isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
                 }
             )

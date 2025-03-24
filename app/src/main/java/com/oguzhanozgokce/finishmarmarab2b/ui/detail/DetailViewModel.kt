@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductCommentsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetProductDetailUseCase
@@ -24,7 +25,8 @@ class DetailViewModel @Inject constructor(
     private val getCommentsUseCase: GetProductCommentsUseCase,
     private val getProductDetailUseCase: GetProductDetailUseCase,
     private val getQuestionsAndAnswersUseCase: GetProductQuestionsAndAnswersUseCase,
-    private val postProductBasketUseCase: PostProductBasketUseCase
+    private val postProductBasketUseCase: PostProductBasketUseCase,
+    private val analyticsManager: AnalyticsManager,
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private val args = savedStateHandle.toRoute<Detail>()
@@ -79,6 +81,7 @@ class DetailViewModel @Inject constructor(
             postProductBasketUseCase(productId).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                    analyticsManager.logProductAddedToCart(productId = it)
                 },
                 onError = {
                     emitUiEffect(UiEffect.ShowToast(it))

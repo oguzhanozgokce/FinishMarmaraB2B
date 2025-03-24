@@ -11,11 +11,14 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.Ques
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SearchHistoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.SellerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.CollectionDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetBasketResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCollectionsResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
@@ -178,4 +181,17 @@ fun PaginationData<ProductDto>.mapToPaginationData(): PaginationData<Product> {
         list = this.list?.map { it.mapToProduct() } ?: emptyList(),
         pagination = this.pagination
     )
+}
+
+fun CollectionDto.toCollectionDomain() = Collection(
+    id = this.id.orZero(),
+    name = this.name.orEmpty(),
+    imageList = this.imageList.orEmpty(),
+    productCount = this.productCount.orZero(),
+)
+
+fun GetCollectionsResponse.toCollectionListDomain(): List<Collection> {
+    return list.orEmpty().map { collectionDto ->
+        collectionDto.toCollectionDomain()
+    }
 }

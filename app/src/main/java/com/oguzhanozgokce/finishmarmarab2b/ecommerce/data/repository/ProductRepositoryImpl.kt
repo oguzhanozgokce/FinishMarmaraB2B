@@ -10,17 +10,21 @@ import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToPaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toCategoryDomain
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toCollectionListDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toProduct
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toQuestionAnswerDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toSearchHistoryListDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.toUserCommentDomain
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.GenericPagingSource
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
@@ -167,5 +171,24 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun deleteAllSearchHistory(): Resource<Unit> {
         val userId = getUserId()
         return safeApiCall { productService.deleteUserAllSearchHistory(userId) }
+    }
+
+    override suspend fun getCollection(): Resource<List<Collection>> {
+        val userId = getUserId()
+        return safeApiCall { productService.getCollections(userId) }
+            .toResourceMap { response ->
+                response.toCollectionListDomain()
+            }
+    }
+
+    override suspend fun postCollection(request: PostCollectionRequest): Resource<Int> {
+        val userId = getUserId()
+        val updatedRequest = request.copy(userId = userId)
+        return safeApiCall { productService.postCollection(updatedRequest) }
+            .toResourceMap { it }
+    }
+
+    override suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit> {
+        return safeApiCall { productService.postCollectionAddProducts(request) }
     }
 }

@@ -1,6 +1,7 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.products
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
+import com.oguzhanozgokce.finishmarmarab2b.ui.home.HomeContract.UiAction
 
 object ProductsContract {
     data class UiState(
@@ -14,6 +15,7 @@ object ProductsContract {
 
     sealed class UiAction {
         data class LoadCategoryProducts(val categoryId: Int, val name: String) : UiAction()
+        data class ToggleFavorite(val productId: Int) : UiAction()
     }
 
     sealed class UiEffect

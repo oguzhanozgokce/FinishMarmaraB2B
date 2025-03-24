@@ -4,6 +4,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_ALL_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_CATEGORIES
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COLLECTIONS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_COMMENT_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_FAVORITE_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCTS
@@ -11,15 +12,20 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_DET
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP5
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH_HISTORY
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION_ADD_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.QuestionAnswerDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.UserCommentDto
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCollectionsResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
@@ -113,5 +119,20 @@ interface ProductService {
     @DELETE(DELETE_USER_ALL_SEARCH_HISTORY)
     suspend fun deleteUserAllSearchHistory(
         @Path("user_id") userId: Int,
+    ): Response<ApiResponse<Unit>>
+
+    @GET(GET_COLLECTIONS)
+    suspend fun getCollections(
+        @Path("user_id") userId: Int,
+    ): Response<ApiResponse<GetCollectionsResponse>>
+
+    @POST(POST_COLLECTION)
+    suspend fun postCollection(
+        @Body request: PostCollectionRequest
+    ): Response<ApiResponse<Int>>
+
+    @POST(POST_COLLECTION_ADD_PRODUCTS)
+    suspend fun postCollectionAddProducts(
+        @Body request: List<PostCollectionAddProductsRequest>
     ): Response<ApiResponse<Unit>>
 }

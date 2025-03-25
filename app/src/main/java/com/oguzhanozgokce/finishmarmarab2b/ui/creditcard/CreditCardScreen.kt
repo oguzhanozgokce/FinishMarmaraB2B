@@ -2,7 +2,9 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.creditcard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -27,6 +29,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.CreditCardContract.UiEf
 import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.CreditCardContract.UiState
 import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.component.AddCreditCardBottomSheetContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.component.CreditCardList
+import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.component.EmptyCreditCartContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -106,19 +109,27 @@ fun CreditCardContent(
             )
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FMTheme.colors.background)
-                .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            CreditCardList(
-                creditCards = uiState.creditCardList,
-                modifier = Modifier,
-                onItemClick = { },
-                onItemLongClick = { }
+        if (uiState.creditCardList.isEmpty()) {
+            EmptyCreditCartContent(
+                modifier = Modifier.padding(innerPadding),
+                onClick = { onAction(UiAction.ShowBottomSheet) }
             )
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(FMTheme.colors.background)
+                    .padding(innerPadding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.height(FMTheme.padding.dimension16))
+                CreditCardList(
+                    creditCards = uiState.creditCardList,
+                    modifier = Modifier,
+                    onItemClick = { },
+                    onItemLongClick = { }
+                )
+            }
         }
     }
 }

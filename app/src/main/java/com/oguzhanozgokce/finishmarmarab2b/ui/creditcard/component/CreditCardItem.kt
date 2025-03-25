@@ -46,7 +46,7 @@ fun CreditCardItem(
     FMCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
@@ -100,8 +100,10 @@ fun CreditCardItem(
 
                 Text(
                     text = maskCreditCardNumber(creditCard.cardNumber),
-                    style = FMTheme.typography.titleLargeBold(),
-                    color = FMTheme.colors.onPrimary,
+                    style = FMTheme.typography.titleLargeBold().copy(
+                        fontSize = FMTheme.fontSize.extraLarge,
+                        color = FMTheme.colors.onPrimary
+                    ),
                     letterSpacing = 2.sp,
                 )
 

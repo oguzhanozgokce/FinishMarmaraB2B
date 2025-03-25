@@ -10,8 +10,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddCollectionViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
-
     override fun onAction(uiAction: UiAction) {
     }
 }
-

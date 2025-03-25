@@ -74,8 +74,7 @@ fun AddCollectionContent() {
 
 @Preview(showBackground = true)
 @Composable
-fun AddCollectionScreenPreview(
-) {
+fun AddCollectionScreenPreview() {
     FMTheme {
         AddCollectionScreen(
             uiState = UiState(),
@@ -84,4 +83,3 @@ fun AddCollectionScreenPreview(
         )
     }
 }
-

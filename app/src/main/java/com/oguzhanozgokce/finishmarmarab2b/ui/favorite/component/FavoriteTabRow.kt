@@ -67,8 +67,8 @@ fun FavoriteTabRow(
             onCartClick = { id ->
                 onNavigateToDetail(id)
             },
-            onBasketClick = { id ->
-                onAction(FavoriteContract.UiAction.PostProductBasket(id))
+            onBasketClick = { id, productName ->
+                onAction(FavoriteContract.UiAction.PostProductBasket(id, productName))
             }
         )
     }

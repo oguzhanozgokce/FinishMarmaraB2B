@@ -24,7 +24,7 @@ fun FMFavoriteList(
     favoriteItems: LazyPagingItems<Product>,
     onFavoriteClick: (productId: Int) -> Unit,
     onCartClick: (productId: Int) -> Unit,
-    onBasketClick: (productId: Int) -> Unit
+    onBasketClick: (productId: Int, productName: String) -> Unit
 ) {
     val isRefreshing = favoriteItems.loadState.refresh is LoadState.Loading
     val isAppending = favoriteItems.loadState.append is LoadState.Loading
@@ -49,7 +49,7 @@ fun FMFavoriteList(
                         product = product,
                         onFavoriteClick = { onFavoriteClick(product.id) },
                         onClick = { onCartClick(product.id) },
-                        onBasketClick = { onBasketClick(product.id) }
+                        onBasketClick = { onBasketClick(product.id, product.title) }
                     )
                 }
             }
@@ -75,7 +75,7 @@ fun FavoriteListPreview() {
             favoriteItems = mockLazyPagingItems(PreviewMockData.defaultProductList),
             onFavoriteClick = {},
             onCartClick = {},
-            onBasketClick = {}
+            onBasketClick = { _, _ -> }
         )
     }
 }

@@ -33,7 +33,11 @@ class FavoriteViewModel @Inject constructor(
         when (uiAction) {
             is UiAction.LoadFavoriteProducts -> loadFavoriteProducts()
             is UiAction.DeleteFavorite -> deleteFavorite(uiAction.productId)
-            is UiAction.PostProductBasket -> postProductBasket(uiAction.productId)
+            is UiAction.PostProductBasket -> postProductBasket(
+                uiAction.productId,
+                uiAction.productName
+            )
+
             is UiAction.ToggleSelectedTabIndex -> updateState { copy(selectedTabIndex = uiAction.tabIndex) }
             is UiAction.OnChangeCollectionName -> updateState { copy(collectionName = uiAction.collectionName) }
             is UiAction.ShowBottomSheet -> showBottomSheet()
@@ -66,12 +70,12 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    private fun postProductBasket(productId: Int) {
+    private fun postProductBasket(productId: Int, productName: String) {
         viewModelScope.launch {
             postProductBasketUseCase(productId).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to basket"))
-                    analyticsManager.logProductAddedToCart(productId)
+                    analyticsManager.logProductAddedToCart(productId, productName)
                 },
                 onError = { error ->
                     updateState { copy(error = error) }

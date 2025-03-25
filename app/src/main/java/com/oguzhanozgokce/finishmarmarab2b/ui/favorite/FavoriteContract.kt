@@ -20,7 +20,7 @@ object FavoriteContract {
     sealed class UiAction {
         data object LoadFavoriteProducts : UiAction()
         data class DeleteFavorite(val productId: Int) : UiAction()
-        data class PostProductBasket(val productId: Int) : UiAction()
+        data class PostProductBasket(val productId: Int, val productName: String) : UiAction()
         data class ToggleSelectedTabIndex(val tabIndex: Int) : UiAction()
         data class OnChangeCollectionName(val collectionName: String) : UiAction()
         data object ShowBottomSheet : UiAction()

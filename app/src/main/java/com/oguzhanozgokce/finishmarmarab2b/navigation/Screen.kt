@@ -68,6 +68,9 @@ data object OrderList
 data class AddCollections(val collectionName: String)
 
 @Serializable
+data class SelectedFavorite(val collectionName: String, val collectionId: Int)
+
+@Serializable
 data class Products(
     val id: Int? = null,
     val name: String? = null,

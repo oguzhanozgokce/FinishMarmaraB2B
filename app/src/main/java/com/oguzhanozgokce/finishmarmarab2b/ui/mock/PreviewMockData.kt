@@ -307,7 +307,14 @@ object PreviewMockData {
         nameSurname = "Ali Yılmaz"
     )
 
-    val defaultCollection = listOf(
+    val defaultCollection = Collection(
+        id = 1,
+        name = "Default",
+        productCount = 0,
+        imageList = listOf()
+    )
+
+    val defaultCollectionList = listOf(
         Collection(
             id = 1,
             name = "Tecnology",

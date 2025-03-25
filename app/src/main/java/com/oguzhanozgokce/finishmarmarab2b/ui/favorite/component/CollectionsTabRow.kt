@@ -34,6 +34,7 @@ fun CollectionsTabRow(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(16.dp),
+            height = 48.dp,
             text = "Create Collection",
             onClick = { onCreateCollectionClick() },
             shape = CircleShape,

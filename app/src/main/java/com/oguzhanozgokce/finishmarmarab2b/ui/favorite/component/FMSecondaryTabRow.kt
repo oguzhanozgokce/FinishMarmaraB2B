@@ -20,6 +20,9 @@ import androidx.compose.ui.graphics.Color
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.model.PrimaryTab
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
+private const val ANIMATION_DURATION_MS = 300
+private const val SLIDE_OFFSET_DIVISOR = 4
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FMSecondaryTabRow(
@@ -69,8 +72,10 @@ fun FMSecondaryTabRow(
         AnimatedContent(
             targetState = selectedTabIndex,
             transitionSpec = {
-                fadeIn(animationSpec = tween(300)) + slideInHorizontally(initialOffsetX = { it / 4 }) togetherWith
-                        fadeOut(animationSpec = tween(300)) + slideOutHorizontally(targetOffsetX = { -it / 4 })
+                fadeIn(animationSpec = tween(ANIMATION_DURATION_MS)) +
+                    slideInHorizontally(initialOffsetX = { it / SLIDE_OFFSET_DIVISOR }) togetherWith
+                    fadeOut(animationSpec = tween(ANIMATION_DURATION_MS)) +
+                    slideOutHorizontally(targetOffsetX = { -it / SLIDE_OFFSET_DIVISOR })
             },
             label = "SharedAxis"
         ) { tabIndex ->

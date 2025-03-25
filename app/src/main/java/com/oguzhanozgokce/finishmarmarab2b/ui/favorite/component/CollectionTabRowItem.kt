@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMCard
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -107,16 +108,7 @@ fun CollectionTabRowItem(
 @Composable
 fun CollectionTabRowItemPreview() {
     FMTheme {
-        val collections = Collection(
-            id = 1,
-            productCount = 10,
-            name = "Example Collection",
-            imageList = listOf(
-                "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg"
-            )
-        )
+        val collections = PreviewMockData.defaultCollection
         CollectionTabRowItem(
             collections = collections,
             modifier = Modifier

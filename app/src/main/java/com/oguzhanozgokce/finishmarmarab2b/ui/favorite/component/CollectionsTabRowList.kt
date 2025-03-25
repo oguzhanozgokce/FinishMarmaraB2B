@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
+import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
@@ -52,38 +53,7 @@ fun CollectionsTabRowList(
 @Composable
 fun CollectionsTabRowListPreview() {
     FMTheme {
-        val collectionsList = listOf(
-            Collection(
-                id = 1,
-                productCount = 10,
-                name = "Example Collection",
-                imageList = listOf(
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",
-                ),
-            ),
-            Collection(
-                id = 2,
-                productCount = 15,
-                name = "Example Collection 2",
-                imageList = listOf(
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",
-                ),
-            ),
-            Collection(
-                id = 2,
-                productCount = 15,
-                name = "Example Collection 2",
-                imageList = listOf(
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
-                    "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93",
-                ),
-            )
-        )
+        val collectionsList = PreviewMockData.defaultCollectionList
         CollectionsTabRowList(
             collectionsList = collectionsList,
             modifier = Modifier

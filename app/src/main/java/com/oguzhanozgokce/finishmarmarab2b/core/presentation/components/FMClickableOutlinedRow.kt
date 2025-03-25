@@ -6,11 +6,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -58,6 +56,18 @@ fun FMClickableOutlinedRow(
     }
 
     Column(modifier = modifier.fillMaxWidth()) {
+        if (label.isNotEmpty()) {
+            Text(
+                text = label,
+                style = FMTheme.typography.bodySmallNormal().copy(
+                    color = textColor.copy(alpha = 0.7f)
+                ),
+                modifier = Modifier.padding(
+                    start = padding.dimension12,
+                    bottom = padding.dimension2
+                )
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,19 +85,10 @@ fun FMClickableOutlinedRow(
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (label.isNotEmpty() && value.isEmpty()) {
-                Text(
-                    text = label,
-                    color = textColor,
-                    fontSize = FMTheme.fontSize.medium
-                )
-                Spacer(modifier = Modifier.width(padding.dimension8))
-            }
 
             Text(
                 text = value,
                 color = textColor,
-                fontSize = FMTheme.fontSize.medium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier

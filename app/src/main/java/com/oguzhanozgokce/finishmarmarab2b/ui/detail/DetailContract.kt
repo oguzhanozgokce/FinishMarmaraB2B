@@ -21,7 +21,7 @@ object DetailContract {
         data class FetchProductDetail(val productId: Int) : UiAction()
         data class FetchComments(val productId: Int) : UiAction()
         data class FetchQuestionsAndAnswers(val productId: Int) : UiAction()
-        data class ProductBasket(val productId: Int) : UiAction()
+        data class ProductBasket(val productId: Int, val productName: String) : UiAction()
     }
 
     sealed class UiEffect {

@@ -18,11 +18,12 @@ class AnalyticsManagerImpl @Inject constructor(
         )
     }
 
-    override fun logProductAddedToCart(productId: Int) {
+    override fun logProductAddedToCart(productId: Int, productName: String) {
         analytics.logEvent(
             FirebaseAnalytics.Event.ADD_TO_CART,
             Bundle().apply {
                 putInt(FirebaseAnalytics.Param.ITEM_ID, productId)
+                putString(FirebaseAnalytics.Param.ITEM_NAME, productName)
             }
         )
     }

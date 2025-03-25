@@ -91,7 +91,9 @@ fun DetailContent(
             uiState.product?.let { product ->
                 BottomDetail(
                     product = product,
-                    onAddToCart = { onAction(UiAction.ProductBasket(product.id)) },
+                    onAddToCart = { productId, productName ->
+                        onAction(UiAction.ProductBasket(productId, productName))
+                    },
                     onNowAddToCart = { }
                 )
             }

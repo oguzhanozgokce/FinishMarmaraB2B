@@ -42,7 +42,7 @@ class DetailViewModel @Inject constructor(
             is UiAction.FetchProductDetail -> fetchProductDetail(args.id)
             is UiAction.FetchComments -> fetchComments(args.id)
             is UiAction.FetchQuestionsAndAnswers -> fetchQuestionsAndAnswers(args.id)
-            is UiAction.ProductBasket -> postProductBasket(args.id)
+            is UiAction.ProductBasket -> postProductBasket(args.id, uiAction.productName)
         }
     }
 
@@ -76,12 +76,15 @@ class DetailViewModel @Inject constructor(
         updateState { copy(questionsAndAnswers = flow, isLoading = false) }
     }
 
-    private fun postProductBasket(productId: Int) {
+    private fun postProductBasket(productId: Int, productName: String) {
         viewModelScope.launch {
             postProductBasketUseCase(productId).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to basket"))
-                    analyticsManager.logProductAddedToCart(productId = it)
+                    analyticsManager.logProductAddedToCart(
+                        productId = productId,
+                        productName = productName
+                    )
                 },
                 onError = {
                     emitUiEffect(UiEffect.ShowToast(it))

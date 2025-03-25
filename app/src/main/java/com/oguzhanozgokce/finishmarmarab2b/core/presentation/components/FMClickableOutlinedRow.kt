@@ -85,7 +85,6 @@ fun FMClickableOutlinedRow(
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Text(
                 text = value,
                 color = textColor,

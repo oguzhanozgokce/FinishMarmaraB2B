@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMTopBar
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
@@ -15,6 +16,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiState
+import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.component.EmptyOrderListContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.component.OrderItemList
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import kotlinx.coroutines.flow.Flow
@@ -29,15 +31,17 @@ fun OrderListScreen(
 ) {
     when {
         uiState.isLoading -> LoadingBar()
-        uiState.list.isNotEmpty() -> EmptyScreen()
+        uiState.orderList.isNotEmpty() -> EmptyScreen()
         else -> OrderListContent(
-            navAction = navAction
+            navAction = navAction,
+            uiState = uiState,
         )
     }
 }
 
 @Composable
 fun OrderListContent(
+    uiState: UiState,
     navAction: OrderNavAction
 ) {
     Scaffold(
@@ -51,24 +55,33 @@ fun OrderListContent(
         containerColor = FMTheme.colors.background,
         contentColor = FMTheme.colors.onBackground,
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FMTheme.colors.background)
-                .padding(innerPadding),
-        ) {
-            OrderItemList(
-                orders = PreviewMockData.defaultOrderInfoList,
-                modifier = Modifier.background(color = FMTheme.colors.background),
-                onClick = { }
+        if (uiState.orderList.isEmpty()) {
+            EmptyOrderListContent(
+                modifier = Modifier.padding(innerPadding),
+                onClick = {}
             )
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(FMTheme.colors.background)
+                    .padding(innerPadding),
+            ) {
+                OrderItemList(
+                    orders = PreviewMockData.defaultOrderInfoList,
+                    modifier = Modifier.background(color = FMTheme.colors.background),
+                    onClick = { }
+                )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun OrderListScreenPreview() {
+fun OrderListScreenPreview(
+    @PreviewParameter(OrderListScreenPreviewProvider::class) uiState: UiState,
+) {
     FMTheme {
         OrderListScreen(
             uiState = UiState(),

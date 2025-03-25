@@ -193,7 +193,8 @@ fun BirthDatePickerField(
                     }
                 ) {
                     Text(
-                        "OK", style = FMTheme.typography.bodySmallNormal().copy(
+                        text = "OK",
+                        style = FMTheme.typography.bodySmallNormal().copy(
                             fontSize = FMTheme.fontSize.mediumSmall
                         )
                     )
@@ -202,7 +203,8 @@ fun BirthDatePickerField(
             dismissButton = {
                 TextButton(onClick = { isDatePickerVisible = false }) {
                     Text(
-                        "Cancel", style = FMTheme.typography.bodySmallNormal().copy(
+                        text = "Cancel",
+                        style = FMTheme.typography.bodySmallNormal().copy(
                             fontSize = FMTheme.fontSize.mediumSmall
                         )
                     )
@@ -236,8 +238,7 @@ fun BirthDatePickerField(
 
 @PreviewLightDark
 @Composable
-fun EditProfileScreenPreview(
-) {
+fun EditProfileScreenPreview() {
     FMTheme {
         EditProfileScreen(
             uiState = UiState(),

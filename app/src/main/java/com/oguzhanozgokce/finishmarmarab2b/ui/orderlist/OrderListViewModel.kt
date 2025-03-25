@@ -13,14 +13,3 @@ class OrderListViewModel @Inject constructor() : MVI<UiState, UiEffect, UiAction
     override fun onAction(uiAction: UiAction) {
     }
 }
-
-object OrderListContract {
-    data class UiState(
-        val isLoading: Boolean = false,
-        val list: List<String> = emptyList(),
-    )
-
-    sealed class UiAction
-
-    sealed class UiEffect
-}

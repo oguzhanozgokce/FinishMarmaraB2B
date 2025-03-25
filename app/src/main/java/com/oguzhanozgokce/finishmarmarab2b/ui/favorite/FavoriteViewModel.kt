@@ -1,6 +1,5 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
@@ -53,18 +52,16 @@ class FavoriteViewModel @Inject constructor(
     private fun showBottomSheet() = updateState { copy(isShowBottomSheet = true) }
     private fun hideBottomSheet() = updateState { copy(isShowBottomSheet = false) }
 
-    private fun deleteFavorite(productId: Int) {
-        viewModelScope.launch {
-            deleteFavoriteUseCase(productId).fold(
-                onSuccess = {
-                    emitUiEffect(UiEffect.Refresh)
-                },
-                onError = { error ->
-                    updateState { copy(error = error) }
-                    UiEffect.ShowToast(error)
-                }
-            )
-        }
+    private fun deleteFavorite(productId: Int) = viewModelScope.launch {
+        deleteFavoriteUseCase(productId).fold(
+            onSuccess = {
+                emitUiEffect(UiEffect.Refresh)
+            },
+            onError = { error ->
+                updateState { copy(error = error) }
+                UiEffect.ShowToast(error)
+            }
+        )
     }
 
     private fun loadFavoriteProducts() {
@@ -75,51 +72,44 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    private fun postProductBasket(productId: Int, productName: String) {
-        viewModelScope.launch {
-            postProductBasketUseCase(productId).fold(
-                onSuccess = {
-                    emitUiEffect(UiEffect.ShowToast("Product added to basket"))
-                    analyticsManager.logProductAddedToCart(productId, productName)
-                },
-                onError = { error ->
-                    updateState { copy(error = error) }
-                    emitUiEffect(UiEffect.ShowToast(error))
-                }
-            )
-        }
+    private fun postProductBasket(productId: Int, productName: String) = viewModelScope.launch {
+        postProductBasketUseCase(productId).fold(
+            onSuccess = {
+                emitUiEffect(UiEffect.ShowToast("Product added to basket"))
+                analyticsManager.logProductAddedToCart(productId, productName)
+            },
+            onError = { error ->
+                updateState { copy(error = error) }
+                emitUiEffect(UiEffect.ShowToast(error))
+            }
+        )
     }
 
-    private fun getCollection() {
+    private fun getCollection() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
-        viewModelScope.launch {
-            getCollectionsUseCase().fold(
-                onSuccess = { collectionList ->
-                    updateState { copy(collectionList = collectionList, isLoading = false) }
-                },
-                onError = { error ->
-                    updateState { copy(error = error, isLoading = false) }
-                    emitUiEffect(UiEffect.ShowToast(error))
-                    Log.e("FavoriteViewModel2", "Error getting collections: $error")
-                }
-            )
-        }
+        getCollectionsUseCase().fold(
+            onSuccess = { collectionList ->
+                updateState { copy(collectionList = collectionList, isLoading = false) }
+            },
+            onError = { error ->
+                updateState { copy(error = error, isLoading = false) }
+                emitUiEffect(UiEffect.ShowToast(error))
+            }
+        )
     }
 
-    private fun postCollection(collectionName: String) {
-        viewModelScope.launch {
-            postCollectionUseCase(collectionName).fold(
-                onSuccess = {
-                    updateState { copy(isRefreshCollection = true, collectionName = "") }
-                    emitUiEffect(UiEffect.ShowToast("Collection created"))
-                    hideBottomSheet()
-                },
-                onError = { error ->
-                    updateState { copy(error = error) }
-                    emitUiEffect(UiEffect.ShowToast(error))
-                    Log.e("FavoriteViewModel3", "Error creating collection: $error")
-                }
-            )
-        }
+    private fun postCollection(collectionName: String) = viewModelScope.launch {
+        postCollectionUseCase(collectionName).fold(
+            onSuccess = { id ->
+                updateState { copy(isRefreshCollection = true, collectionName = "") }
+                hideBottomSheet()
+                emitUiEffect(UiEffect.ShowToast("Collection created"))
+                emitUiEffect(UiEffect.NavigateToSelectedFavorite(collectionName, id))
+            },
+            onError = { error ->
+                updateState { copy(error = error) }
+                emitUiEffect(UiEffect.ShowToast(error))
+            }
+        )
     }
 }

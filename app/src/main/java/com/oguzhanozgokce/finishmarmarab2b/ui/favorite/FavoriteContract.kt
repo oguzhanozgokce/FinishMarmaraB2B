@@ -33,5 +33,7 @@ object FavoriteContract {
     sealed class UiEffect {
         data class ShowToast(val message: String) : UiEffect()
         data object Refresh : UiEffect()
+        data class NavigateToSelectedFavorite(val collectionName: String, val collectionId: Int) :
+            UiEffect()
     }
 }

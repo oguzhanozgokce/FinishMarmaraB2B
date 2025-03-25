@@ -40,7 +40,8 @@ fun FavoriteScreen(
     uiState: UiState,
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit,
-    onNavigateToDetail: (Int) -> Unit
+    onNavigateToDetail: (Int) -> Unit,
+    onNavigateToSelectFavorite: (String, Int) -> Unit,
 ) {
     val context = LocalContext.current
     val favoriteItems = uiState.favoriteList.collectAsLazyPagingItems()
@@ -49,6 +50,10 @@ fun FavoriteScreen(
         when (effect) {
             is UiEffect.ShowToast -> context.showToast(effect.message)
             is UiEffect.Refresh -> favoriteItems.refresh()
+            is UiEffect.NavigateToSelectedFavorite -> onNavigateToSelectFavorite(
+                effect.collectionName,
+                effect.collectionId
+            )
         }
     }
     if (uiState.isShowBottomSheet) {
@@ -129,7 +134,8 @@ fun FavoriteScreenPreview(
             uiState = uiState,
             uiEffect = emptyFlow(),
             onAction = {},
-            onNavigateToDetail = {}
+            onNavigateToDetail = {},
+            onNavigateToSelectFavorite = { _, _ -> }
         )
     }
 }

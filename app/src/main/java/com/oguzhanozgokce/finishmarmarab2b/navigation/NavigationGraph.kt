@@ -36,6 +36,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.products.navigation.products
 import com.oguzhanozgokce.finishmarmarab2b.ui.profile.navigation.profile
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.SearchNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.search.navigation.search
+import com.oguzhanozgokce.finishmarmarab2b.ui.selectedfavorite.SelectedFavoriteNavAction
+import com.oguzhanozgokce.finishmarmarab2b.ui.selectedfavorite.selectedFavorite
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.SignUpNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.signup.navigation.signUp
 import com.oguzhanozgokce.finishmarmarab2b.ui.splash.splash
@@ -105,6 +107,9 @@ fun NavigationGraph(
             favorite(
                 onNavigateToDetail = { id ->
                     navController.navigate(route = Detail(id))
+                },
+                onNavigateToSelectFavorite = { name, id ->
+                    navController.navigate(route = SelectedFavorite(name, id))
                 }
             )
             cart(
@@ -200,6 +205,12 @@ fun NavigationGraph(
                 navAction = OrderNavAction(
                     navigationBack = { navController.navigateUp() },
                     navigateToOrderDetails = { }
+                )
+            )
+            selectedFavorite(
+                actions = SelectedFavoriteNavAction(
+                    navigateBack = { navController.navigateUp() },
+                    navigateToFavorite = { navController.navigate(route = Favorite) },
                 )
             )
         }

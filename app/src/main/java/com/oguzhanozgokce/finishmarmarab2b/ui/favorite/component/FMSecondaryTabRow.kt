@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.PrimaryTab
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.model.PrimaryTab
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +70,7 @@ fun FMSecondaryTabRow(
             targetState = selectedTabIndex,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) + slideInHorizontally(initialOffsetX = { it / 4 }) togetherWith
-                    fadeOut(animationSpec = tween(300)) + slideOutHorizontally(targetOffsetX = { -it / 4 })
+                        fadeOut(animationSpec = tween(300)) + slideOutHorizontally(targetOffsetX = { -it / 4 })
             },
             label = "SharedAxis"
         ) { tabIndex ->

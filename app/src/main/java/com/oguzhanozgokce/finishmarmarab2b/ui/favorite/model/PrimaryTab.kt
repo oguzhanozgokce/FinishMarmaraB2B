@@ -1,4 +1,4 @@
-package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
+package com.oguzhanozgokce.finishmarmarab2b.ui.favorite.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

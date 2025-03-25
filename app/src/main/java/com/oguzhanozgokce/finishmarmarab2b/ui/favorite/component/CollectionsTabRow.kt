@@ -28,7 +28,6 @@ fun CollectionsTabRow(
             collectionsList = collectionsList,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 72.dp)
         )
 
         FMButton(

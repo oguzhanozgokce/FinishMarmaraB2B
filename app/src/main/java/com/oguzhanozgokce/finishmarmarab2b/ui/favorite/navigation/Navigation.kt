@@ -21,6 +21,12 @@ fun NavGraphBuilder.favorite(
         LaunchedEffect(Unit) {
             viewModel.onAction(FavoriteContract.UiAction.LoadFavoriteProducts)
         }
+        LaunchedEffect(key1 = uiState.isRefreshCollection) {
+            if (uiState.isRefreshCollection) {
+                viewModel.onAction(FavoriteContract.UiAction.LoadCollections)
+                viewModel.updateState { copy(isRefreshCollection = false) }
+            }
+        }
         FavoriteScreen(
             uiState = uiState,
             uiEffect = uiEffect,

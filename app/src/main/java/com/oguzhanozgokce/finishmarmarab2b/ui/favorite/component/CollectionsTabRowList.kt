@@ -2,15 +2,19 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -30,11 +34,16 @@ fun CollectionsTabRowList(
         horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
         verticalArrangement = Arrangement.spacedBy(padding.dimension8)
     ) {
-        items(collectionsList) { collections ->
-            CollectionTabRowItem(
-                collections = collections,
-                modifier = Modifier.fillMaxWidth()
-            )
+        itemsIndexed(collectionsList) { index, collections ->
+            Column {
+                CollectionTabRowItem(
+                    collections = collections,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                if (index == collectionsList.lastIndex) {
+                    Spacer(modifier = Modifier.height(72.dp))
+                }
+            }
         }
     }
 }

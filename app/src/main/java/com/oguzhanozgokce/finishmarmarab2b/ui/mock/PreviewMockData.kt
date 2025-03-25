@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.mock
 
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CardType
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.CreditCart
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Image
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Location
@@ -12,7 +13,6 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.QuestionAnswer
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.SearchHistory
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Seller
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.UserComment
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.Collections
 import java.time.LocalDateTime
 
 object PreviewMockData {
@@ -308,31 +308,31 @@ object PreviewMockData {
     )
 
     val defaultCollection = listOf(
-        Collections(
+        Collection(
             id = 1,
             name = "Tecnology",
-            totalProducts = 12,
-            imageProducts = listOf(
+            productCount = 12,
+            imageList = listOf(
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1509/product/media/images/prod/QC/20240828/15/bdd9d479-d4ba-3bbd-ba55-a34d282fdbcf/1_org_zoom.jpg",
             )
         ),
-        Collections(
+        Collection(
             id = 1,
             name = "Health",
-            totalProducts = 12,
-            imageProducts = listOf(
+            productCount = 12,
+            imageList = listOf(
                 "https://cdn.dsmcdn.com/ty1630/prod/QC/20250131/23/223e2ea9-93b6-3dea-9f5d-6ba177c223c5/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1509/product/media/images/prod/QC/20240828/15/bdd9d479-d4ba-3bbd-ba55-a34d282fdbcf/1_org_zoom.jpg",
             )
         ),
-        Collections(
+        Collection(
             id = 1,
             name = "Clothing",
-            totalProducts = 12,
-            imageProducts = listOf(
+            productCount = 12,
+            imageList = listOf(
                 "https://cdn.dsmcdn.com/mnresize/200/303/ty1519/product/media/images/prod/QC/20240902/08/9b364bb3-da69-3a4b-8278-55de1959c147/1_org_thumb.jpg",
                 "https://cdn.dsmcdn.com/ty1534/product/media/images/prod/PIM/20240910/09/e5cbc3fb-0d07-403c-93d8-e634aec88d16/1_org_zoom.jpg",
                 "https://cdn.dsmcdn.com/ty1509/product/media/images/prod/QC/20240828/15/bdd9d479-d4ba-3bbd-ba55-a34d282fdbcf/1_org_zoom.jpg",

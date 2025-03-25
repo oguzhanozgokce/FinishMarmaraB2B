@@ -4,7 +4,6 @@ import androidx.paging.PagingData
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
-import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Category
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
@@ -29,6 +28,6 @@ interface ProductRepository {
     suspend fun deleteSearchHistory(id: Int): Resource<Unit>
     suspend fun deleteAllSearchHistory(): Resource<Unit>
     suspend fun getCollection(): Resource<List<Collection>>
-    suspend fun postCollection(request: PostCollectionRequest): Resource<Int>
+    suspend fun postCollection(name: String): Resource<Int>
     suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit>
 }

@@ -28,6 +28,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddCollectionBo
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.CollectionsTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FMSecondaryTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FavoriteTabRow
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.model.PrimaryTab
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 import kotlinx.coroutines.flow.Flow
@@ -59,7 +60,7 @@ fun FavoriteScreen(
                     uiState = uiState,
                     onAction = onAction,
                     onDismissRequest = { onAction(UiAction.HideBottomSheet) },
-                    onAddCollection = { onAction(UiAction.HideBottomSheet) }
+                    onAddCollection = { onAction(UiAction.PostCollection(it)) }
                 )
             },
             dragHandle = null

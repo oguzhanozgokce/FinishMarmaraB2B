@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
@@ -9,6 +10,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostP
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCollectionsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
@@ -22,6 +24,7 @@ class FavoriteViewModel @Inject constructor(
     private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase,
     private val postProductBasketUseCase: PostProductBasketUseCase,
     private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val postCollectionUseCase: PostCollectionUseCase,
     private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
@@ -32,12 +35,14 @@ class FavoriteViewModel @Inject constructor(
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
             is UiAction.LoadFavoriteProducts -> loadFavoriteProducts()
+            is UiAction.LoadCollections -> getCollection()
             is UiAction.DeleteFavorite -> deleteFavorite(uiAction.productId)
             is UiAction.PostProductBasket -> postProductBasket(
                 uiAction.productId,
                 uiAction.productName
             )
 
+            is UiAction.PostCollection -> postCollection(uiAction.collectionName)
             is UiAction.ToggleSelectedTabIndex -> updateState { copy(selectedTabIndex = uiAction.tabIndex) }
             is UiAction.OnChangeCollectionName -> updateState { copy(collectionName = uiAction.collectionName) }
             is UiAction.ShowBottomSheet -> showBottomSheet()
@@ -95,6 +100,24 @@ class FavoriteViewModel @Inject constructor(
                 onError = { error ->
                     updateState { copy(error = error, isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast(error))
+                    Log.e("FavoriteViewModel2", "Error getting collections: $error")
+                }
+            )
+        }
+    }
+
+    private fun postCollection(collectionName: String) {
+        viewModelScope.launch {
+            postCollectionUseCase(collectionName).fold(
+                onSuccess = {
+                    updateState { copy(isRefreshCollection = true, collectionName = "") }
+                    emitUiEffect(UiEffect.ShowToast("Collection created"))
+                    hideBottomSheet()
+                },
+                onError = { error ->
+                    updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                    Log.e("FavoriteViewModel3", "Error creating collection: $error")
                 }
             )
         }

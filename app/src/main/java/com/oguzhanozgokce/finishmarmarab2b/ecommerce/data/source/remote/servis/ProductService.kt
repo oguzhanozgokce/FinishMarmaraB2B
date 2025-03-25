@@ -29,6 +29,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchHistoryResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetSearchProductResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostCollectionResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -129,7 +130,7 @@ interface ProductService {
     @POST(POST_COLLECTION)
     suspend fun postCollection(
         @Body request: PostCollectionRequest
-    ): Response<ApiResponse<Int>>
+    ): Response<ApiResponse<PostCollectionResponse>>
 
     @POST(POST_COLLECTION_ADD_PRODUCTS)
     suspend fun postCollectionAddProducts(

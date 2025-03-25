@@ -15,12 +15,15 @@ object FavoriteContract {
         val isShowBottomSheet: Boolean = false,
         val collectionList: List<Collection> = emptyList(),
         val error: String? = "",
+        val isRefreshCollection: Boolean = false
     )
 
     sealed class UiAction {
         data object LoadFavoriteProducts : UiAction()
+        data object LoadCollections : UiAction()
         data class DeleteFavorite(val productId: Int) : UiAction()
         data class PostProductBasket(val productId: Int, val productName: String) : UiAction()
+        data class PostCollection(val collectionName: String) : UiAction()
         data class ToggleSelectedTabIndex(val tabIndex: Int) : UiAction()
         data class OnChangeCollectionName(val collectionName: String) : UiAction()
         data object ShowBottomSheet : UiAction()

@@ -5,6 +5,7 @@ import androidx.paging.map
 import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.createPager
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.mapDomain
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.orZero
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.product.mapToPaginationData
@@ -181,11 +182,13 @@ class ProductRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun postCollection(request: PostCollectionRequest): Resource<Int> {
-        val userId = getUserId()
-        val updatedRequest = request.copy(userId = userId)
-        return safeApiCall { productService.postCollection(updatedRequest) }
-            .toResourceMap { it }
+    override suspend fun postCollection(name: String): Resource<Int> {
+        val collectionRequest = PostCollectionRequest(
+            name = name,
+            userId = getUserId()
+        )
+        return safeApiCall { productService.postCollection(collectionRequest) }
+            .toResourceMap { it.id.orZero() }
     }
 
     override suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit> {

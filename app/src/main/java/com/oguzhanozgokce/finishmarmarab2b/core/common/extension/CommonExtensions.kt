@@ -5,8 +5,10 @@ import android.widget.Toast
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.User
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.util.Locale
 
 private const val PHONE_NUMBER_LENGTH = 10
 private const val VISIBLE_PREFIX_LENGTH = 3
@@ -93,6 +95,30 @@ fun String?.toLocalDateTimeOrDefaultPerform(
 fun String?.formatDate(): String {
     return this?.toLocalDateTimeOrDefaultPerform(DateTimeFormatter.ISO_DATE_TIME)
         ?.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")) ?: ""
+}
+
+fun String?.toIsoUtcDateString(): String {
+    if (this.isNullOrEmpty()) return ""
+    val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val localDate = LocalDate.parse(this, inputFormatter)
+    val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        .withZone(ZoneOffset.UTC)
+    val zonedDateTime = localDate.atStartOfDay(ZoneOffset.UTC)
+    return outputFormatter.format(zonedDateTime)
+}
+
+fun String?.toLocalizedDisplayDate(): String {
+    if (this.isNullOrEmpty()) return ""
+    return try {
+        val localDate = LocalDate.parse(this, DateTimeFormatter.ISO_LOCAL_DATE)
+        val displayFormatter = DateTimeFormatter
+            .ofPattern("dd MMMM yyyy")
+            .withLocale(Locale.getDefault())
+
+        localDate.format(displayFormatter)
+    } catch (e: Exception) {
+        this
+    }
 }
 
 fun String.toExpirationDateFormat(): String {

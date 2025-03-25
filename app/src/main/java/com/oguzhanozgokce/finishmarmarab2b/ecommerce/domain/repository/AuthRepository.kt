@@ -15,4 +15,11 @@ interface AuthRepository {
 
     suspend fun saveOrUpdateEmail(email: String)
     suspend fun getEmail(): String?
+    suspend fun putUser(
+        name: String,
+        surname: String,
+        email: String,
+        phoneNumber: String,
+        birthDate: String
+    ): Resource<Unit>
 }

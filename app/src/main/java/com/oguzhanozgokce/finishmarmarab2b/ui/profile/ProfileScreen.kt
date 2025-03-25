@@ -48,6 +48,7 @@ fun ProfileScreen(
     onNavigateToWelcome: () -> Unit,
     onNavigateToCreditCart: () -> Unit,
     onNavigateToOrderList: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
 ) {
     val context = LocalContext.current
     uiEffect.CollectWithLifecycle { effect ->
@@ -63,7 +64,8 @@ fun ProfileScreen(
             uiState = uiState,
             onAction = onAction,
             onNavigateToCreditCart = onNavigateToCreditCart,
-            onNavigateToOrderList = onNavigateToOrderList
+            onNavigateToOrderList = onNavigateToOrderList,
+            onNavigateToEditProfile = onNavigateToEditProfile
         )
     }
 }
@@ -74,6 +76,7 @@ fun ProfileContent(
     onAction: (UiAction) -> Unit,
     onNavigateToCreditCart: () -> Unit,
     onNavigateToOrderList: () -> Unit,
+    onNavigateToEditProfile: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -125,7 +128,7 @@ fun ProfileContent(
             )
             ProfileCard {
                 ProfileItem(text = "My Orders", onClick = { onNavigateToOrderList() })
-                ProfileItem(text = "Edit Profile", onClick = {})
+                ProfileItem(text = "Edit Profile", onClick = { onNavigateToEditProfile() })
                 ProfileItem(text = "Change Password", onClick = {})
             }
             ProfileCard {
@@ -158,7 +161,8 @@ fun ProfileScreenPreview(
             onAction = {},
             onNavigateToWelcome = { },
             onNavigateToCreditCart = { },
-            onNavigateToOrderList = { }
+            onNavigateToOrderList = { },
+            onNavigateToEditProfile = { }
         )
     }
 }

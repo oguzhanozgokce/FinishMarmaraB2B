@@ -4,6 +4,7 @@ object ApiRoutes {
     const val LOGIN = "/api/Auth/user/login"
     const val REGISTER = "/api/Auth/user/register"
     const val GET_USER = "/api/User/{id}"
+    const val PUT_USER = "/api/User"
     const val GET_PRODUCTS = "/api/Product"
     const val POST_TOGGLE_FAVORITE = "/api/Favorite/toggle-fav"
     const val GET_FAVORITE_PRODUCTS = "/api/Favorite/{user_id}"

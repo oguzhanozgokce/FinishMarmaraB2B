@@ -2,7 +2,9 @@ package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.LOGIN
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_USER
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.REGISTER
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PutUserRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
@@ -13,6 +15,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UserService {
@@ -30,4 +33,9 @@ interface UserService {
     suspend fun getUser(
         @Path("id") id: Int,
     ): Response<ApiResponse<GetUserResponse>>
+
+    @PUT(PUT_USER)
+    suspend fun putUser(
+        @Body request: PutUserRequest
+    ): Response<ApiResponse<Unit>>
 }

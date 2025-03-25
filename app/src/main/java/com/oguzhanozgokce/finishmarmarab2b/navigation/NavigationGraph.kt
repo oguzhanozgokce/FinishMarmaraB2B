@@ -18,6 +18,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.NavAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.creditCard
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.DetailNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.detail.navigation.detail
+import com.oguzhanozgokce.finishmarmarab2b.ui.editprofile.EditProfileNavActions
+import com.oguzhanozgokce.finishmarmarab2b.ui.editprofile.editProfileNavGraph
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.EvaluationNavActions
 import com.oguzhanozgokce.finishmarmarab2b.ui.evaluation.evaluation
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.navigation.favorite
@@ -103,6 +105,7 @@ fun NavigationGraph(
                 onNavigateToWelcome = { navController.navigateClearingStack(Welcome, Profile) },
                 onNavigateCreditCart = { navController.navigate(route = CreditCard) },
                 onNavigateToOrderList = { navController.navigate(route = OrderList) },
+                onNavigateToEditProfile = { navController.navigate(route = EditProfile) },
             )
             favorite(
                 onNavigateToDetail = { id ->
@@ -211,6 +214,11 @@ fun NavigationGraph(
                 actions = SelectedFavoriteNavAction(
                     navigateBack = { navController.navigateUp() },
                     navigateToFavorite = { navController.navigate(route = Favorite) },
+                )
+            )
+            editProfileNavGraph(
+                actions = EditProfileNavActions(
+                    navigateToBack = { navController.navigateUp() },
                 )
             )
         }

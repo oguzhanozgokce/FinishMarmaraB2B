@@ -13,6 +13,7 @@ fun NavGraphBuilder.profile(
     onNavigateToWelcome: () -> Unit,
     onNavigateCreditCart: () -> Unit,
     onNavigateToOrderList: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
 ) {
     composable<Profile> {
         val viewModel: ProfileViewModel = hiltViewModel()
@@ -25,7 +26,8 @@ fun NavGraphBuilder.profile(
             onAction = viewModel::onAction,
             onNavigateToWelcome = onNavigateToWelcome,
             onNavigateToCreditCart = onNavigateCreditCart,
-            onNavigateToOrderList = onNavigateToOrderList
+            onNavigateToOrderList = onNavigateToOrderList,
+            onNavigateToEditProfile = onNavigateToEditProfile
         )
     }
 }

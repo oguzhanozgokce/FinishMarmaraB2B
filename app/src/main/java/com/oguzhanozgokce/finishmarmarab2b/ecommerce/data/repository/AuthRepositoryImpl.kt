@@ -4,6 +4,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.Resource
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.toResourceMap
 import com.oguzhanozgokce.finishmarmarab2b.core.data.network.safeApiCall
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.mapper.user.mapToUser
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PutUserRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignInRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.SignUpRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.LoginResponse
@@ -21,6 +22,10 @@ class AuthRepositoryImpl @Inject constructor(
     private val userService: UserService,
     private val localDataSource: LocalDataSource
 ) : AuthRepository {
+
+    private suspend fun getUserId(): Int {
+        return localDataSource.getUserId() ?: -1
+    }
 
     override fun signIn(request: SignInRequest): Flow<Resource<LoginResponse>> = flow {
         val response = safeApiCall { userService.signIn(request) }
@@ -59,5 +64,24 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getEmail(): String? {
         return localDataSource.getEmail()
+    }
+
+    override suspend fun putUser(
+        name: String,
+        surname: String,
+        email: String,
+        phoneNumber: String,
+        birthDate: String
+    ): Resource<Unit> {
+        val userId = getUserId()
+        val request = PutUserRequest(
+            id = userId,
+            name = name,
+            surname = surname,
+            email = email,
+            phoneNumber = phoneNumber,
+            birthDate = birthDate
+        )
+        return safeApiCall { userService.putUser(request) }
     }
 }

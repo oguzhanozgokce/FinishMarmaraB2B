@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.DeleteBasketAllUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.DeleteBasketProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.GetBasketProductsUseCase
@@ -20,7 +21,8 @@ class CartViewModel @Inject constructor(
     private val getBasketProductsUseCase: GetBasketProductsUseCase,
     private val deleteBasketProductUseCase: DeleteBasketProductUseCase,
     private val deleteBasketAllUseCase: DeleteBasketAllUseCase,
-    private val postProductBasketUseCase: PostProductBasketUseCase
+    private val postProductBasketUseCase: PostProductBasketUseCase,
+    private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     init {
@@ -48,6 +50,9 @@ class CartViewModel @Inject constructor(
                             totalPrice = products.sumOf { it.totalPrice },
                             isLoading = false
                         )
+                    }
+                    if (products.isNotEmpty()) {
+                        analyticsManager.logCartViewed(products)
                     }
                 },
                 onError = { error ->

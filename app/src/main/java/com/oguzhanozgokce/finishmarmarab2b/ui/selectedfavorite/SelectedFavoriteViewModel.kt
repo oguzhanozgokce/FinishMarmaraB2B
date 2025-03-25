@@ -7,6 +7,7 @@ import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostCollectionAddProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.navigation.SelectedFavorite
@@ -21,12 +22,12 @@ import javax.inject.Inject
 class SelectedFavoriteViewModel @Inject constructor(
     private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
     private val postCollectionAddProductsUseCase: PostCollectionAddProductsUseCase,
+    private val analyticsManager: AnalyticsManager,
     savedStateHandle: SavedStateHandle
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
     private val args = savedStateHandle.toRoute<SelectedFavorite>()
     private val collectionId = args.collectionId
-    val collectionName = args.collectionName
 
     init {
         loadFavoriteProducts()
@@ -77,6 +78,7 @@ class SelectedFavoriteViewModel @Inject constructor(
                     updateState { copy(isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast("Successful"))
                     emitUiEffect(UiEffect.NavigateToBack)
+                    analyticsManager.logAddCollection(args.collectionId, args.collectionName)
                 },
                 onError = { errorMessage ->
                     updateState { copy(isLoading = false) }

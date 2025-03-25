@@ -8,4 +8,5 @@ interface AnalyticsManager {
     fun logSearchQuery(searchQuery: String)
     fun logProductAddedToFavorites(productId: Int)
     fun logCartViewed(productList: List<Product>)
+    fun logAddCollection(collectionId: Int, collectionName: String)
 }

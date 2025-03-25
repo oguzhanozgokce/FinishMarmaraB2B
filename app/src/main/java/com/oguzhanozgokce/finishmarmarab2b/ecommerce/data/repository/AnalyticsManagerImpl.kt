@@ -60,4 +60,14 @@ class AnalyticsManagerImpl @Inject constructor(
         }
         analytics.logEvent(FirebaseAnalytics.Event.VIEW_CART, bundle)
     }
+
+    override fun logAddCollection(collectionId: Int, collectionName: String) {
+        analytics.logEvent(
+            FirebaseAnalytics.Event.ADD_TO_WISHLIST,
+            Bundle().apply {
+                putInt(FirebaseAnalytics.Param.ITEM_ID, collectionId)
+                putString(FirebaseAnalytics.Param.ITEM_NAME, collectionName)
+            }
+        )
+    }
 }

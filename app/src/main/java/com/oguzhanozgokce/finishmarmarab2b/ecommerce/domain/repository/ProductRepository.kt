@@ -32,4 +32,5 @@ interface ProductRepository {
     suspend fun postCollection(name: String): Resource<Int>
     suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit>
     suspend fun deleteCollection(collectionId: Int): Resource<DeleteCollectionResponse>
+    suspend fun putCollection(collectionId: Int, newName: String): Resource<Unit>
 }

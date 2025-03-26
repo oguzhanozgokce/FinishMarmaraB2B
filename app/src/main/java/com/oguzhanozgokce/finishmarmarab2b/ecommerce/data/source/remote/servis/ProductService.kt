@@ -16,6 +16,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION_ADD_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_COLLECTION
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.CategoryDto
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.PaginationData
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.dto.ProductDto
@@ -38,6 +39,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -143,4 +145,10 @@ interface ProductService {
     suspend fun deleteCollection(
         @Path("collection_id") collectionId: Int,
     ): Response<ApiResponse<DeleteCollectionResponse>>
+
+    @PUT(PUT_COLLECTION)
+    suspend fun putCollection(
+        @Path("collection_id") collectionId: Int,
+        @Query("new_name") newName: String
+    ): Response<ApiResponse<Unit>>
 }

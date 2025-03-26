@@ -200,4 +200,8 @@ class ProductRepositoryImpl @Inject constructor(
         return safeApiCall { productService.deleteCollection(collectionId) }
             .toResourceMap { it }
     }
+
+    override suspend fun putCollection(collectionId: Int, newName: String): Resource<Unit> {
+        return safeApiCall { productService.putCollection(collectionId, newName) }
+    }
 }

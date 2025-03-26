@@ -18,7 +18,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.CollectWithLifecycle
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.showToast
-import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyFavoriteScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMModelBottomSheet
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
@@ -89,16 +88,14 @@ fun FavoriteScreen(
             dragHandle = null
         )
     }
-    when {
-        favoriteItems.itemCount == 0 -> EmptyFavoriteScreen()
-        else -> FavoriteContent(
-            uiState = uiState,
-            favoriteItems = favoriteItems,
-            onAction = onAction,
-            onNavigateToDetail = onNavigateToDetail,
-            onCreateCollectionClick = { onAction(UiAction.ShowBottomSheet) }
-        )
-    }
+
+    FavoriteContent(
+        uiState = uiState,
+        favoriteItems = favoriteItems,
+        onAction = onAction,
+        onNavigateToDetail = onNavigateToDetail,
+        onCreateCollectionClick = { onAction(UiAction.ShowBottomSheet) }
+    )
 }
 
 @Composable

@@ -2,6 +2,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.favorite
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
@@ -16,6 +17,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -81,7 +83,13 @@ class FavoriteViewModel @Inject constructor(
     private fun deleteFavorite(productId: Int) = viewModelScope.launch {
         deleteFavoriteUseCase(productId).fold(
             onSuccess = {
-                emitUiEffect(UiEffect.Refresh)
+                updateState {
+                    copy(
+                        favoriteList = favoriteList.map { pagingData ->
+                            pagingData.filter { it.id != productId }
+                        }
+                    )
+                }
             },
             onError = { error ->
                 updateState { copy(error = error) }
@@ -159,18 +167,7 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             putCollectionUseCase(collectionId, collectionName).fold(
                 onSuccess = {
-                    updateState {
-                        copy(
-                            collectionList = collectionList.map {
-                                if (it.id == collectionId) {
-                                    it.copy(name = collectionName)
-                                } else {
-                                    it
-                                }
-                            },
-                            collectionName = ""
-                        )
-                    }
+                    updateCollectionInState(collectionId, collectionName)
                     hideUpdateCollectionBS()
                     emitUiEffect(UiEffect.ShowToast("Collection Updated"))
                 },
@@ -180,4 +177,13 @@ class FavoriteViewModel @Inject constructor(
                 }
             )
         }
+
+    private fun updateCollectionInState(collectionId: Int, newName: String) = updateState {
+        copy(
+            collectionList = collectionList.map { collection ->
+                if (collection.id == collectionId) collection.copy(name = newName) else collection
+            },
+            collectionName = ""
+        )
+    }
 }

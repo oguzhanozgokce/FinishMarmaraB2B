@@ -26,6 +26,7 @@ fun CollectionsTabRowList(
     collectionsList: List<Collection>,
     modifier: Modifier = Modifier,
     onDeleteCollection: (Int) -> Unit,
+    onEditCollection: (Int, String) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -41,7 +42,8 @@ fun CollectionsTabRowList(
                 CollectionTabRowItem(
                     collections = collections,
                     modifier = Modifier.fillMaxWidth(),
-                    onDeleteCollection = { onDeleteCollection(collections.id) }
+                    onDeleteCollection = { onDeleteCollection(collections.id) },
+                    onEditCollection = onEditCollection
                 )
                 if (index == collectionsList.lastIndex) {
                     Spacer(modifier = Modifier.height(72.dp))
@@ -59,7 +61,8 @@ fun CollectionsTabRowListPreview() {
         CollectionsTabRowList(
             collectionsList = collectionsList,
             modifier = Modifier,
-            onDeleteCollection = { }
+            onDeleteCollection = { },
+            onEditCollection = { _, _ -> }
         )
     }
 }

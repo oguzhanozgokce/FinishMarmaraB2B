@@ -28,6 +28,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddCollectionBo
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.CollectionsTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FMSecondaryTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FavoriteTabRow
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.UpdateCollectionBSContent
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.model.PrimaryTab
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
@@ -66,6 +67,23 @@ fun FavoriteScreen(
                     onAction = onAction,
                     onDismissRequest = { onAction(UiAction.HideBottomSheet) },
                     onAddCollection = { onAction(UiAction.PostCollection(it)) }
+                )
+            },
+            dragHandle = null
+        )
+    }
+    if (uiState.isShowUpdateBS) {
+        FMModelBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = { onAction(UiAction.HideUpdateBottomSheet) },
+            content = {
+                UpdateCollectionBSContent(
+                    uiState = uiState,
+                    onAction = onAction,
+                    onDismissRequest = { onAction(UiAction.HideUpdateBottomSheet) },
+                    onUpdateCollection = { id, name ->
+                        onAction(UiAction.UpdateCollection(id, name))
+                    }
                 )
             },
             dragHandle = null
@@ -117,7 +135,10 @@ fun FavoriteContent(
                     1 -> CollectionsTabRow(
                         collectionsList = uiState.collectionList,
                         onCreateCollectionClick = onCreateCollectionClick,
-                        onDeleteCollectionClick = { onAction(UiAction.DeleteCollection(it)) }
+                        onDeleteCollectionClick = { onAction(UiAction.DeleteCollection(it)) },
+                        onEditCollectionClick = { collectionId, collectionName ->
+                            onAction(UiAction.ShowUpdateBottomSheet(collectionId, collectionName))
+                        }
                     )
                 }
             }

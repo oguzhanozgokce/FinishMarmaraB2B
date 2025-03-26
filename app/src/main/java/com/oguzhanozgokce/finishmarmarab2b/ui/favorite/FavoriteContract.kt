@@ -12,7 +12,9 @@ object FavoriteContract {
         val favoriteList: Flow<PagingData<Product>> = emptyFlow(),
         var selectedTabIndex: Int = 0,
         var collectionName: String = "",
+        val collectionId: Int = 0,
         val isShowBottomSheet: Boolean = false,
+        val isShowUpdateBS: Boolean = false,
         val collectionList: List<Collection> = emptyList(),
         val error: String? = "",
         val isRefreshCollection: Boolean = false
@@ -27,8 +29,13 @@ object FavoriteContract {
         data class ToggleSelectedTabIndex(val tabIndex: Int) : UiAction()
         data class OnChangeCollectionName(val collectionName: String) : UiAction()
         data class DeleteCollection(val collectionId: Int) : UiAction()
+        data class UpdateCollection(val collectionId: Int, val collectionName: String) : UiAction()
         data object ShowBottomSheet : UiAction()
         data object HideBottomSheet : UiAction()
+        data class ShowUpdateBottomSheet(val collectionId: Int, val collectionName: String) :
+            UiAction()
+
+        data object HideUpdateBottomSheet : UiAction()
     }
 
     sealed class UiEffect {

@@ -49,8 +49,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 fun CollectionTabRowItem(
     collections: Collection,
     modifier: Modifier = Modifier,
-    onEditCollection: (Int) -> Unit = {},
-    onDeleteCollection: (Int) -> Unit = {},
+    onEditCollection: (Int, String) -> Unit,
+    onDeleteCollection: (Int) -> Unit,
 ) {
     var menuExpanded by rememberSaveable { mutableStateOf(false) }
     Box(
@@ -142,7 +142,7 @@ fun CollectionTabRowItem(
                     icon = Icons.Default.Edit,
                     onClick = {
                         menuExpanded = false
-                        onEditCollection(collections.id)
+                        onEditCollection(collections.id, collections.name)
                     }
                 ),
                 FMDropdownMenuItem(
@@ -166,7 +166,8 @@ fun CollectionTabRowItemPreview() {
         CollectionTabRowItem(
             collections = collections,
             modifier = Modifier,
-            onDeleteCollection = {}
+            onDeleteCollection = {},
+            onEditCollection = { _, _ -> }
         )
     }
 }

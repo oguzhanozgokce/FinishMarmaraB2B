@@ -19,6 +19,7 @@ fun CollectionsTabRow(
     collectionsList: List<Collection>,
     onCreateCollectionClick: () -> Unit,
     onDeleteCollectionClick: (Int) -> Unit,
+    onEditCollectionClick: (Int, String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -29,7 +30,8 @@ fun CollectionsTabRow(
             collectionsList = collectionsList,
             modifier = Modifier
                 .fillMaxSize(),
-            onDeleteCollection = onDeleteCollectionClick
+            onDeleteCollection = onDeleteCollectionClick,
+            onEditCollection = onEditCollectionClick,
         )
 
         FMButton(

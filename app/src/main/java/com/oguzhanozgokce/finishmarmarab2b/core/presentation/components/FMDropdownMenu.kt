@@ -64,7 +64,8 @@ fun FMDropdownMenu(
                 trailingIcon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = colors.primary
                     )
                 }
             )

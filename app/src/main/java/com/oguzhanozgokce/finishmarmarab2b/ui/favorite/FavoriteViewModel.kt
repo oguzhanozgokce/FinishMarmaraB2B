@@ -11,6 +11,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.Dele
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCollectionsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostCollectionUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PutCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
@@ -26,6 +27,7 @@ class FavoriteViewModel @Inject constructor(
     private val getCollectionsUseCase: GetCollectionsUseCase,
     private val postCollectionUseCase: PostCollectionUseCase,
     private val deleteCollectionUseCase: DeleteCollectionUseCase,
+    private val putCollectionUseCase: PutCollectionUseCase,
     private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
@@ -47,13 +49,34 @@ class FavoriteViewModel @Inject constructor(
             is UiAction.ToggleSelectedTabIndex -> updateState { copy(selectedTabIndex = uiAction.tabIndex) }
             is UiAction.OnChangeCollectionName -> updateState { copy(collectionName = uiAction.collectionName) }
             is UiAction.DeleteCollection -> deleteCollection(uiAction.collectionId)
+            is UiAction.UpdateCollection -> updateCollection(
+                uiAction.collectionId,
+                uiAction.collectionName
+            )
+
             is UiAction.ShowBottomSheet -> showBottomSheet()
             is UiAction.HideBottomSheet -> hideBottomSheet()
+            is UiAction.ShowUpdateBottomSheet -> showUpdateCollectionBS(
+                collectionId = uiAction.collectionId,
+                collectionName = uiAction.collectionName
+            )
+
+            is UiAction.HideUpdateBottomSheet -> hideUpdateCollectionBS()
         }
     }
 
     private fun showBottomSheet() = updateState { copy(isShowBottomSheet = true) }
     private fun hideBottomSheet() = updateState { copy(isShowBottomSheet = false) }
+    private fun showUpdateCollectionBS(collectionId: Int, collectionName: String) = updateState {
+        copy(
+            isShowUpdateBS = true,
+            collectionId = collectionId,
+            collectionName = collectionName
+        )
+    }
+
+    private fun hideUpdateCollectionBS() =
+        updateState { copy(isShowUpdateBS = false, collectionName = "") }
 
     private fun deleteFavorite(productId: Int) = viewModelScope.launch {
         deleteFavoriteUseCase(productId).fold(
@@ -131,4 +154,30 @@ class FavoriteViewModel @Inject constructor(
             }
         )
     }
+
+    private fun updateCollection(collectionId: Int, collectionName: String) =
+        viewModelScope.launch {
+            putCollectionUseCase(collectionId, collectionName).fold(
+                onSuccess = {
+                    updateState {
+                        copy(
+                            collectionList = collectionList.map {
+                                if (it.id == collectionId) {
+                                    it.copy(name = collectionName)
+                                } else {
+                                    it
+                                }
+                            },
+                            collectionName = ""
+                        )
+                    }
+                    hideUpdateCollectionBS()
+                    emitUiEffect(UiEffect.ShowToast("Collection Updated"))
+                },
+                onError = { error ->
+                    updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
 }

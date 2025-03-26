@@ -21,6 +21,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.paging.G
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteCollectionResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.PostToggleResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.datasource.LocalDataSource
@@ -193,5 +194,10 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit> {
         return safeApiCall { productService.postCollectionAddProducts(request) }
+    }
+
+    override suspend fun deleteCollection(collectionId: Int): Resource<DeleteCollectionResponse> {
+        return safeApiCall { productService.deleteCollection(collectionId) }
+            .toResourceMap { it }
     }
 }

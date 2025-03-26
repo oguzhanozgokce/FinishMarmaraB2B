@@ -24,7 +24,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 @Composable
 fun CollectionsTabRowList(
     collectionsList: List<Collection>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDeleteCollection: (Int) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -39,7 +40,8 @@ fun CollectionsTabRowList(
             Column {
                 CollectionTabRowItem(
                     collections = collections,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    onDeleteCollection = { onDeleteCollection(collections.id) }
                 )
                 if (index == collectionsList.lastIndex) {
                     Spacer(modifier = Modifier.height(72.dp))
@@ -56,7 +58,8 @@ fun CollectionsTabRowListPreview() {
         val collectionsList = PreviewMockData.defaultCollectionList
         CollectionsTabRowList(
             collectionsList = collectionsList,
-            modifier = Modifier
+            modifier = Modifier,
+            onDeleteCollection = { }
         )
     }
 }

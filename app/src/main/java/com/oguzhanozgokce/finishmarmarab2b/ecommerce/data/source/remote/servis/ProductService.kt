@@ -1,5 +1,6 @@
 package com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis
 
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_COLLECTION
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_FAVORITE_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_ALL_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.DELETE_USER_SEARCH_HISTORY
@@ -24,6 +25,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.ToggleFavoriteRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.ApiResponse
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteCollectionResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.DeleteFavoriteResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetCollectionsResponse
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.response.GetFavoriteResponse
@@ -136,4 +138,9 @@ interface ProductService {
     suspend fun postCollectionAddProducts(
         @Body request: List<PostCollectionAddProductsRequest>
     ): Response<ApiResponse<Unit>>
+
+    @DELETE(DELETE_COLLECTION)
+    suspend fun deleteCollection(
+        @Path("collection_id") collectionId: Int,
+    ): Response<ApiResponse<DeleteCollectionResponse>>
 }

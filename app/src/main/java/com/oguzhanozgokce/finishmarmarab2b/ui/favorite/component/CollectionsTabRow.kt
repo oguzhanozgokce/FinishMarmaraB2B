@@ -17,7 +17,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.colors
 @Composable
 fun CollectionsTabRow(
     collectionsList: List<Collection>,
-    onCreateCollectionClick: () -> Unit
+    onCreateCollectionClick: () -> Unit,
+    onDeleteCollectionClick: (Int) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -27,7 +28,8 @@ fun CollectionsTabRow(
         CollectionsTabRowList(
             collectionsList = collectionsList,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            onDeleteCollection = onDeleteCollectionClick
         )
 
         FMButton(

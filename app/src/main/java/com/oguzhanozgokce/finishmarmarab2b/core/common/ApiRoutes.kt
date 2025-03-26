@@ -32,4 +32,5 @@ object ApiRoutes {
     const val POST_COLLECTION = "/api/Collection"
     const val POST_COLLECTION_ADD_PRODUCT = "/api/Collection/add-product"
     const val POST_COLLECTION_ADD_PRODUCTS = "/api/Collection/add-products"
+    const val DELETE_COLLECTION = "/api/Collection/{collection_id}"
 }

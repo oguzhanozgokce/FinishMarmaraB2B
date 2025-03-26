@@ -49,7 +49,6 @@ fun FMBottomBar(
             bottomScreens.forEach { screen ->
                 val selected =
                     currentDestination?.hierarchy?.any { it.hasRoute(screen.route::class) } == true
-                Log.d("NavDebug", "Screen: ${screen.route}, isSelected: $selected")
                 NavigationBarItem(
                     icon = {
                         Icon(

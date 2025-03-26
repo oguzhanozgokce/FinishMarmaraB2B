@@ -6,6 +6,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCollectionsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
@@ -24,6 +25,7 @@ class FavoriteViewModel @Inject constructor(
     private val postProductBasketUseCase: PostProductBasketUseCase,
     private val getCollectionsUseCase: GetCollectionsUseCase,
     private val postCollectionUseCase: PostCollectionUseCase,
+    private val deleteCollectionUseCase: DeleteCollectionUseCase,
     private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
@@ -44,6 +46,7 @@ class FavoriteViewModel @Inject constructor(
             is UiAction.PostCollection -> postCollection(uiAction.collectionName)
             is UiAction.ToggleSelectedTabIndex -> updateState { copy(selectedTabIndex = uiAction.tabIndex) }
             is UiAction.OnChangeCollectionName -> updateState { copy(collectionName = uiAction.collectionName) }
+            is UiAction.DeleteCollection -> deleteCollection(uiAction.collectionId)
             is UiAction.ShowBottomSheet -> showBottomSheet()
             is UiAction.HideBottomSheet -> hideBottomSheet()
         }
@@ -105,6 +108,22 @@ class FavoriteViewModel @Inject constructor(
                 hideBottomSheet()
                 emitUiEffect(UiEffect.ShowToast("Collection created"))
                 emitUiEffect(UiEffect.NavigateToSelectedFavorite(collectionName, id))
+            },
+            onError = { error ->
+                updateState { copy(error = error) }
+                emitUiEffect(UiEffect.ShowToast(error))
+            }
+        )
+    }
+
+    private fun deleteCollection(collectionId: Int) = viewModelScope.launch {
+        deleteCollectionUseCase(collectionId).fold(
+            onSuccess = { response ->
+                updateState {
+                    copy(
+                        collectionList = collectionList.filterNot { it.id == response.collectionId }
+                    )
+                }
             },
             onError = { error ->
                 updateState { copy(error = error) }

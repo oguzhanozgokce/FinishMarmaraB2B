@@ -6,7 +6,5 @@ import javax.inject.Inject
 class SaveOrUpdateEmailUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(email: String) {
-        authRepository.saveOrUpdateEmail(email)
-    }
+    suspend operator fun invoke(email: String) = authRepository.saveOrUpdateEmail(email)
 }

@@ -9,7 +9,5 @@ import javax.inject.Inject
 class GetUserUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    operator fun invoke(): Flow<Resource<User>> {
-        return authRepository.getUser()
-    }
+    operator fun invoke(): Flow<Resource<User>> = authRepository.getUser()
 }

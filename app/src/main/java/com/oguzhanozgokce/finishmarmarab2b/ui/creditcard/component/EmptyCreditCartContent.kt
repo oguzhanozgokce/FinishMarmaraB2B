@@ -3,6 +3,7 @@ package com.oguzhanozgokce.finishmarmarab2b.ui.creditcard.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -57,6 +58,10 @@ fun EmptyCreditCartContent(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = FMTheme.padding.dimension16),
+            contentPadding = PaddingValues(
+                vertical = FMTheme.padding.dimension8,
+                horizontal = FMTheme.padding.dimension24
+            )
         )
     }
 }

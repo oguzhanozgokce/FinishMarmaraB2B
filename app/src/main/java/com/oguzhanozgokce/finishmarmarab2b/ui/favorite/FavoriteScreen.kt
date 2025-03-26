@@ -116,7 +116,8 @@ fun FavoriteContent(
 
                     1 -> CollectionsTabRow(
                         collectionsList = uiState.collectionList,
-                        onCreateCollectionClick = onCreateCollectionClick
+                        onCreateCollectionClick = onCreateCollectionClick,
+                        onDeleteCollectionClick = { onAction(UiAction.DeleteCollection(it)) }
                     )
                 }
             }

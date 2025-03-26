@@ -65,9 +65,6 @@ data object CreditCard
 data object OrderList
 
 @Serializable
-data class AddCollections(val collectionName: String)
-
-@Serializable
 data class SelectedFavorite(val collectionName: String, val collectionId: Int)
 
 @Serializable

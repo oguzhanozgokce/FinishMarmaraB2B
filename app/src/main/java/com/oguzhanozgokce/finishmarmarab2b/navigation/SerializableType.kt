@@ -2,7 +2,6 @@ package com.oguzhanozgokce.finishmarmarab2b.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavType
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 inline fun <reified T : Any> serializableType(

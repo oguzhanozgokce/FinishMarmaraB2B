@@ -26,6 +26,7 @@ object FavoriteContract {
         data class PostCollection(val collectionName: String) : UiAction()
         data class ToggleSelectedTabIndex(val tabIndex: Int) : UiAction()
         data class OnChangeCollectionName(val collectionName: String) : UiAction()
+        data class DeleteCollection(val collectionId: Int) : UiAction()
         data object ShowBottomSheet : UiAction()
         data object HideBottomSheet : UiAction()
     }

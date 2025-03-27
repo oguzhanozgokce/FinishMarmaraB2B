@@ -58,7 +58,8 @@ fun FMCardFavorite(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    onBasketClick: () -> Unit
+    onBasketClick: () -> Unit,
+    onShowBS: (Int) -> Unit,
 ) {
     var menuExpanded by rememberSaveable { mutableStateOf(false) }
     FMCard(
@@ -111,10 +112,6 @@ fun FMCardFavorite(
                             maxLines = 1,
                         )
                     }
-//                    FMFavoriteButton(
-//                        isFavorite = product.isFavorite,
-//                        onClick = onFavoriteClick,
-//                    )
                     Box {
                         FMIcon(
                             onClick = { menuExpanded = !menuExpanded },
@@ -146,6 +143,7 @@ fun FMCardFavorite(
                                     icon = Icons.Default.Add,
                                     onClick = {
                                         menuExpanded = false
+                                        onShowBS(product.id)
                                     }
                                 )
                             )
@@ -237,7 +235,8 @@ fun PreviewFMCardFavorite() {
             product = PreviewMockData.defaultProduct,
             onClick = {},
             onFavoriteClick = {},
-            onBasketClick = {}
+            onBasketClick = {},
+            onShowBS = {}
         )
     }
 }

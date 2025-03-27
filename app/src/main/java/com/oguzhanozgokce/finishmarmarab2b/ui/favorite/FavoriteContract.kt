@@ -15,6 +15,9 @@ object FavoriteContract {
         val collectionId: Int = 0,
         val isShowBottomSheet: Boolean = false,
         val isShowUpdateBS: Boolean = false,
+        val isShowProductToCollectionBS: Boolean = false,
+        val selectedCollection: Collection? = null,
+        val selectedProductId: Int = 0,
         val collectionList: List<Collection> = emptyList(),
         val error: String? = "",
         val isRefreshCollection: Boolean = false
@@ -34,6 +37,10 @@ object FavoriteContract {
         data object HideBottomSheet : UiAction()
         data class ShowUpdateBottomSheet(val collectionId: Int, val collectionName: String) :
             UiAction()
+
+        data class ShowProductToCollectionBottomSheet(val productId: Int) : UiAction()
+        data object AddProductToCollection : UiAction()
+        data class OnChangeProductToCollection(val collection: Collection) : UiAction()
     }
 
     sealed class UiEffect {

@@ -6,12 +6,14 @@ import androidx.paging.filter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.evet.EventBus
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Collection
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteFavoriteProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetCollectionsUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostCollectionAddProductUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PostCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.PutCollectionUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
@@ -31,6 +33,7 @@ class FavoriteViewModel @Inject constructor(
     private val postCollectionUseCase: PostCollectionUseCase,
     private val deleteCollectionUseCase: DeleteCollectionUseCase,
     private val putCollectionUseCase: PutCollectionUseCase,
+    private val postCollectionAddProductUseCase: PostCollectionAddProductUseCase,
     private val analyticsManager: AnalyticsManager
 ) : MVI<UiState, UiEffect, UiAction>(UiState()) {
 
@@ -68,18 +71,48 @@ class FavoriteViewModel @Inject constructor(
                 uiAction.collectionName
             )
 
-            is UiAction.ShowBottomSheet -> showBottomSheet()
             is UiAction.HideBottomSheet -> hideBottomSheet()
+            is UiAction.ShowBottomSheet -> showBottomSheet()
             is UiAction.ShowUpdateBottomSheet -> showUpdateCollectionBS(
                 collectionId = uiAction.collectionId,
                 collectionName = uiAction.collectionName
+            )
+
+            is UiAction.ShowProductToCollectionBottomSheet -> showProductToCollection(uiAction.productId)
+            is UiAction.AddProductToCollection -> addProductToCollection()
+            is UiAction.OnChangeProductToCollection -> toggleProductToCollection(uiAction.collection)
+        }
+    }
+
+    private fun toggleProductToCollection(collection: Collection) {
+        updateState {
+            copy(
+                selectedCollection = if (selectedCollection == collection) null else collection
             )
         }
     }
 
     private fun showBottomSheet() = updateState { copy(isShowBottomSheet = true) }
     private fun hideBottomSheet() =
-        updateState { copy(isShowBottomSheet = false, isShowUpdateBS = false, collectionName = "") }
+        updateState {
+            copy(
+                isShowBottomSheet = false,
+                isShowUpdateBS = false,
+                collectionName = "",
+                isShowProductToCollectionBS = false,
+                selectedCollection = null,
+                selectedProductId = 0,
+            )
+        }
+
+    private fun showProductToCollection(productId: Int) {
+        updateState {
+            copy(
+                isShowProductToCollectionBS = true,
+                selectedProductId = productId
+            )
+        }
+    }
 
     private fun showUpdateCollectionBS(collectionId: Int, collectionName: String) = updateState {
         copy(
@@ -195,5 +228,20 @@ class FavoriteViewModel @Inject constructor(
             },
             collectionName = ""
         )
+    }
+
+    private fun addProductToCollection() = viewModelScope.launch {
+        currentState.selectedCollection?.let {
+            postCollectionAddProductUseCase(currentState.selectedProductId, it.id).fold(
+                onSuccess = {
+                    emitUiEffect(UiEffect.ShowToast("Product added to collection"))
+                    hideBottomSheet()
+                },
+                onError = { error ->
+                    updateState { copy(error = error) }
+                    emitUiEffect(UiEffect.ShowToast(error))
+                }
+            )
+        }
     }
 }

@@ -37,7 +37,7 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme.padding
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AddCollectionBottomSheetContent(
+fun AddCollectionBSContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
     onDismissRequest: () -> Unit,
@@ -142,7 +142,7 @@ fun AddCollectionBottomSheetContent(
 @Composable
 fun AddCollectionBottomSheetContentPreview() {
     FMTheme {
-        AddCollectionBottomSheetContent(
+        AddCollectionBSContent(
             uiState = UiState(),
             onAction = {},
             onDismissRequest = {},

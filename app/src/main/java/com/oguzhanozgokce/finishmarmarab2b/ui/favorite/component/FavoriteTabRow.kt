@@ -30,6 +30,7 @@ fun FavoriteTabRow(
     favoriteItems: LazyPagingItems<Product>,
     onAction: (FavoriteContract.UiAction) -> Unit,
     onNavigateToDetail: (Int) -> Unit,
+    onShowBS: (Int) -> Unit,
 ) {
     val isRefreshing = favoriteItems.loadState.refresh is LoadState.Loading
     val isEmpty = favoriteItems.itemSnapshotList.items.isEmpty()
@@ -76,7 +77,8 @@ fun FavoriteTabRow(
                 },
                 onBasketClick = { id, productName ->
                     onAction(FavoriteContract.UiAction.PostProductBasket(id, productName))
-                }
+                },
+                onShowBS = onShowBS
             )
         }
     }

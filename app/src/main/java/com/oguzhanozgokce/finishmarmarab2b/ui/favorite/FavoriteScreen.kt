@@ -23,7 +23,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.Product
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.FavoriteContract.UiState
-import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddCollectionBottomSheetContent
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddCollectionBSContent
+import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.AddProductToCollectionBS
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.CollectionsTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FMSecondaryTabRow
 import com.oguzhanozgokce.finishmarmarab2b.ui.favorite.component.FavoriteTabRow
@@ -61,7 +62,7 @@ fun FavoriteScreen(
             sheetState = sheetState,
             onDismissRequest = { onAction(UiAction.HideBottomSheet) },
             content = {
-                AddCollectionBottomSheetContent(
+                AddCollectionBSContent(
                     uiState = uiState,
                     onAction = onAction,
                     onDismissRequest = { onAction(UiAction.HideBottomSheet) },
@@ -82,6 +83,25 @@ fun FavoriteScreen(
                     onDismissRequest = { onAction(UiAction.HideBottomSheet) },
                     onUpdateCollection = { id, name ->
                         onAction(UiAction.UpdateCollection(id, name))
+                    }
+                )
+            },
+            dragHandle = null
+        )
+    }
+    if (uiState.isShowProductToCollectionBS) {
+        FMModelBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = { onAction(UiAction.HideBottomSheet) },
+            content = {
+                AddProductToCollectionBS(
+                    uiState = uiState,
+                    onDismissRequest = { onAction(UiAction.HideBottomSheet) },
+                    onAddProductToCollection = { collection ->
+                        onAction(UiAction.OnChangeProductToCollection(collection))
+                    },
+                    onSaveProductToCollection = {
+                        onAction(UiAction.AddProductToCollection)
                     }
                 )
             },
@@ -126,7 +146,10 @@ fun FavoriteContent(
                         modifier = Modifier,
                         favoriteItems = favoriteItems,
                         onAction = onAction,
-                        onNavigateToDetail = onNavigateToDetail
+                        onNavigateToDetail = onNavigateToDetail,
+                        onShowBS = { productId ->
+                            onAction(UiAction.ShowProductToCollectionBottomSheet(productId))
+                        }
                     )
 
                     1 -> CollectionsTabRow(

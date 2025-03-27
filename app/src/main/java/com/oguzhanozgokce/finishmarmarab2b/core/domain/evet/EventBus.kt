@@ -12,6 +12,6 @@ object EventBus {
     }
 
     sealed class Event {
-        data object WordAdded : Event()
+        data object LoadCollection : Event()
     }
 }

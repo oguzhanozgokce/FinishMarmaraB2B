@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.evet.EventBus
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.basket.PostProductBasketUseCase
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.DeleteCollectionUseCase
@@ -35,6 +36,17 @@ class FavoriteViewModel @Inject constructor(
 
     init {
         getCollection()
+        observeEvents()
+    }
+
+    private fun observeEvents() {
+        viewModelScope.launch {
+            EventBus.eventFlow.collect { event ->
+                when (event) {
+                    is EventBus.Event.LoadCollection -> getCollection()
+                }
+            }
+        }
     }
 
     override fun onAction(uiAction: UiAction) {
@@ -62,13 +74,13 @@ class FavoriteViewModel @Inject constructor(
                 collectionId = uiAction.collectionId,
                 collectionName = uiAction.collectionName
             )
-
-            is UiAction.HideUpdateBottomSheet -> hideUpdateCollectionBS()
         }
     }
 
     private fun showBottomSheet() = updateState { copy(isShowBottomSheet = true) }
-    private fun hideBottomSheet() = updateState { copy(isShowBottomSheet = false) }
+    private fun hideBottomSheet() =
+        updateState { copy(isShowBottomSheet = false, isShowUpdateBS = false, collectionName = "") }
+
     private fun showUpdateCollectionBS(collectionId: Int, collectionName: String) = updateState {
         copy(
             isShowUpdateBS = true,
@@ -76,9 +88,6 @@ class FavoriteViewModel @Inject constructor(
             collectionName = collectionName
         )
     }
-
-    private fun hideUpdateCollectionBS() =
-        updateState { copy(isShowUpdateBS = false, collectionName = "") }
 
     private fun deleteFavorite(productId: Int) = viewModelScope.launch {
         deleteFavoriteUseCase(productId).fold(
@@ -90,6 +99,7 @@ class FavoriteViewModel @Inject constructor(
                         }
                     )
                 }
+                emitUiEffect(UiEffect.Refresh)
             },
             onError = { error ->
                 updateState { copy(error = error) }
@@ -168,7 +178,7 @@ class FavoriteViewModel @Inject constructor(
             putCollectionUseCase(collectionId, collectionName).fold(
                 onSuccess = {
                     updateCollectionInState(collectionId, collectionName)
-                    hideUpdateCollectionBS()
+                    hideBottomSheet()
                     emitUiEffect(UiEffect.ShowToast("Collection Updated"))
                 },
                 onError = { error ->

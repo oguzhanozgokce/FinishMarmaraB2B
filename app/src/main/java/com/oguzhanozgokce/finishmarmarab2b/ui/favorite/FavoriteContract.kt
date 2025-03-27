@@ -34,8 +34,6 @@ object FavoriteContract {
         data object HideBottomSheet : UiAction()
         data class ShowUpdateBottomSheet(val collectionId: Int, val collectionName: String) :
             UiAction()
-
-        data object HideUpdateBottomSheet : UiAction()
     }
 
     sealed class UiEffect {

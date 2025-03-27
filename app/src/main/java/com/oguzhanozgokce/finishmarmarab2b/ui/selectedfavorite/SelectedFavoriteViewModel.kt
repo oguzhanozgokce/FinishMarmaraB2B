@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import androidx.paging.cachedIn
 import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.fold
 import com.oguzhanozgokce.finishmarmarab2b.core.domain.delegation.MVI
+import com.oguzhanozgokce.finishmarmarab2b.core.domain.evet.EventBus
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.request.PostCollectionAddProductsRequest
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.repository.AnalyticsManager
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.usecase.product.GetFavoriteProductsUseCase
@@ -78,6 +79,7 @@ class SelectedFavoriteViewModel @Inject constructor(
                     updateState { copy(isLoading = false) }
                     emitUiEffect(UiEffect.ShowToast("Successful"))
                     emitUiEffect(UiEffect.NavigateToBack)
+                    EventBus.emitEvent(EventBus.Event.LoadCollection)
                     analyticsManager.logAddCollection(args.collectionId, args.collectionName)
                 },
                 onError = { errorMessage ->

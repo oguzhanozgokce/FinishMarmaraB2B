@@ -74,12 +74,12 @@ fun FavoriteScreen(
     if (uiState.isShowUpdateBS) {
         FMModelBottomSheet(
             sheetState = sheetState,
-            onDismissRequest = { onAction(UiAction.HideUpdateBottomSheet) },
+            onDismissRequest = { onAction(UiAction.HideBottomSheet) },
             content = {
                 UpdateCollectionBSContent(
                     uiState = uiState,
                     onAction = onAction,
-                    onDismissRequest = { onAction(UiAction.HideUpdateBottomSheet) },
+                    onDismissRequest = { onAction(UiAction.HideBottomSheet) },
                     onUpdateCollection = { id, name ->
                         onAction(UiAction.UpdateCollection(id, name))
                     }

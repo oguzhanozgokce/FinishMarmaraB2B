@@ -30,6 +30,7 @@ interface ProductRepository {
     suspend fun deleteAllSearchHistory(): Resource<Unit>
     suspend fun getCollection(): Resource<List<Collection>>
     suspend fun postCollection(name: String): Resource<Int>
+    suspend fun postCollectionAddProduct(request: PostCollectionAddProductsRequest): Resource<Unit>
     suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit>
     suspend fun deleteCollection(collectionId: Int): Resource<DeleteCollectionResponse>
     suspend fun putCollection(collectionId: Int, newName: String): Resource<Unit>

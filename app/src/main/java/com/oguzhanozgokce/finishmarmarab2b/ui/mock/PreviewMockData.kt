@@ -309,8 +309,8 @@ object PreviewMockData {
 
     val defaultCollection = Collection(
         id = 1,
-        name = "Default",
-        productCount = 0,
+        name = "Tecnology",
+        productCount = 12,
         imageList = listOf()
     )
 
@@ -326,7 +326,7 @@ object PreviewMockData {
             )
         ),
         Collection(
-            id = 1,
+            id = 2,
             name = "Health",
             productCount = 12,
             imageList = listOf(
@@ -336,7 +336,7 @@ object PreviewMockData {
             )
         ),
         Collection(
-            id = 1,
+            id = 3,
             name = "Clothing",
             productCount = 12,
             imageList = listOf(

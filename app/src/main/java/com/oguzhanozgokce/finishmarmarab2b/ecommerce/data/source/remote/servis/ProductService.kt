@@ -14,6 +14,7 @@ import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_PRODUCT_TOP
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_QUESTIONS_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.GET_USER_SEARCH_HISTORY
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION
+import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION_ADD_PRODUCT
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_COLLECTION_ADD_PRODUCTS
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.POST_TOGGLE_FAVORITE
 import com.oguzhanozgokce.finishmarmarab2b.core.common.ApiRoutes.PUT_COLLECTION
@@ -135,6 +136,11 @@ interface ProductService {
     suspend fun postCollection(
         @Body request: PostCollectionRequest
     ): Response<ApiResponse<PostCollectionResponse>>
+
+    @POST(POST_COLLECTION_ADD_PRODUCT)
+    suspend fun postCollectionAddProduct(
+        @Body request: PostCollectionAddProductsRequest
+    ): Response<ApiResponse<Unit>>
 
     @POST(POST_COLLECTION_ADD_PRODUCTS)
     suspend fun postCollectionAddProducts(

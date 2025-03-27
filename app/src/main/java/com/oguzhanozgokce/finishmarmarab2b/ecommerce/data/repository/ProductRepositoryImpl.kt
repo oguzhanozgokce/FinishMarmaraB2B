@@ -192,6 +192,10 @@ class ProductRepositoryImpl @Inject constructor(
             .toResourceMap { it.id.orZero() }
     }
 
+    override suspend fun postCollectionAddProduct(request: PostCollectionAddProductsRequest): Resource<Unit> {
+        return safeApiCall { productService.postCollectionAddProduct(request) }
+    }
+
     override suspend fun postCollectionAddProducts(request: List<PostCollectionAddProductsRequest>): Resource<Unit> {
         return safeApiCall { productService.postCollectionAddProducts(request) }
     }

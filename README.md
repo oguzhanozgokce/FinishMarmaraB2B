@@ -1,5 +1,10 @@
 # Finish B2B E-commerce Compose 🛒
 
+![Platform](https://img.shields.io/badge/platform-Android-blue)
+![Architecture](https://img.shields.io/badge/architecture-Clean--Architecture-brightgreen)
+![Build](https://img.shields.io/badge/build-success-green)
+![Language](https://img.shields.io/badge/language-Kotlin-purple)
+
 ## Overview
 
 This project is developed as part of my graduation thesis at Marmara University. It is a B2B (
@@ -29,13 +34,13 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
 - **MVI**
 - **COMPOSE**
 - **PREVIEW PARAMETER PROVIDER**
-- **NAVIGATION**
+- **Navigation + Bottom Navigation + Type Safety**
 - **BOTTOM-NAVIGATION**
-- **HILT**
-- **RETROFIT**
+- **Hilt (Dependency Injection)**
+- **Retrofit (Networking)**
 - **DATA SOURCE**
-- **DETEKT**
-- **COIL**
+- **Detekt (Static Code Analysis)**
+- **Coil (Image Loading)**
 - **VERSION CATALOG**
 - **COROUTINES FLOW**
 
@@ -52,7 +57,7 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
   <tr>
     <td><img src="screenshot/welcome.png" alt="Welcome Screen" width="1280"/></td>
     <td><img src="screenshot/login.png" alt="Login Screen" width="1280"/></td>
-    <td><img src="screenshot/sign_up.png" alt="Cart Screen" width="1280"/></td>
+    <td><img src="screenshot/sign_up.png" alt="SignUp Screen" width="1280"/></td>
   </tr>
 </table>
 <br/>
@@ -144,6 +149,68 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
   </tr>
 </table>
 
+## Package Structure
+
+```
+├── FinishMarmaraB2B.kt
+├── core
+│ ├── common
+│ ├── data
+│ ├── domain
+│ └── presentation
+├── di
+│ ├── AnalyticsModule.kt
+│ ├── ConnectivityModule.kt
+│ ├── DataStoreModule.kt
+│ ├── JsonModule.kt
+│ ├── LocalDataSourceModule.kt
+│ ├── NetworkModule.kt
+│ └── RepositoryModule.kt
+├── ecommerce
+│ ├── data
+│ └── domain
+├── navigation
+│ ├── NavigationGraph.kt
+│ ├── Screen.kt
+│ ├── SellerNavigationGraph.kt
+│ ├── SerializableType.kt
+│ └── bottom
+├── structure_finishmarmarab2b.txt
+└── ui
+├── MainActivity.kt
+├── MainContract.kt
+├── MainViewModel.kt
+├── address
+├── cart
+├── creditcard
+├── detail
+├── editprofile
+├── evaluation
+├── favorite
+├── home
+├── login
+├── mock
+├── orderlist
+├── ordersuccess
+├── password
+├── payment
+├── products
+├── profile
+├── search
+├── selectedfavorite
+├── seller
+├── signup
+├── splash
+├── theme
+└── welcome
+```
+
+## 🧑‍💻 How to Run
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/kullaniciadi/FinishMarmaraB2B.git
+
 ## Code blocks
 
 ```kotlin
@@ -152,3 +219,9 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
     println("Crafted with clean architecture & love 💙")
 }
 ```
+
+---
+
+<p style="text-align:center">
+  Made with ❤️ by <strong>Oguzhan</strong>
+</p>

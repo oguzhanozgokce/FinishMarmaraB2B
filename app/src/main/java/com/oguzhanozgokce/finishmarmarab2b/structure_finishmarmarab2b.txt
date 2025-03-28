@@ -1,0 +1,54 @@
+.
+├── FinishMarmaraB2B.kt
+├── core
+│   ├── common
+│   ├── data
+│   ├── domain
+│   └── presentation
+├── di
+│   ├── AnalyticsModule.kt
+│   ├── ConnectivityModule.kt
+│   ├── DataStoreModule.kt
+│   ├── JsonModule.kt
+│   ├── LocalDataSourceModule.kt
+│   ├── NetworkModule.kt
+│   └── RepositoryModule.kt
+├── ecommerce
+│   ├── data
+│   └── domain
+├── navigation
+│   ├── NavigationGraph.kt
+│   ├── Screen.kt
+│   ├── SellerNavigationGraph.kt
+│   ├── SerializableType.kt
+│   └── bottom
+├── structure_finishmarmarab2b.txt
+└── ui
+    ├── MainActivity.kt
+    ├── MainContract.kt
+    ├── MainViewModel.kt
+    ├── address
+    ├── cart
+    ├── creditcard
+    ├── detail
+    ├── editprofile
+    ├── evaluation
+    ├── favorite
+    ├── home
+    ├── login
+    ├── mock
+    ├── orderlist
+    ├── ordersuccess
+    ├── password
+    ├── payment
+    ├── products
+    ├── profile
+    ├── search
+    ├── selectedfavorite
+    ├── seller
+    ├── signup
+    ├── splash
+    ├── theme
+    └── welcome
+
+36 directories, 16 files

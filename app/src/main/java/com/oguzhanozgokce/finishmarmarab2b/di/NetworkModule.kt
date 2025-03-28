@@ -5,6 +5,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import com.oguzhanozgokce.finishmarmarab2b.BuildConfig
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.BasketService
+import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.OrderService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.ProductService
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.data.source.remote.servis.UserService
 import dagger.Module
@@ -81,5 +82,11 @@ object NetworkModule {
     @Singleton
     fun provideBasketService(retrofit: Retrofit): BasketService {
         return retrofit.create(BasketService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderService(retrofit: Retrofit): OrderService {
+        return retrofit.create(OrderService::class.java)
     }
 }

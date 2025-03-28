@@ -209,7 +209,7 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/kullaniciadi/FinishMarmaraB2B.git
+   git clone https://github.com/oguzhanozgokce/FinishMarmaraB2B.git
 
 ## Code blocks
 

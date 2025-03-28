@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.oguzhanozgokce.finishmarmarab2b.core.common.extension.noRippleClickable
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMHorizontalDivider
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMOutlinedCard
 import com.oguzhanozgokce.finishmarmarab2b.ecommerce.domain.model.OrderInfo
@@ -42,7 +43,8 @@ import com.oguzhanozgokce.finishmarmarab2b.ui.theme.FMTheme
 fun OrderItem(
     order: OrderInfo,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    onClick: (Int) -> Unit,
+    onEvaluation: () -> Unit
 ) {
     FMOutlinedCard(
         modifier = modifier,
@@ -50,7 +52,7 @@ fun OrderItem(
         cardColors = CardDefaults.outlinedCardColors(
             containerColor = FMTheme.colors.cardBackground,
         ),
-        onClick = onClick,
+        onClick = { onClick(order.id) },
         content = {
             Column(
                 modifier = Modifier
@@ -82,7 +84,8 @@ fun OrderItem(
                                     FMTheme.colors.primary,
                                     shape = RoundedCornerShape(8.dp)
                                 )
-                                .padding(4.dp),
+                                .padding(4.dp)
+                                .noRippleClickable { onEvaluation() },
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Icon(
@@ -188,6 +191,7 @@ fun OrderItemList(
     orders: List<OrderInfo>,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit,
+    onEvaluation: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier.padding(FMTheme.padding.dimension16),
@@ -196,9 +200,10 @@ fun OrderItemList(
     ) {
         items(orders) { order ->
             OrderItem(
+                modifier = Modifier.fillMaxWidth(),
                 order = order,
-                onClick = { onClick(order.id) },
-                modifier = Modifier.fillMaxWidth()
+                onClick = onClick,
+                onEvaluation = onEvaluation
             )
         }
     }
@@ -212,6 +217,7 @@ fun OrderItemListPreview() {
             orders = PreviewMockData.defaultOrderInfoList,
             modifier = Modifier,
             onClick = { },
+            onEvaluation = { }
         )
     }
 }
@@ -226,6 +232,7 @@ fun OrderItemPreview() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
+            onEvaluation = { },
         )
     }
 }

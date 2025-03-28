@@ -69,7 +69,8 @@ fun OrderListContent(
                 OrderItemList(
                     orders = uiState.orderInfoList,
                     modifier = Modifier.background(color = FMTheme.colors.background),
-                    onClick = { }
+                    onClick = { navAction.navigateToOrderDetails(it) },
+                    onEvaluation = { }
                 )
             }
         }

@@ -69,7 +69,7 @@ proje, yazılım geliştirmeye ve güzel tasarımlı sistemlere olan ilgimi yans
   </tr>
   <tr>
     <td><img src="screenshot/home.png" alt="Profile" width="1280"/></td>
-    <td><img src="screenshot/producs.png" alt="Products" width="1280"/></td>
+    <td><img src="screenshot/products.png" alt="Products" width="1280"/></td>
     <td><img src="screenshot/search.png" alt="Search" width="1280"/></td>
   </tr>
 </table>

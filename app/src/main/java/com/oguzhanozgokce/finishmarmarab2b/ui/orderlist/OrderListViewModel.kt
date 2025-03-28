@@ -23,17 +23,15 @@ class OrderListViewModel @Inject constructor(
     override fun onAction(uiAction: UiAction) {
     }
 
-    private fun getOrderInfo() {
+    private fun getOrderInfo() = viewModelScope.launch {
         updateState { copy(isLoading = true) }
-        viewModelScope.launch {
-            getOrderInfoUseCase().fold(
-                onSuccess = {
-                    updateState { copy(isLoading = false, orderInfoList = it) }
-                },
-                onError = { error ->
-                    updateState { copy(isLoading = false, error = error) }
-                }
-            )
-        }
+        getOrderInfoUseCase().fold(
+            onSuccess = {
+                updateState { copy(isLoading = false, orderInfoList = it) }
+            },
+            onError = { error ->
+                updateState { copy(isLoading = false, error = error) }
+            }
+        )
     }
 }

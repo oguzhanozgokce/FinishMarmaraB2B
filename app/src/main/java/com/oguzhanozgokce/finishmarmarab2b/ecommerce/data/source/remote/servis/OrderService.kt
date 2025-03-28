@@ -13,4 +13,3 @@ interface OrderService {
         @Path("userId") userId: Int
     ): Response<ApiResponse<GetOrderInfoResponse>>
 }
-

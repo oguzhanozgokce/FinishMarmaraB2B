@@ -69,4 +69,3 @@ fun Map<String, List<String>>.toDomainProvinces(): List<Province> {
         )
     }
 }
-

@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.EmptyScreen
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.FMTopBar
 import com.oguzhanozgokce.finishmarmarab2b.core.presentation.components.LoadingBar
-import com.oguzhanozgokce.finishmarmarab2b.ui.mock.PreviewMockData
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiAction
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiEffect
 import com.oguzhanozgokce.finishmarmarab2b.ui.orderlist.OrderListContract.UiState
@@ -31,7 +30,7 @@ fun OrderListScreen(
 ) {
     when {
         uiState.isLoading -> LoadingBar()
-        uiState.orderList.isNotEmpty() -> EmptyScreen()
+        uiState.orderInfoList.isNotEmpty() -> EmptyScreen()
         else -> OrderListContent(
             navAction = navAction,
             uiState = uiState,
@@ -55,7 +54,7 @@ fun OrderListContent(
         containerColor = FMTheme.colors.background,
         contentColor = FMTheme.colors.onBackground,
     ) { innerPadding ->
-        if (uiState.orderList.isEmpty()) {
+        if (uiState.orderInfoList.isEmpty()) {
             EmptyOrderListContent(
                 modifier = Modifier.padding(innerPadding),
                 onClick = {}
@@ -68,7 +67,7 @@ fun OrderListContent(
                     .padding(innerPadding),
             ) {
                 OrderItemList(
-                    orders = PreviewMockData.defaultOrderInfoList,
+                    orders = uiState.orderInfoList,
                     modifier = Modifier.background(color = FMTheme.colors.background),
                     onClick = { }
                 )

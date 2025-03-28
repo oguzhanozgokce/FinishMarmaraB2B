@@ -140,9 +140,9 @@ fun OrderItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = order.status,
+                        text = order.orderStatus,
                         style = FMTheme.typography.bodySmallNormal().copy(
-                            color = if (order.status == "Pending") FMTheme.colors.error else Color.Green,
+                            color = if (order.orderStatus == "Pending") FMTheme.colors.error else Color.Green,
                             fontSize = FMTheme.fontSize.mediumSmall
                         ),
                         modifier = Modifier.padding(8.dp)
@@ -221,17 +221,7 @@ fun OrderItemListPreview() {
 fun OrderItemPreview() {
     FMTheme {
         OrderItem(
-            order = OrderInfo(
-                id = 1,
-                createdAt = "2022-01-01 12:00:00",
-                totalPrice = 100.0,
-                status = "Success",
-                orderImage = listOf(
-                    "",
-                    "",
-                    ""
-                )
-            ),
+            order = PreviewMockData.defaultOrderInfo,
             onClick = { },
             modifier = Modifier
                 .fillMaxWidth()

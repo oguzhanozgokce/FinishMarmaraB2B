@@ -347,12 +347,27 @@ object PreviewMockData {
         )
     )
 
+    val defaultOrderInfo = OrderInfo(
+        id = 1,
+        userId = 2,
+        totalPrice = 199.99,
+        orderStatus = "Pending",
+        createdAt = "2025-03-18",
+        updatedAt = "2025-03-18",
+        orderImage = listOf(
+            "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/samsung/thumb/1-171_large.jpg",
+            "https://cdn.akakce.com/z/marshall/marshall-major-iv-katlanabilir-kablosuz-kulak-ustu.jpg"
+        )
+    )
+
     val defaultOrderInfoList = listOf(
         OrderInfo(
             id = 1,
+            userId = 2,
             totalPrice = 199.99,
-            status = "Pending",
+            orderStatus = "Pending",
             createdAt = "2025-03-18",
+            updatedAt = "2025-03-18",
             orderImage = listOf(
                 "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/samsung/thumb/1-171_large.jpg",
                 "https://cdn.akakce.com/z/marshall/marshall-major-iv-katlanabilir-kablosuz-kulak-ustu.jpg"
@@ -360,9 +375,11 @@ object PreviewMockData {
         ),
         OrderInfo(
             id = 2,
+            userId = 3,
             totalPrice = 349.50,
-            status = "Shipped",
+            orderStatus = "Shipped",
             createdAt = "2025-03-15",
+            updatedAt = "2025-03-15",
             orderImage = listOf(
                 "https://cdn.akakce.com/z/samsung/samsung-990-evo-plus-mz-v9s1t0bw-pci-express-1-tb-m-2.jpg",
                 "https://iis-akakce.akamaized.net/p.x?%2f%2fproductimages.hepsiburada.net%2fs%2f777%2f600%2f110000805819136.jpg"
@@ -370,9 +387,11 @@ object PreviewMockData {
         ),
         OrderInfo(
             id = 3,
+            userId = 4,
             totalPrice = 89.99,
-            status = "Delivered",
+            orderStatus = "Delivered",
             createdAt = "2025-03-12",
+            updatedAt = "2025-03-12",
             orderImage = listOf(
                 "https://cdn.akakce.com/z/apple/apple-watch-series-10-gps-46mm-aluminyum-kasa-spor-kordon.jpg",
                 "https://cdn.akakce.com/x/samsung/samsung-galaxy-watch-7-44mm.jpg"

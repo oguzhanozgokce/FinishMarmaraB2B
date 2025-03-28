@@ -8,10 +8,10 @@ class OrderListScreenPreviewProvider : PreviewParameterProvider<OrderListContrac
         get() = sequenceOf(
             OrderListContract.UiState(
                 isLoading = false,
-                orderList = emptyList()
+                orderInfoList = emptyList()
             ),
             OrderListContract.UiState(
-                orderList = PreviewMockData.defaultOrderInfoList,
+                orderInfoList = PreviewMockData.defaultOrderInfoList,
                 isLoading = false,
             ),
         )

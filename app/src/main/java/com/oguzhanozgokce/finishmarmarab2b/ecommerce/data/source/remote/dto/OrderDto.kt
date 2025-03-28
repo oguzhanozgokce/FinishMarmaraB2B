@@ -25,3 +25,20 @@ data class OrderDto(
     @SerializedName("updated_At")
     val updatedAt: String? = null,
 )
+
+data class OrderInfoDto(
+    @SerializedName("id")
+    val id: Int? = null,
+    @SerializedName("user_Id")
+    val userId: Int? = null,
+    @SerializedName("total_Price")
+    val totalPrice: Double? = null,
+    @SerializedName("order_Status")
+    val orderStatus: String? = null,
+    @SerializedName("created_At")
+    val createdAt: String? = null,
+    @SerializedName("updated_At")
+    val updatedAt: String? = null,
+    @SerializedName("order_Image")
+    val orderImage: List<String>? = null
+)

@@ -20,7 +20,7 @@ object FavoriteContract {
         val selectedProductId: Int = 0,
         val collectionList: List<Collection> = emptyList(),
         val error: String? = "",
-        val isRefreshCollection: Boolean = false
+        val isRefreshCollection: Boolean = false,
     )
 
     sealed class UiAction {

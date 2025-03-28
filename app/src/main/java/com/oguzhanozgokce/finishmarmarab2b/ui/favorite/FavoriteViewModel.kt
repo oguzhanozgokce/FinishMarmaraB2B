@@ -232,7 +232,10 @@ class FavoriteViewModel @Inject constructor(
 
     private fun addProductToCollection() = viewModelScope.launch {
         currentState.selectedCollection?.let {
-            postCollectionAddProductUseCase(currentState.selectedProductId, it.id).fold(
+            postCollectionAddProductUseCase(
+                productId = currentState.selectedProductId,
+                collectionId = it.id
+            ).fold(
                 onSuccess = {
                     emitUiEffect(UiEffect.ShowToast("Product added to collection"))
                     hideBottomSheet()

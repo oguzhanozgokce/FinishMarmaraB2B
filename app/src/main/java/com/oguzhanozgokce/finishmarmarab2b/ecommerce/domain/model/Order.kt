@@ -12,8 +12,10 @@ data class Order(
 
 data class OrderInfo(
     val id: Int,
+    val userId: Int,
     val totalPrice: Double,
-    val status: String,
+    val orderStatus: String,
     val createdAt: String,
+    val updatedAt: String,
     val orderImage: List<String>
 )
